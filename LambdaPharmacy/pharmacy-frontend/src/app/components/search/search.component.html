@@ -1,0 +1,93 @@
+<div class="s012" ng *ngIf="pharmacyShow">
+  <form>
+    <fieldset >
+      <legend>Looking for a PHARMACY?</legend>
+    </fieldset>
+    <div class="inner-form">
+      <header>
+        <div class="travel-type-wrap">
+          <div class="item active" >
+            <div class="group-icon">
+              <img src="assets/pharmacy.png">
+            </div>
+            <span>PHARMACY ONLY</span>
+          </div>
+          <div class="item"  (click)="showMedicineSearch()">
+            <div class="group-icon">
+              <img src="assets/medicine.png">
+            </div>
+            <span>MEDICINE</span>
+          </div>
+        </div>
+      </header>
+      <div class="main-form" id="main-form">
+        <div class="row second">
+          <div class="input-wrap">
+
+            <div class="input-field">
+
+              <input  type="text" placeholder="Name" />
+            </div>
+          </div>
+          <div class="input-wrap">
+
+            <div class="input-field">
+
+              <input  type="text" placeholder="Location" />
+            </div>
+          </div>
+
+          <button class="btn-search" type="button">Search</button>
+
+
+        </div>
+
+        <div class="row last">
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<div class="s012" *ngIf="medicineShow">
+  <form>
+    <fieldset >
+      <legend>Looking for a MEDICINE?</legend>
+    </fieldset>
+    <div class="inner-form">
+      <header>
+        <div class="travel-type-wrap">
+          <div class="item" (click)="showPharmacySearch()">
+            <div class="group-icon">
+              <img src="assets/pharmacy.png">
+            </div>
+            <span>PHARMACY ONLY</span>
+          </div>
+          <div class="item active">
+            <div class="group-icon">
+              <img src="assets/medicine.png">
+            </div>
+            <span>MEDICINE</span>
+          </div>
+        </div>
+      </header>
+      <div class="main-form" id="main-form">
+        <div class="row second">
+          <div class="input-wrap">
+            <div class="input-field">
+              <input  type="text" placeholder="Name" />
+            </div>
+          </div>
+          <div class="input-field">
+            <button class="btn-search" type="button">Search</button>
+          </div>
+
+        </div>
+        <div class="row last">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
