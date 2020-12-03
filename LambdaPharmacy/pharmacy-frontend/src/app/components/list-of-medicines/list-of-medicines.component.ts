@@ -28,7 +28,7 @@ export class ListOfMedicinesComponent implements OnInit {
 
       },
       err => {
-        console.log("greska u fethc");
+
       }
     );
 

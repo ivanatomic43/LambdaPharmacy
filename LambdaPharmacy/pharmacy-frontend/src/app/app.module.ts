@@ -11,7 +11,15 @@ import {Routes} from '@angular/router';
 import { SearchComponent } from './components/search/search.component';
 import { ListOfMedicinesComponent } from './components/list-of-medicines/list-of-medicines.component';
 import { ListOfPharmaciesComponent } from './components/list-of-pharmacies/list-of-pharmacies.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { PatientPageComponent } from './components/patient-page/patient-page.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AuthService} from './services/AuthService';
+import {FooService} from './services/FooService';
+import {ConfigService} from './services/ConfigService';
+import {ApiService} from './services/ApiService';
+import {UserService} from './services/UserService';
+import {TokenInterceptor} from './interceptor/TokenInterceptor';
 
 
 
@@ -25,15 +33,27 @@ import {HttpClientModule} from '@angular/common/http';
     HomepageComponent,
     SearchComponent,
     ListOfMedicinesComponent,
-    ListOfPharmaciesComponent
+    ListOfPharmaciesComponent,
+    PatientPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
-
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  },
+    FooService,
+    AuthService,
+    ApiService,
+    UserService,
+    ConfigService,
   ],
   bootstrap: [AppComponent]
 })

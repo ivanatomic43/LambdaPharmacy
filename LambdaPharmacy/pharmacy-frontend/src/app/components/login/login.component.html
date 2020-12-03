@@ -1,25 +1,25 @@
 
 <div class="s012">
-  <form>
+  <form (ngSubmit)="login()" [formGroup]="loginForm">
     <fieldset >
       <legend>Welcome to LambdaPharmacy</legend>
     </fieldset>
     <div class="inner-form">
 
-      <div class="main-form" id="main-form">
+      <div class="main-form" id="main-form" >
         <div class="row second">
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="text" placeholder="Username" />
+              <input  type="text" placeholder="Username" formControlName="username" />
             </div>
           </div>
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="password" placeholder="Password" />
+              <input  type="password" placeholder="Password" formControlName="password" />
             </div>
           </div>
           <div class="input-field">
-            <button class="btn-search" type="button">Log in</button>
+            <button class="btn-search" type="submit">Log in</button>
           </div>
 
         </div>

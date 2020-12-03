@@ -1,6 +1,6 @@
 
 
-
+INSERT INTO USER (user_type, id, address, approved, email, first_name, last_name, password, phone_number, username) values ('USER_PATIENT',1,'Bulevar Kralja Petra I',true,'ivana@gmail.com','Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','ivana');
 
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (1,'Humani lekovi','111','NO_RECIPE','Strepsils','Pogodno za decu','RECKITT BENCKISER HEALTHCARE','Lozenga', '	2,4-dihlorbenzilalkohol, amilmetakrezol');
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (2,'Humani lekovi','112','NO_RECIPE','Andol','Za sve vrste bolova u telu','Pliva Hrvatska','Tableta', 'acetilsalicilna kiselina');
@@ -18,3 +18,6 @@ INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_PATIENT');
 INSERT INTO AUTHORITY (id, name) VALUES (2,'ROLE_PHARMACIST');
 INSERT INTO AUTHORITY (id, name) VALUES (3, 'ROLE_DERMATOLOGIST');
 INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_PHARMACY_ADMIN');
+
+
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1,1);
