@@ -9,6 +9,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import {Routes} from '@angular/router';
 import { SearchComponent } from './components/search/search.component';
+import { ListOfMedicinesComponent } from './components/list-of-medicines/list-of-medicines.component';
+import { ListOfPharmaciesComponent } from './components/list-of-pharmacies/list-of-pharmacies.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 
@@ -20,11 +23,14 @@ import { SearchComponent } from './components/search/search.component';
     LoginComponent,
     RegisterComponent,
     HomepageComponent,
-    SearchComponent
+    SearchComponent,
+    ListOfMedicinesComponent,
+    ListOfPharmaciesComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [
 
