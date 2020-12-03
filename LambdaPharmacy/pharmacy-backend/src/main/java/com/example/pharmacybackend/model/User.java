@@ -1,10 +1,12 @@
 package com.example.pharmacybackend.model;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,9 +48,21 @@ public class User implements UserDetails {
 	
     @Column(name="phone_Number", nullable = false)  
     private String phoneNumber;
+    
+    
+    //za potvrdu mejla nakon registracije
+    @Column(name="approved", nullable = false)
+    private boolean approved;
 	
     
-    @ManyToMany(fetch = FetchType.EAGER)
+    public boolean isApproved() {
+		return approved;
+	}
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+	
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
@@ -103,8 +117,10 @@ public class User implements UserDetails {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public List<Authority> getAuthorities() {
-		return authorities;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return  this.authorities;
 	}
 	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
