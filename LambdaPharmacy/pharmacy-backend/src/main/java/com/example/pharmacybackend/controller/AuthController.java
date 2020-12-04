@@ -1,5 +1,6 @@
 package com.example.pharmacybackend.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,18 +27,20 @@ import com.example.pharmacybackend.security.*;
 import com.example.pharmacybackend.repository.AuthorityRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
 import com.example.pharmacybackend.security.TokenUtils;
+import com.example.pharmacybackend.services.AuthorityService;
 import com.example.pharmacybackend.services.CustomUserDetailsService;
 import com.example.pharmacybackend.services.EmailService;
 import com.example.pharmacybackend.services.PatientService;
 import com.example.pharmacybackend.services.UserService;
+import com.example.pharmacybackend.services.UserServiceImpl;
 
 @RestController
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/auth")
 public class AuthController {
 
 	
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 	
 	@Autowired
 	TokenUtils tokenUtils;
@@ -61,6 +64,9 @@ public class AuthController {
 	@Autowired
 	private PatientRepository patientRepository;
 	
+	@Autowired
+	private AuthorityService authorityService;
+	
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
@@ -77,19 +83,12 @@ public class AuthController {
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.UNAUTHORIZED);
 		}
 		
-		if(!found.isApproved() && (!found.isFirstLogin())) {
+		if(!found.isApproved()) {
 			System.out.println("User didn't confirm registration");
-			System.out.println(found.isApproved());
-			System.out.println(found.isFirstLogin());
+			
 			return new ResponseEntity<>(new UserTokenState("error", 0), HttpStatus.FORBIDDEN);
 		}
-		
-		if(!found.isFirstLogin() && found.isApproved()) {
-			System.out.println("User se loguje prvi put...");
-			found.setFirstLogin(true);
-			
-			
-		}
+	
 		
 		
 		
@@ -135,8 +134,7 @@ public class AuthController {
 		
 		Patient patient = this.patientService.registerPatient(userRequest);
 		this.emailService.sendActivationLink(patient);
-		this.patientRepository.save(patient);
-		System.out.println(patient.isApproved());
+	
 		
 		 if (patient == null) {
 	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -144,6 +142,41 @@ public class AuthController {
 
 	        return new ResponseEntity<>(patient, HttpStatus.CREATED);
 	
+	}
+	
+	@RequestMapping("/registrationConfirm/{email}")
+	public void confirmation(@PathVariable("email") String email, HttpServletResponse response) throws IOException
+	{
+		
+		System.out.println("EMAIL " + email);
+		User confirm = userService.findByEmail(email);
+		if(confirm==null || confirm.isApproved()==true)
+		{
+			
+			if(confirm==null)
+				System.out.println("User is null.");
+			else if(confirm.isApproved()==true)
+				System.out.println("User is already approved.");
+		}
+		else
+		{
+			confirm.setApproved(true);
+			Authority role = null;
+			role = authorityService.findByName("ROLE_PATIENT");
+			
+			if(role == null) {
+				role = new Authority();
+				role.setName("ROLE_PATIENT");
+				authorityService.save(role);
+			}
+			
+			confirm.setAuthority(role);
+			//authorityService.updateUserAuthority(potvrda.getId(), uloga.getId());
+			userService.updateActivation(true, confirm.getId());
+			response.sendRedirect("http://localhost:4200/login");
+			System.out.println("USPESNO AKTIVIRAN");
+			
+		}
 	}
 	
 

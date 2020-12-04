@@ -1,5 +1,6 @@
 package com.example.pharmacybackend.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -71,11 +72,11 @@ public class User implements UserDetails {
 		this.approved = approved;
 	}
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
-	private List<Authority> authorities;
+	private  Authority authority;
 	
 	public Long getId() {
 		return id;
@@ -126,13 +127,12 @@ public class User implements UserDetails {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+	public Authority getAuthority() {
 		// TODO Auto-generated method stub
-		return  this.authorities;
+		return  this.authority;
 	}
-	public void setAuthorities(List<Authority> authorities) {
-		this.authorities = authorities;
+	public void setAuthority(Authority authority) {
+		this.authority= authority;
 	}
 	@Override
 	public boolean isAccountNonExpired() {
@@ -153,6 +153,13 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		List<Authority> authorities= new ArrayList<Authority>();
+		authorities.add(this.authority);
+		return authorities;
 	}
 	
 	

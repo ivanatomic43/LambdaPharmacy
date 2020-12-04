@@ -51,13 +51,9 @@ public class PatientService {
 	 newPatient.setPhoneNumber(p.getPhoneNumber());
 	 
 		
-	// newPatient.setPatientStatus(Status.AWAITING_APPROVAL);
+	
 	 newPatient.setApproved(false);
-	 newPatient.setFirstLogin(false);
-	 
-	 List<Authority> auth = authorityService.findByname("ROLE_PATIENT");
-	 newPatient.setAuthorities(auth);
-	 
+	
 	 
 	 
 	 return this.patientRepository.save(newPatient);

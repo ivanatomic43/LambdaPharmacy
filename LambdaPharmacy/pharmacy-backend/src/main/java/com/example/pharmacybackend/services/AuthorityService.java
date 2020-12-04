@@ -1,10 +1,28 @@
 package com.example.pharmacybackend.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import com.example.pharmacybackend.model.*;
+import com.example.pharmacybackend.model.Authority;
+import com.example.pharmacybackend.repository.AuthorityRepository;
 
-public interface AuthorityService {
-	List<Authority> findById(Long id);
-	List<Authority> findByname(String name);
+@Service
+public class AuthorityService {
+
+	@Autowired
+	private AuthorityRepository authorityRepository;
+	
+	
+	public Authority save(Authority authority)
+	{
+		return authorityRepository.save(authority);
+	}
+	
+	public Authority findByName(String name) {
+		return authorityRepository.findOneByName(name);
+	}
+	
+	
+	
+	
 }

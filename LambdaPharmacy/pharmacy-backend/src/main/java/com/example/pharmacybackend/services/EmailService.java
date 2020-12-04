@@ -27,9 +27,9 @@ public class EmailService {
 		System.out.println("Usao u emailservice");
 		System.out.println(user.getEmail());
 		SimpleMailMessage mail = new SimpleMailMessage();
-		String link = "http://localhost:4200/login";
+		String link = "http://localhost:8051/auth/registrationConfirm/" + user.getEmail();
 		mail.setTo(user.getEmail());
-		user.setApproved(true);
+	
 		
 		mail.setFrom("no.reply.lambdapharmacy@gmail.com");
 		mail.setSubject("Activation link");

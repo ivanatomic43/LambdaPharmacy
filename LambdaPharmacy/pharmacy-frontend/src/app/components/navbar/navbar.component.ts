@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
     this.shareService.shareIsLogged.subscribe(data => {
       this.anyLogged = data;
     });
-    
+
     this.shareService.shareProfile.subscribe(data => {
       console.log('ng on init navabr');
       this.profil = data;
