@@ -1,6 +1,6 @@
 
 <div class="s012">
-  <form>
+  <form [formGroup]="registrationForm" (ngSubmit)="registerPatient()">
     <fieldset >
       <legend>Register to join our comunity!</legend>
     </fieldset>
@@ -10,27 +10,12 @@
         <div class="row second">
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="text" placeholder="Name" />
+              <input  type="text" placeholder="Name" formControlName="firstName" />
             </div>
           </div>
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="text" placeholder="Surname" />
-            </div>
-          </div>
-          <div class = "input-field">
-
-          </div>
-        </div>
-        <div class="row second">
-          <div class="input-wrap">
-            <div class="input-field">
-              <input  type="text" placeholder="Username" />
-            </div>
-          </div>
-          <div class="input-wrap">
-            <div class="input-field">
-              <input  type="text" placeholder="E-mail" />
+              <input  type="text" placeholder="Surname" formControlName="lastName"/>
             </div>
           </div>
           <div class = "input-field">
@@ -40,12 +25,12 @@
         <div class="row second">
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="password" placeholder="Password" />
+              <input  type="text" placeholder="Username" formControlName="username"/>
             </div>
           </div>
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="password" placeholder="Confirm Password" />
+              <input  type="text" placeholder="E-mail" formControlName="email"/>
             </div>
           </div>
           <div class = "input-field">
@@ -55,12 +40,27 @@
         <div class="row second">
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="text" placeholder="Address" />
+              <input  type="password" placeholder="Password" formControlName="password" />
             </div>
           </div>
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="text" placeholder="Phone Number" />
+              <input  type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
+            </div>
+          </div>
+          <div class = "input-field">
+
+          </div>
+        </div>
+        <div class="row second">
+          <div class="input-wrap">
+            <div class="input-field">
+              <input  type="text" placeholder="Address" formControlName="address"/>
+            </div>
+          </div>
+          <div class="input-wrap">
+            <div class="input-field">
+              <input  type="text" placeholder="Phone Number" formControlName="phoneNumber" />
             </div>
           </div>
           <div class = "input-field">
@@ -69,7 +69,7 @@
         </div>
         <div class="row last">
           <div class="input-field">
-            <button class="btn-search" type="button">Sign in</button>
+            <button class="btn-search" type="submit">Sign in</button>
           </div>
 
         </div>

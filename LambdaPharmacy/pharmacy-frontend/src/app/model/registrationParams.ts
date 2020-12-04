@@ -8,7 +8,7 @@ export class RegistrationParams {
   private address: string;
   private phoneNumber: string;
 
-  constructor(email: string, username: string, password: string, firstName: string, lastName: string,
+  constructor(firstName: string, lastName: string, username: string, email: string, password: string,
               address: string,  phoneNumber:string) {
     this.email = email;
     this.username= username;

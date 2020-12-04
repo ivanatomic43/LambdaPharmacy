@@ -54,8 +54,17 @@ public class User implements UserDetails {
     @Column(name="approved", nullable = false)
     private boolean approved;
 	
+    @Column(name="firstLogin", nullable = false)
+    private boolean firstLogin;
     
-    public boolean isApproved() {
+    
+    public boolean isFirstLogin() {
+		return firstLogin;
+	}
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
+	}
+	public boolean isApproved() {
 		return approved;
 	}
 	public void setApproved(boolean approved) {
