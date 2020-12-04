@@ -3,6 +3,7 @@ package com.example.pharmacybackend.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.owasp.encoder.Encode;
+
 
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.exceptions.ResourceConflictException;
@@ -142,6 +144,42 @@ public class AuthController {
 
 	        return new ResponseEntity<>(patient, HttpStatus.CREATED);
 	
+	}
+	
+
+	@GetMapping("/logout")
+	public void logout(){
+		System.out.println("LOGOUT");
+		SecurityContextHolder.getContext().setAuthentication(null);
+		SecurityContextHolder.clearContext();
+	}
+	
+	@GetMapping("/getLoggedUser")
+	public ResponseEntity<?> getLoggedUser(HttpServletRequest request){
+		
+		System.out.println("Usao u getLoggedUser ovaj username: " + SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		
+		
+		User user=this.userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		if(user !=null){
+			List<String> authorities = user.getAuthorities().stream()
+    				.map(GrantedAuthority::getAuthority)
+    				.collect(Collectors.toList());
+			System.out.println("Id:"+user.getId());
+			
+			//System.out.println("request get header: " + request.getHeader("Authorization"));
+			UserTokenState loggedUser =new UserTokenState(user.getUsername(),request.getHeader("TokenAuthBic"), authorities);
+			System.out.println(loggedUser.getUsername());
+			
+			return new ResponseEntity<UserTokenState>(loggedUser,HttpStatus.OK);
+		}else {
+			System.out.println("eles");
+			return new ResponseEntity<>("Fail",HttpStatus.BAD_REQUEST);
+		}
+		
+		
 	}
 	
 	

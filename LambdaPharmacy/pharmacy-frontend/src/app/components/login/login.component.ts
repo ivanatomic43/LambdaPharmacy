@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
 
     this.authService.login(this.loginParams).subscribe(response => {
-        console.log('USao u suss');
+        console.log('Prosao login u auth servisu');
         this.profil = response;
         this.sessionStorageService.saveToken(response.token);
         this.sessionStorageService.saveUsername(response.username);

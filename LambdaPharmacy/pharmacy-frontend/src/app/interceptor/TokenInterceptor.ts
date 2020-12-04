@@ -1,26 +1,42 @@
-
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HTTP_INTERCEPTORS, HttpHeaders
 } from '@angular/common/http';
 import { AuthService } from '../services/AuthService';
-import { Observable } from 'rxjs';
+import {SessionStorageService} from '../services/SessionStorageService';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(public auth: AuthService) {}
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  constructor(private sessionStorageService: SessionStorageService) { }
 
-    if (this.auth.tokenIsPresent()) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${this.auth.getToken()}`
-        }
-      });
+  intercept(request: HttpRequest<any>, next: HttpHandler) {
+
+    let authReq = request;
+    const token = this.sessionStorageService.getToken();
+    let myHeaders = new HttpHeaders();
+
+    const parametar = 'Bearer ' + token;
+    console.log('interceptr ' + parametar);
+
+    if (token != null) {
+      myHeaders = myHeaders.set('TokenAuthBic', `Bearer ${token}`);
     }
-    return next.handle(request);
+
+    authReq = request.clone({headers: myHeaders});
+
+    return next.handle(authReq);
   }
 }
+
+export const httpInterceptorProviders = [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }
+];

@@ -20,6 +20,7 @@ import {ConfigService} from './services/ConfigService';
 import {ApiService} from './services/ApiService';
 import {UserService} from './services/UserService';
 import {TokenInterceptor} from './interceptor/TokenInterceptor';
+import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 
 
 
@@ -34,7 +35,8 @@ import {TokenInterceptor} from './interceptor/TokenInterceptor';
     SearchComponent,
     ListOfMedicinesComponent,
     ListOfPharmaciesComponent,
-    PatientPageComponent
+    PatientPageComponent,
+    PatientProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -49,11 +51,6 @@ import {TokenInterceptor} from './interceptor/TokenInterceptor';
     useClass: TokenInterceptor,
     multi: true
   },
-    FooService,
-    AuthService,
-    ApiService,
-    UserService,
-    ConfigService,
   ],
   bootstrap: [AppComponent]
 })

@@ -73,7 +73,8 @@ export class AuthService {
     return this.http.post<any>(this.registerPatientUrl, registrationParams, httpOptions);
 
   }
-  getLogged(): Observable < UserDTO > {
+  getLogged(): Observable <UserDTO> {
+    console.log('usao u get logged u auth service');
     return this.http.get<UserDTO>(this.getLoggedUrl, httpOptions);
   }
 

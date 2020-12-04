@@ -1,6 +1,6 @@
 
 
-INSERT INTO USER (user_type, id, address, approved, email, first_name, last_name, password, phone_number, username) values ('USER_PATIENT',1,'Bulevar Kralja Petra I',true,'ivana@gmail.com','Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','ivana');
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username) values ('USER_PATIENT',1,'Bulevar Kralja Petra I',true,'ivana@gmail.com',false,'Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','ivana');
 
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (1,'Humani lekovi','111','NO_RECIPE','Strepsils','Pogodno za decu','RECKITT BENCKISER HEALTHCARE','Lozenga', '	2,4-dihlorbenzilalkohol, amilmetakrezol');
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (2,'Humani lekovi','112','NO_RECIPE','Andol','Za sve vrste bolova u telu','Pliva Hrvatska','Tableta', 'acetilsalicilna kiselina');
