@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {PharmacyService} from '../../services/PharmacyService';
+import {PharmacyDTO} from '../../model/PharmacyDTO';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-list-of-pharmacies',
@@ -6,10 +9,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-of-pharmacies.component.css']
 })
 export class ListOfPharmaciesComponent implements OnInit {
+  loaded = false;
+  fetchedPharmacies: PharmacyDTO[] = [];
+  constructor(
+    private pharmacyService: PharmacyService,
+    private router: Router
+  ) { }
 
-  constructor() { }
+  ngOnInit(){
+    this.pharmacyService.allMedicines().subscribe(
+      resp => {
+        this.fetchedPharmacies = resp;
+        console.log(this.fetchedPharmacies);
+        this.loaded = true;
 
-  ngOnInit() {
+      },
+      err => {
+
+      }
+    );
+
+    this.pharmacyService.refreshPharmacies.subscribe(refreshPharmacies => {
+      this.fetchedPharmacies = refreshPharmacies;
+    });
+
+
   }
 
 }

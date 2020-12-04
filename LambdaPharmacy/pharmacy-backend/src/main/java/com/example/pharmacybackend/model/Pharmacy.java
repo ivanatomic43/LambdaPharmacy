@@ -1,5 +1,6 @@
 package com.example.pharmacybackend.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="PHARMACY")
-public class Pharmacy {
+public class Pharmacy implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -53,6 +54,49 @@ public class Pharmacy {
 	    @ManyToOne
 	    private Pricelist pricelist;
 
+	   
+	    public List<Dermatologist> getDermatologists() {
+			return dermatologists;
+		}
+
+
+		public void setDermatologists(List<Dermatologist> dermatologists) {
+			this.dermatologists = dermatologists;
+		}
+
+
+		public List<PharmacyAdministrator> getPharmacyAdministrators() {
+			return pharmacyAdministrators;
+		}
+
+
+		public void setPharmacyAdministrators(List<PharmacyAdministrator> pharmacyAdministrators) {
+			this.pharmacyAdministrators = pharmacyAdministrators;
+		}
+
+
+		public List<Medicine> getListOfMedicines() {
+			return listOfMedicines;
+		}
+
+
+		public void setListOfMedicines(List<Medicine> listOfMedicines) {
+			this.listOfMedicines = listOfMedicines;
+		}
+
+
+		public List<Image> getImages() {
+			return images;
+		}
+
+
+		public void setImages(List<Image> images) {
+			this.images = images;
+		}
+
+
+		@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY)
+	    private List<Image> images;
 
 		public Long getId() {
 			return id;

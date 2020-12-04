@@ -2,6 +2,11 @@
 
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username) values ('USER_PATIENT',1,'Bulevar Kralja Petra I',true,'ivana@gmail.com',false,'Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','ivana');
 
+INSERT INTO PHARMACY (id, address, description, name) VALUES (1, 'Bulevar Oslobodjenja 56, Novi Sad', 'Otvorena 24/7', 'Jankovic DOO');
+INSERT INTO PHARMACY (id, address, description, name) VALUES (2, 'Lasla Gala 12, Novi Sad', 'Sirok asortiman proizvoda', 'BENU apoteka');
+
+
+
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (1,'Humani lekovi','111','NO_RECIPE','Strepsils','Pogodno za decu','RECKITT BENCKISER HEALTHCARE','Lozenga', '	2,4-dihlorbenzilalkohol, amilmetakrezol');
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (2,'Humani lekovi','112','NO_RECIPE','Andol','Za sve vrste bolova u telu','Pliva Hrvatska','Tableta', 'acetilsalicilna kiselina');
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (3,'Humani lekovi','113','NO_RECIPE','Aspirin 500mg','Za jaku glavobolju','	BAYER BITTERFELD GMBH','Tableta', 'acetilsalicilna kiselina');
