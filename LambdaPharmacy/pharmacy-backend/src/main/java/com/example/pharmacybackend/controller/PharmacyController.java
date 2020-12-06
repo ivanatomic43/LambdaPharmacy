@@ -27,7 +27,7 @@ public class PharmacyController {
 		 		List<PharmacyDTO> retPha = new ArrayList<>();
 		 		
 		 		for(Pharmacy p : pharmacies) {
-		 			PharmacyDTO newPha = new PharmacyDTO(p.getId(), p.getAddress(), p.getDescription(), p.getName());
+		 			PharmacyDTO newPha = new PharmacyDTO(p.getId(), p.getAddress(), p.getDescription(), p.getName(), p.getRating());
 		 			retPha.add(newPha);
 		 			
 		 		}

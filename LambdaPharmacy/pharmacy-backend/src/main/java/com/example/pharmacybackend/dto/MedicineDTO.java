@@ -16,6 +16,7 @@ public class MedicineDTO {
 	private MedicineMode mode;
 	private String note;
 	
+	public MedicineDTO() {}
 	
 	public MedicineDTO(Medicine m) {
 		this(m.getId(), m.getMedicine_code(), m.getMed_type(), m.getName(), m.getShape(), m.getProducer(), m.getStructure(), m.getMode(), m.getNote());

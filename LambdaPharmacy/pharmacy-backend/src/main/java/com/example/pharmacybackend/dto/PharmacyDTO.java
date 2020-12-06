@@ -9,16 +9,26 @@ public class PharmacyDTO {
 	private String address;
 	private String description;
 	private String name;
+	private double rating;
 	
 	public PharmacyDTO(Pharmacy p) {
-		this(p.getId(), p.getAddress(), p.getDescription(), p.getName());
+		this(p.getId(), p.getAddress(), p.getDescription(), p.getName(), p.getRating());
 	}
 	
-	public PharmacyDTO(Long id, String address, String description, String name) {
+	public PharmacyDTO(Long id, String address, String description, String name, double rating) {
 		this.id = id;
 		this.address= address;
 		this.description= description;
 		this.name = name;
+		this.rating = rating;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 	public Long getId() {

@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/AlertService';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../services/AuthService';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -46,7 +47,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private sessionStorageService: SessionStorageService,
-    private shareService: ShareService
+    private shareService: ShareService,
+    private alertService : AlertService
 
 
   ) { }
@@ -80,6 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   login() {
     this.notification = undefined;
     this.submitted = true;
+    this.alertService.clear();
 
     this.loginParams = new LoginParams(
       this.loginForm.get('username').value,
@@ -103,7 +106,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
       error => {
         this.submitted = false;
-        this.notification = {msgType: 'error', msgBody: 'Incorrect username or password.'};
+        //this.notification = {msgType: 'error', msgBody: 'Incorrect username or password.'};
+        this.alertService.error("Incorrect username/password!");
       }
 
     );

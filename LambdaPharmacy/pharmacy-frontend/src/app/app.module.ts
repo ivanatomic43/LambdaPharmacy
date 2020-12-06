@@ -21,6 +21,7 @@ import {ApiService} from './services/ApiService';
 import {UserService} from './services/UserService';
 import {TokenInterceptor} from './interceptor/TokenInterceptor';
 import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
+import { AlertComponent } from './alert/alert.component';
 
 
 
@@ -36,7 +37,8 @@ import { PatientProfileComponent } from './components/patient-profile/patient-pr
     ListOfMedicinesComponent,
     ListOfPharmaciesComponent,
     PatientPageComponent,
-    PatientProfileComponent
+    PatientProfileComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

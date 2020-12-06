@@ -1,5 +1,7 @@
+
+
 <div class="s012" ng *ngIf="pharmacyShow">
-  <form>
+  <form (ngSubmit) = searchPharmacy() [formGroup]="searchPharmacyForm">
     <fieldset >
       <legend>Looking for a PHARMACY?</legend>
     </fieldset>
@@ -10,7 +12,7 @@
             <div class="group-icon">
               <img src="assets/pharmacy.png">
             </div>
-            <span>PHARMACY ONLY</span>
+            <span>PHARMACY</span>
           </div>
           <div class="item"  (click)="showMedicineSearch()">
             <div class="group-icon">
@@ -26,18 +28,35 @@
 
             <div class="input-field">
 
-              <input  type="text" placeholder="Name" />
+              <input formControlName="pharmacyName" type="text" placeholder="Name" />
             </div>
           </div>
           <div class="input-wrap">
 
             <div class="input-field">
 
-              <input  type="text" placeholder="Location" />
+              <input formControlName="pharmacyLocation"  type="text" placeholder="Location" />
             </div>
           </div>
 
-          <button class="btn-search" type="button">Search</button>
+
+            <label>Min rating:</label>
+            <div class="input-field">
+              <select data-trigger="" name="pharmacyRating">
+                <option value="0" aria-placeholder="">All</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+
+
+
+
+
+          <button class="btn-search" type="submit">Search</button>
 
 
         </div>
@@ -52,7 +71,7 @@
 
 
 <div class="s012" *ngIf="medicineShow">
-  <form>
+  <form (ngSubmit)= "searchMedicine()" [formGroup]="searchMedicineForm">
     <fieldset >
       <legend>Looking for a MEDICINE?</legend>
     </fieldset>
@@ -63,7 +82,7 @@
             <div class="group-icon">
               <img src="assets/pharmacy.png">
             </div>
-            <span>PHARMACY ONLY</span>
+            <span>PHARMACY</span>
           </div>
           <div class="item active">
             <div class="group-icon">
@@ -77,11 +96,11 @@
         <div class="row second">
           <div class="input-wrap">
             <div class="input-field">
-              <input  type="text" placeholder="Name" />
+              <input formControlName="medicineName"  type="text" placeholder="Name" />
             </div>
           </div>
           <div class="input-field">
-            <button class="btn-search" type="button">Search</button>
+            <button class="btn-search" type="submit">Search</button>
           </div>
 
         </div>

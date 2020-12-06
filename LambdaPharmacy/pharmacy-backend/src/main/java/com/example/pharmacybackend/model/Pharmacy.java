@@ -27,11 +27,24 @@ public class Pharmacy implements Serializable {
 	   
 	    @Column(nullable = false)
 	    private String description;
+	    
+	    @Column(nullable = false)
+	    private double rating = 0;
 	
 	   // @Column(nullable = false)
 	   // private List<Date> freeDates;
 	    
-	    @ManyToMany(fetch = FetchType.LAZY)
+	    public double getRating() {
+			return rating;
+		}
+
+
+		public void setRating(double rating) {
+			this.rating = rating;
+		}
+
+
+		@ManyToMany(fetch = FetchType.LAZY)
 	    @JoinTable(name = "pharmacy_dermatologist",
 	            joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"),
 	            inverseJoinColumns = @JoinColumn(name = "dermatologist_id", referencedColumnName = "id"))
