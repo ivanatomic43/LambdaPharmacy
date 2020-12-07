@@ -1,3 +1,4 @@
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'home', component: HomepageComponent},
   {path:  'patient', component: PatientPageComponent},
-  {path: 'patient-profile', component: PatientProfileComponent}
+  {path: 'patient-profile', component: PatientProfileComponent},
+  {path: 'editProfile', component: EditProfileComponent}
 
 ];
 

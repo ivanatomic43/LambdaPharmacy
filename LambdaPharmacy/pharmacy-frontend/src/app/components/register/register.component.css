@@ -1584,7 +1584,7 @@ span.flatpickr-weekday {
   width: 100%;
   max-width: 840px;
   margin: auto;
-  background: linear-gradient(rgba(79, 172, 254, 0.8) 0%, rgba(0, 242, 254, 0.8) 100%);
+  background: #0f6674;
   padding: 50px 70px 80px 70px;
   border-radius: 10px;
 }

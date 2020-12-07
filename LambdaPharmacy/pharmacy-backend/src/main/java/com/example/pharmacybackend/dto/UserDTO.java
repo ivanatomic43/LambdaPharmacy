@@ -18,8 +18,8 @@ public class UserDTO {
     }
 
     public UserDTO(User u) {
-        this(u.getId(), u.getFirstName(), u.getLastName(), u.getUsername(), u.getEmail(), u.getAddress(),
-                u.getPhoneNumber());
+        this(u.getId(), u.getFirstName(), u.getLastName(), u.getUsername(), u.getPassword(), u.getEmail(),
+                u.getAddress(), u.getPhoneNumber());
     }
 
     public String getPhoneNumber() {
@@ -30,12 +30,13 @@ public class UserDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public UserDTO(Long id, String firstName, String lastName, String username, String email, String address,
-            String phoneNumber) {
+    public UserDTO(Long id, String firstName, String lastName, String username, String password, String email,
+            String address, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;

@@ -8,6 +8,7 @@ import {catchError} from 'rxjs/operators';
 import {Observable, throwError} from "rxjs";
 
 const authUrl = 'http://localhost:8051/auth';
+const userUrl = 'http://localhost:8051/api';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +16,7 @@ export class UserService {
 
   currentUser;
   getMyUserUrl = authUrl + '/getMyUser';
+  updateProfileUrl = userUrl + '/updateProfile';
 
   constructor(
     private apiService: ApiService,
@@ -62,6 +64,26 @@ export class UserService {
         map((response: any) => {
           // tslint:disable-next-line:no-unused-expression
           const data = response
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  updateProfile(id: number, firstName: string, lastName: string, address: string,  phoneNumber: string) {
+    return this.http.post( this.updateProfileUrl, {
+      id,
+      firstName,
+      lastName,
+      address,
+      phoneNumber
+
+    })
+      .pipe(
+        map((response: any) => {
+          const data = response;
           return data;
         }),
         catchError((err: any) => {
