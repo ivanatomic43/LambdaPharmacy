@@ -14,26 +14,25 @@ public class MedicineService {
 
 	@Autowired
 	private MedicineRepository medicineRepository;
-	
-	
-	public List<Medicine> getAllMedicine(){
+
+	public List<Medicine> getAllMedicine() {
 		return medicineRepository.findAll();
 	}
-	
-	public List<MedicineDTO> searchMedicine(String med){
+
+	public List<MedicineDTO> searchMedicine(String med) {
 		System.out.println("IME" + med);
 		List<MedicineDTO> retMed = new ArrayList<>();
-		
+
 		List<Medicine> medicines = medicineRepository.findAll();
-		
-		for(Medicine m : medicines) {
-			if(med.toLowerCase().equals(m.getName().toLowerCase())) {
-				MedicineDTO newMed = new MedicineDTO(m.getId(), m.getMedicine_code(), m.getMed_type(), m.getName(), 
-						m.getShape(), m.getProducer(),m.getStructure(), m.getMode(), m.getNote());
+
+		for (Medicine m : medicines) {
+			if (med.toLowerCase().equals(m.getName().toLowerCase())) {
+				MedicineDTO newMed = new MedicineDTO(m.getId(), m.getMedicine_code(), m.getMed_type(), m.getName(),
+						m.getShape(), m.getProducer(), m.getStructure(), m.getMode(), m.getNote());
 				retMed.add(newMed);
 			}
 		}
-		
+
 		return retMed;
 	}
 }

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("USER_SUPPLIER")
-public class Supplier extends User{
+public class Supplier extends User {
+
+    private static final long serialVersionUID = 1L;
 
 }

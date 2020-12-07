@@ -18,49 +18,44 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
-	
 	@Override
 	public User findById(Long id) {
-		// TODO Auto-generated method stub
+
 		User u = userRepository.findById(id).orElseGet(null);
 		return u;
 	}
 
 	@Override
 	public User findByUsername(String username) {
-		// TODO Auto-generated method stub
+
 		return userRepository.findByUsername(username);
 	}
 
 	@Override
 	public User findOneByUsername(String username) {
-		// TODO Auto-generated method stub
-		//return userRepository.findOneByUsername(username);
-		return null;
+
+		// return userRepository.findOneByUsername(username);
+		return userRepository.findOneByUsername(username);
 	}
 
 	@Override
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
+
 		return userRepository.findAll();
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
+
 		return userRepository.findByEmail(email);
 	}
 
 	public void updateActivation(boolean active, Long id) {
-		
+
 		User user = userRepository.findById(id).get();
 		user.setApproved(active);
 		userRepository.save(user);
-		
+
 	}
-	
-	
-	
-	
+
 }

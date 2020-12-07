@@ -9,7 +9,9 @@ import javax.persistence.*;
 @DiscriminatorValue("USER_DERMATOLOGIST")
 public class Dermatologist extends User {
 
+	private static final long serialVersionUID = 1L;
+
 	@OneToMany(mappedBy = "dermatologist", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Appointment> reservedAppointments= new ArrayList<>();
-	
+	private List<Appointment> reservedAppointments = new ArrayList<>();
+
 }

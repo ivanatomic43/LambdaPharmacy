@@ -8,20 +8,20 @@ import javax.persistence.*;
 public class Image {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	protected Long id;
+
 	@Lob
 	private byte[] url;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Pharmacy pharmacy;
-	
+
 	public Image() {
 		super();
 	}
-	
-	public Image(byte[] url, Pharmacy car) {
+
+	public Image(byte[] url, Pharmacy pharmacy) {
 		super();
 		this.url = url;
 		this.pharmacy = pharmacy;
@@ -50,5 +50,5 @@ public class Image {
 	public void setPharmacy(Pharmacy pharmacy) {
 		this.pharmacy = pharmacy;
 	}
-	
+
 }

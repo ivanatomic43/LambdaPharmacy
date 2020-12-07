@@ -8,12 +8,14 @@ import org.springframework.stereotype.Repository;
 import com.example.pharmacybackend.model.*;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByEmail(String email);
+
 	User findByUsername(String username);
+
+	User findOneByUsername(String username);
+
 	List<User> findAll();
-	
-	
-	
+
 }

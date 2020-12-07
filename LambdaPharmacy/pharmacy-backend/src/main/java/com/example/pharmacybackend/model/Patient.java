@@ -9,10 +9,12 @@ import javax.persistence.*;
 @DiscriminatorValue("USER_PATIENT")
 public class Patient extends User {
 
+	private static final long serialVersionUID = 1L;
+
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Appointment> appointments  = new ArrayList<>();
-	
-	@OneToMany(mappedBy="patient", cascade= CascadeType.ALL, orphanRemoval = true)
+	private List<Appointment> appointments = new ArrayList<>();
+
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Recipe> recipies = new ArrayList<>();
-	
+
 }

@@ -5,7 +5,6 @@ import com.example.pharmacybackend.model.Medicine;
 
 public class MedicineDTO {
 
-	
 	private Long id;
 	private String medicineCode;
 	private String medType;
@@ -15,25 +14,28 @@ public class MedicineDTO {
 	private String structure;
 	private MedicineMode mode;
 	private String note;
-	
-	public MedicineDTO() {}
-	
-	public MedicineDTO(Medicine m) {
-		this(m.getId(), m.getMedicine_code(), m.getMed_type(), m.getName(), m.getShape(), m.getProducer(), m.getStructure(), m.getMode(), m.getNote());
+
+	public MedicineDTO() {
 	}
 
-	 public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer, String structure, MedicineMode mode, String note) {
-	        super();
-	        this.id = id;
-	        this.medicineCode = medicineCode;
-	        this.medType = medType;
-	        this.name = name;
-	        this.shape = shape;
-	        this.producer= producer;
-	        this.structure = structure;
-	        this.mode = mode;
-	        this.note = note;
-	    }
+	public MedicineDTO(Medicine m) {
+		this(m.getId(), m.getMedicine_code(), m.getMed_type(), m.getName(), m.getShape(), m.getProducer(),
+				m.getStructure(), m.getMode(), m.getNote());
+	}
+
+	public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer,
+			String structure, MedicineMode mode, String note) {
+		super();
+		this.id = id;
+		this.medicineCode = medicineCode;
+		this.medType = medicineType;
+		this.name = name;
+		this.shape = shape;
+		this.producer = producer;
+		this.structure = structure;
+		this.mode = mode;
+		this.note = note;
+	}
 
 	public Long getId() {
 		return id;
@@ -106,11 +108,5 @@ public class MedicineDTO {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

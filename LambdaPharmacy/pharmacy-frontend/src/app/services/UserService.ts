@@ -1,19 +1,25 @@
+import { HttpClient } from '@angular/common/http';
 
 import {Injectable} from '@angular/core';
 import {ApiService} from './ApiService';
 import {ConfigService} from './ConfigService';
 import {map} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
+import {Observable, throwError} from "rxjs";
 
+const authUrl = 'http://localhost:8051/auth';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
   currentUser;
+  getMyUserUrl = authUrl + '/getMyUser';
 
   constructor(
     private apiService: ApiService,
-    private config: ConfigService
+    private config: ConfigService,
+    private http: HttpClient
   ) {
   }
 
@@ -48,4 +54,19 @@ export class UserService {
     return this.apiService.get(this.config.users_url);
   }
 
+  getMyUser(email: string) {
+    return this.http.post(this.getMyUserUrl, {
+      username: email
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
 }
