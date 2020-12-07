@@ -5,6 +5,8 @@ import { SimpleSearch } from 'src/app/model/SimpleSearch';
 import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MedicineService } from './medicineService';
+import { stringify } from 'querystring';
+import { NumberValueAccessor } from '@angular/forms/src/directives';
 
 
 const searchUrl = 'http://localhost:8051/search';
@@ -15,6 +17,10 @@ export class SearchService {
   private searchPharmacyUrl = searchUrl + '/searchPharmacy';
   private searchMedicineUrl = searchUrl + '/searchMedicine/';
 
+  name: string;
+  location: string;
+  rating: number;
+
   constructor(
 
     private http: HttpClient,
@@ -23,7 +29,8 @@ export class SearchService {
   ){}
 
     searchPharmacy(data: SimpleSearch){
-        return this.http.get<any>(this.searchPharmacyUrl);
+
+        return this.http.post<any>(this.searchPharmacyUrl, data);
     }
 
     searchMedicine(name :string){

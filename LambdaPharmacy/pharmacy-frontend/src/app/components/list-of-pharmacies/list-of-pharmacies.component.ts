@@ -17,7 +17,7 @@ export class ListOfPharmaciesComponent implements OnInit {
   ) { }
 
   ngOnInit(){
-    this.pharmacyService.allMedicines().subscribe(
+    this.pharmacyService.allPharmacies().subscribe(
       resp => {
         this.fetchedPharmacies = resp;
         console.log(this.fetchedPharmacies);

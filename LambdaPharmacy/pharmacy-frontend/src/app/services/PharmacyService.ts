@@ -18,7 +18,7 @@ export class PharmacyService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  allMedicines() {
+  allPharmacies() {
     return this.http.get<any>(this.allPharmaciesUrl);
   }
 

@@ -26,6 +26,10 @@ export class SearchComponent implements OnInit {
   searchPharmacyForm : FormGroup;
   searchMedicineForm : FormGroup;
 
+  pharmacyName: string;
+  pharmacyLocation : string;
+  pharmacyRating: number;
+
   constructor(
     private searchService : SearchService,
     private formBuilder: FormBuilder,
@@ -78,7 +82,13 @@ export class SearchComponent implements OnInit {
     this.searchPharmacyParams = new SimpleSearch(this.searchPharmacyForm.get('pharmacyName').value, this.searchPharmacyForm.get('pharmacyLocation').value,
     this.searchPharmacyForm.get('pharmacyRating').value);
 
+      const searchParams = new SimpleSearch(
+        this.pharmacyName,
+        this.pharmacyLocation,
+        this.pharmacyRating
+      );
 
+      console.log(this.searchPharmacyParams);
 
     this.searchService.searchPharmacy(this.searchPharmacyParams).subscribe(
         response => {

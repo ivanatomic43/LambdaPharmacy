@@ -2,8 +2,8 @@
 export class SimpleSearch{
 
   constructor(
-    public name : string,
-    public location : string,
-    public rating : number
+    public pharmacyName : string,
+    public pharmacyLocation : string,
+    public pharmacyRating : number
   ){}
 }

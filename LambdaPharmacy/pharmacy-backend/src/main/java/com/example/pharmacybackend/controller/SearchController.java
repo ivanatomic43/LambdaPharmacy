@@ -1,7 +1,6 @@
 package com.example.pharmacybackend.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.PathParam;
+
 
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
@@ -11,14 +10,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
+
 
 import com.example.pharmacybackend.dto.MedicineDTO;
+import com.example.pharmacybackend.dto.PharmacyDTO;
+import com.example.pharmacybackend.dto.SimpleSearchDTO;
 import com.example.pharmacybackend.services.MedicineService;
 import com.example.pharmacybackend.services.PharmacyService;
 
 import java.util.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/search")
@@ -46,6 +50,35 @@ public class SearchController {
 		
 		
 		return new ResponseEntity<>(medicines, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/searchPharmacy",
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> searchPharmacy(@RequestBody SimpleSearchDTO p){
+		
+		System.out.println("SIMPLE SEARCHDTO" + p.toString());
+		
+		String name = "";
+		String location= "";
+		double rating = 0;
+		
+		if(p.getPharmacyName() != null) {
+			name = p.getPharmacyName();
+		}
+		if(p.getPharmacyLocation() != null) {
+			location = p.getPharmacyLocation();
+		}
+		if(p.getPharmacyRating() != 0) {
+			rating = p.getPharmacyRating();
+		}
+		
+		List<PharmacyDTO> pharmacies = pharmacyService.searchPharmacy(name, location, rating);
+		
+		if(pharmacies.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		return new ResponseEntity<>(pharmacies, HttpStatus.OK);
 	}
 	
 	

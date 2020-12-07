@@ -28,21 +28,21 @@
 
             <div class="input-field">
 
-              <input formControlName="pharmacyName" type="text" placeholder="Name" />
+              <input formControlName="pharmacyName" name="pharmacyName" type="text" placeholder="Name" />
             </div>
           </div>
           <div class="input-wrap">
 
             <div class="input-field">
 
-              <input formControlName="pharmacyLocation"  type="text" placeholder="Location" />
+              <input formControlName="pharmacyLocation" name="pharmacyLocation" type="text" placeholder="Location" />
             </div>
           </div>
 
 
             <label>Min rating:</label>
             <div class="input-field">
-              <select data-trigger="" name="pharmacyRating">
+              <select data-trigger="" name="pharmacyRating" formControlName="pharmacyRating">
                 <option value="0" aria-placeholder="">All</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
