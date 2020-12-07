@@ -61,7 +61,7 @@ public class SearchController {
 		
 		String name = "";
 		String location= "";
-		double rating = 0;
+		//double rating = 0;
 		
 		if(p.getPharmacyName() != null) {
 			name = p.getPharmacyName();
@@ -69,11 +69,11 @@ public class SearchController {
 		if(p.getPharmacyLocation() != null) {
 			location = p.getPharmacyLocation();
 		}
-		if(p.getPharmacyRating() != 0) {
+		/*if(p.getPharmacyRating() != 0) {
 			rating = p.getPharmacyRating();
 		}
-		
-		List<PharmacyDTO> pharmacies = pharmacyService.searchPharmacy(name, location, rating);
+		*/
+		List<PharmacyDTO> pharmacies = pharmacyService.searchPharmacy(name, location);
 		
 		if(pharmacies.isEmpty())
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -80,12 +80,12 @@ export class SearchComponent implements OnInit {
     this.alertService.clear();
 
     this.searchPharmacyParams = new SimpleSearch(this.searchPharmacyForm.get('pharmacyName').value, this.searchPharmacyForm.get('pharmacyLocation').value,
-    this.searchPharmacyForm.get('pharmacyRating').value);
+    );
 
       const searchParams = new SimpleSearch(
         this.pharmacyName,
-        this.pharmacyLocation,
-        this.pharmacyRating
+        this.pharmacyLocation
+
       );
 
       console.log(this.searchPharmacyParams);

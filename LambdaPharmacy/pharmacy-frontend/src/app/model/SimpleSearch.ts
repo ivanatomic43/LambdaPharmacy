@@ -4,6 +4,6 @@ export class SimpleSearch{
   constructor(
     public pharmacyName : string,
     public pharmacyLocation : string,
-    public pharmacyRating : number
+
   ){}
 }
