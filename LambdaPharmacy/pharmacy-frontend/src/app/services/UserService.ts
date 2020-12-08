@@ -72,11 +72,14 @@ export class UserService {
       );
   }
 
-  updateProfile(id: number, firstName: string, lastName: string, address: string,  phoneNumber: string) {
+  updateProfile(id: number, firstName: string, lastName: string, username: string, password: string, email:string, address: string,  phoneNumber: string) {
     return this.http.post( this.updateProfileUrl, {
       id,
       firstName,
       lastName,
+      username,
+      password,
+      email,
       address,
       phoneNumber
 

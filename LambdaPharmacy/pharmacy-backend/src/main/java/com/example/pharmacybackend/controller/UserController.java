@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ import com.example.pharmacybackend.services.*;
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 
 	// Za pristup ovoj metodi neophodno je da ulogovani korisnik ima ADMIN ulogu
 	// Ukoliko nema, server ce vratiti gresku 403 Forbidden
@@ -56,23 +57,17 @@ public class UserController {
 		fooObj.put("foo", "bar");
 		return fooObj;
 	}
-	/*
-	 * @RequestMapping(value = "/updateProfile", method = RequestMethod.POST) public
-	 * ResponseEntity<?> updateProfile(@RequestBody UserDTO user) {
-	 * System.out.println("usao u UpdateProfile" + user.getUsername() + " " +
-	 * user.getId());
-	 * 
-	 * User updateUser = userService.findById(user.getId()); if (updateUser != null)
-	 * {
-	 * 
-	 * userService.updateUser(user.getFirstName(), user.getLastName(),
-	 * user.getAddress(), user.getPhoneNumber(), user.getId()); updateUser =
-	 * userService.findById(user.getId());
-	 * 
-	 * return new ResponseEntity<>(new UserDTO(updateUser), HttpStatus.ACCEPTED);
-	 * 
-	 * }
-	 * 
-	 * return new ResponseEntity<>(new UserDTO(), HttpStatus.BAD_REQUEST); }
-	 */
+
+	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
+	public ResponseEntity<?> updateProfile(@RequestBody UserDTO user) {
+		System.out.println("usao u UpdateProfile" + user.getUsername() + " " + user.getId());
+
+		UserDTO retUser = userService.updateUser(user);
+
+		if (retUser == null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(retUser, HttpStatus.OK);
+	}
+
 }

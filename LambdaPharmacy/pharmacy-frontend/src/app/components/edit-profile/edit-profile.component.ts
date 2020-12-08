@@ -20,6 +20,7 @@ export class EditProfileComponent implements OnInit {
   username: string;
   password: string;
   address:string;
+  email: string;
   phoneNumber:string;
 
 
@@ -37,10 +38,11 @@ export class EditProfileComponent implements OnInit {
   }
 
   editProfile() {
-  this.userService.updateProfile(this.id, this.firstName, this.lastName, this.address, this.phoneNumber)
+  this.userService.updateProfile(this.id, this.firstName, this.lastName, this.usernameForBack, this.password,
+     this.email, this.address, this.phoneNumber)
     .subscribe((user:any)=>
       {
-          this.router.navigate(['/pacient-profile']);
+          this.router.navigate(['/patient-profile']);
       });
   }
 
@@ -49,9 +51,11 @@ export class EditProfileComponent implements OnInit {
       console.log(response);
       this.userData = Object.assign([], response);
       this.firstName = this.userData.firstName;
+      this.username= this.userData.username;
       this.lastName = this.userData.lastName;
       this.password= this.userData.password;
       this.address = this.userData.address;
+      this.email = this.userData.email;
       this.phoneNumber = this.userData.phoneNumber;
       this.id = this.userData.id;
 
