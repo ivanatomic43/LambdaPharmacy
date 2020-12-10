@@ -13,4 +13,9 @@ public class TimeProvider implements Serializable {
     public Date now() {
         return new Date();
     }
+
+    public Date expiresDate(int ms) {
+
+        return new Date(this.now().getTime() + ms);
+    }
 }

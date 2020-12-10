@@ -40,4 +40,8 @@ export class PatientProfileComponent implements OnInit {
   editProfile() {
     this.router.navigate(['/editProfile']);
   }
+
+  changePassword(){
+    this.router.navigate(['/changePassword']);
+  }
 }

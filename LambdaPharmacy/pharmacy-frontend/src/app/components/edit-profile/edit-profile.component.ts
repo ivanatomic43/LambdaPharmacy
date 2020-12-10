@@ -38,6 +38,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   editProfile() {
+
+
   this.userService.updateProfile(this.id, this.firstName, this.lastName, this.usernameForBack, this.password,
      this.email, this.address, this.phoneNumber)
     .subscribe((user:any)=>

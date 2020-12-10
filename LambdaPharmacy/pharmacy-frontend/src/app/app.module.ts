@@ -23,6 +23,7 @@ import {TokenInterceptor} from './interceptor/TokenInterceptor';
 import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 import { AlertComponent } from './alert/alert.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
 
 
 
@@ -42,6 +43,7 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
     PatientProfileComponent,
     AlertComponent,
     EditProfileComponent,
+    PasswordChangeComponent,
 
   ],
   imports: [

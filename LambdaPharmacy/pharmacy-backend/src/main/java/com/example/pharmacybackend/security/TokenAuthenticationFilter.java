@@ -38,13 +38,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 if (tokenUtils.validateToken(authToken, userDetails)) {
                     TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
                     authentication.setToken(authToken);
-                    //podaci bivaju dostupni ostalim filterima i korisnickom kodu
+                    // podaci bivaju dostupni ostalim filterima i korisnickom kodu
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
         }
-        
-        //prosledjivanje http zahteva sledecem filteru u lancu 
+
+        // prosledjivanje http zahteva sledecem filteru u lancu
         chain.doFilter(request, response);
     }
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
 import org.owasp.encoder.Encode;
 
 import com.example.pharmacybackend.dto.*;
@@ -24,9 +26,13 @@ import com.example.pharmacybackend.model.*;
 import com.example.pharmacybackend.security.*;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.AuthorityService;
+import com.example.pharmacybackend.services.CustomUserDetailsService;
 import com.example.pharmacybackend.services.EmailService;
 import com.example.pharmacybackend.services.PatientService;
 import com.example.pharmacybackend.services.UserServiceImpl;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -50,13 +56,16 @@ public class AuthController {
 	@Autowired
 	private AuthorityService authorityService;
 
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+
 	@PostMapping("/login")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
 			HttpServletResponse response) {
 
 		// System.out.println( "REQUEST: " + hr.getHeader("TokenAuthBic"));
 		//
-
+		System.out.println("Usao u login");
 		User found = userService.findByUsername(Encode.forHtml(authenticationRequest.getUsername()));
 
 		if (found == null) {
@@ -72,7 +81,7 @@ public class AuthController {
 
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-		System.out.println(authenticationRequest.getPassword());
+
 		// Ubaci korisnika u trenutni security kontekst
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -80,7 +89,8 @@ public class AuthController {
 		User user = (User) authentication.getPrincipal();
 		String token = tokenUtils.generateToken(user.getUsername());
 
-		int expiresIn = tokenUtils.getExpiredIn() * 1000000000;
+		int expiresIn = tokenUtils.getExpiredIn();
+
 		List<String> authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
 
@@ -90,8 +100,6 @@ public class AuthController {
 
 	@PostMapping("/registerPatient")
 	public ResponseEntity<?> registerPatient(@RequestBody UserRequestDTO userRequest) {
-
-		System.out.println("Usao u registraciju pacijenta");
 
 		User existUser = this.userService.findByUsername(userRequest.getUsername());
 		System.out.println("Registruje se pacijent: " + userRequest.getUsername());
@@ -119,7 +127,6 @@ public class AuthController {
 	@RequestMapping("/registrationConfirm/{email}")
 	public void confirmation(@PathVariable("email") String email, HttpServletResponse response) throws IOException {
 
-		System.out.println("EMAIL " + email);
 		User confirm = userService.findByEmail(email);
 		if (confirm == null || confirm.isApproved() == true) {
 
@@ -139,7 +146,7 @@ public class AuthController {
 			}
 
 			confirm.setAuthority(role);
-			// authorityService.updateUserAuthority(potvrda.getId(), uloga.getId());
+
 			userService.updateActivation(true, confirm.getId());
 			response.sendRedirect("http://localhost:4200/login");
 			System.out.println("USPESNO AKTIVIRAN");
@@ -155,11 +162,16 @@ public class AuthController {
 	}
 
 	@GetMapping("/getLoggedUser")
-	public ResponseEntity<?> getLoggedUser(HttpServletRequest request) {
+	public ResponseEntity<?> getLoggedUser(HttpServletRequest request, @RequestHeader("TokenAuthBic") String token) {
 
 		System.out.println("Usao u getLoggedUser ovaj username: "
 				+ SecurityContextHolder.getContext().getAuthentication().getName());
 
+		String myToken = tokenUtils.getToken(request);
+		System.out.println("Token: " + myToken);
+
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		System.out.println("Username iz tokena:" + username);
 		User user = this.userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		if (user != null) {
@@ -182,13 +194,34 @@ public class AuthController {
 	}
 
 	@RequestMapping(value = "/getMyUser", method = RequestMethod.POST)
-	public ResponseEntity<?> getMyUser(@RequestBody UserDTO person) {
+	public ResponseEntity<?> getMyUser(@RequestBody UserDTO person, HttpServletRequest request) {
 		System.out.println("usao u getmyuser" + person.getUsername());
 
-		User personRet = userService.findOneByUsername(person.getUsername());
+		String token = tokenUtils.getToken(request);
+		System.out.println("Token: " + token);
+
+		String username = tokenUtils.getUsernameFromToken(token);
+		System.out.println("Username u getMYUser: " + username);
+		User personRet = userService.findOneByUsername(username);
 
 		return new ResponseEntity<>(new UserDTO(personRet), HttpStatus.OK);
 
+	}
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody PasswordDTO passDTO) {
+		System.out.println("PRONASAO BEK CHANGE");
+		String token = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(token);
+		System.out.println("Username koji menja sifru: " + username);
+
+		User user = customUserDetailsService.changePassword(passDTO.getOldPassword(), passDTO.getNewPassword());
+
+		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+		}
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 }

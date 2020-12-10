@@ -1,3 +1,4 @@
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'home', component: HomepageComponent},
   {path:  'patient', component: PatientPageComponent},
   {path: 'patient-profile', component: PatientProfileComponent},
-  {path: 'editProfile', component: EditProfileComponent}
+  {path: 'editProfile', component: EditProfileComponent},
+  {path: 'changePassword', component: PasswordChangeComponent}
 
 ];
 

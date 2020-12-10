@@ -1,3 +1,5 @@
+import { SessionStorageService } from 'src/app/services/SessionStorageService';
+import { PasswordDTO } from './../model/PasswordDTO';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {LoginParams} from '../model/loginParams';
@@ -33,17 +35,20 @@ export class AuthService {
   private getLoggedUrl = authUrl + '/getLoggedUser';
   private logoutUrl = authUrl + '/logout';
   private registerPatientUrl = authUrl + '/registerPatient';
+  private changePasswordUrl = authUrl + '/changePassword';
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private apiService: ApiService,
     private config: ConfigService,
-    private userService: UserService
+    private userService: UserService,
+    private sessionStorageService: SessionStorageService
 
   ) {}
 
   private access_token = null;
+  myToken : string;
 
   handleAuth = new BehaviorSubject<string>(null);
   handleRole = new BehaviorSubject<string>(null);
@@ -74,35 +79,12 @@ export class AuthService {
 
   }
   getLogged(): Observable <UserDTO> {
+    this.myToken = this.sessionStorageService.getToken();
+    //const headers = new HttpHeaders({"TokenAuthBic": this.myToken})
     console.log('usao u get logged u auth service');
-    return this.http.get<UserDTO>(this.getLoggedUrl, httpOptions);
+    return this.http.get<UserDTO>(this.getLoggedUrl, { headers: new HttpHeaders({'TokenAuthBic': this.myToken})});
   }
 
-
-
-  /*
-    login(user) {
-      const loginHeaders = new HttpHeaders({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${this.getToken()}'
-      });
-      // const body = `username=${user.username}&password=${user.password}`;
-      const body = {
-        'username' : user.username,
-        'password' : user.password
-      };
-      console.log(body.username);
-     return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
-        .pipe(map((res) => {
-          console.log('Login success');
-          this.access_token = res.accessToken;
-          // localStorage.setItem(this.access_token, JSON.stringify(body));
-          //this.handleAuth.next(res.accessToken);
-          // this.handleRole.next(res.)
-        }));
-    }
-  */
   autoLogin() {
     const token = JSON.parse(localStorage.getItem(this.access_token));
     if (!token) {
@@ -139,5 +121,14 @@ export class AuthService {
 
   getToken() {
     return this.access_token;
+  }
+
+  changePassword(data: PasswordDTO){
+
+      alert("USAO OVDE");
+    return this.http.put<any>(this.changePasswordUrl, data);
+
+
+
   }
 }

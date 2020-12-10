@@ -22,10 +22,9 @@ import com.example.pharmacybackend.services.CustomUserDetailsService;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-	//algoritam za hesiranje passworda 
+    // algoritam za hesiranje passworda
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -60,15 +59,11 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 // za neautorizovane zahteve posalji 401 gresku
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
-                // svim korisnicima dopusti da pristupe putanjama /auth/**, /h2-console/** i /api/foo
-                .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/api").permitAll()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/api/foo").permitAll()
+                // svim korisnicima dopusti da pristupe putanjama /auth/**, /h2-console/** i
+                // /api/foo
+                .authorizeRequests().antMatchers("/auth/**").permitAll().antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/api").permitAll().antMatchers("/api/**").permitAll().antMatchers("/api/foo").permitAll()
                 .antMatchers("/**").permitAll()
-                
 
                 // svaki zahtev mora biti autorizovan
                 .anyRequest().authenticated().and()
@@ -82,11 +77,12 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 
-    //exception!!!
+    // exception!!!
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
-        //web.ignoring().antMatchers(HttpMethod.PUT, "/api/cc-admin/approve-registration-request/**");
+        // web.ignoring().antMatchers(HttpMethod.PUT,
+        // "/api/cc-admin/approve-registration-request/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
                 "/**/*.css", "/**/*.js");
     }

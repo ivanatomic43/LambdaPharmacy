@@ -23,7 +23,7 @@ public class TokenUtils {
     @Value("somesecret")
     public String SECRET;
 
-    @Value("300000000")
+    @Value("300000")
     private int EXPIRES_IN;
 
     @Value("TokenAuthBic")
@@ -36,22 +36,23 @@ public class TokenUtils {
 
     @Autowired
     TimeProvider timeProvider;
-    
 
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
     public String generateToken(String username) {
-        return Jwts.builder()
-                .setIssuer(APP_NAME)
-                .setSubject(username)
-                .setIssuedAt(timeProvider.now())
-                .setExpiration(generateExpirationDate())
+        return Jwts.builder().setIssuer(APP_NAME).setSubject(username).setAudience(generateAudience())
+                .setIssuedAt(timeProvider.now()).setExpiration(timeProvider.expiresDate(EXPIRES_IN))
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
 
+    private String generateAudience() {
+
+        return AUDIENCE_WEB;
+    }
 
     private Date generateExpirationDate() {
-        return new Date(timeProvider.now().getTime() + EXPIRES_IN * 1000);
+        long expiresIn = EXPIRES_IN;
+        return new Date(new Date().getTime() + expiresIn);
     }
 
     public String refreshToken(String token) {
@@ -59,9 +60,7 @@ public class TokenUtils {
         try {
             final Claims claims = this.getAllClaimsFromToken(token);
             claims.setIssuedAt(timeProvider.now());
-            refreshedToken = Jwts.builder()
-                    .setClaims(claims)
-                    .setExpiration(generateExpirationDate())
+            refreshedToken = Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate())
                     .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
         } catch (Exception e) {
             refreshedToken = null;
@@ -76,13 +75,25 @@ public class TokenUtils {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        User account = (User) userDetails;
+        User user = (User) userDetails;
         final String username = getUsernameFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
 
         return (username != null && username.equals(userDetails.getUsername()));
     }
 
+    public String getUsernameFromToken(String token) {
+        String username;
+        try {
+            final Claims claims = this.getAllClaimsFromToken(token);
+            username = claims.getSubject();
+            System.out.println(username);
+        } catch (Exception e) {
+            System.out.println("EXCEPTION" + e);
+            username = null;
+        }
+        return username;
+    }
 
     public Date getIssuedAtDateFromToken(String token) {
         Date issueAt;
@@ -95,7 +106,16 @@ public class TokenUtils {
         return issueAt;
     }
 
-   
+    public String getAudienceFromToken(String token) {
+        String audience;
+        try {
+            final Claims claims = this.getAllClaimsFromToken(token);
+            audience = claims.getAudience();
+        } catch (Exception e) {
+            audience = null;
+        }
+        return audience;
+    }
 
     public Date getExpirationDateFromToken(String token) {
         Date expiration;
@@ -123,9 +143,8 @@ public class TokenUtils {
     }
 
     public String getAuthHeaderFromHeader(HttpServletRequest request) {
-    	// System.out.println("Headers: " +  request.getHeader("Content-Type") + " " + request.getHeader("TokenAuthBic"));
-    	
-        return request.getHeader("AUTH_HEADER");
+
+        return request.getHeader(AUTH_HEADER);
     }
 
     private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
@@ -137,44 +156,23 @@ public class TokenUtils {
         return expiration.before(timeProvider.now());
     }
 
-    public String getAudienceFromToken(String token) {
-		String audience;
-		try {
-			final Claims claims = this.getAllClaimsFromToken(token);
-			audience = claims.getAudience();
-		} catch (Exception e) {
-			audience = null;
-		}
-		return audience;
-	}
-    
     private Boolean ignoreTokenExpiration(String token) {
         String audience = this.getAudienceFromToken(token);
         return (audience.equals(AUDIENCE_TABLET) || audience.equals(AUDIENCE_MOBILE));
     }
 
+    // citanje podataka iz tokena
     private Claims getAllClaimsFromToken(String token) {
-        Claims claims;
+        System.out.println("CATCHTOKEN" + token);
+        Claims claims = null;
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(SECRET)
-                    .parseClaimsJws(token)
-                    .getBody();
+            claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
         } catch (Exception e) {
+            System.out.println("EXCEPTION CATCH" + e);
             claims = null;
+
         }
         return claims;
     }
 
-    public String getUsernameFromToken(String token) {
-		String username;
-		try {
-			final Claims claims = this.getAllClaimsFromToken(token);
-			username = claims.getSubject();
-		} catch (Exception e) {
-			username = null;
-		}
-		return username;
-	}
-    
 }

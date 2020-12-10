@@ -17,11 +17,10 @@ import com.example.pharmacybackend.model.User;
 
 import com.example.pharmacybackend.repository.UserRepository;
 
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+	protected final Log LOGGER = LogFactory.getLog(getClass());
 
 	@Autowired
 	private UserRepository userRepository;
@@ -43,9 +42,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}
 	}
 
-	
 	// Funkcija pomocu koje korisnik menja svoju lozinku
-	public void changePassword(String oldPassword, String newPassword) {
+	public User changePassword(String oldPassword, String newPassword) {
 
 		Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
 		String username = currentUser.getName();
@@ -57,18 +55,19 @@ public class CustomUserDetailsService implements UserDetailsService {
 		} else {
 			LOGGER.debug("No authentication manager set. can't change Password!");
 
-			return;
+			return null;
 		}
 
 		LOGGER.debug("Changing password for user '" + username + "'");
 
-		//hesiranje lozinke
+		// hesiranje lozinke
 		User user = (User) loadUserByUsername(username);
 		user.setPassword(passwordEncoder.encode(newPassword));
 
 		userRepository.save(user);
 
+		return user;
+
 	}
 
-	
 }
