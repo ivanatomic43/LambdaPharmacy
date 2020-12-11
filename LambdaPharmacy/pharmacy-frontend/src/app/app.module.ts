@@ -24,6 +24,21 @@ import { PatientProfileComponent } from './components/patient-profile/patient-pr
 import { AlertComponent } from './alert/alert.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { ListOfPrescriptionsComponent } from './list-of-prescriptions/list-of-prescriptions.component';
+import { ReservedMedicinesComponent } from './reserved-medicines/reserved-medicines.component';
+import { AllMyMedicinesComponent } from './all-my-medicines/all-my-medicines.component';
+import { GetMedicinePageComponent } from './get-medicine-page/get-medicine-page.component';
+import { MyAppointmentsComponent } from './my-appointments/my-appointments.component';
+import { PenaltyInsightComponent } from './penalty-insight/penalty-insight.component';
+import { MakeAnAppDComponent } from './make-an-app-d/make-an-app-d.component';
+import { MakeAnAppPComponent } from './make-an-app-p/make-an-app-p.component';
+import { ComplaintComponent } from './complaint/complaint.component';
+import { HistoryOfAppDComponent } from './history-of-app-d/history-of-app-d.component';
+import { HistoryOfAppPComponent } from './history-of-app-p/history-of-app-p.component';
+import { AlergiesComponent } from './alergies/alergies.component';
+import { SubPharmaciesComponent } from './sub-pharmacies/sub-pharmacies.component';
+import { MyComponent } from './my/my.component';
+import { MyStatsComponent } from './my-stats/my-stats.component';
 
 
 
@@ -44,6 +59,20 @@ import { PasswordChangeComponent } from './components/password-change/password-c
     AlertComponent,
     EditProfileComponent,
     PasswordChangeComponent,
+    ListOfPrescriptionsComponent,
+    ReservedMedicinesComponent,
+    AllMyMedicinesComponent,
+    GetMedicinePageComponent,
+    MyAppointmentsComponent,
+    PenaltyInsightComponent,
+    MakeAnAppDComponent,
+    MakeAnAppPComponent,
+    ComplaintComponent,
+    HistoryOfAppDComponent,
+    HistoryOfAppPComponent,
+    AlergiesComponent,
+    SubPharmaciesComponent,
+    MyStatsComponent,
 
   ],
   imports: [

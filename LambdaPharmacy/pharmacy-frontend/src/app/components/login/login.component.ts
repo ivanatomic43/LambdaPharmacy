@@ -101,8 +101,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.shareService.sendIsLogged(this.isLogged);
         console.log(this.profil);
 
-
-        this.router.navigate(['/patient']);
+        alert("Login successfull!");
+        this.router.navigate(['/home']);
       },
       error => {
         this.submitted = false;
