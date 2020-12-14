@@ -1,5 +1,9 @@
 
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username) values ('USER_PATIENT',1,'Bulevar Kralja Petra I 12',true,'ivana@gmail.com',false,'Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','ivanatomic');
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username) values ('USER_PHARMA_ADMIN', 2, 'Narodnog fronta 34, Novi Sad', true, 'admin@gmail.com', false, 'Marko', 'Markovic', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0633216547', 'markomarkovic');
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username) values ('USER_PATIENT',1,'Bulevar Kralja Petra I 12, Novi Sad',true,'ivana@gmail.com',false,'Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','ivanatomic');
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username) values ('USER_DERMATOLOGIST',3,'Bulevar Oslobodjenja 56, Novi Sad',true,'derma@gmail.com',false,'Pera','Peric','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234488','peraperic');
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username) values ('USER_DERMATOLOGIST',4,'Jevrejska 33, Novi Sad',true,'dermamika@gmail.com',false,'Mika','Mikic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601277567','mikamikic');
+
 
 INSERT INTO PHARMACY (id, address, description, name, rating) VALUES (1, 'Bulevar Oslobodjenja 56, Novi Sad', 'Otvorena 24/7', 'Jankovic DOO',0);
 INSERT INTO PHARMACY (id, address, description, name, rating) VALUES (2, 'Lasla Gala 12, Novi Sad', 'Sirok asortiman proizvoda', 'BENU apoteka',0);
@@ -25,3 +29,6 @@ INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_PHARMACY_ADMIN');
 
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1,1);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2,4);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (3,3);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (4,3);

@@ -1,3 +1,4 @@
+import { DermatologistsComponent } from './components/dermatologists/dermatologists.component';
 import { MyStatsComponent } from './components/my-stats/my-stats.component';
 import { SubPharmaciesComponent } from './components/sub-pharmacies/sub-pharmacies.component';
 import { AlergiesComponent } from './components/alergies/alergies.component';
@@ -44,7 +45,8 @@ const routes: Routes = [
   {path: 'history-of-app-p', component: HistoryOfAppPComponent},
   {path: 'alergies', component: AlergiesComponent},
   {path: 'sub-pharmacies', component: SubPharmaciesComponent },
-  {path: 'my-stats', component: MyStatsComponent}
+  {path: 'my-stats', component: MyStatsComponent},
+  {path: 'dermatologists', component: DermatologistsComponent}
 
 ];
 

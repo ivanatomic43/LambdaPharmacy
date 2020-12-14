@@ -1,6 +1,7 @@
 package com.example.pharmacybackend.dto;
 
 import com.example.pharmacybackend.model.User;
+import com.rabbitmq.client.DnsSrvRecordAddressResolver.SrvRecord;
 
 public class UserDTO {
 
@@ -12,6 +13,7 @@ public class UserDTO {
     private String username;
     private String phoneNumber;
     private String email;
+    private String role;
 
     public UserDTO() {
 
@@ -19,7 +21,7 @@ public class UserDTO {
 
     public UserDTO(User u) {
         this(u.getId(), u.getFirstName(), u.getLastName(), u.getUsername(), u.getPassword(), u.getEmail(),
-                u.getAddress(), u.getPhoneNumber());
+                u.getAddress(), u.getPhoneNumber(), u.getAuthority().toString());
     }
 
     public String getPhoneNumber() {
@@ -31,7 +33,7 @@ public class UserDTO {
     }
 
     public UserDTO(Long id, String firstName, String lastName, String username, String password, String email,
-            String address, String phoneNumber) {
+            String address, String phoneNumber, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,6 +42,7 @@ public class UserDTO {
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.role = role;
 
     }
 
@@ -97,6 +100,14 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public UserDTO(Long id, String firstName, String lastName, String username, String email) {

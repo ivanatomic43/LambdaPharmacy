@@ -1,3 +1,69 @@
-<p>
-  make-an-app-d works!
-</p>
+
+<div class="main">
+  <div class="col-sm-9" style="background-color: #0f6674">
+    <h3 class="mgbt-xs-15">Make an appointment - dermatologist</h3>
+    <div class="col-md-8">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">First Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" [(ngModel)]="firstName"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Last Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" [(ngModel)]="lastName"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Username</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <p>You can not change this property.</p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">E-mail</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <p>You can not change this property.</p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Address</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" [(ngModel)]="address"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Phone Number</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" [(ngModel)]="phoneNumber"/>
+            </div>
+          </div>
+          <hr>
+
+        </div>
+        <button (click)="makeAppointmentDerm()" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Save</button>
+      </div>
+
+  </div>
+  </div>
+

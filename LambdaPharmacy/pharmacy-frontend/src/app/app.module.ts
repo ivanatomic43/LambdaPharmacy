@@ -1,3 +1,5 @@
+
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -38,6 +40,10 @@ import { HistoryOfAppPComponent } from './components/history-of-app-p/history-of
 import { AlergiesComponent } from './components/alergies/alergies.component';
 import { SubPharmaciesComponent } from './components/sub-pharmacies/sub-pharmacies.component';
 import { MyStatsComponent } from './components/my-stats/my-stats.component';
+import {SortPipe} from "./services/SortPipe";
+import { MatTableModule } from "@angular/material/table";
+import { DermatologistsComponent } from './components/dermatologists/dermatologists.component';
+
 
 
 
@@ -72,6 +78,9 @@ import { MyStatsComponent } from './components/my-stats/my-stats.component';
     AlergiesComponent,
     SubPharmaciesComponent,
     MyStatsComponent,
+    SortPipe,
+    DermatologistsComponent
+
 
   ],
   imports: [
@@ -80,8 +89,10 @@ import { MyStatsComponent } from './components/my-stats/my-stats.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [
+    SortPipe,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,

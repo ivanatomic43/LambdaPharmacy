@@ -1,5 +1,6 @@
 package com.example.pharmacybackend.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.pharmacybackend.dto.UserDTO;
+import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.repository.UserRepository;
 
@@ -94,6 +96,24 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return null;
+	}
+
+	public List<UserDTO> getAllDermatologist() {
+
+		List<User> userList = userRepository.findAll();
+		List<UserDTO> retList = new ArrayList<>();
+
+		for (User u : userList) {
+			System.out.println(u.getAuthority().getName());
+			if (u.getAuthority().getName().toString().equals("ROLE_DERMATOLOGIST")) {
+				UserDTO dto = new UserDTO(u);
+				dto.setRole(u.getAuthority().getName());
+				retList.add(dto);
+			}
+		}
+
+		return retList;
+
 	}
 
 }

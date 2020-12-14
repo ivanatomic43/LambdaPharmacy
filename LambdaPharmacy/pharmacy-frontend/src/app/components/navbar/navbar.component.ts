@@ -75,9 +75,9 @@ export class NavbarComponent implements OnInit {
 
 
     getLoggedUser() {
-        console.log('usao u getloggedUser navbar');
+
         this.authService.getLogged().subscribe(data => {
-              console.log('usao u this');
+
           this.profil = data;
           this.anyLogged = true;
           this.shareService.sendIsLogged(this.anyLogged);

@@ -10,7 +10,7 @@
         <li class="nav-item"><a *ngIf="!anyLogged"  routerLink="/login" class="nav-link">Log in </a></li>
         <li class="nav-item"><a *ngIf="!anyLogged"  routerLink="/register" class="nav-link">Registration</a></li>
 
-
+          <!--Patient-->
         <div class="nav-item">
            <a class="nav-link" *ngIf="isPatient && anyLogged">Medicines
              <div class="dropdown-content">
@@ -55,7 +55,11 @@
           </a>
         </div>
 
-        <li class="nav-item"><a *ngIf="isPatient && anyLogged" routerLink="/patient-profile" class="nav-link">Patient profile</a></li>
+      <!--Pharmacy admin-->
+      <li class="nav-item"><a *ngIf="anyLogged && isPharmacyAdmin" routerLink="/dermatologists" class="nav-link">Dermatologists</a></li>
+
+
+        <li class="nav-item"><a *ngIf="anyLogged" routerLink="/patient-profile" class="nav-link">My profile</a></li>
 
 
         <li class="nav-item"><a *ngIf="anyLogged" (click)="logout()" class="nav-link">Log out</a></li>
