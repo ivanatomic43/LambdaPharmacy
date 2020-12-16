@@ -1,3 +1,6 @@
+import { NewPharmacyComponent } from './new-pharmacy/new-pharmacy.component';
+import { ManageDermatologistComponent } from './components/manage-dermatologist/manage-dermatologist.component';
+import { ManagePharmacyComponent } from './components/manage-pharmacy/manage-pharmacy.component';
 import { DermatologistsComponent } from './components/dermatologists/dermatologists.component';
 import { MyStatsComponent } from './components/my-stats/my-stats.component';
 import { SubPharmaciesComponent } from './components/sub-pharmacies/sub-pharmacies.component';
@@ -46,7 +49,10 @@ const routes: Routes = [
   {path: 'alergies', component: AlergiesComponent},
   {path: 'sub-pharmacies', component: SubPharmaciesComponent },
   {path: 'my-stats', component: MyStatsComponent},
-  {path: 'dermatologists', component: DermatologistsComponent}
+  {path: 'dermatologists', component: DermatologistsComponent},
+  {path: 'manage-pharmacy', component: ManagePharmacyComponent},
+  {path: 'manage-dermatologist', component: ManageDermatologistComponent},
+  {path: 'new-pharmacy', component: NewPharmacyComponent}
 
 ];
 

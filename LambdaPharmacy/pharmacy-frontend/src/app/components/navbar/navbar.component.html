@@ -58,6 +58,10 @@
       <!--Pharmacy admin-->
       <li class="nav-item"><a *ngIf="anyLogged && isPharmacyAdmin" routerLink="/dermatologists" class="nav-link">Dermatologists</a></li>
 
+      <!--SYSTEM ADMIN-->
+
+      <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/manage-pharmacy" class="nav-link">Manage pharmacy</a></li>
+      <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/manage-dermatologist" class="nav-link">Manage dermatologists</a></li>
 
         <li class="nav-item"><a *ngIf="anyLogged" routerLink="/patient-profile" class="nav-link">My profile</a></li>
 

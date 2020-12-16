@@ -1,0 +1,31 @@
+
+
+
+
+<section class="u-clearfix u-section-1" id="carousel_9f1d" style=" background-color: #eff2ff; " *ngIf="loaded">
+  <div style="display: flex;  justify-content: center;
+  align-items: center;">
+    <h2 style=" color:#0f6674; font-family:'Arial Black'">List of all pharmacies in the system</h2>
+    <button style="margin-left:50px;" class="btn-search" (click)="showPharmacyForm()">Register pharmacy</button>
+  </div>
+
+
+
+
+
+  <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+    <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-xl u-list u-repeater u-list-1">
+      <div class="u-container-style u-list-item u-repeater-item u-list-item-1" style="margin-top: 15px; margin-left: 15px;" *ngFor="let pharmacy of fetchedPharmacies">
+        <div class="u-container-layout u-similar-container u-container-layout-1">
+          <img src="https://www.creswell-pharmacy.co.uk/images/shopL.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="500" data-image-height="500">
+          <h5 class="u-text u-text-default u-text-1">{{pharmacy.name}}&nbsp;</h5>
+          <p class="u-text u-text-default u-text-2">Rating: {{pharmacy.rating}}</p>
+          <h4 class="u-text u-text-default u-text-palette-1-base u-text-3">{{pharmacy.address}}</h4>
+          <button class="btn-search">See details</button>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>

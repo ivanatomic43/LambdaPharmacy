@@ -43,7 +43,11 @@ import { MyStatsComponent } from './components/my-stats/my-stats.component';
 import {SortPipe} from "./services/SortPipe";
 import { MatTableModule } from "@angular/material/table";
 import { DermatologistsComponent } from './components/dermatologists/dermatologists.component';
-
+import { ManagePharmacyComponent } from './components/manage-pharmacy/manage-pharmacy.component';
+import { ManageDermatologistComponent } from './components/manage-dermatologist/manage-dermatologist.component';
+import {MatDialogModule, MatDialog} from '@angular/material/dialog';
+import { NewPharmacyComponent } from './new-pharmacy/new-pharmacy.component';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -79,7 +83,10 @@ import { DermatologistsComponent } from './components/dermatologists/dermatologi
     SubPharmaciesComponent,
     MyStatsComponent,
     SortPipe,
-    DermatologistsComponent
+    DermatologistsComponent,
+    ManagePharmacyComponent,
+    ManageDermatologistComponent,
+    NewPharmacyComponent
 
 
   ],
@@ -89,15 +96,22 @@ import { DermatologistsComponent } from './components/dermatologists/dermatologi
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule
   ],
+  entryComponents: [
+    NewPharmacyComponent
+  ],
+
   providers: [
     SortPipe,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,
     multi: true
-  },
+  }
   ],
   bootstrap: [AppComponent]
 })

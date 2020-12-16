@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit {
   isPharmacist = false;
   isPharmacyAdmin = false;
   isSupplier = false;
+  isSysAdmin = false;
 
   profil: UserDTO;
 
@@ -55,6 +56,12 @@ export class NavbarComponent implements OnInit {
       } else {
         this.isPharmacyAdmin = false;
       }
+      if(role == 'ROLE_SYS_ADMIN') {
+
+        this.isSysAdmin = true;
+      } else {
+        this.isSysAdmin = false;
+      }
     });
     console.log('dosao dovde');
     this.getLoggedUser();
@@ -70,6 +77,8 @@ export class NavbarComponent implements OnInit {
     this.sessionStorageService.signOut();
     this.anyLogged = false;
     this.isPatient = false;
+    this.isPharmacyAdmin = false;
+    this.isSysAdmin = false;
     this.router.navigate(['/login']);
   }
 
@@ -95,6 +104,12 @@ export class NavbarComponent implements OnInit {
             this.isPatient = true;
           } else {
             this.isPatient = false;
+          }
+          if(role == 'ROLE_SYS_ADMIN') {
+
+            this.isSysAdmin = true;
+          } else {
+            this.isSysAdmin = false;
           }
         },
         error => {

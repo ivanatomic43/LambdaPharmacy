@@ -1,0 +1,54 @@
+<div class="main">
+  <div class="col-sm-9" style="background-color: #0f6674">
+    <h3 class="mgbt-xs-15">Register new pharmacy</h3>
+    <form (ngSubmit)= "registerPharmacy()" [formGroup]="pharmacyForm" >
+    <div class="col-md-8">
+      <div class="card mb-3">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName= "name" id="name" name ="name"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Address</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName= "address" id="address" name ="address"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Description</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName = "description" id="description" name ="description"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Image</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="file" name="file" formControlName = "file" id="file" (change)="onFileSelected($event)"/>
+            </div>
+          </div>
+          <hr>
+
+        </div>
+        <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Create</button>
+      </div>
+    </div>
+    </form>
+
+  </div>
+</div>
+

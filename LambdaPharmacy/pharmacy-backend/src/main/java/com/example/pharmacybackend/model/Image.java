@@ -14,7 +14,7 @@ public class Image {
 	@Lob
 	private byte[] url;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	private Pharmacy pharmacy;
 
 	public Image() {
