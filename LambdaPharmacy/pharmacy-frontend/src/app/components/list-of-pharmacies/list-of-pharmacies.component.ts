@@ -36,4 +36,8 @@ export class ListOfPharmaciesComponent implements OnInit {
 
   }
 
+  showPharmacyDet(id:number){
+    this.router.navigate(['/pharmacy-details/' + id]);
+  }
+
 }

@@ -63,4 +63,9 @@ export class ManagePharmacyComponent implements OnInit {
     this.router.navigate(['/new-pharmacy']);
   }
 
+  showPharmacyDetails(id:number){
+
+    this.router.navigate(['/pharmacy-details/' + id]);
+  }
+
 }

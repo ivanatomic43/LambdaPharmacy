@@ -17,6 +17,7 @@ export class PharmacyService {
   refreshPharmacies = new Subject<PharmacyDTO[]>();
   allPharmaciesUrl = pharmacyUrl + '/getAllPharmacies';
   createPharmacyUrl = pharmacyUrl + '/createPharmacy';
+  getPharmacyUrl = pharmacyUrl + '/getPharmacy/'
 
 
 
@@ -40,5 +41,9 @@ export class PharmacyService {
 
   images(id:number){
     return this.http.get<any>('http://localhost:8051/pharmacy/getImage/' + id);
+  }
+
+  getPharmacyById(id: number){
+    return this.http.get<any>(this.getPharmacyUrl + id);
   }
 }

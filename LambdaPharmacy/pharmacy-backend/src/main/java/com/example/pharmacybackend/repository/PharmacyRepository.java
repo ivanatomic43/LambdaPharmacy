@@ -10,4 +10,5 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
 
 	List<Pharmacy> findAll();
 
+	Pharmacy findOneById(Long id);
 }

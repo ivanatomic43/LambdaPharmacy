@@ -94,4 +94,20 @@ public class PharmacyController {
 		return new ResponseEntity<>(newSt, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/getPharmacy/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getPharmacy(@PathVariable("id") Long id) {
+		System.out.println("USAO U GET PH" + id);
+
+		Pharmacy p = this.pharmacyService.getPharmacy(id);
+
+		PharmacyDTO dto = new PharmacyDTO(p);
+
+		if (dto == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+
+	}
+
 }

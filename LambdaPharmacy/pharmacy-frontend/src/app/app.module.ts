@@ -48,6 +48,7 @@ import { ManageDermatologistComponent } from './components/manage-dermatologist/
 import {MatDialogModule, MatDialog} from '@angular/material/dialog';
 import { NewPharmacyComponent } from './new-pharmacy/new-pharmacy.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { PharmacyDetailsComponent } from './components/pharmacy-details/pharmacy-details.component';
 
 
 
@@ -86,7 +87,8 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
     DermatologistsComponent,
     ManagePharmacyComponent,
     ManageDermatologistComponent,
-    NewPharmacyComponent
+    NewPharmacyComponent,
+    PharmacyDetailsComponent
 
 
   ],

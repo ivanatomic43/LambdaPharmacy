@@ -33,6 +33,11 @@ public class PharmacyService {
 		return null;
 	}
 
+	public Pharmacy getPharmacy(Long id) {
+
+		return this.pharmacyRepository.findOneById(id);
+	}
+
 	public List<PharmacyDTO> searchPharmacy(String name, String location) {
 		System.out.println("ime" + name + "lokacija" + location);
 		List<PharmacyDTO> retPha = new ArrayList<>();
@@ -69,13 +74,14 @@ public class PharmacyService {
 	public PharmacyDTO createPharmacy(PharmacyDTO pharmacy) {
 
 		Pharmacy p = new Pharmacy();
-		System.out.println(pharmacy.getName() + pharmacy.getAddress() + pharmacy.getDescription());
+		// System.out.println(pharmacy.getName() + pharmacy.getAddress() +
+		// pharmacy.get);
 		p.setName(pharmacy.getName());
 		p.setAddress(pharmacy.getAddress());
 		p.setDescription(pharmacy.getDescription());
 		p.setRating(0);
 
-		Pharmacy retPha = pharmacyRepository.save(p);
+		Pharmacy retPha = this.savePharmacy(p);
 
 		PharmacyDTO ret = new PharmacyDTO(retPha);
 		System.out.println(ret.getId());

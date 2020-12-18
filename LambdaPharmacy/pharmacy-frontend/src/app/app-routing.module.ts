@@ -1,3 +1,5 @@
+
+import { PharmacyDetailsComponent } from './components/pharmacy-details/pharmacy-details.component';
 import { NewPharmacyComponent } from './new-pharmacy/new-pharmacy.component';
 import { ManageDermatologistComponent } from './components/manage-dermatologist/manage-dermatologist.component';
 import { ManagePharmacyComponent } from './components/manage-pharmacy/manage-pharmacy.component';
@@ -52,7 +54,15 @@ const routes: Routes = [
   {path: 'dermatologists', component: DermatologistsComponent},
   {path: 'manage-pharmacy', component: ManagePharmacyComponent},
   {path: 'manage-dermatologist', component: ManageDermatologistComponent},
-  {path: 'new-pharmacy', component: NewPharmacyComponent}
+  {path: 'new-pharmacy', component: NewPharmacyComponent},
+  {path: 'pharmacy-details',
+        children : [
+          {
+            path: ':id',
+            component: PharmacyDetailsComponent
+          }
+        ]
+  }
 
 ];
 
