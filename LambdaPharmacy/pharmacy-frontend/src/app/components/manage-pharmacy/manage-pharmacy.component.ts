@@ -1,4 +1,4 @@
-import { NewPharmacyComponent } from './../../new-pharmacy/new-pharmacy.component';
+
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PharmacyDTO } from 'src/app/model/PharmacyDTO';

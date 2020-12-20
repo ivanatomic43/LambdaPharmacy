@@ -1,10 +1,11 @@
 import { Router } from '@angular/router';
-import { PharmacyDTO } from './../model/PharmacyDTO';
-import { Image } from './../model/Image';
+import { PharmacyDTO } from 'src/app/model/PharmacyDTO';
+import { Image } from 'src/app/model/Image';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PharmacyService } from './../services/PharmacyService';
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { PharmacyService } from 'src/app/services/PharmacyService';
 
 
 @Component({

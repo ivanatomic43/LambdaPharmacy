@@ -1,6 +1,7 @@
+import { RegisterDermatologistComponent } from './components/register-dermatologist/register-dermatologist.component';
 
 import { PharmacyDetailsComponent } from './components/pharmacy-details/pharmacy-details.component';
-import { NewPharmacyComponent } from './new-pharmacy/new-pharmacy.component';
+import { NewPharmacyComponent } from './components/new-pharmacy/new-pharmacy.component';
 import { ManageDermatologistComponent } from './components/manage-dermatologist/manage-dermatologist.component';
 import { ManagePharmacyComponent } from './components/manage-pharmacy/manage-pharmacy.component';
 import { DermatologistsComponent } from './components/dermatologists/dermatologists.component';
@@ -62,7 +63,8 @@ const routes: Routes = [
             component: PharmacyDetailsComponent
           }
         ]
-  }
+  },
+  {path: 'register-dermatologist', component: RegisterDermatologistComponent}
 
 ];
 

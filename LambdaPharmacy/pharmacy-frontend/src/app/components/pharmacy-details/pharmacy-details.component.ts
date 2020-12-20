@@ -1,3 +1,5 @@
+import { UserDTO } from './../../model/UserDTO';
+import { AuthService } from './../../services/AuthService';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileDTO } from 'src/app/model/UserProfileDTO';
@@ -16,6 +18,8 @@ export class PharmacyDetailsComponent implements OnInit {
   pharmacyID: number;
   fetchedPharmacy: PharmacyDTO;
   loaded = false;
+  isSysAdmin = false;
+  profil: UserDTO;
 
   //dermatologists
   dataSource: MatTableDataSource<UserProfileDTO>;
@@ -28,13 +32,15 @@ export class PharmacyDetailsComponent implements OnInit {
     'email',
     'address',
     'phoneNumber',
-    'role'
+    'role',
+    'action'
   ];
 
   constructor(
     private route: ActivatedRoute,
     private pharmacyService: PharmacyService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -46,6 +52,21 @@ export class PharmacyDetailsComponent implements OnInit {
         this.loaded= true;
       });
 
+      this.authService.getLogged().subscribe(response => {
+          this.profil= response;
+          const role = this.profil.authorities[0];
+          if(role == 'ROLE_SYS_ADMIN') {
+
+            this.isSysAdmin = true;
+          } else {
+            this.isSysAdmin = false;
+          }
+      });
+
+  }
+
+  registerDermForm(){
+    this.router.navigate(['/register-dermatologist']);
   }
 
 }

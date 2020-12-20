@@ -20,6 +20,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.owasp.encoder.Encode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.example.pharmacybackend.dto.*;
 import com.example.pharmacybackend.exceptions.ResourceConflictException;
@@ -28,6 +30,7 @@ import com.example.pharmacybackend.security.*;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.AuthorityService;
 import com.example.pharmacybackend.services.CustomUserDetailsService;
+import com.example.pharmacybackend.services.DermatologistService;
 import com.example.pharmacybackend.services.EmailService;
 import com.example.pharmacybackend.services.PatientService;
 import com.example.pharmacybackend.services.UserServiceImpl;
@@ -39,14 +42,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "/dermatologist")
 public class DermatologistController {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     TokenUtils tokenUtils;
 
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private DermatologistService dermatologistService;
+
     @RequestMapping(value = "/getAllDermatologists", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    @PreAuthorize("hasRole('PHARMACY_ADMIN') or hasRole('SYS_ADMIN')")
     public ResponseEntity<?> getAllDermatologists() {
 
         List<UserDTO> list = userService.getAllDermatologist();
@@ -56,6 +64,27 @@ public class DermatologistController {
 
         return new ResponseEntity<>(list, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/registerDermatologist", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> registerDermatologist(@RequestBody UserRequestDTO userRequest) {
+
+        User exist = userService.findByUsername(userRequest.getUsername());
+
+        if (exist != null) {
+            logger.warn("DERMATOLOGISTUSERNAMEEXIST");
+            return new ResponseEntity<>(exist, HttpStatus.CONFLICT);
+        }
+
+        Dermatologist d = new Dermatologist();
+        d = dermatologistService.registerDermatologist(userRequest);
+
+        if (d == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(d, HttpStatus.OK);
     }
 
 }
