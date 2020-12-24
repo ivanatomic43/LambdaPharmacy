@@ -1,3 +1,4 @@
+import { AddingDermDTO } from './../model/AddingDermDTO';
 import { RegistrationParams } from './../model/registrationParams';
 import { RegisterDermatologistComponent } from './../components/register-dermatologist/register-dermatologist.component';
 import {Injectable} from '@angular/core';
@@ -17,6 +18,8 @@ export class DermatologistService {
 
   getAll = dermatologistUrl + '/getAllDermatologists';
   registerDermatologistUrl = dermatologistUrl + '/registerDermatologist';
+  addDermatologistUrl = dermatologistUrl + '/addDermatologist/';
+  getAllDerm = dermatologistUrl + '/getAllDermatologistForPharmacy/';
 
 
   constructor(
@@ -64,5 +67,30 @@ export class DermatologistService {
 
   }
 
+  addDermatologist(dermData : AddingDermDTO, id:number){
+
+    return this.http.post(this.addDermatologistUrl + id, dermData);
+
+
+  }
+
+  getAllDermatologistsForPharmacy(id:number){
+
+    return this.http.post(this.getAllDerm + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
 
 }

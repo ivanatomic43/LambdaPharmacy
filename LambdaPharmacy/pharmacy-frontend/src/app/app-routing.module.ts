@@ -1,3 +1,4 @@
+import { AddDermComponent } from './components/add-derm/add-derm.component';
 import { RegisterDermatologistComponent } from './components/register-dermatologist/register-dermatologist.component';
 
 import { PharmacyDetailsComponent } from './components/pharmacy-details/pharmacy-details.component';
@@ -57,13 +58,22 @@ const routes: Routes = [
   {path: 'manage-dermatologist', component: ManageDermatologistComponent},
   {path: 'new-pharmacy', component: NewPharmacyComponent},
   {path: 'pharmacy-details',
-        children : [
-          {
-            path: ':id',
-            component: PharmacyDetailsComponent
-          }
-        ]
+  children : [
+    {
+      path: ':id',
+      component: PharmacyDetailsComponent
+    }
+  ]
   },
+  {path: 'add-derm',
+    children: [
+      {
+        path: ':id',
+        component: AddDermComponent
+      }
+    ]
+  },
+
   {path: 'register-dermatologist', component: RegisterDermatologistComponent}
 
 ];

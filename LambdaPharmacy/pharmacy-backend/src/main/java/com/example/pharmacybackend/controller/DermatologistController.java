@@ -87,4 +87,29 @@ public class DermatologistController {
         return new ResponseEntity<>(d, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/addDermatologist/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> addDermatologist(@PathVariable("id") Long id, @RequestBody DermatologistDTO dto) {
+
+        DermatologistDTO addedDermatologist = dermatologistService.addDermatologist(dto, id);
+
+        if (addedDermatologist == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(addedDermatologist, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getAllDermatologistForPharmacy/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllDerm(@PathVariable("id") Long id) {
+
+        List<DermatologistDTO> retDerm = dermatologistService.getAllDermForPharmacy(id);
+
+        if (retDerm.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(retDerm, HttpStatus.OK);
+
+    }
 }

@@ -50,6 +50,7 @@ import { NewPharmacyComponent } from './components/new-pharmacy/new-pharmacy.com
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PharmacyDetailsComponent } from './components/pharmacy-details/pharmacy-details.component';
 import { RegisterDermatologistComponent } from './components/register-dermatologist/register-dermatologist.component';
+import { AddDermComponent } from './components/add-derm/add-derm.component';
 
 
 
@@ -90,7 +91,8 @@ import { RegisterDermatologistComponent } from './components/register-dermatolog
     ManageDermatologistComponent,
     NewPharmacyComponent,
     PharmacyDetailsComponent,
-    RegisterDermatologistComponent
+    RegisterDermatologistComponent,
+    AddDermComponent
 
 
   ],

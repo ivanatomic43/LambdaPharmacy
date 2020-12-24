@@ -1,3 +1,5 @@
+import { DermatologistService } from './../../services/DermatologistService';
+import { DermDTO } from './../../model/DermDTO';
 import { UserDTO } from './../../model/UserDTO';
 import { AuthService } from './../../services/AuthService';
 import { Subscription } from 'rxjs';
@@ -19,20 +21,19 @@ export class PharmacyDetailsComponent implements OnInit {
   fetchedPharmacy: PharmacyDTO;
   loaded = false;
   isSysAdmin = false;
+  isPharmacyAdmin = false;
   profil: UserDTO;
 
   //dermatologists
-  dataSource: MatTableDataSource<UserProfileDTO>;
+  dataSource: MatTableDataSource<DermDTO>;
   loadedDerm = false;
+  dermatologists: DermDTO[] = [];
   displayedColumns: string[]= [
     'id',
     'firstName',
     'lastName',
-    'username',
-    'email',
-    'address',
-    'phoneNumber',
-    'role',
+    'workFrom',
+    'workTo',
     'action'
   ];
 
@@ -40,7 +41,8 @@ export class PharmacyDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private pharmacyService: PharmacyService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private dermatologistService: DermatologistService
   ) { }
 
   ngOnInit() {
@@ -61,12 +63,30 @@ export class PharmacyDetailsComponent implements OnInit {
           } else {
             this.isSysAdmin = false;
           }
+          if(role == 'ROLE_PHARMACY_ADMIN'){
+            this.isPharmacyAdmin = true;
+          } else {
+            this.isPharmacyAdmin = false;
+          }
       });
+
+      this.fetchDermatologists();
 
   }
 
-  registerDermForm(){
-    this.router.navigate(['/register-dermatologist']);
+  addDermatologist(id:number){
+    alert("!!!!");
+    alert(id);
+      this.router.navigate(['/add-derm/' + id]);
+  }
+
+  fetchDermatologists(){
+    this.dermatologistService.getAllDermatologistsForPharmacy(this.pharmacyID).subscribe(response => {
+      this.dermatologists= response;
+
+      this.dataSource= new MatTableDataSource(this.dermatologists);
+  });
+
   }
 
 }

@@ -1,5 +1,6 @@
 <div class="preview-users" style="background: url(/assets/searchimage.jpg);"y>
   <h2 style="position: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Dermatologists</h2>
+  <button *ngIf="isSysAdmin" style="margin-left:50px;" class="btn-search" (click)="registerDermForm()">Register dermatologist</button>
 
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

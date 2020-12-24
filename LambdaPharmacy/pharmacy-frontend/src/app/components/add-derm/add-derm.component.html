@@ -1,0 +1,52 @@
+<div class="main">
+  <div class="col-sm-9" style="background-color: #0f6674">
+    <h3 class="mgbt-xs-15">Adding dermatologist to pharmacy</h3>
+    <form (ngSubmit)= "addDermatologist()" [formGroup]="addingDermForm" >
+    <div class="col-md-8">
+      <div class="card mb-3">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Choose dermatologist</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <select formControlName="dermatologist" name = "dermatologist" style="width: 150px;">
+                  <option *ngFor="let dermatologist of fetchedDermatologist" [value]="dermatologist.id">
+                      {{dermatologist.id}} {{dermatologist.firstName}} {{dermatologist.lastName}}
+                  </option>
+              </select>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Date</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="date" formControlName= "dateFrom" id="dateFrom" name ="dateFrom" placeholder="From"/>
+              <input style="margin-left: 10px;" type="date" formControlName = "dateTo" id="dateTo" name ="dateTo" placeholder="To"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Visiting hours</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="time" formControlName = "workFrom" id="workFrom" name ="workFrom" placeholder="From"/>
+              <input style="margin-left: 10px;" type="time" formControlName = "workTo" id="workTo" name ="workTo" placeholder="To"/>
+            </div>
+          </div>
+          <hr>
+
+
+
+        </div>
+        <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Add</button>
+      </div>
+    </div>
+    </form>
+
+  </div>
+</div>
