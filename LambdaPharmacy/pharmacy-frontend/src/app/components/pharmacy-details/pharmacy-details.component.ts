@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PharmacyDTO } from 'src/app/model/PharmacyDTO';
 import { Component, OnInit } from '@angular/core';
 import { PharmacyService } from 'src/app/services/PharmacyService';
+import { PharmacistService } from 'src/app/services/PharmacistService';
 
 @Component({
   selector: 'app-pharmacy-details',
@@ -37,12 +38,26 @@ export class PharmacyDetailsComponent implements OnInit {
     'action'
   ];
 
+  //pharmacists
+  dataSource1: MatTableDataSource<DermDTO>;
+  loadedPharm = false;
+  pharmacists: DermDTO[]= [];
+  displayedColumns1: string[]=[
+    'id',
+    'firstName',
+    'lastName',
+    'workFrom',
+    'workTo',
+    'action'
+  ];
+
   constructor(
     private route: ActivatedRoute,
     private pharmacyService: PharmacyService,
     private router: Router,
     private authService: AuthService,
-    private dermatologistService: DermatologistService
+    private dermatologistService: DermatologistService,
+    private pharmacistService: PharmacistService
   ) { }
 
   ngOnInit() {
@@ -71,6 +86,7 @@ export class PharmacyDetailsComponent implements OnInit {
       });
 
       this.fetchDermatologists();
+      this.fetchPharmacists();
 
   }
 
@@ -87,6 +103,18 @@ export class PharmacyDetailsComponent implements OnInit {
       this.dataSource= new MatTableDataSource(this.dermatologists);
   });
 
+  }
+
+  addPharmacist(id:number){
+    this.router.navigate(['/add-pharm/' + id]);
+  }
+
+  fetchPharmacists(){
+    alert("USAO U FETCH NA FRONTU");
+    this.pharmacistService.getAllPharmacistForPharmacy(this.pharmacyID).subscribe(response => {
+      this.pharmacists = response;
+      this.dataSource1 = new MatTableDataSource(this.pharmacists);
+    });
   }
 
 }

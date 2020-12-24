@@ -1,4 +1,4 @@
-import { AddingDermDTO } from './../../model/AddingDermDTO';
+import { AddingStaffDTO } from '../../model/AddingStaffDTO';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UserProfileDTO } from './../../model/UserProfileDTO';
 import { DermatologistService } from './../../services/DermatologistService';
@@ -17,7 +17,7 @@ export class AddDermComponent implements OnInit {
   pharmacyID : number;
   fetchedDermatologist: UserProfileDTO[] = [];
   addingDermForm: FormGroup;
-  dermData : AddingDermDTO;
+  dermData : AddingStaffDTO;
 
   constructor(
     private router: Router,
@@ -52,7 +52,7 @@ export class AddDermComponent implements OnInit {
 
 
 
-    this.dermData = new AddingDermDTO(
+    this.dermData = new AddingStaffDTO(
       this.addingDermForm.get('dermatologist').value,
       this.addingDermForm.get('dateFrom').value,
       this.addingDermForm.get('dateTo').value,

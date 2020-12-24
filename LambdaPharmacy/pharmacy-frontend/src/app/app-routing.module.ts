@@ -1,3 +1,4 @@
+import { AddPharmComponent } from './components/add-pharm/add-pharm.component';
 import { AddDermComponent } from './components/add-derm/add-derm.component';
 import { RegisterDermatologistComponent } from './components/register-dermatologist/register-dermatologist.component';
 
@@ -72,6 +73,14 @@ const routes: Routes = [
         component: AddDermComponent
       }
     ]
+  },
+  { path: 'add-pharm',
+      children :[
+        {
+          path: ':id',
+          component: AddPharmComponent
+        }
+      ]
   },
 
   {path: 'register-dermatologist', component: RegisterDermatologistComponent}

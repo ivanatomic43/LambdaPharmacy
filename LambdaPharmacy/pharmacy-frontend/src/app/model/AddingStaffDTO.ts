@@ -1,4 +1,4 @@
-export class AddingDermDTO{
+export class AddingStaffDTO{
 
   constructor(
     public id: number,

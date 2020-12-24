@@ -1,3 +1,4 @@
+import { NewPharmacist } from './../model/NewPharmacist';
 import { AddingStaffDTO } from '../model/AddingStaffDTO';
 import { RegistrationParams } from './../model/registrationParams';
 import { RegisterDermatologistComponent } from './../components/register-dermatologist/register-dermatologist.component';
@@ -9,17 +10,17 @@ import {catchError, first, map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 
-const dermatologistUrl = 'http://localhost:8051/dermatologist';
+const pharmacistUrl = 'http://localhost:8051/pharmacist';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DermatologistService {
+export class PharmacistService {
 
-  getAll = dermatologistUrl + '/getAllDermatologists';
-  registerDermatologistUrl = dermatologistUrl + '/registerDermatologist';
-  addDermatologistUrl = dermatologistUrl + '/addDermatologist/';
-  getAllDerm = dermatologistUrl + '/getAllDermatologistForPharmacy/';
+  getAll = pharmacistUrl + '/getAllPharmacists';
+ registerPharmacistUrl = pharmacistUrl + '/registerPharmacist';
+  addPharmacistUrl = pharmacistUrl + '/addPharmacist/';
+  getAllPharm = pharmacistUrl + '/getAllPharmacistForPharmacy/';
 
 
   constructor(
@@ -29,7 +30,7 @@ export class DermatologistService {
   ){}
 
 
-  getAllDermatologists(){
+  getAllPharmacists(){
 
     return this.http.post(this.getAll, {
 
@@ -48,35 +49,17 @@ export class DermatologistService {
 
   }
 
-  registerDermatologist(dermatologistParams : RegistrationParams){
 
-    return this.http.post(this.registerDermatologistUrl, dermatologistParams, {
+  addPharmacist(pharmData : NewPharmacist, id:number){
 
-    })
-      .pipe(
-        map((response: any) => {
-          // tslint:disable-next-line:no-unused-expression
-          const data = response;
-          console.log(data);
-          return data;
-        }),
-        catchError((err: any) => {
-          return throwError(err);
-        })
-      );
-
-  }
-
-  addDermatologist(dermData : AddingStaffDTO, id:number){
-
-    return this.http.post(this.addDermatologistUrl + id, dermData);
+    return this.http.post(this.addPharmacistUrl + id, pharmData);
 
 
   }
 
-  getAllDermatologistsForPharmacy(id:number){
+  getAllPharmacistForPharmacy(id:number){
 
-    return this.http.post(this.getAllDerm + id, {
+    return this.http.post(this.getAllPharm + id, {
 
     })
       .pipe(

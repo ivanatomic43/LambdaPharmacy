@@ -81,6 +81,7 @@ public class DermatologistService {
         retDer.add(d);
 
         dermatologistRepository.save(d);
+        pharmacyRepository.save(pharmacy);
 
         DermatologistDTO retUser = new DermatologistDTO();
         retUser.setId(d.getId());
