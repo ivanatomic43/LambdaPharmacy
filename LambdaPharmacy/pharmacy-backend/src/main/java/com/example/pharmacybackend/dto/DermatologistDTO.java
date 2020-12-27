@@ -12,6 +12,8 @@ public class DermatologistDTO {
     private Date dateTo;
     private LocalTime workFrom;
     private LocalTime workTo;
+    private String from;
+    private String to;
 
     public DermatologistDTO() {
     }
@@ -122,6 +124,34 @@ public class DermatologistDTO {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    /**
+     * @return String return the from
+     */
+    public String getFrom() {
+        return from;
+    }
+
+    /**
+     * @param from the from to set
+     */
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    /**
+     * @return String return the to
+     */
+    public String getTo() {
+        return to;
+    }
+
+    /**
+     * @param to the to to set
+     */
+    public void setTo(String to) {
+        this.to = to;
     }
 
 }

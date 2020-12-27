@@ -15,6 +15,8 @@ public class PharmacistDTO {
     private String phoneNumber;
     private LocalTime workFrom;
     private LocalTime workTo;
+    private String from;
+    private String to;
 
     public PharmacistDTO() {
     }
@@ -174,6 +176,34 @@ public class PharmacistDTO {
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * @return String return the from
+     */
+    public String getFrom() {
+        return from;
+    }
+
+    /**
+     * @param from the from to set
+     */
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    /**
+     * @return String return the to
+     */
+    public String getTo() {
+        return to;
+    }
+
+    /**
+     * @param to the to to set
+     */
+    public void setTo(String to) {
+        this.to = to;
     }
 
 }

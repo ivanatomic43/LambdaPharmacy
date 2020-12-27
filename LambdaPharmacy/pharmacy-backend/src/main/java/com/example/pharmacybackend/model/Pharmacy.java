@@ -57,6 +57,9 @@ public class Pharmacy implements Serializable {
 	@JoinTable(name = "pharmacy_medicine", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))
 	private List<Medicine> listOfMedicines;
 
+	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Appointment> pharmacyAppointments = new ArrayList<>();
+
 	@ManyToOne
 	private Pricelist pricelist;
 
@@ -161,6 +164,20 @@ public class Pharmacy implements Serializable {
 
 	public void setPricelist(Pricelist pricelist) {
 		this.pricelist = pricelist;
+	}
+
+	/**
+	 * @return List<Appointment> return the pharmacyAppointments
+	 */
+	public List<Appointment> getPharmacyAppointments() {
+		return pharmacyAppointments;
+	}
+
+	/**
+	 * @param pharmacyAppointments the pharmacyAppointments to set
+	 */
+	public void setPharmacyAppointments(List<Appointment> pharmacyAppointments) {
+		this.pharmacyAppointments = pharmacyAppointments;
 	}
 
 }

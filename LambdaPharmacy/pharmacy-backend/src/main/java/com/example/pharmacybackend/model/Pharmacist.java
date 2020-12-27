@@ -29,6 +29,9 @@ public class Pharmacist extends User {
 	@Column(name = "workingTo")
 	private LocalTime workingTo;
 
+	@Column(name = "rating")
+	private double rating;
+
 	/**
 	 * @return Pharmacy return the pharmacy
 	 */
@@ -111,6 +114,20 @@ public class Pharmacist extends User {
 	 */
 	public void setWorkingTo(LocalTime workingTo) {
 		this.workingTo = workingTo;
+	}
+
+	/**
+	 * @return double return the rating
+	 */
+	public double getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 }

@@ -46,7 +46,14 @@ const routes: Routes = [
   {path: 'get-medicine-page', component: GetMedicinePageComponent },
   {path: 'my-appointments', component: MyAppointmentsComponent },
   {path: 'penalty-insight', component: PenaltyInsightComponent },
-  {path: 'make-an-app-d', component: MakeAnAppDComponent },
+  {path: 'make-an-app-d',
+      children : [
+        {
+          path: ':pid/:did',
+          component: MakeAnAppDComponent
+        }
+      ]
+   },
   {path: 'make-an-app-p', component:MakeAnAppPComponent },
   {path: 'complaint', component:  ComplaintComponent},
   {path: 'history-of-app-d', component:  HistoryOfAppDComponent},

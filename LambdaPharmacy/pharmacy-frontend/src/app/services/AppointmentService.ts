@@ -1,3 +1,4 @@
+import { NewAppointmentDTO } from './../model/NewAppointmentDTO';
 import {Injectable} from '@angular/core';
 import {ApiService} from './ApiService';
 import {ConfigService} from './ConfigService';
@@ -17,7 +18,9 @@ const appointmentUrl = 'http://localhost:8051/appointment';
 export class AppointmentService {
 
 
-  getAllAppointmentsUrl = appointmentUrl + '/getAllAppointments';
+  getAllAppointmentsUrl = appointmentUrl + '/getAllAppointments';  //history of appointments
+  getAllPredefined = appointmentUrl + '/getAllPredefined/'; //for each pharmacy
+  createAppointmentUrl = appointmentUrl + '/createAppointment';
 
   constructor(
     private apiService: ApiService,
@@ -27,7 +30,7 @@ export class AppointmentService {
   }
 
   getAllAppointments() {
-    return this.http.post(this.getAllAppointmentsUrl, {
+    return this.http.post(this.getAllAppointmentsUrl ,{
 
     })
       .pipe(
@@ -44,8 +47,26 @@ export class AppointmentService {
   }
 
 
+  createAppointment(newApp: NewAppointmentDTO){
+        return this.http.post<any>(this.createAppointmentUrl, newApp);
+  }
 
+  getAllPredefinedAp(id:number) {
+    return this.http.post<any>(this.getAllPredefined + id, {
 
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
 
 
 }

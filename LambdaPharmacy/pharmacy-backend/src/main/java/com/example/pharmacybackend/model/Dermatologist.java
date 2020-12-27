@@ -30,6 +30,9 @@ public class Dermatologist extends User implements Serializable {
 	@Column(name = "workingTo")
 	private LocalTime workingTo;
 
+	@Column(name = "rating")
+	private Double rating;
+
 	public Dermatologist() {
 
 	}
@@ -102,6 +105,20 @@ public class Dermatologist extends User implements Serializable {
 	 */
 	public void setWorkingTo(LocalTime workingTo) {
 		this.workingTo = workingTo;
+	}
+
+	/**
+	 * @return double return the rating
+	 */
+	public Double getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(Double rating) {
+		this.rating = rating;
 	}
 
 }

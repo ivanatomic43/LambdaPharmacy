@@ -2,68 +2,52 @@
 <div class="main">
   <div class="col-sm-9" style="background-color: #0f6674">
     <h3 class="mgbt-xs-15">Make an appointment - dermatologist</h3>
-    <div class="col-md-8">
+    <form (ngSubmit)= "makeAnAppointment()" [formGroup]="newApForm">
+      <div class="col-md-8">
       <div class="card mb-3">
         <div class="card-body">
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">First Name</h6>
+              <h6 class="mb-0">Date of appointment</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input type="text" [(ngModel)]="firstName"/>
+              <input type="date" formControlName="dateOfAppointment" id="dateOfAppointment" name="dateOfAppointment"/>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Last Name</h6>
+              <h6 class="mb-0">Meeting time</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input type="text" [(ngModel)]="lastName"/>
+              <input type="time" formControlName="meetingTime" id="meetingTime" name="meetingTime"/>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Username</h6>
+              <h6 class="mb-0">Duration</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <p>You can not change this property.</p>
+              <input type="text" formControlName="duration" id="duration" name="duration"/>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">E-mail</h6>
+              <h6 class="mb-0">Price</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <p>You can not change this property.</p>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">Address</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              <input type="text" [(ngModel)]="address"/>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">Phone Number</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              <input type="text" [(ngModel)]="phoneNumber"/>
+              <input type="text" formControlName="price" id="price" name="price"/>
             </div>
           </div>
           <hr>
 
         </div>
-        <button (click)="makeAppointmentDerm()" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Save</button>
+        <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Create</button>
       </div>
-
+      </div>
+    </form>
   </div>
   </div>
 

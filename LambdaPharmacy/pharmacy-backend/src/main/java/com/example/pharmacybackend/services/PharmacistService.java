@@ -97,8 +97,8 @@ public class PharmacistService {
                 System.out.println(p.getFirstName());
                 dto.setFirstName(p.getFirstName());
                 dto.setLastName(p.getLastName());
-                dto.setWorkFrom(p.getWorkingFrom());
-                dto.setWorkTo(p.getWorkingTo());
+                dto.setFrom(p.getWorkingFrom().toString());
+                dto.setTo(p.getWorkingTo().toString());
 
                 retList.add(dto);
             }

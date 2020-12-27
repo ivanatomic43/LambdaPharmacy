@@ -1,3 +1,5 @@
+import { AppointmentService } from './../../services/AppointmentService';
+
 import { DermatologistService } from './../../services/DermatologistService';
 import { DermDTO } from './../../model/DermDTO';
 import { UserDTO } from './../../model/UserDTO';
@@ -10,6 +12,7 @@ import { PharmacyDTO } from 'src/app/model/PharmacyDTO';
 import { Component, OnInit } from '@angular/core';
 import { PharmacyService } from 'src/app/services/PharmacyService';
 import { PharmacistService } from 'src/app/services/PharmacistService';
+import { AppointmentPreview } from './../../model/AppointmentPreview';
 
 @Component({
   selector: 'app-pharmacy-details',
@@ -51,13 +54,27 @@ export class PharmacyDetailsComponent implements OnInit {
     'action'
   ];
 
+ //predefined appointments
+  dataSource2 : MatTableDataSource<AppointmentPreview>;
+  appointments: AppointmentPreview[] = [];
+  displayedColumns2: string[]= [
+    'id',
+    'dateOfAppointment',
+    'meetingTime',
+    'dermatologist',
+    'duration',
+    'price',
+    'action'
+  ];
+
   constructor(
     private route: ActivatedRoute,
     private pharmacyService: PharmacyService,
     private router: Router,
     private authService: AuthService,
     private dermatologistService: DermatologistService,
-    private pharmacistService: PharmacistService
+    private pharmacistService: PharmacistService,
+    private appointmentService :AppointmentService
   ) { }
 
   ngOnInit() {
@@ -87,12 +104,12 @@ export class PharmacyDetailsComponent implements OnInit {
 
       this.fetchDermatologists();
       this.fetchPharmacists();
+      this.fetchAppointments();
 
   }
 
   addDermatologist(id:number){
-    alert("!!!!");
-    alert(id);
+
       this.router.navigate(['/add-derm/' + id]);
   }
 
@@ -110,11 +127,24 @@ export class PharmacyDetailsComponent implements OnInit {
   }
 
   fetchPharmacists(){
-    alert("USAO U FETCH NA FRONTU");
+
     this.pharmacistService.getAllPharmacistForPharmacy(this.pharmacyID).subscribe(response => {
       this.pharmacists = response;
       this.dataSource1 = new MatTableDataSource(this.pharmacists);
     });
   }
 
+
+  makeAnAppointment(pid:number, did:number){
+
+    this.router.navigate(['/make-an-app-d/' + pid + '/' + did]);
+
+  }
+
+  fetchAppointments(){
+    this.appointmentService.getAllPredefinedAp(this.pharmacyID).subscribe(response => {
+      this.appointments= response;
+      this.dataSource2 = new MatTableDataSource(this.appointments);
+    });
+  }
 }

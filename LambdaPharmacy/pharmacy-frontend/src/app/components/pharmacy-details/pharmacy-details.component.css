@@ -79,7 +79,7 @@ table {
 
 .mat-header-cell {
   color: white;
-  background:   #ff8300;
+  background: #0f6674;
   font-size: medium;
   text-transform: uppercase;
   text-align: center;
@@ -134,6 +134,7 @@ table {
   margin-right: 10px;
   height: 35px;
   border-radius: 16px;
+  background-color: #ff8300;
 }
 .btn-search{
   width: 200px;

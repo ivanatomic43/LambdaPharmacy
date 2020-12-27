@@ -87,8 +87,8 @@ public class DermatologistService {
         retUser.setId(d.getId());
         retUser.setFirstName(d.getFirstName());
         retUser.setLastName(d.getLastName());
-        retUser.setWorkFrom(d.getWorkingFrom());
-        retUser.setWorkTo(d.getWorkingTo());
+        retUser.setFrom(d.getWorkingFrom().toString());
+        retUser.setTo(d.getWorkingTo().toString());
 
         return retUser;
 
@@ -108,8 +108,8 @@ public class DermatologistService {
             dto.setId(d.getId());
             dto.setFirstName(d.getFirstName());
             dto.setLastName(d.getLastName());
-            dto.setWorkFrom(d.getWorkingFrom());
-            dto.setWorkTo(d.getWorkingTo());
+            dto.setFrom(d.getWorkingFrom().toString());
+            dto.setTo(d.getWorkingTo().toString());
 
             retList.add(dto);
         }
