@@ -3,7 +3,7 @@
 <div class="container">
   <div class="main-body">
   <div id = "main" *ngIf="loaded">
-    <div class="row gutters-sm"  style="background-color: #0f6674">
+    <div class="row gutters-sm"  style="8">
       <div class="col-md-4 mb-3">
         <div class="card">
           <div class="card-body">
@@ -171,6 +171,7 @@
 
   </div>
 
+
   <div class="preview-users">
     <h1 style="position: center; text-align: center; margin-top: 20px; background-color: white; color:#0f6674; font-family:'Arial Black'">List of predefined appointments</h1>
 
@@ -213,7 +214,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
-          <button (click)="reserve()">Reserve</button>
+          <button  *ngIf="isPatient" (click)="reserve(element.id)">Reserve</button>
 
 
         </td>

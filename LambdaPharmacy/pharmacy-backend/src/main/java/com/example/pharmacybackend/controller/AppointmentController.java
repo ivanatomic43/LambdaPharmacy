@@ -2,9 +2,14 @@ package com.example.pharmacybackend.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.example.pharmacybackend.dto.AppointmentDTO;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.AppointmentService;
+
+import com.example.pharmacybackend.services.UserServiceImpl;
+import com.example.pharmacybackend.model.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import reactor.netty.http.server.HttpServerRequest;
-
 @RestController
 @RequestMapping(value = "/appointment")
 public class AppointmentController {
@@ -32,6 +35,9 @@ public class AppointmentController {
 
     @Autowired
     private AppointmentService appointmentService;
+
+    @Autowired
+    private UserServiceImpl userService;
 
     @RequestMapping(value = "/createAppointment", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('PHARMACY_ADMIN')")
@@ -58,9 +64,20 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/reserveAppointment/{id}")
-    public ResponseEntity<?> getAll(@PathVariable("id") Long id, HttpServerRequest request) {
+    public ResponseEntity<?> getAll(@PathVariable("id") Long id, HttpServletRequest request) {
 
-        return null;
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        boolean reserved = appointmentService.reserveAppointment(id, user.getId());
+
+        if (!reserved) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+        return new ResponseEntity<>(reserved, HttpStatus.OK);
     }
 
 }

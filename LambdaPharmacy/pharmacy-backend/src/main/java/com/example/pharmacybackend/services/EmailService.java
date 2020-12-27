@@ -23,8 +23,6 @@ public class EmailService {
 	@Async
 	public void sendActivationLink(Patient user) throws MailException {
 
-		System.out.println("Usao u emailservice");
-		System.out.println(user.getEmail());
 		SimpleMailMessage mail = new SimpleMailMessage();
 		String link = "http://localhost:8051/auth/registrationConfirm/" + user.getEmail();
 		mail.setTo(user.getEmail());
@@ -37,8 +35,6 @@ public class EmailService {
 
 	@Async
 	public void sendDenyMail(User user) throws MailException {
-		System.out.println("Usao u denyMail");
-		System.out.println(user.getEmail());
 
 		SimpleMailMessage mail = new SimpleMailMessage();
 		mail.setTo(user.getEmail());
@@ -47,5 +43,17 @@ public class EmailService {
 		mail.setText("Sorry to inform you, clinic centre administrator denied your request for registration");
 		javaMailSender.send(mail);
 
+	}
+
+	@Async
+	public void sendAppointmentReservationMail(User user) throws MailException {
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(user.getEmail());
+		mail.setFrom("no.reply.medclinic@gmail.com");
+		mail.setSubject("Appointment reservation");
+		mail.setText(
+				"Dear patient, your appointment with dermatologist has been made. Thank you for your trust. Best regards, LambdaPharmacy team.");
+		javaMailSender.send(mail);
 	}
 }

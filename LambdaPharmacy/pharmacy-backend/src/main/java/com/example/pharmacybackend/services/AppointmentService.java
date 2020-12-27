@@ -11,6 +11,7 @@ import com.example.pharmacybackend.enumerations.AppointmentStatus;
 import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Dermatologist;
+import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.repository.*;
 
@@ -32,6 +33,9 @@ public class AppointmentService {
     @Autowired
     private PharmacyRepository pharmacyRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     public Appointment findById(long id) {
         return this.appointmentRepository.findById(id);
     }
@@ -42,9 +46,6 @@ public class AppointmentService {
 
     // dermatologist
     public AppointmentDTO createAppointment(AppointmentDTO newApp) {
-
-        System.out.println("PHID" + newApp.getPharmacyID());
-        System.out.println("DERMID" + newApp.getDermatologistID());
 
         // checking if dermatologist is available
         Dermatologist dermatologist = dermatologistRepository.findOneById(newApp.getDermatologistID());
@@ -95,8 +96,6 @@ public class AppointmentService {
 
         System.out.println(firstName + lastName);
 
-        System.out.println("podaci za appointment: " + a.getId());
-
         AppointmentDTO dto = new AppointmentDTO();
         dto.setId(a.getId());
         dto.setDateOfAppointment(a.getDateOfAppointment());
@@ -116,7 +115,7 @@ public class AppointmentService {
     public List<AppointmentDTO> getAllPredefined(Long id) {
 
         Pharmacy pharmacy = pharmacyRepository.findOneById(id);
-        System.out.println("PHARMACY ID U get predefined: " + id);
+
         List<Appointment> appList = pharmacy.getPharmacyAppointments();
         List<AppointmentDTO> retList = new ArrayList<>();
 
@@ -140,6 +139,28 @@ public class AppointmentService {
         }
 
         return retList;
+    }
+
+    public boolean reserveAppointment(Long id, Long userID) {
+
+        boolean reserved = false;
+
+        Appointment a = appointmentRepository.findOneById(id);
+        Patient patient = patientRepository.findOneById(userID);
+
+        a.setStatus(AppointmentStatus.RESERVED);
+        a.setPatient(patient);
+
+        List<Appointment> myAppointments = patient.getAppointments();
+        myAppointments.add(a);
+
+        appointmentRepository.save(a);
+        patientRepository.save(patient);
+
+        emailService.sendAppointmentReservationMail(patient);
+        reserved = true;
+
+        return reserved;
     }
 
 }

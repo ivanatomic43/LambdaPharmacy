@@ -26,7 +26,10 @@ export class PharmacyDetailsComponent implements OnInit {
   loaded = false;
   isSysAdmin = false;
   isPharmacyAdmin = false;
+  isPatient = false;
   profil: UserDTO;
+  appointmentID:number;
+
 
   //dermatologists
   dataSource: MatTableDataSource<DermDTO>;
@@ -100,6 +103,11 @@ export class PharmacyDetailsComponent implements OnInit {
           } else {
             this.isPharmacyAdmin = false;
           }
+          if(role == 'ROLE_PATIENT'){
+            this.isPatient = true;
+          } else {
+            this.isPatient = false;
+          }
       });
 
       this.fetchDermatologists();
@@ -146,5 +154,13 @@ export class PharmacyDetailsComponent implements OnInit {
       this.appointments= response;
       this.dataSource2 = new MatTableDataSource(this.appointments);
     });
+  }
+
+  reserve(id:number){
+      this.appointmentID = id;
+      this.appointmentService.reserveAppointment(this.appointmentID).subscribe(response => {
+         alert("Appointment reserved!");
+         this.router.navigate(['my-appointments']);
+      });
   }
 }
