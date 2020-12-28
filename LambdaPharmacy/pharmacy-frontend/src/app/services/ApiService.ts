@@ -66,6 +66,7 @@ export class ApiService {
   private checkError(error: any): any {
     if (error && error.status === 401) {
       // this.redirectIfUnauth(error);
+      console.log("Api service..");
     } else {
       // this.displayError(error);
     }
