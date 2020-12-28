@@ -22,6 +22,9 @@ public class AppointmentDTO {
     private String lastName;
     private double rating;
 
+    private String role;
+    private String type;
+
     public AppointmentDTO() {
     }
 
@@ -46,6 +49,20 @@ public class AppointmentDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rating = rating;
+    }
+
+    public AppointmentDTO(Long id, String dateOfAppointmentt, LocalTime meetingTime, long duration, double price,
+            String firstName, String lastName, double rating, String role, String type) {
+        this.id = id;
+        this.dateOfAppointmentt = dateOfAppointmentt;
+        this.meetingTime = meetingTime;
+        this.duration = duration;
+        this.price = price;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.rating = rating;
+        this.role = role;
+        this.type = type;
     }
 
     /**
@@ -242,6 +259,34 @@ public class AppointmentDTO {
      */
     public void setMeetingTimee(String meetingTimee) {
         this.meetingTimee = meetingTimee;
+    }
+
+    /**
+     * @return String return the role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    /**
+     * @return String return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

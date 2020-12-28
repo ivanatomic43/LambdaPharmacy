@@ -22,6 +22,7 @@ export class AppointmentService {
   getAllPredefined = appointmentUrl + '/getAllPredefined/'; //for each pharmacy
   createAppointmentUrl = appointmentUrl + '/createAppointment';
   reserveAppointmentUrl = appointmentUrl + '/reserveAppointment/';
+  getPatientAppointmentsUrl = appointmentUrl + '/getPatientAppointments'; //all types
 
   constructor(
     private apiService: ApiService,
@@ -71,6 +72,23 @@ export class AppointmentService {
 
   reserveAppointment(id:number){
     return this.http.post<any>(this.reserveAppointmentUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getPatientAppointments() {
+    return this.http.post<any>(this.getPatientAppointmentsUrl, {
 
     })
       .pipe(

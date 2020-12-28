@@ -163,4 +163,37 @@ public class AppointmentService {
         return reserved;
     }
 
+    public List<AppointmentDTO> getAllPatientAppointments(Long id) {
+
+        List<Appointment> appList = appointmentRepository.findByPatientId(id);
+        List<AppointmentDTO> myList = new ArrayList<>();
+
+        for (Appointment a : appList) {
+            AppointmentDTO dto = new AppointmentDTO();
+            dto.setId(a.getId());
+            dto.setDateOfAppointmentt(a.getDateOfAppointment().toString());
+            dto.setMeetingTimee(a.getMeetingTime().toString());
+
+            if (a.getDermatologist() != null) {
+                System.out.println("DERMATOLOG JE");
+                dto.setFirstName(a.getDermatologist().getFirstName());
+                dto.setLastName(a.getDermatologist().getLastName());
+                dto.setRole("DERMATOLOGIST");
+                dto.setType(AppointmentType.EXAMINATION.toString());
+            } else {
+                dto.setFirstName(a.getPharmacist().getFirstName());
+                dto.setLastName(a.getPharmacist().getLastName());
+                dto.setRole("PHARMACIST");
+                dto.setType(AppointmentType.COUNCELING.toString());
+            }
+
+            dto.setDuration(a.getDuration());
+            dto.setPrice(a.getPrice());
+
+            myList.add(dto);
+        }
+
+        return myList;
+    }
+
 }

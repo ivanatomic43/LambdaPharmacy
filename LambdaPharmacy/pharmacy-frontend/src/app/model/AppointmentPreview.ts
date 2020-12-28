@@ -15,7 +15,11 @@ export class AppointmentPreview{
   lastName: string;
   rating: number;
 
-  constructor(id: number, dateOfAppointment:any, meetingTime:any, firstName:string, lastName: string, duration:number, price:number, rating:number){
+  role:string;
+  type:string;
+
+  constructor(id: number, dateOfAppointment:any, meetingTime:any, firstName:string,
+     lastName: string, duration:number, price:number, rating:number, role:string, type:string){
     this.id=id;
     this.dateOfAppointment= dateOfAppointment;
     this.meetingTime= meetingTime;
@@ -24,6 +28,8 @@ export class AppointmentPreview{
     this.duration=duration;
     this.price=price;
     this.rating=rating;
+    this.role = role;
+    this.type=type;
   }
 
 

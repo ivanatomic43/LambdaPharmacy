@@ -80,4 +80,20 @@ public class AppointmentController {
         return new ResponseEntity<>(reserved, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getPatientAppointments")
+    public ResponseEntity<?> getPatientAppointments(HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        List<AppointmentDTO> myAppointments = appointmentService.getAllPatientAppointments(user.getId());
+
+        if (myAppointments.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(myAppointments, HttpStatus.OK);
+    }
+
 }
