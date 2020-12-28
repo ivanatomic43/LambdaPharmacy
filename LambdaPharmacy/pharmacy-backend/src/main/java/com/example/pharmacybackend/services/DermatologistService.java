@@ -110,6 +110,7 @@ public class DermatologistService {
             dto.setLastName(d.getLastName());
             dto.setFrom(d.getWorkingFrom().toString());
             dto.setTo(d.getWorkingTo().toString());
+            System.out.println(dto.getFirstName());
 
             retList.add(dto);
         }

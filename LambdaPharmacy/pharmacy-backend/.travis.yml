@@ -6,8 +6,7 @@ jdk: oraclejdk8
 before_install:
   - chmod +x mvnw
 
-  
-  addons:
+addons:
     sonarcloud:
     organization: ivanatomic43-github
     token: $MY_SONAR_TOKEN
@@ -15,8 +14,7 @@ before_install:
 script:
   - ./mvnw clean install -DskipTests=false -B
   - ./mvnw sonar:sonar -Dsonar.projectKey=$PROJECT_KEY -Dsonar.organization=<ivanatomic43-github> -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$MY_SONAR_TOKEN
-  
-  
+
 dist: trusty
 
 deploy:
