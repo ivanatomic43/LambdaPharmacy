@@ -4,7 +4,7 @@ jdk: oraclejdk8
 
 
 before_install:
-  -cd pharmacy-backend
+  - cd pharmacy-backend
   - chmod +x mvnw
 
 addons:
