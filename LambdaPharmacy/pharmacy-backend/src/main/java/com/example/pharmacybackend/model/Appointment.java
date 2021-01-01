@@ -15,7 +15,7 @@ public class Appointment {
 	@Column
 	private Long id;
 
-	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private AppointmentType type;
 
 	@Column(nullable = false)
@@ -30,7 +30,7 @@ public class Appointment {
 	@Column
 	private LocalTime meetingTime;
 
-	@Column
+	@Enumerated(EnumType.STRING)
 	private AppointmentStatus status;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

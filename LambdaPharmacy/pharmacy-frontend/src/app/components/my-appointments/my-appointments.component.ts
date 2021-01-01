@@ -69,4 +69,12 @@ export class MyAppointmentsComponent implements OnInit {
   }
 
 
+  cancel(id:number){
+    this.appointmentService.cancelAppointment(id).subscribe(response => {
+      alert("Appointment is cancelled!");
+      this.fetchAppointments();
+    });
+
+
+  }
 }

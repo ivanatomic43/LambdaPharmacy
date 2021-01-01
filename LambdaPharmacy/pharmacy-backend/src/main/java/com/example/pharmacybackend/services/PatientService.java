@@ -27,6 +27,10 @@ public class PatientService {
 		return this.patientRepository.findByUsername(username);
 	}
 
+	public Patient update(Patient p) {
+		return this.patientRepository.save(p);
+	}
+
 	public Patient registerPatient(UserRequestDTO p) {
 
 		Patient newPatient = new Patient();

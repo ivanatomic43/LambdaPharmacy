@@ -23,6 +23,7 @@ export class AppointmentService {
   createAppointmentUrl = appointmentUrl + '/createAppointment';
   reserveAppointmentUrl = appointmentUrl + '/reserveAppointment/';
   getPatientAppointmentsUrl = appointmentUrl + '/getPatientAppointments'; //all types
+  cancelAppointmentUrl = appointmentUrl + '/cancelAppointment/';
 
   constructor(
     private apiService: ApiService,
@@ -103,5 +104,23 @@ export class AppointmentService {
         })
       );
   }
+
+  cancelAppointment(id:number) {
+    return this.http.put<any>(this.cancelAppointmentUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
 
 }

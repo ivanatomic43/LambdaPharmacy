@@ -64,6 +64,7 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/reserveAppointment/{id}")
+    @PreAuthorize("hasRole('PATIENT')")
     public ResponseEntity<?> getAll(@PathVariable("id") Long id, HttpServletRequest request) {
 
         String myToken = tokenUtils.getToken(request);
@@ -94,6 +95,23 @@ public class AppointmentController {
         }
 
         return new ResponseEntity<>(myAppointments, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cancelAppointment/{id}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> cancelAppointment(@PathVariable("id") Long id, HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        boolean cancelled = appointmentService.cancelAppointment(id, user.getId());
+
+        if (!cancelled) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

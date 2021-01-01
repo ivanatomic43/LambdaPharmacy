@@ -87,7 +87,7 @@ public class TokenUtils {
         try {
             final Claims claims = this.getAllClaimsFromToken(token);
             username = claims.getSubject();
-            System.out.println(username);
+
         } catch (Exception e) {
             System.out.println("EXCEPTION" + e);
             username = null;
@@ -163,7 +163,7 @@ public class TokenUtils {
 
     // citanje podataka iz tokena
     private Claims getAllClaimsFromToken(String token) {
-        System.out.println("CATCHTOKEN" + token);
+
         Claims claims = null;
         try {
             claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
