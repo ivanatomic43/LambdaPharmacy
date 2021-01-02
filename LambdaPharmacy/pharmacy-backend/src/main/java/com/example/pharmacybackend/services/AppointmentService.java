@@ -81,23 +81,16 @@ public class AppointmentService {
         // checking other appointments
         List<Appointment> allApp = appointmentRepository.findAll();
         if (!allApp.isEmpty()) {
-            System.out.println("Korak 1");
+
             for (Appointment app : allApp) {
 
-                System.out.println("Korak 2 idcrazlicit");
                 if (app.getDermatologist().getId() == dermatologist.getId()) {
-                    System.out.println("Korak dermatolog isti");
-                    System.out.println(app.getDateOfAppointment().toString());
-                    System.out.println(newApp.getDateOfAppointment().toString());
 
                     if (app.getDateOfAppointment().compareTo(newApp.getDateOfAppointment()) == 0) {
-                        System.out.println("Korak datum isti");
+
                         LocalTime appStart = app.getMeetingTime();
                         LocalTime appEnd = appStart.plusHours(app.getDuration());
-                        System.out.println("VREME POCETKA STAROG SASTANKA" + appStart.toString());
-                        System.out.println("VREME ZAVRSETKA STAROG SASTANKA" + appEnd.toString());
-                        System.out.println("VREME POCETKA NOVOG SASTANKA" + timeStart);
-                        System.out.println("VREME ZAVRSETKA NOVOG SASTABKA" + timeEnd);
+
                         if (appStart.compareTo(newApp.getMeetingTime()) == 0 || timeStart.compareTo(appEnd) < 0) { // timeEnd
                             // -
                             // for
@@ -225,7 +218,7 @@ public class AppointmentService {
                 dto.setMeetingTimee(a.getMeetingTime().toString());
 
                 if (a.getDermatologist() != null) {
-                    System.out.println("DERMATOLOG JE");
+
                     dto.setFirstName(a.getDermatologist().getFirstName());
                     dto.setLastName(a.getDermatologist().getLastName());
                     dto.setRole("DERMATOLOGIST");
@@ -283,10 +276,8 @@ public class AppointmentService {
                 System.out.println(a.getDermatologist().getId());
                 System.out.println(a.getPatient().getId());
                 this.update(a);
-                // a.setPatient(null);
 
                 this.patientService.update(a.getPatient());
-                System.out.println("prosao patient update");
 
                 cancelled = true;
             }
