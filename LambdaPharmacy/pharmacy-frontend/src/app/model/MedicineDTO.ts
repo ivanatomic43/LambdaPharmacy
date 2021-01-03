@@ -8,7 +8,7 @@ export class MedicineDTO {
     public producer: string,
     public structure: string,
     public mode: string,
-    public note: string,
+    public note: string
 
 
   ) {

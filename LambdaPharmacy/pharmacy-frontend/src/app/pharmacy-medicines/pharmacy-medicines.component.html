@@ -1,0 +1,22 @@
+
+<div *ngIf="!loaded" class="row" style="margin-left: 50px;">
+  <h6>No data to show.</h6>
+</div>
+
+<section class="u-clearfix u-section-1" id="carousel_9f1d" style="margin-top: 30px; background-color: #eff2ff;" *ngIf="loaded">
+  <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+    <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-xl u-list u-repeater u-list-1">
+      <div class="u-container-style u-list-item u-repeater-item u-list-item-1" style="margin-top: 15px; margin-left: 15px;"  *ngFor="let medicine of fetchedMedicines">
+        <div class="u-container-layout u-similar-container u-container-layout-1">
+          <img src="https://1au3b422k9zdqzddw3my51gg-wpengine.netdna-ssl.com/wp-content/uploads/sites/7/2019/11/Givlaari-Alnylam.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="500" data-image-height="500">
+          <h5 class="u-text u-text-default u-text-1">{{medicine.name}}&nbsp;</h5>
+          <p class="u-text u-text-default u-text-2">{{medicine.note}}</p>
+          <h4 class="u-text u-text-default u-text-palette-1-base u-text-3">{{medicine.producer}}</h4>
+          <button class="btn-search">See details</button>
+          <button style="margin-left: 5px;" class="btn-search">Reserve</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

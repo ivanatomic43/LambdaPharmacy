@@ -163,4 +163,8 @@ export class PharmacyDetailsComponent implements OnInit {
          this.router.navigate(['my-appointments']);
       });
   }
+
+  showMedicines(id:number){
+    this.router.navigate(['pharmacy-medicines/'+ id]);
+  }
 }

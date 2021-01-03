@@ -20,6 +20,16 @@ INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, s
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (9,'Humani lekovi','119','RECIPE','Xanax','Namenjen za lečenje anksioznosti, napetosti ili drugih somatskih (telesnih) ili psihijatrijskih simptoma povezanih sa anksioznošću','PFIZER ITALIA S.R.L.','Tableta', 'alprazolam');
 INSERT INTO MEDICINE (id, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (10,'Humani lekovi','120','RECIPE','Rantudil forte 60mg','Koristi se u terapiji bola i zapaljenja kod reumatoidnog artritisa (hronični poliartritis)','MEDA MANUFACTURING GMBH','Kapsula', 'acemetacin');
 
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (1,1);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (1,2);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (1,3);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (1,4);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (2,1);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (2,4);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (3,6);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (3,7);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (3,8);
+INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (3,2);
 
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_PATIENT');
 INSERT INTO AUTHORITY (id, name) VALUES (2,'ROLE_PHARMACIST');

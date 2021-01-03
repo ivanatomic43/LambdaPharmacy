@@ -73,6 +73,10 @@ export class MyAppointmentsComponent implements OnInit {
     this.appointmentService.cancelAppointment(id).subscribe(response => {
       alert("Appointment is cancelled!");
       this.fetchAppointments();
+    }, error => {
+      if(error.status == 400){
+        alert("You can't cancel appointment!");
+      }
     });
 
 

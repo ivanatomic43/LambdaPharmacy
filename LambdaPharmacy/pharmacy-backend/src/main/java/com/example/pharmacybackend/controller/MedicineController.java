@@ -24,7 +24,7 @@ public class MedicineController {
 
 	@RequestMapping(value = "/getAllMedicines", method = RequestMethod.GET)
 	public ResponseEntity<?> getAllMedicines() {
-		System.out.println("USAO U GET ALL med");
+
 		List<Medicine> medicines = medicineService.getAllMedicine();
 		List<MedicineDTO> retMed = new ArrayList<>();
 
@@ -36,6 +36,18 @@ public class MedicineController {
 		}
 
 		return new ResponseEntity<>(retMed, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/getPharmacyMedicines/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getPharmacyMedicines(@PathVariable("id") Long id) {
+
+		List<MedicineDTO> medicines = medicineService.getPharmacyMedicines(id);
+
+		if (medicines.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(medicines, HttpStatus.OK);
 	}
 
 }

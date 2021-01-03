@@ -52,6 +52,7 @@ import { PharmacyDetailsComponent } from './components/pharmacy-details/pharmacy
 import { RegisterDermatologistComponent } from './components/register-dermatologist/register-dermatologist.component';
 import { AddDermComponent } from './components/add-derm/add-derm.component';
 import { AddPharmComponent } from './components/add-pharm/add-pharm.component';
+import { PharmacyMedicinesComponent } from './pharmacy-medicines/pharmacy-medicines.component';
 
 
 
@@ -94,7 +95,8 @@ import { AddPharmComponent } from './components/add-pharm/add-pharm.component';
     PharmacyDetailsComponent,
     RegisterDermatologistComponent,
     AddDermComponent,
-    AddPharmComponent
+    AddPharmComponent,
+    PharmacyMedicinesComponent
 
 
   ],

@@ -63,9 +63,6 @@ public class AuthController {
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
 			HttpServletResponse response) {
 
-		// System.out.println( "REQUEST: " + hr.getHeader("TokenAuthBic"));
-		//
-		System.out.println("Usao u login");
 		User found = userService.findByUsername(Encode.forHtml(authenticationRequest.getUsername()));
 
 		if (found == null) {
@@ -164,14 +161,10 @@ public class AuthController {
 	@GetMapping("/getLoggedUser")
 	public ResponseEntity<?> getLoggedUser(HttpServletRequest request, @RequestHeader("TokenAuthBic") String token) {
 
-		System.out.println("Usao u getLoggedUser ovaj username: "
-				+ SecurityContextHolder.getContext().getAuthentication().getName());
-
 		String myToken = tokenUtils.getToken(request);
-		System.out.println("Token: " + myToken);
 
 		String username = tokenUtils.getUsernameFromToken(myToken);
-		System.out.println("Username iz tokena:" + username);
+
 		User user = this.userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		if (user != null) {

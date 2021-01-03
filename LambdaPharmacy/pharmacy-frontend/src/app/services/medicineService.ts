@@ -13,6 +13,7 @@ export class MedicineService {
 
   refreshMedicines = new Subject<MedicineDTO[]>();
   allMedicinesUrl = medicineUrl + '/getAllMedicines';
+  getPharmacyMedicinesUrl = medicineUrl + '/getPharmacyMedicines/';
 
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -21,5 +22,8 @@ export class MedicineService {
     return this.http.get<any>(this.allMedicinesUrl);
   }
 
+  getPharmacyMedicines(id:number){
+    return this.http.get<any>(this.getPharmacyMedicinesUrl + id);
+  }
 
 }
