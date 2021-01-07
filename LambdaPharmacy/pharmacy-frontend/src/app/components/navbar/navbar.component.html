@@ -17,7 +17,7 @@
                  <a class="nav-link" routerLink="/list-of-prescriptions">E-Prescriptions</a>
                  <a class="nav-link" routerLink="/reserved-medicines">Reserved medicines</a>
                  <a class="nav-link" routerLink="/all-my-medicines">Medicines on e-prescriptions</a>
-                 <a class="nav-link" routerLink="/get-medicine-page">Get medicine</a> <!--button in reserved medicines/e-prescriptions-->
+
               </div>
             </a>
           </div>
@@ -62,7 +62,7 @@
 
       <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/manage-pharmacy" class="nav-link">Manage pharmacy</a></li>
       <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/manage-dermatologist" class="nav-link">Manage dermatologists</a></li>
-
+      <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/list-of-medicines" class ="nav-link">Manage medicines</a></li>
         <li class="nav-item"><a *ngIf="anyLogged" routerLink="/patient-profile" class="nav-link">My profile</a></li>
 
 

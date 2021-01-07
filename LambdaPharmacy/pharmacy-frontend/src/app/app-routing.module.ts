@@ -1,4 +1,7 @@
-import { PharmacyMedicinesComponent } from './pharmacy-medicines/pharmacy-medicines.component';
+import { ListOfMedicinesComponent } from './components/list-of-medicines/list-of-medicines.component';
+import { RegisterMedicineComponent } from './components/register-medicine/register-medicine.component';
+import { ReserveMedPageComponent } from './components/reserve-med-page/reserve-med-page.component';
+import { PharmacyMedicinesComponent } from './components/pharmacy-medicines/pharmacy-medicines.component';
 import { AddPharmComponent } from './components/add-pharm/add-pharm.component';
 import { AddDermComponent } from './components/add-derm/add-derm.component';
 import { RegisterDermatologistComponent } from './components/register-dermatologist/register-dermatologist.component';
@@ -26,7 +29,6 @@ import {PatientPageComponent} from './components/patient-page/patient-page.compo
 import {PatientProfileComponent} from './components/patient-profile/patient-profile.component';
 import { ReservedMedicinesComponent } from './components/reserved-medicines/reserved-medicines.component';
 import { AllMyMedicinesComponent } from './components/all-my-medicines/all-my-medicines.component';
-import { GetMedicinePageComponent } from './components/get-medicine-page/get-medicine-page.component';
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
 import { PenaltyInsightComponent } from './components/penalty-insight/penalty-insight.component';
 import { MakeAnAppDComponent } from './components/make-an-app-d/make-an-app-d.component';
@@ -44,7 +46,6 @@ const routes: Routes = [
   {path: 'list-of-prescriptions', component: ListOfPrescriptionsComponent },
   {path: 'reserved-medicines', component: ReservedMedicinesComponent },
   {path: 'all-my-medicines', component: AllMyMedicinesComponent },
-  {path: 'get-medicine-page', component: GetMedicinePageComponent },
   {path: 'my-appointments', component: MyAppointmentsComponent },
   {path: 'penalty-insight', component: PenaltyInsightComponent },
   {path: 'make-an-app-d',
@@ -55,6 +56,15 @@ const routes: Routes = [
         }
       ]
    },
+  {path: 'reserve-med-page',
+      children : [
+        {
+          path: ':mid/:pid',
+          component: ReserveMedPageComponent
+        }
+      ]
+
+  },
   {path: 'make-an-app-p', component:MakeAnAppPComponent },
   {path: 'complaint', component:  ComplaintComponent},
   {path: 'history-of-app-d', component:  HistoryOfAppDComponent},
@@ -99,7 +109,9 @@ const routes: Routes = [
           component : PharmacyMedicinesComponent
         }
       ]
-  }
+  },
+  {path: 'register-medicine', component: RegisterMedicineComponent},
+  {path: 'list-of-medicines', component: ListOfMedicinesComponent}
 
 ];
 

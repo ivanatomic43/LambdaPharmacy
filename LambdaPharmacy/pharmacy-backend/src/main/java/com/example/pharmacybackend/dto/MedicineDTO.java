@@ -14,10 +14,13 @@ public class MedicineDTO {
 	private String structure;
 	private MedicineMode mode;
 	private String note;
+	private String contraindications;
+	private String dailyDose;
 
 	private Long pharmacyID;
 	private String pharmacyName;
 	private String modee;
+	private String status;
 
 	public MedicineDTO() {
 	}
@@ -43,7 +46,8 @@ public class MedicineDTO {
 	}
 
 	public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer,
-			String structure, String modee, String note, Long pharmacyID, String pharmacyName) {
+			String structure, String modee, String note, Long pharmacyID, String pharmacyName, String status,
+			String contraindications, String dailyDose) {
 		super();
 		this.id = id;
 		this.medicineCode = medicineCode;
@@ -56,6 +60,9 @@ public class MedicineDTO {
 		this.note = note;
 		this.pharmacyID = pharmacyID;
 		this.pharmacyName = pharmacyName;
+		this.status = status;
+		this.contraindications = contraindications;
+		this.dailyDose = dailyDose;
 	}
 
 	public Long getId() {
@@ -170,6 +177,48 @@ public class MedicineDTO {
 	 */
 	public void setModee(String modee) {
 		this.modee = modee;
+	}
+
+	/**
+	 * @return String return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return String return the contraindications
+	 */
+	public String getContraindications() {
+		return contraindications;
+	}
+
+	/**
+	 * @param contraindications the contraindications to set
+	 */
+	public void setContraindications(String contraindications) {
+		this.contraindications = contraindications;
+	}
+
+	/**
+	 * @return int return the dailyDose
+	 */
+	public String getDailyDose() {
+		return dailyDose;
+	}
+
+	/**
+	 * @param dailyDose the dailyDose to set
+	 */
+	public void setDailyDose(String dailyDose) {
+		this.dailyDose = dailyDose;
 	}
 
 }

@@ -1,0 +1,122 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex flex-column align-items-center text-center">
+      <img src="https://1au3b422k9zdqzddw3my51gg-wpengine.netdna-ssl.com/wp-content/uploads/sites/7/2019/11/Givlaari-Alnylam.jpg" alt="" data-image-width="50" data-image-height="50">
+      <div class="mt-3">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="col-sm-9" style="background-color: #0f6674">
+    <h3 class="mgbt-xs-15">Register new medicine</h3>
+    <form (ngSubmit)= "registerMedicine()" [formGroup]="medicineForm" >
+    <div class="col-md-8">
+      <div class="card mb-3">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Medicine code</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input [(ngModel)]="medicine.medicineCode" type="text" formControlName= "medicineCode" id="medicineCode" name ="medicineCode"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input [(ngModel)]="medicine.name" type="text" formControlName= "name" id="name" name ="name"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Medicine type</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input [(ngModel)]="medicine.medType" type="text" formControlName = "medicineType" id="medicineType" name ="medicineType"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Shape</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input [(ngModel)]="medicine.shape" type="text" formControlName = "shape" id="shape" name ="shape"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Structure</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" [(ngModel)]="medicine.structure" formControlName = "structure" id="strucutre" name ="structure"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Producer</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" [(ngModel)]="medicine.producer" formControlName = "producer" id="producer" name ="producer"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Medicine mode</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <select [(ngModel)]="medicine.mode" formControlName="medicineMode" name = "medicineMode" id="medicineMode" style="width: 150px;">
+                <option >NO RECIPE</option>
+                <option >RECIPE</option>
+
+            </select>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Contraindications</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input [(ngModel)]="medicine.contraindications" type="text" formControlName = "contraindications" id="contraindications" name ="contraindications"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Note</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input [(ngModel)]="medicine.note" type="text" formControlName = "note" id="note" name ="note"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Daily dose</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input [(ngModel)]="medicine.dailyDose" type="text" formControlName = "dailyDose" id="dailyDose" name ="dailyDose"/>
+            </div>
+          </div>
+          <hr>
+
+        </div>
+        <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Register</button>
+      </div>
+    </div>
+    </form>
+
+  </div>
+</div>

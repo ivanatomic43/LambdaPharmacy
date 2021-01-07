@@ -1,7 +1,9 @@
 import { Router, ActivatedRoute } from '@angular/router';
-import { MedicineDTO } from './../model/MedicineDTO';
+
 import { Component, OnInit } from '@angular/core';
-import { MedicineService } from '../services/medicineService';
+import { MedicineDTO } from 'src/app/model/MedicineDTO';
+import { MedicineService } from 'src/app/services/medicineService';
+
 
 @Component({
   selector: 'app-pharmacy-medicines',

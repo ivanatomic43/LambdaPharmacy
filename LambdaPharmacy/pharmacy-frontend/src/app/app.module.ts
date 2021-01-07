@@ -29,7 +29,6 @@ import { PasswordChangeComponent } from './components/password-change/password-c
 import { ListOfPrescriptionsComponent } from './components/list-of-prescriptions/list-of-prescriptions.component';
 import { ReservedMedicinesComponent } from './components/reserved-medicines/reserved-medicines.component';
 import { AllMyMedicinesComponent } from './components/all-my-medicines/all-my-medicines.component';
-import { GetMedicinePageComponent } from './components/get-medicine-page/get-medicine-page.component';
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
 import { PenaltyInsightComponent } from './components/penalty-insight/penalty-insight.component';
 import { MakeAnAppDComponent } from './components/make-an-app-d/make-an-app-d.component';
@@ -52,7 +51,10 @@ import { PharmacyDetailsComponent } from './components/pharmacy-details/pharmacy
 import { RegisterDermatologistComponent } from './components/register-dermatologist/register-dermatologist.component';
 import { AddDermComponent } from './components/add-derm/add-derm.component';
 import { AddPharmComponent } from './components/add-pharm/add-pharm.component';
-import { PharmacyMedicinesComponent } from './pharmacy-medicines/pharmacy-medicines.component';
+import { PharmacyMedicinesComponent } from './components/pharmacy-medicines/pharmacy-medicines.component';
+import { ReserveMedPageComponent } from './components/reserve-med-page/reserve-med-page.component';
+import { RegisterMedicineComponent } from './components/register-medicine/register-medicine.component';
+
 
 
 
@@ -76,7 +78,6 @@ import { PharmacyMedicinesComponent } from './pharmacy-medicines/pharmacy-medici
     ListOfPrescriptionsComponent,
     ReservedMedicinesComponent,
     AllMyMedicinesComponent,
-    GetMedicinePageComponent,
     MyAppointmentsComponent,
     PenaltyInsightComponent,
     MakeAnAppDComponent,
@@ -96,7 +97,9 @@ import { PharmacyMedicinesComponent } from './pharmacy-medicines/pharmacy-medici
     RegisterDermatologistComponent,
     AddDermComponent,
     AddPharmComponent,
-    PharmacyMedicinesComponent
+    PharmacyMedicinesComponent,
+    ReserveMedPageComponent,
+    RegisterMedicineComponent
 
 
   ],

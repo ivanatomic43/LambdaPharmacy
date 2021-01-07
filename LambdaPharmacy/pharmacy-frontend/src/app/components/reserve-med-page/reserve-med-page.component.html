@@ -1,0 +1,29 @@
+<div class="main">
+  <div class="col-sm-9" style="background-color: #0f6674">
+    <h3 class="mgbt-xs-15">Reserve medicine</h3>
+    <form (ngSubmit)= "reserve()" [formGroup]="reserveForm" >
+    <div class="col-md-8">
+      <div class="card mb-3">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Date</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="date" formControlName= "date"/>
+            </div>
+          </div>
+          <hr>
+
+
+
+        </div>
+        <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Reserve</button>
+      </div>
+    </div>
+    </form>
+
+  </div>
+</div>
+

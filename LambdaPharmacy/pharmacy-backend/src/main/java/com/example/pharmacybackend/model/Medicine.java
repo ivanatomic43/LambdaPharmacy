@@ -3,6 +3,7 @@ package com.example.pharmacybackend.model;
 import javax.persistence.*;
 
 import com.example.pharmacybackend.enumerations.MedicineMode;
+import com.example.pharmacybackend.enumerations.MedicineStatus;
 
 @Entity
 @Table(name = "MEDICINE")
@@ -35,6 +36,12 @@ public class Medicine {
 
 	@Enumerated(EnumType.STRING)
 	private MedicineMode mode;
+
+	@Column(nullable = false)
+	private String contraindications;
+
+	@Column(nullable = false)
+	private String dailyDose;
 
 	// @Column
 	// private List<String> substituteMedicines = new ArrayList<>();
@@ -113,4 +120,33 @@ public class Medicine {
 
 	@Column
 	private String note;
+
+	/**
+	 * @return String return the contraindications
+	 */
+	public String getContraindications() {
+		return contraindications;
+	}
+
+	/**
+	 * @param contraindications the contraindications to set
+	 */
+	public void setContraindications(String contraindications) {
+		this.contraindications = contraindications;
+	}
+
+	/**
+	 * @return int return the dailyDose
+	 */
+	public String getDailyDose() {
+		return dailyDose;
+	}
+
+	/**
+	 * @param dailyDose the dailyDose to set
+	 */
+	public void setDailyDose(String dailyDose) {
+		this.dailyDose = dailyDose;
+	}
+
 }

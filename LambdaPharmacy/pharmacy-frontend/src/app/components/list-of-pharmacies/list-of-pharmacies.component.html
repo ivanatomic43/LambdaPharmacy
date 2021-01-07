@@ -3,6 +3,12 @@
   <h6>No data to show.</h6>
 </div>
 <section class="u-clearfix u-section-1" id="carousel_9f1d" style="margin-top: 30px; background-color: #eff2ff;" *ngIf="loaded">
+  <div *ngIf="isSysAdmin" style="display: flex;  justify-content: center;
+  align-items: center;">
+    <h2 style=" color:#0f6674; font-family:'Arial Black'">List of all pharmacies in the system</h2>
+    <button style="margin-left:50px;" class="btn-search" (click)="showPharmacyForm()">Register pharmacy</button>
+  </div>
+
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
     <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-xl u-list u-repeater u-list-1">
       <div class="u-container-style u-list-item u-repeater-item u-list-item-1" style="margin-top: 15px; margin-left: 15px;" *ngFor="let pharmacy of fetchedPharmacies">

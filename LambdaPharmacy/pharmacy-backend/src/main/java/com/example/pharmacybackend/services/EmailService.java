@@ -56,4 +56,17 @@ public class EmailService {
 				"Dear patient, your appointment with dermatologist has been made. Thank you for your trust. Best regards, LambdaPharmacy team.");
 		javaMailSender.send(mail);
 	}
+
+	@Async
+	public void sendMedicineReservationMail(Patient patient, Long reservationID) throws MailException {
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(patient.getEmail());
+		mail.setFrom("no.reply.medclinic@gmail.com");
+		mail.setSubject("Medicine reservation");
+		mail.setText(
+				"Dear patient, the medicine you have chosen has been successfully reserved. The number of your reservation is: "
+						+ reservationID + ". Thank you for your trust. Best regards, LambdaPharmacy team.");
+		javaMailSender.send(mail);
+	}
 }

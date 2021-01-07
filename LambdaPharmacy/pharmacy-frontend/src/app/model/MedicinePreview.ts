@@ -1,5 +1,4 @@
-export class MedicineDTO {
-
+export class MedicinePreview{
   constructor(
     public id: number,
     public medicineCode: string,
@@ -10,10 +9,11 @@ export class MedicineDTO {
     public structure: string,
     public mode: string,
     public note: string,
-    public contraindications: string,
+    public pharmacyID:number,
+    public pharmacyName: string,
+    public status: string,
+    public contraidications: string,
     public dailyDose : string
-
-
   ) {
   }
 
