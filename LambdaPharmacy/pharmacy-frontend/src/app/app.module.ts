@@ -55,6 +55,8 @@ import { PharmacyMedicinesComponent } from './components/pharmacy-medicines/phar
 import { ReserveMedPageComponent } from './components/reserve-med-page/reserve-med-page.component';
 import { RegisterMedicineComponent } from './components/register-medicine/register-medicine.component';
 
+import { AddMedComponent } from './components/add-med/add-med.component';
+
 
 
 
@@ -99,7 +101,8 @@ import { RegisterMedicineComponent } from './components/register-medicine/regist
     AddPharmComponent,
     PharmacyMedicinesComponent,
     ReserveMedPageComponent,
-    RegisterMedicineComponent
+    RegisterMedicineComponent,
+    AddMedComponent
 
 
   ],

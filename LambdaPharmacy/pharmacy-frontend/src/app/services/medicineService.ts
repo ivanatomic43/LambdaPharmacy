@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import {MedicineDTO} from '../model/MedicineDTO';
+import {catchError, first, map} from 'rxjs/operators';
+import {Observable, throwError} from 'rxjs';
 
 const medicineUrl = 'http://localhost:8051/medicine';
 
@@ -21,6 +23,8 @@ export class MedicineService {
   getPatientReservationsUrl = medicineUrl + '/getPatientReservations';
   getAllMedicinesInSystemUrl = medicineUrl + '/getAllMedicinesInSystem';
   registerMedicineUrl = medicineUrl + '/registerMedicine';
+  getMedForAddUrl = medicineUrl + '/getMedForAdd/';
+  addMedicineToPharmacyUrl = medicineUrl + '/addMedicineToPharmacy/';
 
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -47,5 +51,46 @@ export class MedicineService {
 
   registerMedicine(medicineParams: NewMedicine){
     return this.http.post<any>(this.registerMedicineUrl, medicineParams);
+  }
+
+  getMedForAdd(pharmacyID:number){
+
+    return this.http.post(this.getMedForAddUrl + pharmacyID, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+
+
+
+  addMedicineToPharmacy(pharmacyID:number, medicineID: number){
+
+    return this.http.post(this.addMedicineToPharmacyUrl + pharmacyID + '/' + medicineID, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
   }
 }

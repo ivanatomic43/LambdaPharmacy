@@ -117,4 +117,31 @@ public class MedicineController {
 
 	}
 
+	@RequestMapping(value = "/getMedForAdd/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> getMedForAdd(@PathVariable("id") Long id) {
+
+		List<MedicineDTO> list = medicineService.getMedForAdd(id);
+
+		if (list.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/addMedicineToPharmacy/{id}/{medicineID}", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> addMedicineToPharmacy(@PathVariable("id") Long id,
+			@PathVariable("medicineID") Long medicineID) {
+
+		boolean added = medicineService.addMedicineToPharmacy(id, medicineID);
+
+		if (!added) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(added, HttpStatus.OK);
+	}
+
 }

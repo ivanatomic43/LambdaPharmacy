@@ -1,3 +1,4 @@
+
 import { ListOfMedicinesComponent } from './components/list-of-medicines/list-of-medicines.component';
 import { RegisterMedicineComponent } from './components/register-medicine/register-medicine.component';
 import { ReserveMedPageComponent } from './components/reserve-med-page/reserve-med-page.component';
@@ -33,6 +34,7 @@ import { MyAppointmentsComponent } from './components/my-appointments/my-appoint
 import { PenaltyInsightComponent } from './components/penalty-insight/penalty-insight.component';
 import { MakeAnAppDComponent } from './components/make-an-app-d/make-an-app-d.component';
 import { ComplaintComponent } from './components/complaint/complaint.component';
+import { AddMedComponent } from './components/add-med/add-med.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -111,7 +113,15 @@ const routes: Routes = [
       ]
   },
   {path: 'register-medicine', component: RegisterMedicineComponent},
-  {path: 'list-of-medicines', component: ListOfMedicinesComponent}
+  {path: 'list-of-medicines', component: ListOfMedicinesComponent},
+  {path: 'add-med',
+      children : [
+        {
+          path: ':id',
+          component : AddMedComponent
+        }
+      ]
+  }
 
 ];
 

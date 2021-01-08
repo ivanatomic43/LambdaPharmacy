@@ -1,0 +1,32 @@
+<div class="main">
+  <div class="col-sm-9" style="background-color: #0f6674">
+    <h3 class="mgbt-xs-15">Adding medicine to pharmacy</h3>
+    <form (ngSubmit)= "addMedicine()" [formGroup]="addingMedForm" >
+    <div class="col-md-8">
+      <div class="card mb-3">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Choose medicine from the list</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <select formControlName="medicine" name = "medicine" style="width: 150px;">
+                  <option *ngFor="let medicine of fetchedMedicines" [value]="medicine.id">
+                      {{medicine.id}} {{medicine.name}}
+                  </option>
+              </select>
+            </div>
+          </div>
+          <hr>
+
+
+
+        </div>
+        <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Add</button>
+      </div>
+    </div>
+    </form>
+
+  </div>
+</div>

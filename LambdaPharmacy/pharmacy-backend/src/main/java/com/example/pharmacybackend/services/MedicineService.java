@@ -274,4 +274,65 @@ public class MedicineService {
 
 	}
 
+	public List<MedicineDTO> getMedForAdd(Long id) {
+
+		List<MedicineDTO> retList = new ArrayList<>();
+
+		Pharmacy pharmacy = pharmacyRepository.findOneById(id);
+
+		List<Medicine> allMed = medicineRepository.findAll();
+
+		List<Medicine> pharmMed = pharmacy.getListOfMedicines();
+
+		for (Medicine m : allMed) {
+
+			if (!pharmMed.contains(m)) {
+
+				MedicineDTO dto = new MedicineDTO();
+				dto.setId(m.getId());
+				dto.setName(m.getName());
+				dto.setContraindications(m.getContraindications());
+				dto.setDailyDose(m.getDailyDose());
+				dto.setMedType(m.getMed_type());
+				dto.setMedicineCode(m.getMedicine_code());
+				dto.setModee(m.getMode().toString());
+				dto.setNote(m.getNote());
+				dto.setPharmacyID(id);
+				dto.setPharmacyName(pharmacy.getName());
+				dto.setProducer(m.getProducer());
+				dto.setStatus("AVAILABLE");
+				dto.setShape(m.getShape());
+				dto.setStructure(m.getStructure());
+
+				retList.add(dto);
+			}
+		}
+
+		return retList;
+
+	}
+
+	public boolean addMedicineToPharmacy(Long pharmacyID, Long medicineID) {
+
+		boolean added = false;
+
+		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyID);
+		Medicine medicine = medicineRepository.findOneById(medicineID);
+
+		List<Medicine> allPharmMed = pharmacy.getListOfMedicines();
+
+		System.out.println(pharmacyID);
+		System.out.println("Medicine id" + medicineID);
+		System.out.println("Pronadjen lek " + medicine.getId());
+
+		if (!allPharmMed.contains(medicine)) {
+			allPharmMed.add(medicine);
+			pharmacyRepository.save(pharmacy);
+			added = true;
+		}
+
+		return added;
+
+	}
+
 }

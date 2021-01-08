@@ -7,10 +7,10 @@ import com.example.pharmacybackend.model.Medicine;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MedicineRepository extends JpaRepository<Medicine, Long>{
+public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
 	List<Medicine> findAll();
-	
-	
-	
+
+	Medicine findOneById(Long id);
+
 }
