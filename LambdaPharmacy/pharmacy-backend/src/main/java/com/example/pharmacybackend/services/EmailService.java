@@ -69,4 +69,16 @@ public class EmailService {
 						+ reservationID + ". Thank you for your trust. Best regards, LambdaPharmacy team.");
 		javaMailSender.send(mail);
 	}
+
+	@Async
+	public void sendCouncelingReservationMail(Patient patient) throws MailException {
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(patient.getEmail());
+		mail.setFrom("no.reply.medclinic@gmail.com");
+		mail.setSubject("Counceling reservation");
+		mail.setText(
+				"Dear patient, your counceling with pharmacist has been made. Thank you for your trust. Best regards, LambdaPharmacy team.");
+		javaMailSender.send(mail);
+	}
 }

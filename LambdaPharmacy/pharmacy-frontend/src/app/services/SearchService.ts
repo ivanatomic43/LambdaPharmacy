@@ -1,3 +1,4 @@
+import { SearchPharmacistParams } from './../model/SearchPharmacistParams';
 import { MedicineSearch } from './../model/MedicineSearch';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +17,7 @@ export class SearchService {
 
   private searchPharmacyUrl = searchUrl + '/searchPharmacy';
   private searchMedicineUrl = searchUrl + '/searchMedicine/';
+  private searchPharmacistUrl = searchUrl + '/searchPharmacist';
 
   name: string;
   location: string;
@@ -36,6 +38,11 @@ export class SearchService {
     searchMedicine(name :string){
 
         return this.http.get<any>(this.searchMedicineUrl + name);
+    }
+
+    searchPharmacist(searchParams : SearchPharmacistParams){
+
+      return this.http.post<any>(this.searchPharmacistUrl, searchParams);
     }
 
 }

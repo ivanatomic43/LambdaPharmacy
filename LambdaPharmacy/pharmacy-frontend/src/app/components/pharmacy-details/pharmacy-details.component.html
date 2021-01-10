@@ -3,7 +3,7 @@
 <div class="container">
   <div class="main-body">
   <div id = "main" *ngIf="loaded">
-    <div class="row gutters-sm"  style="8">
+    <div class="row gutters-sm">
       <div class="col-md-4 mb-3">
         <div class="card">
           <div class="card-body">
@@ -155,11 +155,10 @@
         <td mat-cell *matCellDef="let element"> {{element.to}} </td>
       </ng-container>
 
-
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
-          <button (click)="reserve()">Reserve</button>
+          <button (click)="reservePharmacist(fetchedPharmacy.id, element.id)">Reserve</button>
 
 
         </td>

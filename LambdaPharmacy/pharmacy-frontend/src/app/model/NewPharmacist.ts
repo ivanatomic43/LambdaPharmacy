@@ -9,7 +9,8 @@ export class NewPharmacist{
     public address: string,
     public phoneNumber: string,
     public workFrom: any,
-    public workTo: any
+    public workTo: any,
+    public price: any
   ){}
 
 

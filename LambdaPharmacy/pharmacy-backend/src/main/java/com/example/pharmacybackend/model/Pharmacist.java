@@ -32,6 +32,9 @@ public class Pharmacist extends User {
 	@Column(name = "rating")
 	private double rating;
 
+	@Column(name = "price")
+	private double price;
+
 	/**
 	 * @return Pharmacy return the pharmacy
 	 */
@@ -128,6 +131,20 @@ public class Pharmacist extends User {
 	 */
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	/**
+	 * @return double return the price
+	 */
+	public double getPrice() {
+		return price;
+	}
+
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }

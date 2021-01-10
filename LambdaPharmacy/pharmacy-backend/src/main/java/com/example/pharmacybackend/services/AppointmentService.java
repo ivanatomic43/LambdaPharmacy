@@ -16,6 +16,7 @@ import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.Patient;
+import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.repository.*;
 
@@ -38,6 +39,9 @@ public class AppointmentService {
 
     @Autowired
     private PharmacyRepository pharmacyRepository;
+
+    @Autowired
+    private PharmacistRepository pharmacistRepository;
 
     @Autowired
     private EmailService emailService;
@@ -285,6 +289,42 @@ public class AppointmentService {
 
         return cancelled;
 
+    }
+
+    public boolean reserveCounceling(AppointmentDTO newApp, Long userID) {
+        // insert validation
+        boolean reserved = false;
+
+        System.out.println(newApp.getDateOfAppointmentt());
+        System.out.println(newApp.getMeetingTimee());
+        System.out.println(newApp.getPharmacistID());
+        System.out.println(newApp.getPharmacyID());
+
+        Patient p = patientRepository.findOneById(userID);
+        Appointment a = new Appointment();
+        Pharmacy pharmacy = pharmacyRepository.findOneById(newApp.getPharmacyID());
+        Pharmacist pharmacist = pharmacistRepository.findOneById(newApp.getPharmacistID());
+
+        a.setDateOfAppointment(newApp.getDateOfAppointment());
+        a.setMeetingTime(newApp.getMeetingTime());
+        a.setPatient(p);
+        a.setPharmacist(pharmacist);
+        a.setPharmacy(pharmacy);
+        a.setType(AppointmentType.COUNCELING);
+        a.setStatus(AppointmentStatus.RESERVED);
+        a.setDuration(1);
+        // a.setPrice(); insert pricelist;
+
+        appointmentRepository.save(a);
+        List<Appointment> pharmacyAppointments = pharmacy.getPharmacyAppointments();
+        pharmacyAppointments.add(a);
+        pharmacyRepository.save(pharmacy);
+
+        emailService.sendCouncelingReservationMail(p);
+
+        reserved = true;
+
+        return reserved;
     }
 
 }

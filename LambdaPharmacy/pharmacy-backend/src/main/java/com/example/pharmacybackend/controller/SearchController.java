@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pharmacybackend.dto.MedicineDTO;
 import com.example.pharmacybackend.dto.PharmacyDTO;
+import com.example.pharmacybackend.dto.SearchPharmacistParams;
 import com.example.pharmacybackend.dto.SimpleSearchDTO;
 import com.example.pharmacybackend.services.MedicineService;
+import com.example.pharmacybackend.services.PharmacistService;
 import com.example.pharmacybackend.services.PharmacyService;
 
 import java.util.*;
@@ -29,6 +31,9 @@ public class SearchController {
 
 	@Autowired
 	private PharmacyService pharmacyService;
+
+	@Autowired
+	private PharmacistService pharmacistService;
 
 	@RequestMapping(value = "/searchMedicine/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchMedicine(@PathVariable("name") String name, HttpServletRequest httpRequest) {
@@ -65,6 +70,21 @@ public class SearchController {
 
 		if (pharmacies.isEmpty())
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(pharmacies, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/searchPharmacist", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> searchPharmacist(@RequestBody SearchPharmacistParams sp) {
+
+		System.out.println(sp.getDate());
+		System.out.println(sp.getTime());
+		List<PharmacyDTO> pharmacies = pharmacistService.searchPharmacist(sp);
+
+		if (pharmacies.isEmpty()) {
+
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
 		return new ResponseEntity<>(pharmacies, HttpStatus.OK);
 	}

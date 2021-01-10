@@ -6,7 +6,8 @@ export class PharmacyDTO {
      public name: string,
      public address: string,
      public description: string,
-     public rating:number) {
+     public rating:number,
+     public price: number) {
 
 
    }

@@ -39,7 +39,8 @@ export class AddPharmComponent implements OnInit {
           address: new FormControl('', [Validators.required]),
           phoneNumber: new FormControl('', [Validators.required]),
           workFrom: new FormControl('', [Validators.required]),
-          workTo: new FormControl('', [Validators.required])
+          workTo: new FormControl('', [Validators.required]),
+          price: new FormControl('', [Validators.required])
         });
 
 
@@ -60,7 +61,8 @@ export class AddPharmComponent implements OnInit {
       this.addingPharmForm.get('address').value,
       this.addingPharmForm.get('phoneNumber').value,
       this.addingPharmForm.get('workFrom').value,
-      this.addingPharmForm.get('workTo').value
+      this.addingPharmForm.get('workTo').value,
+      this.addingPharmForm.get('price').value
     );
 
     this.pharmacistService.addPharmacist(this.pharmData, this.pharmacyID).subscribe(response => {

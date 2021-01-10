@@ -3,6 +3,7 @@ package com.example.pharmacybackend.controller;
 import java.util.List;
 
 import com.example.pharmacybackend.dto.PharmacistDTO;
+import com.example.pharmacybackend.dto.SearchPharmacistParams;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
@@ -73,6 +74,20 @@ public class PharmacistController {
     public ResponseEntity<?> getAllPharm(@PathVariable("id") Long id) {
 
         List<PharmacistDTO> retPharm = pharmacistService.getAllPharmForPharmacy(id);
+
+        if (retPharm.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(retPharm, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/seePharmacists/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAvailablePharmacists(@PathVariable("id") Long id,
+            @RequestBody SearchPharmacistParams sp) {
+
+        List<PharmacistDTO> retPharm = pharmacistService.getAvailablePharmacists(id, sp);
 
         if (retPharm.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

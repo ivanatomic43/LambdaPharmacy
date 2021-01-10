@@ -167,4 +167,11 @@ export class PharmacyDetailsComponent implements OnInit {
   showMedicines(id:number){
     this.router.navigate(['pharmacy-medicines/'+ id]);
   }
+
+  reservePharmacist(pid: number, ppid: number){
+
+    this.router.navigate(['reserve-pharmacist/' + pid + '/' + ppid]);
+  }
+
+
 }

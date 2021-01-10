@@ -1,3 +1,4 @@
+import { NewCounceling } from './../model/NewCounceling';
 import { NewAppointmentDTO } from './../model/NewAppointmentDTO';
 import {Injectable} from '@angular/core';
 import {ApiService} from './ApiService';
@@ -24,6 +25,7 @@ export class AppointmentService {
   reserveAppointmentUrl = appointmentUrl + '/reserveAppointment/';
   getPatientAppointmentsUrl = appointmentUrl + '/getPatientAppointments'; //all types
   cancelAppointmentUrl = appointmentUrl + '/cancelAppointment/';
+  reserveCouncelingUrl = appointmentUrl + '/reserveCounceling';
 
   constructor(
     private apiService: ApiService,
@@ -87,6 +89,24 @@ export class AppointmentService {
         })
       );
   }
+
+  reserveCounceling(newAppointment : NewCounceling){
+    return this.http.post<any>(this.reserveCouncelingUrl, newAppointment, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
 
   getPatientAppointments() {
     return this.http.post<any>(this.getPatientAppointmentsUrl, {

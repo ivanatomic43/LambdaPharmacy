@@ -1,3 +1,5 @@
+import { NewCounceling } from './../model/NewCounceling';
+import { SearchPharmacistParams } from './../model/SearchPharmacistParams';
 import { NewPharmacist } from './../model/NewPharmacist';
 import { AddingStaffDTO } from '../model/AddingStaffDTO';
 import { RegistrationParams } from './../model/registrationParams';
@@ -21,6 +23,8 @@ export class PharmacistService {
  registerPharmacistUrl = pharmacistUrl + '/registerPharmacist';
   addPharmacistUrl = pharmacistUrl + '/addPharmacist/';
   getAllPharm = pharmacistUrl + '/getAllPharmacistForPharmacy/';
+  seePharmacistsUrl = pharmacistUrl + '/seePharmacists/';
+
 
 
   constructor(
@@ -75,5 +79,29 @@ export class PharmacistService {
       );
 
   }
+
+
+  seePharmacists(id:number, searchParams :SearchPharmacistParams){
+
+    return this.http.post(this.seePharmacistsUrl+ id, searchParams, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+
+
+
 
 }

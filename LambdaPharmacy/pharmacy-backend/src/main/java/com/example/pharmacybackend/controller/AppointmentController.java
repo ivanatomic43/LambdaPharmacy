@@ -114,4 +114,22 @@ public class AppointmentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/reserveCounceling")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> getAll(@RequestBody AppointmentDTO newApp, HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        boolean reserved = appointmentService.reserveCounceling(newApp, user.getId());
+
+        if (!reserved) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+        return new ResponseEntity<>(reserved, HttpStatus.OK);
+    }
+
 }
