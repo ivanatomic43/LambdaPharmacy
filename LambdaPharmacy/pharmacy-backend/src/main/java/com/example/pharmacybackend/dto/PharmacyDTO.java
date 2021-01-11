@@ -11,6 +11,10 @@ public class PharmacyDTO {
 	private double rating;
 	private double price;
 
+	private Long pharmacyAdministrator;
+	private String firstName;
+	private String lastName;
+
 	public PharmacyDTO() {
 	}
 
@@ -27,12 +31,36 @@ public class PharmacyDTO {
 		this.price = price;
 	}
 
+	public PharmacyDTO(Long id, String address, String description, String name, double rating,
+			Long pharmacyAdministrator, String firstName, String lastName) {
+		this.id = id;
+		this.address = address;
+		this.description = description;
+		this.name = name;
+		this.rating = rating;
+		this.pharmacyAdministrator = pharmacyAdministrator;
+		this.firstName = firstName;
+		this.lastName = lastName;
+
+	}
+
 	public PharmacyDTO(Long id, String address, String description, String name, double rating) {
 		this.id = id;
 		this.address = address;
 		this.description = description;
 		this.name = name;
 		this.rating = rating;
+
+	}
+
+	public PharmacyDTO(Long id, String address, String description, String name, double rating,
+			Long pharmacyAdministrator) {
+		this.id = id;
+		this.address = address;
+		this.description = description;
+		this.name = name;
+		this.rating = rating;
+		this.pharmacyAdministrator = pharmacyAdministrator;
 
 	}
 
@@ -88,6 +116,48 @@ public class PharmacyDTO {
 	 */
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	/**
+	 * @return Long return the pharmacyAdministratorID
+	 */
+	public Long getPharmacyAdministrator() {
+		return pharmacyAdministrator;
+	}
+
+	/**
+	 * @param pharmacyAdministrator the pharmacyAdministratorID to set
+	 */
+	public void setPharmacyAdministrator(Long pharmacyAdministrator) {
+		this.pharmacyAdministrator = pharmacyAdministrator;
+	}
+
+	/**
+	 * @return String return the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+	/**
+	 * @param firstName the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return String return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }

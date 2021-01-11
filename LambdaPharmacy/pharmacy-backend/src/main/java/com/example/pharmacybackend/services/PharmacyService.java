@@ -3,11 +3,16 @@ package com.example.pharmacybackend.services;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.dto.PharmacyDTO;
+import com.example.pharmacybackend.dto.UserRequestDTO;
+import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.model.PharmacyAdministrator;
 
 @Service
 public class PharmacyService {
@@ -15,14 +20,20 @@ public class PharmacyService {
 	@Autowired
 	private PharmacyRepository pharmacyRepository;
 
+	@Autowired
+	private PharmacyAdministratorRepository pharmacyAdministratorRepository;
+
+	@Autowired
+	private AuthorityService authorityService;
+
 	public List<Pharmacy> getAllPharmacies() {
 		return pharmacyRepository.findAll();
 	}
 
-	public Pharmacy savePharmacy(Pharmacy createdPharmacy) {
-		return this.pharmacyRepository.save(createdPharmacy);
-	}
-
+	/*
+	 * public void savePharmacy(Pharmacy createdPharmacy) { return
+	 * this.pharmacyRepository.save(createdPharmacy); }
+	 */
 	public Pharmacy findById(Long id) {
 		Optional<Pharmacy> p = this.pharmacyRepository.findById(id);
 		if (p.isPresent()) {
@@ -81,13 +92,62 @@ public class PharmacyService {
 		p.setDescription(pharmacy.getDescription());
 		p.setRating(0);
 
-		Pharmacy retPha = this.savePharmacy(p);
+		// setting pharmacy administrator
+		System.out.println("ID ADMINA APOTeke" + pharmacy.getPharmacyAdministrator());
+		PharmacyAdministrator pa = pharmacyAdministratorRepository.findOneById(pharmacy.getPharmacyAdministrator());
+		List<PharmacyAdministrator> pharmAdmins = new ArrayList<>();
 
-		PharmacyDTO ret = new PharmacyDTO(retPha);
+		pharmAdmins.add(pa);
+
+		pharmacyRepository.save(p);
+		pa.setPharmacy(p);
+
+		PharmacyDTO ret = new PharmacyDTO();
+		ret.setId(p.getId());
+		ret.setName(p.getName());
+		ret.setAddress(p.getAddress());
+		ret.setDescription(p.getDescription());
+		ret.setRating(p.getRating());
+		ret.setFirstName(pa.getFirstName());
+		ret.setLastName(pa.getLastName());
+
+		// PharmacyDTO ret = new PharmacyDTO(retPha);
 		System.out.println(ret.getId());
 
 		return ret;
 
+	}
+
+	public boolean registerAdmin(UserRequestDTO newUser) {
+
+		boolean registred = false;
+		PharmacyAdministrator d = new PharmacyAdministrator();
+		System.out.println(newUser.getUsername());
+
+		d.setUsername(newUser.getUsername());
+		d.setFirstName(newUser.getFirstName());
+		d.setLastName(newUser.getLastName());
+		d.setEmail(newUser.getEmail());
+		d.setAddress(newUser.getAddress());
+		d.setPhoneNumber(newUser.getPhoneNumber());
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
+		String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
+		d.setPassword(hashedPass);
+
+		Authority role = new Authority();
+		role = authorityService.findByName("ROLE_PHARMACY_ADMIN");
+		d.setAuthority(role);
+
+		Pharmacy p = pharmacyRepository.findOneById(newUser.getPharmacyID());
+		d.setPharmacy(p);
+
+		this.pharmacyAdministratorRepository.save(d);
+		pharmacyRepository.save(p);
+
+		registred = true;
+		return registred;
 	}
 
 }

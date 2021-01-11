@@ -63,7 +63,19 @@
       <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/manage-pharmacy" class="nav-link">Manage pharmacy</a></li>
       <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/manage-dermatologist" class="nav-link">Manage dermatologists</a></li>
       <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/list-of-medicines" class ="nav-link">Manage medicines</a></li>
-        <li class="nav-item"><a *ngIf="anyLogged" routerLink="/patient-profile" class="nav-link">My profile</a></li>
+
+      <div class="nav-item">
+        <a class="nav-link" *ngIf="isSysAdmin && anyLogged">Register employees
+             <div class="dropdown-content">
+                 <a class="nav-link" routerLink="/register-pharmacy-admin">Pharmacy administrator</a>
+                 <a class="nav-link" routerLink="/register-supplier">Supplier</a>
+
+              </div>
+        </a>
+      </div>
+
+
+      <li class="nav-item"><a *ngIf="anyLogged" routerLink="/patient-profile" class="nav-link">My profile</a></li>
 
 
         <li class="nav-item"><a *ngIf="anyLogged" (click)="logout()" class="nav-link">Log out</a></li>

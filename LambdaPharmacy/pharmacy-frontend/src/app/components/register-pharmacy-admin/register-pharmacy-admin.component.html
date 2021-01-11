@@ -1,0 +1,94 @@
+<div class="main">
+  <div class="col-sm-9" style="background-color: #0f6674">
+    <h3 class="mgbt-xs-15">Register new pharmacy administrator</h3>
+    <form (ngSubmit)= "registerPharmacyAdministrator()" [formGroup]="pharmAdminForm" >
+    <div class="col-md-8">
+      <div class="card mb-3">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0"> First name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName= "firstName" id="firstName" name ="firstName"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Last name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName= "lastName" id="lastName" name ="lastName"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Username</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName = "username" id="username" name ="username"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">E-mail</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName = "email" id="email" name ="email"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Password</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="password" formControlName = "password" id="password" name ="password"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Address</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName = "address" id="address" name ="address"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Phone number</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName = "phoneNumber" id="phoneNumber" name ="phoneNumber"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Choose pharmacy</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <select formControlName="pharmacy" name = "pharmacy" style="width: 150px;">
+                <option *ngFor="let pharmacy of fetchedPharmacies" [value]="pharmacy.id">
+                    {{pharmacy.id}} {{pharmacy.name}}
+                </option>
+            </select>
+            </div>
+          </div>
+          <hr>
+
+        </div>
+        <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Register</button>
+      </div>
+    </div>
+    </form>
+
+  </div>
+</div>
+

@@ -2,12 +2,14 @@ import { Image } from './../model/Image';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import {MedicineDTO} from '../model/MedicineDTO';
 import {PharmacyDTO} from '../model/PharmacyDTO';
+import { catchError, map } from 'rxjs/operators';
 
 
 const pharmacyUrl = 'http://localhost:8051/pharmacy';
+const pharmacyAdminUrl = 'http://localhost:8051/pharmacyAdmin';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,8 @@ export class PharmacyService {
   refreshPharmacies = new Subject<PharmacyDTO[]>();
   allPharmaciesUrl = pharmacyUrl + '/getAllPharmacies';
   createPharmacyUrl = pharmacyUrl + '/createPharmacy';
-  getPharmacyUrl = pharmacyUrl + '/getPharmacy/'
+  getPharmacyUrl = pharmacyUrl + '/getPharmacy/';
+  getAdministratorsUrl = pharmacyUrl+ '/getAdministrators';
 
 
 
@@ -45,5 +48,24 @@ export class PharmacyService {
 
   getPharmacyById(id: number){
     return this.http.get<any>(this.getPharmacyUrl + id);
+  }
+
+  getAdministrators(){
+
+    return this.http.post(this.getAdministratorsUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
   }
 }

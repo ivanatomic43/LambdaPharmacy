@@ -1,3 +1,4 @@
+import { AdministratorParams } from 'src/app/model/AdministratorParams';
 import { HttpClient } from '@angular/common/http';
 
 import {Injectable} from '@angular/core';
@@ -9,6 +10,7 @@ import {Observable, throwError} from "rxjs";
 
 const authUrl = 'http://localhost:8051/auth';
 const userUrl = 'http://localhost:8051/api';
+const pharmacyUrl = 'http://localhost:8051/pharmacy';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +19,7 @@ export class UserService {
   currentUser;
   getMyUserUrl = authUrl + '/getMyUser';
   updateProfileUrl = userUrl + '/updateProfile';
+  registerPharmacyAdministratorUrl = pharmacyUrl + '/registerPharmacyAdministrator';
 
   constructor(
     private apiService: ApiService,
@@ -94,4 +97,15 @@ export class UserService {
         })
       );
   }
-}
+
+
+
+  registerPharmacyAdministrator(adminParams : AdministratorParams){
+    return this.http.post<any>(this.registerPharmacyAdministratorUrl, adminParams);
+  }
+
+
+  }
+
+
+

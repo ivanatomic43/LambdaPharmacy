@@ -134,4 +134,22 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	public List<UserDTO> getAdministrators() {
+
+		List<User> userList = userRepository.findAll();
+		List<UserDTO> retList = new ArrayList<>();
+
+		for (User u : userList) {
+			System.out.println(u.getAuthority().getName());
+			if (u.getAuthority().getName().toString().equals("ROLE_PHARMACY_ADMIN")) {
+				UserDTO dto = new UserDTO(u);
+				dto.setRole(u.getAuthority().getName());
+				retList.add(dto);
+			}
+		}
+
+		return retList;
+
+	}
+
 }

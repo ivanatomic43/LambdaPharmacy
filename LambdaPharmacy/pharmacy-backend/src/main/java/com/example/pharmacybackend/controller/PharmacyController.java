@@ -16,15 +16,23 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.bytebuddy.description.type.PackageDescription;
+
 import com.example.pharmacybackend.dto.PharmacyDTO;
+import com.example.pharmacybackend.dto.UserDTO;
+import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.model.Image;
 import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.model.PharmacyAdministrator;
+import com.example.pharmacybackend.model.User;
+import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
+import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.services.ImageService;
 import com.example.pharmacybackend.services.PharmacyService;
+import com.example.pharmacybackend.services.UserServiceImpl;
 
 @RestController
 @RequestMapping("/pharmacy")
-@CrossOrigin(origins = "http://localhost:4200")
 public class PharmacyController {
 
 	@Autowired
@@ -33,15 +41,30 @@ public class PharmacyController {
 	@Autowired
 	private ImageService imageService;
 
+	@Autowired
+	private UserServiceImpl userService;
+
+	@Autowired
+	private PharmacyAdministratorRepository pharmacyAdminRep;
+
 	@RequestMapping(value = "/getAllPharmacies", method = RequestMethod.GET)
 	public ResponseEntity<?> getAllPharmacies() {
 
 		List<Pharmacy> pharmacies = pharmacyService.getAllPharmacies();
 		List<PharmacyDTO> retPha = new ArrayList<>();
+		List<PharmacyAdministrator> admins = pharmacyAdminRep.findAll();
 
 		for (Pharmacy p : pharmacies) {
+
 			PharmacyDTO newPha = new PharmacyDTO(p.getId(), p.getAddress(), p.getDescription(), p.getName(),
 					p.getRating());
+
+			/*
+			 * for (PharmacyAdministrator pa : admins) { if() if (pa.getPharmacy().getId()
+			 * == p.getId()) { newPha.setFirstName(pa.getFirstName());
+			 * newPha.setLastName(pa.getLastName());
+			 * newPha.setPharmacyAdministrator(pa.getId()); } }
+			 */
 			retPha.add(newPha);
 
 		}
@@ -108,6 +131,39 @@ public class PharmacyController {
 
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 
+	}
+
+	@RequestMapping(value = "/getAdministrators", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('SYS_ADMIN')")
+	public ResponseEntity<?> getAdministrators() {
+
+		List<UserDTO> list = userService.getAdministrators();
+
+		if (list.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/registerPharmacyAdministrator", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('SYS_ADMIN')")
+	public ResponseEntity<?> registerAdmin(@RequestBody UserRequestDTO userRequest) {
+
+		User exist = userService.findByUsername(userRequest.getUsername());
+
+		if (exist != null) {
+
+			return new ResponseEntity<>(exist, HttpStatus.CONFLICT);
+		}
+
+		boolean done = pharmacyService.registerAdmin(userRequest);
+
+		if (!done) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(done, HttpStatus.OK);
 	}
 
 }

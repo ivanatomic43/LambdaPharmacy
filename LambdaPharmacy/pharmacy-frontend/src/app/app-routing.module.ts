@@ -1,3 +1,4 @@
+import { RegisterPharmacyAdminComponent } from './components/register-pharmacy-admin/register-pharmacy-admin.component';
 
 import { ListOfMedicinesComponent } from './components/list-of-medicines/list-of-medicines.component';
 import { RegisterMedicineComponent } from './components/register-medicine/register-medicine.component';
@@ -121,7 +122,8 @@ const routes: Routes = [
           component : AddMedComponent
         }
       ]
-  }
+  },
+  {path: 'register-pharmacy-admin', component: RegisterPharmacyAdminComponent}
 
 ];
 

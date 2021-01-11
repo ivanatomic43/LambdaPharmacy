@@ -1,3 +1,4 @@
+import { UserProfileDTO } from 'src/app/model/UserProfileDTO';
 import { Router } from '@angular/router';
 import { PharmacyDTO } from 'src/app/model/PharmacyDTO';
 import { Image } from 'src/app/model/Image';
@@ -19,6 +20,7 @@ export class NewPharmacyComponent implements OnInit {
   choosenImage: Image;
   imgSource : string = '';
   submittedData : PharmacyDTO;
+  fetchedAdministrators : UserProfileDTO[] = [];
 
 
   constructor
@@ -33,27 +35,17 @@ export class NewPharmacyComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
-      file: new FormControl('', [Validators.required]),
-      price : new FormControl('', [Validators.required])
+      pharmacyAdministrator : new FormControl('', [Validators.required])
     });
 
-  }
+    this.pharmacyService.getAdministrators().subscribe(response => {
+        this.fetchedAdministrators = response;
+    }, error => {
+      console.log("There is no pharmacy administrators in system...");
+    })
 
 
-  onFileSelected($event: Event) {
-    let reader = new FileReader();
 
-    var file = $event.target['files'][0];
-    console.log('Image is choosen');
-    reader.onload = (e: any) => {
-      this.imgSource = e.target.result;
-      var newPicture = new Image();
-      newPicture.id = 1;
-      newPicture.data = file;
-      this.choosenImage= newPicture;
-      console.log(newPicture.data);
-    };
-    reader.readAsDataURL(file);
   }
 
   registerPharmacy(){
@@ -66,16 +58,10 @@ export class NewPharmacyComponent implements OnInit {
 
     this.pharmacyService.createNewPharmacy(this.submittedData).subscribe(
       response => {
-        let pharmacy = response as PharmacyDTO;
-        console.log(pharmacy.id);
-        console.log(this.choosenImage);
-        this.pharmacyService.addImage(pharmacy.id, this.choosenImage).subscribe(
-          response => {
+
             alert("Pharmacy registred!");
             this.router.navigate(['/manage-pharmacy']);
-          },
-          error =>{}
-        );
+
       },
       error => {
         alert("Something is wrong...");
