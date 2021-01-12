@@ -20,6 +20,7 @@ export class UserService {
   getMyUserUrl = authUrl + '/getMyUser';
   updateProfileUrl = userUrl + '/updateProfile';
   registerPharmacyAdministratorUrl = pharmacyUrl + '/registerPharmacyAdministrator';
+  getAdminsForPharmacyUrl = pharmacyUrl + '/getAdminsForPharmacy/';
 
   constructor(
     private apiService: ApiService,
@@ -50,7 +51,7 @@ export class UserService {
     return this.apiService.get(this.config.whoami_url)
       .pipe(map(user => {
         this.currentUser = user;
-        console.log("USAO OVDE");
+
         return user;
       }));
   }
@@ -101,9 +102,42 @@ export class UserService {
 
 
   registerPharmacyAdministrator(adminParams : AdministratorParams){
-    return this.http.post<any>(this.registerPharmacyAdministratorUrl, adminParams);
+
+    return this.http.post(this.registerPharmacyAdministratorUrl, adminParams, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
   }
 
+  getAdminsForPharmacy(id: number){
+
+    return this.http.post(this.getAdminsForPharmacyUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
 
   }
 

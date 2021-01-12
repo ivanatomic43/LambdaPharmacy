@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javassist.expr.NewArray;
+
 import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.dto.PharmacyDTO;
+import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Pharmacy;
@@ -130,6 +133,8 @@ public class PharmacyService {
 		d.setEmail(newUser.getEmail());
 		d.setAddress(newUser.getAddress());
 		d.setPhoneNumber(newUser.getPhoneNumber());
+		d.setFirstLogin(true);
+		d.setApproved(true);
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
@@ -141,13 +146,43 @@ public class PharmacyService {
 		d.setAuthority(role);
 
 		Pharmacy p = pharmacyRepository.findOneById(newUser.getPharmacyID());
-		d.setPharmacy(p);
+		List<PharmacyAdministrator> pharmAdmins = new ArrayList<>();
+		pharmAdmins = p.getPharmacyAdministrators();
+		pharmAdmins.add(d);
 
-		this.pharmacyAdministratorRepository.save(d);
+		pharmacyAdministratorRepository.save(d);
 		pharmacyRepository.save(p);
 
 		registred = true;
 		return registred;
+	}
+
+	public List<UserDTO> getAdminsForPharmacy(Long pharmacyID) {
+
+		List<UserDTO> retList = new ArrayList<>();
+
+		Pharmacy pharm = pharmacyRepository.findOneById(pharmacyID);
+		List<PharmacyAdministrator> admins = pharm.getPharmacyAdministrators();
+
+		if (!admins.isEmpty()) {
+			for (PharmacyAdministrator a : admins) {
+				UserDTO dto = new UserDTO();
+				dto.setId(a.getId());
+				dto.setFirstName(a.getFirstName());
+				dto.setLastName(a.getLastName());
+				dto.setUsername(a.getUsername());
+				dto.setAddress(a.getAddress());
+				dto.setPassword(a.getPassword());
+				dto.setPhoneNumber(a.getPhoneNumber());
+				dto.setEmail(a.getEmail());
+
+				retList.add(dto);
+
+			}
+		}
+
+		return retList;
+
 	}
 
 }

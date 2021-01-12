@@ -12,7 +12,7 @@
               <div class="mt-3">
 
                 <h4>{{fetchedPharmacy.name}}</h4>
-                <h5>Administrator: {{fetchedPharmacy.firstName}} {{fetchedPharmacy.lastName}}</h5>
+
                 <button class="btn-search" (click)="showMedicines(fetchedPharmacy.id)" >See medicines</button>
 
               </div>
@@ -51,6 +51,16 @@
               </div>
             </div>
             <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Pharmacy administrators</h6>
+              </div>
+              <div class="col-sm-9 text-secondary" *ngFor="let admin of admins" >
+                <p>{{admin.firstName}} {{admin.lastName}}</p>
+              </div>
+            </div>
+            <hr>
+
             <div class="row">
               <div class="col-sm-3">
                 <h6 class="mb-0">Rating</h6>
@@ -108,7 +118,7 @@
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
           <button *ngIf="isPharmacyAdmin" (click)="makeAnAppointment(fetchedPharmacy.id, element.id)">Make an appointment</button>
-
+          <button *ngIf="isPharmacyAdmin" (click)="removeDermatologist(fetchedPharmacy.id, element.id)">Remove</button>
 
         </td>
       </ng-container>
@@ -159,6 +169,7 @@
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
           <button (click)="reservePharmacist(fetchedPharmacy.id, element.id)">Reserve</button>
+          <button *ngIf="isPharmacyAdmin" (click)="removePharmacist(fetchedPharmacy.id, element.id)">Remove</button>
 
 
         </td>

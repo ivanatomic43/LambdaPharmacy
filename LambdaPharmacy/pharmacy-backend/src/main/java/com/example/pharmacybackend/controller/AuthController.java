@@ -87,12 +87,14 @@ public class AuthController {
 		String token = tokenUtils.generateToken(user.getUsername());
 
 		int expiresIn = tokenUtils.getExpiredIn();
+		boolean firstLogin = user.isFirstLogin();
+		System.out.println("FIRSTLOGIN:0" + firstLogin);
 
 		List<String> authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
 
 		// Vrati token kao odgovor na uspesnu autentifikaciju*/
-		return ResponseEntity.ok(new UserTokenState(user.getUsername(), token, expiresIn, authorities));
+		return ResponseEntity.ok(new UserTokenState(user.getUsername(), token, expiresIn, authorities, firstLogin));
 	}
 
 	@PostMapping("/registerPatient")
@@ -170,17 +172,17 @@ public class AuthController {
 		if (user != null) {
 			List<String> authorities = user.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 					.collect(Collectors.toList());
-			System.out.println("Id:" + user.getId());
 
+			boolean firstLogin = user.isFirstLogin();
 			// System.out.println("request get header: " +
 			// request.getHeader("Authorization"));
 			UserTokenState loggedUser = new UserTokenState(user.getUsername(), request.getHeader("TokenAuthBic"),
-					authorities);
+					authorities, firstLogin);
 			System.out.println(loggedUser.getUsername());
 
 			return new ResponseEntity<UserTokenState>(loggedUser, HttpStatus.OK);
 		} else {
-			System.out.println("eles");
+
 			return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
 		}
 
@@ -203,13 +205,14 @@ public class AuthController {
 
 	@RequestMapping(value = "/changePassword", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody PasswordDTO passDTO) {
-		System.out.println("PRONASAO BEK CHANGE");
+
 		String token = tokenUtils.getToken(request);
 		String username = tokenUtils.getUsernameFromToken(token);
 		System.out.println("Username koji menja sifru: " + username);
 
 		User user = customUserDetailsService.changePassword(passDTO.getOldPassword(), passDTO.getNewPassword());
 
+		System.out.println(user.getAuthority().getName());
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.pharmacybackend.dto.DermatologistDTO;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
+import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.Pharmacy;
@@ -47,6 +48,7 @@ public class DermatologistService {
         d.setEmail(newUser.getEmail());
         d.setAddress(newUser.getAddress());
         d.setPhoneNumber(newUser.getPhoneNumber());
+        d.setApproved(true);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
@@ -117,5 +119,38 @@ public class DermatologistService {
 
         return retList;
 
+    }
+
+    public boolean removeDermatologist(Long id, Long dermID) {
+
+        boolean removed = false;
+
+        Pharmacy p = pharmacyRepository.findOneById(id);
+        List<Appointment> allApp = p.getPharmacyAppointments();
+        List<Dermatologist> pharmDermatologist = p.getDermatologists();
+
+        if (!allApp.isEmpty()) {
+            for (Appointment a : allApp) {
+                if (a.getDermatologist().getId() == dermID) {
+                    System.out.println("Dermatologist has reserved appointment...");
+                    return removed;
+                } else {
+                    Dermatologist derm = dermatologistRepository.findOneById(dermID);
+                    pharmDermatologist.remove(derm);
+                    pharmacyRepository.save(p);
+                    removed = true;
+                    return removed;
+                }
+            }
+        } else {
+            System.out.println("There is no appointments in this pharmacy, dermatologist removed");
+            Dermatologist derm = dermatologistRepository.findOneById(dermID);
+            pharmDermatologist.remove(derm);
+            pharmacyRepository.save(p);
+            removed = true;
+            return removed;
+        }
+
+        return removed;
     }
 }

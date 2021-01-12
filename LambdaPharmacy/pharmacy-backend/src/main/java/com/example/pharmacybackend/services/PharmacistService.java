@@ -52,6 +52,7 @@ public class PharmacistService {
         p.setWorkingFrom(newUser.getWorkFrom());
         p.setWorkingTo(newUser.getWorkTo());
         p.setPrice(newUser.getPrice());
+        p.setApproved(true);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
@@ -95,19 +96,23 @@ public class PharmacistService {
 
         pharmaList = pharmacistRepository.findAll();
 
-        for (Pharmacist p : pharmaList) {
-            if (p.getPharmacy().getId() == id) {
-                PharmacistDTO dto = new PharmacistDTO();
-                dto.setId(p.getId());
-                System.out.println(p.getFirstName());
-                dto.setFirstName(p.getFirstName());
-                dto.setLastName(p.getLastName());
-                dto.setFrom(p.getWorkingFrom().toString());
-                dto.setTo(p.getWorkingTo().toString());
-                dto.setPrice(p.getPrice());
+        if (!pharmaList.isEmpty()) {
+            for (Pharmacist p : pharmaList) {
+                if (p.getPharmacy().getId() == id) {
+                    PharmacistDTO dto = new PharmacistDTO();
+                    dto.setId(p.getId());
+                    System.out.println(p.getFirstName());
+                    dto.setFirstName(p.getFirstName());
+                    dto.setLastName(p.getLastName());
+                    dto.setFrom(p.getWorkingFrom().toString());
+                    dto.setTo(p.getWorkingTo().toString());
+                    dto.setPrice(p.getPrice());
 
-                retList.add(dto);
+                    retList.add(dto);
+                }
             }
+        } else {
+            return retList;
         }
 
         // Pharmacy pharmacy = pharmacyRepository.findOneById(id);
@@ -261,6 +266,39 @@ public class PharmacistService {
         }
 
         return retList;
+    }
+
+    public boolean removePharmacist(Long id, Long pharmID) {
+
+        boolean removed = false;
+
+        Pharmacy p = pharmacyRepository.findOneById(id);
+        List<Appointment> allApp = p.getPharmacyAppointments();
+        List<Pharmacist> pharmPharmacist = p.getPharmacists();
+
+        if (!allApp.isEmpty()) {
+            for (Appointment a : allApp) {
+                if (a.getPharmacist().getId() == pharmID) {
+                    System.out.println("Pharmacist has reserved appointment...");
+                    return removed;
+                } else {
+                    Pharmacist pharmacist = pharmacistRepository.findOneById(pharmID);
+                    pharmPharmacist.remove(pharmacist);
+                    pharmacyRepository.save(p);
+                    removed = true;
+                    return removed;
+                }
+            }
+        } else {
+            System.out.println("There is no appointments in this pharmacy, pharmacist removed");
+            Pharmacist pharm = pharmacistRepository.findOneById(pharmID);
+            pharmPharmacist.remove(pharm);
+            pharmacyRepository.save(p);
+            removed = true;
+            return removed;
+        }
+
+        return removed;
     }
 
 }

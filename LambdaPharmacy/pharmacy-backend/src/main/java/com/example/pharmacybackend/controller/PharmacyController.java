@@ -166,4 +166,16 @@ public class PharmacyController {
 		return new ResponseEntity<>(done, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/getAdminsForPharmacy/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getAdminsForPharmacy(@PathVariable("id") Long id) {
+
+		List<UserDTO> list = pharmacyService.getAdminsForPharmacy(id);
+
+		if (list.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
+
+	}
+
 }

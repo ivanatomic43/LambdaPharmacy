@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { SimpleSearch } from 'src/app/model/SimpleSearch';
 import {ActivatedRoute, Router} from '@angular/router';
+import { UserDTO } from 'src/app/model/UserDTO';
+import { AuthService } from 'src/app/services/AuthService';
 
 
 @Component({
@@ -30,6 +32,10 @@ export class SearchComponent implements OnInit {
   pharmacyLocation : string;
   pharmacyRating: number;
 
+  isPharmacyAdmin = false;
+  isFirstLogin = false;
+  profil : UserDTO;
+
   constructor(
     private searchService : SearchService,
     private formBuilder: FormBuilder,
@@ -37,7 +43,8 @@ export class SearchComponent implements OnInit {
     private route : ActivatedRoute,
     private pharmacyService : PharmacyService,
     private medicineService : MedicineService,
-    private alertService : AlertService
+    private alertService : AlertService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -51,6 +58,21 @@ export class SearchComponent implements OnInit {
   this.searchMedicineForm = this.formBuilder.group({
     'medicineName' : ['', Validators.required]
   });
+
+  this.authService.getLogged().subscribe(response => {
+    this.profil= response;
+    const role = this.profil.authorities[0];
+    const firstTime = this.profil.firstLogin;
+
+    if(role == 'ROLE_PHARMACY_ADMIN'  && firstTime == true){
+      this.isPharmacyAdmin = true;
+      this.isFirstLogin = true;
+    } else {
+      this.isPharmacyAdmin = false;
+      this.isFirstLogin = false;
+    }
+
+});
 
 
   }
@@ -117,5 +139,9 @@ export class SearchComponent implements OnInit {
       );
 
 
+  }
+
+  showChangePasswordForm(){
+    this.router.navigate(['/changePassword']);
   }
 }

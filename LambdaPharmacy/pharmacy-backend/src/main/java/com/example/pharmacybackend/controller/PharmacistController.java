@@ -75,10 +75,10 @@ public class PharmacistController {
 
         List<PharmacistDTO> retPharm = pharmacistService.getAllPharmForPharmacy(id);
 
-        if (retPharm.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
+        /*
+         * if (retPharm.isEmpty()) { return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         * }
+         */
         return new ResponseEntity<>(retPharm, HttpStatus.OK);
 
     }
@@ -95,6 +95,19 @@ public class PharmacistController {
 
         return new ResponseEntity<>(retPharm, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/removePharmacist/{id}/{did}")
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> removePharmacist(@PathVariable("id") Long id, @PathVariable("did") Long did) {
+
+        boolean removed = pharmacistService.removePharmacist(id, did);
+
+        if (!removed) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

@@ -20,6 +20,7 @@ export class DermatologistService {
   registerDermatologistUrl = dermatologistUrl + '/registerDermatologist';
   addDermatologistUrl = dermatologistUrl + '/addDermatologist/';
   getAllDerm = dermatologistUrl + '/getAllDermatologistForPharmacy/';
+  removeDermatologistUrl = dermatologistUrl + '/removeDermatologist/';
 
 
   constructor(
@@ -91,6 +92,23 @@ export class DermatologistService {
         })
       );
 
+  }
+
+  removeDermatologist(pid: number, did:number){
+    return this.http.put(this.removeDermatologistUrl + pid + '/' + did, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
   }
 
 }

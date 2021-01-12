@@ -63,6 +63,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		// hesiranje lozinke
 		User user = (User) loadUserByUsername(username);
 		user.setPassword(passwordEncoder.encode(newPassword));
+		if (user.getAuthority().getName().equals("ROLE_PHARMACY_ADMIN")) {
+			user.setFirstLogin(false);
+		}
 
 		userRepository.save(user);
 

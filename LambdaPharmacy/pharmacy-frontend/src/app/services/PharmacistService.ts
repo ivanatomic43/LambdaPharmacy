@@ -24,7 +24,7 @@ export class PharmacistService {
   addPharmacistUrl = pharmacistUrl + '/addPharmacist/';
   getAllPharm = pharmacistUrl + '/getAllPharmacistForPharmacy/';
   seePharmacistsUrl = pharmacistUrl + '/seePharmacists/';
-
+  removePharmacistUrl = pharmacistUrl + '/removePharmacist/';
 
 
   constructor(
@@ -98,6 +98,23 @@ export class PharmacistService {
         })
       );
 
+  }
+
+  removePharmacist(pid: number, did:number){
+    return this.http.put(this.removePharmacistUrl + pid + '/' + did, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
   }
 
 

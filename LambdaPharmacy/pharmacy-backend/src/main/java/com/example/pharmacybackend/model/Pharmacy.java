@@ -50,7 +50,7 @@ public class Pharmacy implements Serializable {
 	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Pharmacist> pharmacists = new ArrayList<>();
 
-	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PharmacyAdministrator> pharmacyAdministrators = new ArrayList<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)

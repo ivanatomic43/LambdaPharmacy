@@ -81,7 +81,7 @@ export class AuthService {
   getLogged(): Observable <UserDTO> {
     this.myToken = this.sessionStorageService.getToken();
     //const headers = new HttpHeaders({"TokenAuthBic": this.myToken})
-    console.log('usao u get logged u auth service');
+
     return this.http.get<UserDTO>(this.getLoggedUrl, { headers: new HttpHeaders({'TokenAuthBic': this.myToken})});
   }
 
@@ -125,7 +125,7 @@ export class AuthService {
 
   changePassword(data: PasswordDTO){
 
-      alert("USAO OVDE");
+
     return this.http.put<any>(this.changePasswordUrl, data);
 
 

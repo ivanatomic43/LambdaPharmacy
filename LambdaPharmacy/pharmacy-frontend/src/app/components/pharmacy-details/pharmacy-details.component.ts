@@ -13,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
 import { PharmacyService } from 'src/app/services/PharmacyService';
 import { PharmacistService } from 'src/app/services/PharmacistService';
 import { AppointmentPreview } from './../../model/AppointmentPreview';
+import { UserService } from 'src/app/services/UserService';
 
 @Component({
   selector: 'app-pharmacy-details',
@@ -29,6 +30,8 @@ export class PharmacyDetailsComponent implements OnInit {
   isPatient = false;
   profil: UserDTO;
   appointmentID:number;
+
+  admins : UserProfileDTO[] = [];
 
 
   //dermatologists
@@ -77,7 +80,8 @@ export class PharmacyDetailsComponent implements OnInit {
     private authService: AuthService,
     private dermatologistService: DermatologistService,
     private pharmacistService: PharmacistService,
-    private appointmentService :AppointmentService
+    private appointmentService :AppointmentService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -87,6 +91,11 @@ export class PharmacyDetailsComponent implements OnInit {
       this.pharmacyService.getPharmacyById(this.pharmacyID).subscribe(response=>{
         this.fetchedPharmacy = response;
         this.loaded= true;
+      });
+
+      this.userService.getAdminsForPharmacy(this.pharmacyID).subscribe(response => {
+        this.admins = response;
+
       });
 
       this.authService.getLogged().subscribe(response => {
@@ -171,6 +180,26 @@ export class PharmacyDetailsComponent implements OnInit {
   reservePharmacist(pid: number, ppid: number){
 
     this.router.navigate(['reserve-pharmacist/' + pid + '/' + ppid]);
+  }
+
+  removeDermatologist(pid:number, did: number){
+
+    this.dermatologistService.removeDermatologist(pid, did).subscribe(response => {
+      alert("Dermatologist removed!");
+      this.fetchDermatologists();
+
+    }, error => {
+      alert("Dermatologist can not be removed because of reserved appointments!");
+    });
+  }
+
+  removePharmacist(pid:number, ppid:number){
+   this.pharmacistService.removePharmacist(pid, ppid).subscribe(response => {
+     alert("Pharmacist removed!");
+     this.fetchPharmacists();
+   }, error => {
+     alert("Pharmacist can not be removed because of reserved appointments!");
+   });
   }
 
 

@@ -11,6 +11,8 @@ import javax.persistence.*;
 @DiscriminatorValue("USER_PHARMACIST")
 public class Pharmacist extends User {
 
+	private static final long serialVersionUID = 1L;
+
 	@ManyToOne
 	private Pharmacy pharmacy;
 

@@ -1,4 +1,8 @@
-
+<div *ngIf="isPharmacyAdmin && isFirstLogin" style="display: flex;  justify-content: center;
+  align-items: center;">
+    <h5 style=" color:#0f6674; font-family:'Arial Black'">Welcome to LambdaPharmacy! This is your first login. Please change your password before you continue.</h5>
+    <button style="margin-left:50px;" class="btn-search" (click)="showChangePasswordForm()">Change password</button>
+  </div>
 
 <div class="s012" ng *ngIf="pharmacyShow">
   <form (ngSubmit) = searchPharmacy() [formGroup]="searchPharmacyForm">

@@ -2,15 +2,19 @@ package com.example.pharmacybackend.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @DiscriminatorValue("USER_PHARMA_ADMIN")
-@Table(name = "PHARMACY_ADMINISTRATOR")
 public class PharmacyAdministrator extends User {
 
-	@ManyToOne
+	private static final long serialVersionUID = 1L;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pharmacy_id")
 	private Pharmacy pharmacy;
 
 	/**

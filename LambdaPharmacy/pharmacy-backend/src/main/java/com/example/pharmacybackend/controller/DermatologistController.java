@@ -105,11 +105,23 @@ public class DermatologistController {
 
         List<DermatologistDTO> retDerm = dermatologistService.getAllDermForPharmacy(id);
 
-        if (retDerm.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
+        /*
+         * if (retDerm.isEmpty()) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
+         */
         return new ResponseEntity<>(retDerm, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/removeDermatologist/{id}/{did}")
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> removeDermatologist(@PathVariable("id") Long id, @PathVariable("did") Long did) {
+
+        boolean removed = dermatologistService.removeDermatologist(id, did);
+
+        if (!removed) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
