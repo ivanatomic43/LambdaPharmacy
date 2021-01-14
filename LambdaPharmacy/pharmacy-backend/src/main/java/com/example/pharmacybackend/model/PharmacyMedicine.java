@@ -1,15 +1,12 @@
 package com.example.pharmacybackend.model;
 
-import java.util.Date;
-
 import javax.persistence.*;
-import com.example.pharmacybackend.enumerations.*;
 
-import org.springframework.data.jpa.repository.EntityGraph;
+import com.example.pharmacybackend.enumerations.MedicineStatus;
 
 @Entity
-@Table(name = "MEDICINE_RESERVATION")
-public class MedicineReservation {
+@Table(name = "PHARMACY_MEDICINES")
+public class PharmacyMedicine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +19,11 @@ public class MedicineReservation {
     @OneToOne
     private Pharmacy pharmacy;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Patient patient;
+    @Enumerated(EnumType.STRING)
+    private MedicineStatus statusInPharmacy;
 
     @Column
-    private Date date;
-
-    @Enumerated(EnumType.STRING)
-    private MedicineStatus status;
+    private double quantity;
 
     /**
      * @return Long return the id
@@ -74,45 +68,31 @@ public class MedicineReservation {
     }
 
     /**
-     * @return Patient return the patient
+     * @return MedicineStatus return the statusInPharmacy
      */
-    public Patient getPatient() {
-        return patient;
+    public MedicineStatus getStatusInPharmacy() {
+        return statusInPharmacy;
     }
 
     /**
-     * @param patient the patient to set
+     * @param statusInPharmacy the statusInPharmacy to set
      */
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setStatusInPharmacy(MedicineStatus statusInPharmacy) {
+        this.statusInPharmacy = statusInPharmacy;
     }
 
     /**
-     * @return Date return the date
+     * @return double return the quantity
      */
-    public Date getDate() {
-        return date;
+    public double getQuantity() {
+        return quantity;
     }
 
     /**
-     * @param date the date to set
+     * @param quantity the quantity to set
      */
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    /**
-     * @return MedicineStatus return the status
-     */
-    public MedicineStatus getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(MedicineStatus status) {
-        this.status = status;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
 }

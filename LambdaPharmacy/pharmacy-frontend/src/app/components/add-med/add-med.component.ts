@@ -39,10 +39,10 @@ export class AddMedComponent implements OnInit {
   }
 
   addMedicine(){
-    alert("USAO OVDE");
+
     this.medicineID = this.addingMedForm.get('medicine').value;
-    alert(this.medicineID);
-    alert("PHarmacy id:" + this.pharmacyID);
+
+
 
     this.medicineService.addMedicineToPharmacy(this.pharmacyID, this.medicineID).subscribe(response => {
       alert("Medicine added to pharmacy!");

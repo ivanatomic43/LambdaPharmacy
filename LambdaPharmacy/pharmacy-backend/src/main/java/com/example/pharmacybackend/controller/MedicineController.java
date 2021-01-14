@@ -37,7 +37,7 @@ public class MedicineController {
 	@Autowired
 	TokenUtils tokenUtils;
 
-	@RequestMapping(value = "/getAllMedicines", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAllMedicines", method = RequestMethod.GET) // in all pharmacies
 	public ResponseEntity<?> getAllMedicines() {
 
 		List<MedicineDTO> medicines = medicineService.getAllMedicine();
@@ -142,6 +142,36 @@ public class MedicineController {
 		}
 
 		return new ResponseEntity<>(added, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/getNotReservedMedicines", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getNotReservedMedicines() {
+
+		List<MedicineDTO> allMedicines = medicineService.getNotReservedMedicines();
+
+		if (allMedicines.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(allMedicines, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/cancelMedicineReservation/{id}")
+	@PreAuthorize("hasRole('PATIENT')")
+	public ResponseEntity<?> cancelMedicineReservation(@PathVariable("id") Long id, HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		boolean cancelled = medicineService.cancelMedicineReservation(id, user.getId());
+
+		if (!cancelled) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

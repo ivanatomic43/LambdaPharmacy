@@ -43,6 +43,9 @@ public class Medicine {
 	@Column(nullable = false)
 	private String dailyDose;
 
+	@Enumerated(EnumType.STRING)
+	private MedicineStatus defaultStatus;
+
 	// @Column
 	// private List<String> substituteMedicines = new ArrayList<>();
 
@@ -147,6 +150,20 @@ public class Medicine {
 	 */
 	public void setDailyDose(String dailyDose) {
 		this.dailyDose = dailyDose;
+	}
+
+	/**
+	 * @return MedicineStatus return the defaultStatus
+	 */
+	public MedicineStatus getDefaultStatus() {
+		return defaultStatus;
+	}
+
+	/**
+	 * @param defaultStatus the defaultStatus to set
+	 */
+	public void setDefaultStatus(MedicineStatus defaultStatus) {
+		this.defaultStatus = defaultStatus;
 	}
 
 }

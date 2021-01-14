@@ -11,27 +11,29 @@ INSERT INTO PHARMACY (id, address, description, name, rating) VALUES (1, 'Buleva
 INSERT INTO PHARMACY (id, address, description, name, rating) VALUES (2, 'Lasla Gala 12, Novi Sad', 'Sirok asortiman proizvoda', 'BENU apoteka',0);
 INSERT INTO PHARMACY (id, address, description, name, rating) VALUES (3, 'Kisacka 27, Novi Sad', 'Sirok asortiman proizvoda', 'Zegin',0);
 
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (1, 'None', '3', 'Humani lekovi','111','NO_RECIPE','Strepsils','Pogodno za decu','RECKITT BENCKISER HEALTHCARE','Lozenga', '2,4-dihlorbenzilalkohol, amilmetakrezol');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (2, 'None', '4','Humani lekovi','112','NO_RECIPE','Andol','Za sve vrste bolova u telu','Pliva Hrvatska','Tableta', 'acetilsalicilna kiselina');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (3, 'None', '2','Humani lekovi','113','NO_RECIPE','Aspirin 500mg','Za jaku glavobolju','	BAYER BITTERFELD GMBH','Tableta','acetilsalicilna kiselina');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (4, 'Alergies', '1','Humani lekovi','114','RECIPE','	Enalapril Remedica 10mg','Za kontrolu povišenog krvnog pritiska','REMEDICA LTD','Tableta', 'enalapril');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (5, 'Heart problems', '2','Humani lekovi','115','NO_RECIPE','Brufen 100mg','Za prehlade, kasalj i temepraturu','ABBVIE S.R.L.','Sirup', 'ibuprofen');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (6, 'None', '2','Homeopatski lekovi','116','NO_RECIPE','Influcid','Koristi se u terapiji infekcija slicnih gripu','DEUTSCHE HOMOOPATHIE-UNION','Tableta','Aconitum trit. D3 25 mg Gelsemium trit. D3 ');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (7, 'None', '1','Homeopatski lekovi','117','NO_RECIPE','Polinol','Za terapiju alergijskih reakcija disajnih puteva','DEUTSCHE HOMOOPATHIE-UNION ','Tableta', 'luffa operculata trit. D4, galphimia glauca trit. D3, cardiospermum trit. D3');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (8, 'Alergies', '2','Humani lekovi','118','RECIPE','Kardioprotekt','Za smanjenje rizika smrtnosti kod osoba koje su preživele infarkt kao i za sprečavanje moždanog udara','AD JAKA 80 RADOVIŠ','Gastrorezistentna tableta', 'acetilsalicilna kiselina');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (9, 'Not for children', '1','Humani lekovi','119','RECIPE','Xanax','Namenjen za lečenje anksioznosti, napetosti ili drugih somatskih (telesnih) ili psihijatrijskih simptoma povezanih sa anksioznošću','PFIZER ITALIA S.R.L.','Tableta', 'alprazolam');
-INSERT INTO MEDICINE (id, contraindications, daily_dose, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (10, 'None', '2','Humani lekovi','120','RECIPE','Rantudil forte 60mg','Koristi se u terapiji bola i zapaljenja kod reumatoidnog artritisa (hronični poliartritis)','MEDA MANUFACTURING GMBH','Kapsula', 'acemetacin');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (1, 'None', '3', 'AVAILABLE', 'Humani lekovi','111','NO_RECIPE','Strepsils','Pogodno za decu','RECKITT BENCKISER HEALTHCARE','Lozenga', '2,4-dihlorbenzilalkohol, amilmetakrezol');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,  med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (2, 'None', '4', 'AVAILABLE','Humani lekovi','112','NO_RECIPE','Andol','Za sve vrste bolova u telu','Pliva Hrvatska','Tableta', 'acetilsalicilna kiselina');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,  med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (3, 'None', '2','AVAILABLE','Humani lekovi','113','NO_RECIPE','Aspirin 500mg','Za jaku glavobolju','	BAYER BITTERFELD GMBH','Tableta','acetilsalicilna kiselina');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (4, 'Alergies', '1','AVAILABLE','Humani lekovi','114','RECIPE','	Enalapril Remedica 10mg','Za kontrolu povišenog krvnog pritiska','REMEDICA LTD','Tableta', 'enalapril');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (5, 'Heart problems', '2','AVAILABLE','Humani lekovi','115','NO_RECIPE','Brufen 100mg','Za prehlade, kasalj i temepraturu','ABBVIE S.R.L.','Sirup', 'ibuprofen');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (6, 'None', '2','AVAILABLE','Homeopatski lekovi','116','NO_RECIPE','Influcid','Koristi se u terapiji infekcija slicnih gripu','DEUTSCHE HOMOOPATHIE-UNION','Tableta','Aconitum trit. D3 25 mg Gelsemium trit. D3 ');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (7, 'None', '1','AVAILABLE','Homeopatski lekovi','117','NO_RECIPE','Polinol','Za terapiju alergijskih reakcija disajnih puteva','DEUTSCHE HOMOOPATHIE-UNION ','Tableta', 'luffa operculata trit. D4, galphimia glauca trit. D3, cardiospermum trit. D3');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, med_type, medicine_code, mode, name, note, producer, shape, structure) VALUES (8, 'Alergies', '2','AVAILABLE','Humani lekovi','118','RECIPE','Kardioprotekt','Za smanjenje rizika smrtnosti kod osoba koje su preživele infarkt kao i za sprečavanje moždanog udara','AD JAKA 80 RADOVIŠ','Gastrorezistentna tableta', 'acetilsalicilna kiselina');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,  med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (9, 'Not for children', '1','AVAILABLE','Humani lekovi','119','RECIPE','Xanax','Namenjen za lečenje anksioznosti, napetosti ili drugih somatskih (telesnih) ili psihijatrijskih simptoma povezanih sa anksioznošću','PFIZER ITALIA S.R.L.','Tableta', 'alprazolam');
+INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,  med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (10, 'None', '2','AVAILABLE','Humani lekovi','120','RECIPE','Rantudil forte 60mg','Koristi se u terapiji bola i zapaljenja kod reumatoidnog artritisa (hronični poliartritis)','MEDA MANUFACTURING GMBH','Kapsula', 'acemetacin');
 
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (1,1);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (1,2);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (1,3);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (1,4);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (2,1);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (2,4);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (3,6);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (3,7);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (3,8);
-INSERT INTO PHARMACY_MEDICINE (pharmacy_id, medicine_id) VALUES (3,2);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (1, 5, 'AVAILABLE', 1,1);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (2, 5, 'AVAILABLE', 2,1);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (3, 5, 'AVAILABLE', 3,1);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (4, 5, 'AVAILABLE', 4,1);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (5, 5, 'AVAILABLE', 1,2);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (6, 5, 'AVAILABLE', 4,2);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (7, 5, 'AVAILABLE', 6,3);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (8, 5, 'AVAILABLE', 7,3);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (9, 5, 'AVAILABLE', 8,3);
+INSERT INTO PHARMACY_MEDICINES (id, quantity, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (10, 5, 'AVAILABLE', 2,3);
+
+
 
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_PATIENT');
 INSERT INTO AUTHORITY (id, name) VALUES (2,'ROLE_PHARMACIST');

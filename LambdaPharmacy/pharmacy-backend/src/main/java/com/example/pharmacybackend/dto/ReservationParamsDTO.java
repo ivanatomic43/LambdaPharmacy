@@ -15,6 +15,7 @@ public class ReservationParamsDTO {
     private String pharmacyName;
     private String datee;
     private String status;
+    private double quantity;
 
     public ReservationParamsDTO() {
     }
@@ -27,7 +28,7 @@ public class ReservationParamsDTO {
     }
 
     public ReservationParamsDTO(Long id, Long medicineID, Long pharmacyID, String datee, String medicineName,
-            String pharmacyName, String status) {
+            String pharmacyName, String status, double quantity) {
         this.id = id;
         this.medicineID = medicineID;
         this.pharmacyID = pharmacyID;
@@ -35,6 +36,7 @@ public class ReservationParamsDTO {
         this.medicineName = medicineName;
         this.pharmacyName = pharmacyName;
         this.status = status;
+        this.quantity = quantity;
 
     }
 
@@ -148,6 +150,20 @@ public class ReservationParamsDTO {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * @return double return the quantity
+     */
+    public double getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
 }

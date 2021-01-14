@@ -16,8 +16,8 @@
         <div class="u-container-layout u-similar-container u-container-layout-1">
           <img src="https://1au3b422k9zdqzddw3my51gg-wpengine.netdna-ssl.com/wp-content/uploads/sites/7/2019/11/Givlaari-Alnylam.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="500" data-image-height="500">
           <h5 class="u-text u-text-default u-text-1">{{medicine.name}}&nbsp;</h5>
-          <p class="u-text u-text-default u-text-2">Status: <b>{{medicine.status}}</b></p>
-
+          <p *ngIf="isPatient" class="u-text u-text-default u-text-2">Status: <b>{{medicine.status}}</b></p>
+          <p *ngIf="anyLogged" class="u-text u-text-default u-text-2">Quantity: {{medicine.quantity}}</p>
           <h4 class="u-text u-text-default u-text-palette-1-base u-text-3">{{medicine.pharmacyName}}</h4>
           <button class="btn-search">See details</button>
           <button style="margin-left: 5px;" *ngIf="isPatient" class="btn-search" (click)= "reserveMedicine(medicine.id, medicine.pharmacyID)">Reserve</button>

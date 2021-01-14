@@ -18,6 +18,8 @@ export class ReservedMedicinesComponent implements OnInit {
     'date',
     'medicineName',
     'pharmacyName',
+    'status',
+    'quantity',
     'action'
   ];
 
@@ -49,6 +51,20 @@ export class ReservedMedicinesComponent implements OnInit {
     );
 
 
+  }
+  //medicine reservation id
+  cancel(id:number){
+    this.medicineService.cancelMedicineReservation(id).subscribe(response => {
+      alert("Reservation cancelled!");
+      this.fetchReservations();
+    }, error =>{
+      if(error.status == 400){
+        alert("The reservation of the medicine can be canceled no later than 24 hours!");
+      }else {
+        console.log("error...");
+      }
+
+    });
   }
 
 }

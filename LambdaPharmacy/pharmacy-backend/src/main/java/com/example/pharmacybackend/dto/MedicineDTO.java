@@ -21,6 +21,7 @@ public class MedicineDTO {
 	private String pharmacyName;
 	private String modee;
 	private String status;
+	private double quantity;
 
 	public MedicineDTO() {
 	}
@@ -47,7 +48,7 @@ public class MedicineDTO {
 
 	public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer,
 			String structure, String modee, String note, Long pharmacyID, String pharmacyName, String status,
-			String contraindications, String dailyDose) {
+			String contraindications, String dailyDose, double quantity) {
 		super();
 		this.id = id;
 		this.medicineCode = medicineCode;
@@ -63,6 +64,7 @@ public class MedicineDTO {
 		this.status = status;
 		this.contraindications = contraindications;
 		this.dailyDose = dailyDose;
+		this.quantity = quantity;
 	}
 
 	public Long getId() {
@@ -219,6 +221,20 @@ public class MedicineDTO {
 	 */
 	public void setDailyDose(String dailyDose) {
 		this.dailyDose = dailyDose;
+	}
+
+	/**
+	 * @return String return the quantity
+	 */
+	public double getQuantity() {
+		return quantity;
+	}
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
 	}
 
 }

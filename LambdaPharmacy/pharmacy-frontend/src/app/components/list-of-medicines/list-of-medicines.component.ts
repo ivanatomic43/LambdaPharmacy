@@ -20,6 +20,7 @@ export class ListOfMedicinesComponent implements OnInit {
   isSysAdmin = false;
   profil :UserDTO;
   reservationParams : ReservationParams;
+  anyLogged = false;
 
   constructor(
     private medicineService: MedicineService,
@@ -31,20 +32,30 @@ export class ListOfMedicinesComponent implements OnInit {
   ngOnInit(){
 
     this.authService.getLogged().subscribe(response => {
+
       this.profil= response;
       const role = this.profil.authorities[0];
-      if(role != 'ROLE_SYS_ADMIN') {
 
+      if(role == 'ROLE_PATIENT'){
         this.isPatient = true;
+        this.anyLogged = true;
+        this.medicineService.getNotReservedMedicines().subscribe(response => {
 
+          this.fetchedMedicines = response;
+          this.loaded = true;
+        });
 
+        this.medicineService.refreshMedicines.subscribe(refreshMedicines => {
+          this.fetchedMedicines = refreshMedicines;
+        });
 
-
-      } else {
-        this.isPatient = false;
+        return;
+      }else {
+        this.isPatient= false;
       }
       if(role == 'ROLE_SYS_ADMIN'){
         this.isSysAdmin= true;
+        this.anyLogged= true;
 
         this.medicineService.getAllMedicinesInSystem().subscribe( response => {
           this.fetchedMedicines = response;
@@ -66,22 +77,24 @@ export class ListOfMedicinesComponent implements OnInit {
 
 
 
-      });
 
-      this.medicineService.allMedicines().subscribe(
-        resp => {
-          this.fetchedMedicines = resp;
-          console.log(this.fetchedMedicines);
-          this.loaded = true;
+      }, error => {
+        console.log("There is no logged user...");
+        this.medicineService.allMedicines().subscribe(
+          resp => {
+            this.fetchedMedicines = resp;
+            console.log(this.fetchedMedicines);
+            this.loaded = true;
 
-        },
-        err => {
+          },
+          err => {
 
-        }
-      );
+          }
+        );
 
-      this.medicineService.refreshMedicines.subscribe(refreshMedicines => {
-        this.fetchedMedicines = refreshMedicines;
+        this.medicineService.refreshMedicines.subscribe(refreshMedicines => {
+          this.fetchedMedicines = refreshMedicines;
+        });
       });
 
 

@@ -53,7 +53,6 @@ export class NewPharmacyComponent implements OnInit {
     console.log("RAW VALUE:", this.pharmacyForm.getRawValue());
 
     this.submittedData = this.pharmacyForm.getRawValue();
-    console.log(this.submittedData.name);
 
 
     this.pharmacyService.createNewPharmacy(this.submittedData).subscribe(

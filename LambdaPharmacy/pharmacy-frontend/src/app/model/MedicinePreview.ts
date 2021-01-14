@@ -13,7 +13,8 @@ export class MedicinePreview{
     public pharmacyName: string,
     public status: string,
     public contraidications: string,
-    public dailyDose : string
+    public dailyDose : string,
+    public quantity: number
   ) {
   }
 

@@ -1,13 +1,20 @@
 
-<div *ngIf="!loaded" class="row" style="margin-left: 50px;">
-  <h6>No data to show.</h6>
-</div>
 
-<section class="u-clearfix u-section-1" id="carousel_9f1d" style="margin-top: 30px; background-color: #eff2ff;" *ngIf="loaded">
+
+<section class="u-clearfix u-section-1" id="carousel_9f1d" style="margin-top: 30px; background-color: #eff2ff;">
   <div *ngIf="isPharmacyAdmin" style="display: flex;  justify-content: center;
   align-items: center;">
-    <h2 style=" color:#0f6674; font-family:'Arial Black'">List of all medicines in the pharmacy</h2>
+    <button style="margin-right: 50px;" class="btn-search" (click)="backToPharmacy(pharmacy.id)">Back</button>
+    <h2 style=" color:#0f6674; font-family:'Arial Black'">All Medicines in the pharmacy {{pharmacy.name}}</h2>
     <button style="margin-left:50px;" class="btn-search" (click)="showAddForm()">Add medicine</button>
+  </div>
+
+
+  <div *ngIf="!isPharmacyAdmin" style="display: flex;  justify-content: center;
+  align-items: center;">
+     <button style="margin-right: 50px;" class="btn-search" (click)="backToPharmacy(pharmacy.id)">Back</button>
+    <h2 style=" color:#0f6674; font-family:'Arial Black'">List of medicines in {{pharmacy.name}}</h2>
+
   </div>
 
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
@@ -16,10 +23,11 @@
         <div class="u-container-layout u-similar-container u-container-layout-1">
           <img src="https://1au3b422k9zdqzddw3my51gg-wpengine.netdna-ssl.com/wp-content/uploads/sites/7/2019/11/Givlaari-Alnylam.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="500" data-image-height="500">
           <h5 class="u-text u-text-default u-text-1">{{medicine.name}}&nbsp;</h5>
-          <p class="u-text u-text-default u-text-2">{{medicine.note}}</p>
+          <p *ngIf="anyLogged" class="u-text u-text-default u-text-2">Status: <b> {{medicine.status}}</b></p>
+          <p *ngIf="anyLogged" class="u-text u-text-default u-text-2">Quantity: {{medicine.quantity}}</p>
           <h4 class="u-text u-text-default u-text-palette-1-base u-text-3">{{medicine.producer}}</h4>
           <button class="btn-search">See details</button>
-          <button style="margin-left: 5px;" class="btn-search">Reserve</button>
+          <button *ngIf="isPatient" style="margin-left: 5px;" class="btn-search">Reserve</button>
         </div>
       </div>
 

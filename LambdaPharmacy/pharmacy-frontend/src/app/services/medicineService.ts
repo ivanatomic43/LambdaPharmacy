@@ -25,6 +25,8 @@ export class MedicineService {
   registerMedicineUrl = medicineUrl + '/registerMedicine';
   getMedForAddUrl = medicineUrl + '/getMedForAdd/';
   addMedicineToPharmacyUrl = medicineUrl + '/addMedicineToPharmacy/';
+  getNotReservedMedicinesUrl = medicineUrl + '/getNotReservedMedicines';
+  cancelMedicineReservationUrl = medicineUrl + '/cancelMedicineReservation/';
 
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -45,8 +47,14 @@ export class MedicineService {
     return this.http.get<any>(this.getPatientReservationsUrl);
   }
 
+  //front page
   getAllMedicinesInSystem(){
     return this.http.get<any>(this.getAllMedicinesInSystemUrl);
+  }
+
+  //for patient role
+  getNotReservedMedicines(){
+    return this.http.get<any>(this.getNotReservedMedicinesUrl);
   }
 
   registerMedicine(medicineParams: NewMedicine){
@@ -92,5 +100,23 @@ export class MedicineService {
         })
       );
 
+  }
+
+  cancelMedicineReservation(id:number){
+
+    return this.http.post(this.cancelMedicineReservationUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
   }
 }
