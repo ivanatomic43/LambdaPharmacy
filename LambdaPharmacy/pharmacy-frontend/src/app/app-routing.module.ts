@@ -1,3 +1,4 @@
+import { PharmacistsComponent } from './components/pharmacists/pharmacists.component';
 import { RegisterPharmacyAdminComponent } from './components/register-pharmacy-admin/register-pharmacy-admin.component';
 
 import { ListOfMedicinesComponent } from './components/list-of-medicines/list-of-medicines.component';
@@ -123,7 +124,16 @@ const routes: Routes = [
         }
       ]
   },
-  {path: 'register-pharmacy-admin', component: RegisterPharmacyAdminComponent}
+  {path: 'register-pharmacy-admin', component: RegisterPharmacyAdminComponent},
+  {path : 'pharmacists',
+      children : [
+        {
+          path: ':id',
+          component: PharmacistsComponent
+        }
+      ]
+
+  }
 
 ];
 

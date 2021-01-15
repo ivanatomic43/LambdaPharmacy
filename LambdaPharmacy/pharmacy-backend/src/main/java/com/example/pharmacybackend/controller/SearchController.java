@@ -81,10 +81,11 @@ public class SearchController {
 		System.out.println(sp.getTime());
 		List<PharmacyDTO> pharmacies = pharmacistService.searchPharmacist(sp);
 
-		if (pharmacies.isEmpty()) {
-
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		/*
+		 * if (pharmacies.isEmpty()) {
+		 * 
+		 * return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
+		 */
 
 		return new ResponseEntity<>(pharmacies, HttpStatus.OK);
 	}

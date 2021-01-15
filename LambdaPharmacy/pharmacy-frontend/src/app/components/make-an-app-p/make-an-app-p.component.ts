@@ -1,3 +1,4 @@
+import { SortPipe } from './../../services/SortPipe';
 import { AppointmentService } from 'src/app/services/AppointmentService';
 import { NewCounceling } from './../../model/NewCounceling';
 import { NewAppointmentDTO } from './../../model/NewAppointmentDTO';
@@ -43,26 +44,31 @@ export class MakeAnAppPComponent implements OnInit {
   ];
 
   searchPharmacistForm : FormGroup;
-  searchParams : SearchPharmacistParams;
-  show = false;
+  //searchParams : SearchPharmacistParams;
+  show :boolean;
   newAppointment: NewCounceling;
   pharmacyID : number;
+  searchParams:  SearchPharmacistParams ;
 
   constructor(
     private router: Router,
     private pharmacistService: PharmacistService,
     private searchService : SearchService,
     private formBuilder : FormBuilder,
-    private appointmentService :AppointmentService
+    private appointmentService :AppointmentService,
+    private sortPipe : SortPipe
 
   ) { }
 
   ngOnInit() {
 
+    this.show = true;
     this.searchPharmacistForm = new FormGroup({
       searchPharmacistDate: new FormControl('', [Validators.required]),
       searchPharmacistTime: new FormControl('', [Validators.required])
+
     });
+
 
   }
 
@@ -72,10 +78,11 @@ export class MakeAnAppPComponent implements OnInit {
       this.searchPharmacistForm.get('searchPharmacistDate').value,
       this.searchPharmacistForm.get('searchPharmacistTime').value
     );
-
      this.searchService.searchPharmacist(this.searchParams).subscribe( response => {
-       this.pharmacies = response;
+
+      this.pharmacies = response;
        this.dataSource2 = new MatTableDataSource(this.pharmacies);
+
 
      }, error => {
        alert("No search results!");
@@ -83,22 +90,66 @@ export class MakeAnAppPComponent implements OnInit {
 
   }
 
+  sortChange(value) {
+    console.log(value);
+    if (value == 'priceA')
+      this.pharmacies = this.sortPipe.transform(
+        this.pharmacies,
+        'asc',
+        'price'
+      );
+
+    if (value == 'priceD')
+      this.pharmacies = this.sortPipe.transform(
+        this.pharmacies,
+        'desc',
+        'price'
+      );
+
+    if (value == 'ratingA')
+      this.pharmacies = this.sortPipe.transform(
+        this.pharmacies,
+        'asc',
+        'rating'
+      );
+
+    if (value == 'ratingD')
+      this.pharmacies = this.sortPipe.transform(
+        this.pharmacies,
+        'desc',
+        'rating'
+      );
+  }
+
   seePharm(id:number){
-    this.show = true;
+    this.show = false;
     this.pharmacyID= id;
+
     this.searchParams = new SearchPharmacistParams(
       this.searchPharmacistForm.get('searchPharmacistDate').value,
       this.searchPharmacistForm.get('searchPharmacistTime').value
     );
 
+    alert(id);
+    alert(this.searchParams);
     this.pharmacistService.seePharmacists(id, this.searchParams).subscribe(response => {
       this.pharmacists = response;
       this.dataSource3 = new MatTableDataSource(this.pharmacists);
     }, error => {
       alert("There is no available pharmacist for chosen params...");
+      this.pharmacists = null;
+      this.dataSource3 = new MatTableDataSource(this.pharmacists);
     })
+
+
   }
 
+  back(){
+
+    this.show = true;
+    this.pharmacists = null;
+      this.dataSource3 = new MatTableDataSource(this.pharmacists);
+  }
   reserveCounceling(id:number){
 
     this.newAppointment = new NewCounceling(

@@ -75,10 +75,10 @@ public class PharmacistController {
 
         List<PharmacistDTO> retPharm = pharmacistService.getAllPharmForPharmacy(id);
 
-        /*
-         * if (retPharm.isEmpty()) { return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-         * }
-         */
+        if (retPharm.isEmpty()) {
+            return new ResponseEntity<>(retPharm, HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(retPharm, HttpStatus.OK);
 
     }

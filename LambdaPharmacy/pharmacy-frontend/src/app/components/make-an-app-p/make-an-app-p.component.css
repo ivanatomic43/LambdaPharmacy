@@ -1891,6 +1891,21 @@ span.flatpickr-weekday {
   background: #e67600;
 }
 
+.btn-search{
+  min-width: 100px;
+  height: 50px;
+  padding: 0 15px;
+  background: #ff8300;
+  white-space: nowrap;
+  border-radius: 3px;
+  font-size: 16px;
+  color: #fff;
+  transition: all .2s ease-out, color .2s ease-out;
+  border: 0;
+  cursor: pointer;
+
+}
+
 @media screen and (max-width: 767px) {
   .s012 form {
     padding: 30px 15px;

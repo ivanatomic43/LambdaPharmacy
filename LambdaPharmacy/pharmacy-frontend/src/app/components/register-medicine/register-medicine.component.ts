@@ -14,7 +14,7 @@ export class RegisterMedicineComponent implements OnInit {
 
   medicineForm : FormGroup;
   medicineParams : NewMedicine;
-  //modeOptions= ['NO_RECIPE','RECIPE'];
+
 
   medicine : NewMedicine = new NewMedicine();
 

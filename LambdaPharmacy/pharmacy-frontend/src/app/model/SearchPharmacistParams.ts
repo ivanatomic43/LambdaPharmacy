@@ -1,8 +1,11 @@
 export class SearchPharmacistParams{
 
+
+
+
   constructor(
-    public date: any,
-    public time : any
+public date : any,
+public time: any
   ){}
 
 

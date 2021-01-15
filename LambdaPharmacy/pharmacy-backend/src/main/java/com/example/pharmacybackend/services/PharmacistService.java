@@ -129,9 +129,13 @@ public class PharmacistService {
         List<Pharmacy> allPharm = pharmacyRepository.findAll();
 
         for (Pharmacy p : allPharm) {
+
             System.out.println("Usao u for za apoteke");
-            List<Pharmacist> pharmacists = p.getPharmacists();
-            List<Appointment> appointments = p.getPharmacyAppointments();
+            List<Pharmacist> pharmacists = new ArrayList<>();
+            List<Appointment> appointments = new ArrayList<>();
+            pharmacists = p.getPharmacists();
+            appointments = p.getPharmacyAppointments();
+
             if (!appointments.isEmpty() && !pharmacists.isEmpty()) {
                 for (Appointment a : appointments) {
 
@@ -173,7 +177,8 @@ public class PharmacistService {
 
                 }
             } else if (appointments.isEmpty() && !pharmacists.isEmpty()) {
-                // nema sastanaka zakazanih, znaci da su svi farmaceuti slobodni
+                // nema sastanaka zakazanih, znaci da su svi farmaceuti slobodni ali da li se
+                // uklapa trazeno vreme u njihovo radno vreme?
 
                 System.out.println("Usao u nema zakazanih sastanaka");
                 PharmacyDTO dto = new PharmacyDTO();
