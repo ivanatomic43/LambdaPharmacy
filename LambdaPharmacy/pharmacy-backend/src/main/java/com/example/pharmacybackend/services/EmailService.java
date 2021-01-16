@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.example.pharmacybackend.model.Patient;
+import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.model.Promotion;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.repository.PatientRepository;
 
@@ -79,6 +81,19 @@ public class EmailService {
 		mail.setSubject("Counceling reservation");
 		mail.setText(
 				"Dear patient, your counceling with pharmacist has been made. Thank you for your trust. Best regards, LambdaPharmacy team.");
+		javaMailSender.send(mail);
+	}
+
+	@Async
+	public void sendPromotionEmail(Patient patient, Promotion promotion, Pharmacy pharmacy) throws MailException {
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(patient.getEmail());
+		mail.setFrom("no.reply.medclinic@gmail.com");
+		mail.setSubject("New promotion in our pharmacy " + pharmacy.getName());
+		mail.setText("There is new promotion in our pharmacy: " + promotion.getDescription() + "It's available from: "
+				+ promotion.getDateFrom().toString() + "to " + promotion.getDateTo()
+				+ "Best regards, your LambdaPharmacy team.");
 		javaMailSender.send(mail);
 	}
 }

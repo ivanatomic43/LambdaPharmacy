@@ -11,13 +11,16 @@ import javassist.expr.NewArray;
 import com.example.pharmacybackend.repository.PatientRepository;
 import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
+import com.example.pharmacybackend.repository.PromotionRepository;
 import com.example.pharmacybackend.dto.PharmacyDTO;
+import com.example.pharmacybackend.dto.PromotionDTO;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.PharmacyAdministrator;
+import com.example.pharmacybackend.model.Promotion;
 
 @Service
 public class PharmacyService {
@@ -33,6 +36,12 @@ public class PharmacyService {
 
 	@Autowired
 	private PatientRepository patientRepository;
+
+	@Autowired
+	private PromotionRepository promotionRepository;
+
+	@Autowired
+	private EmailService emailService;
 
 	public List<Pharmacy> getAllPharmacies() {
 		return pharmacyRepository.findAll();
@@ -233,6 +242,65 @@ public class PharmacyService {
 		}
 
 		return retList;
+
+	}
+
+	public List<PromotionDTO> fetchAllPromotions(Long id) {
+
+		List<PromotionDTO> retList = new ArrayList<>();
+
+		List<Promotion> allProm = promotionRepository.findAll();
+
+		for (Promotion p : allProm) {
+
+			if (p.getPharmacy().getId() == id) {
+
+				PromotionDTO dto = new PromotionDTO();
+				dto.setId(p.getId());
+				dto.setDescription(p.getDescription());
+				dto.setDateFromm(p.getDateFrom().toString());
+				dto.setDateToo(p.getDateTo().toString());
+
+				retList.add(dto);
+
+			}
+		}
+
+		return retList;
+	}
+
+	public PromotionDTO createPromotion(Long pharmacyID, PromotionDTO newProm) {
+
+		Pharmacy p = pharmacyRepository.findOneById(pharmacyID);
+
+		Promotion prom = new Promotion();
+		prom.setDateFrom(newProm.getDateFrom());
+		prom.setDateTo(newProm.getDateFrom());
+		prom.setDescription(newProm.getDescription());
+		prom.setPharmacy(p);
+
+		promotionRepository.save(prom);
+
+		// send e-mail to subscribers
+		List<Patient> patients = patientRepository.findAll();
+
+		for (Patient pat : patients) {
+			List<Pharmacy> subPharm = new ArrayList<>();
+			subPharm = pat.getSubscribedPharmacies();
+
+			for (Pharmacy ph : subPharm) {
+				if (ph.getId() == pharmacyID) {
+					emailService.sendPromotionEmail(pat, prom, ph);
+				}
+			}
+		}
+
+		PromotionDTO ret = new PromotionDTO();
+		ret.setId(prom.getId());
+		ret.setDescription(prom.getDescription());
+		ret.setDateFromm(prom.getDateFrom().toString());
+		ret.setDateToo(prom.getDateTo().toString());
+		return ret;
 
 	}
 

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import net.bytebuddy.description.type.PackageDescription;
 
 import com.example.pharmacybackend.dto.PharmacyDTO;
+import com.example.pharmacybackend.dto.PromotionDTO;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.model.Image;
@@ -208,6 +209,31 @@ public class PharmacyController {
 			return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
 
 		return new ResponseEntity<>(list, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/fetchAllPromotions/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> fetchAllPromotions(@PathVariable("id") Long id) {
+
+		List<PromotionDTO> list = pharmacyService.fetchAllPromotions(id);
+
+		if (list.isEmpty())
+			return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/createPromotion/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> fetchAllPromotions(@PathVariable("id") Long id, @RequestBody PromotionDTO newProm) {
+
+		PromotionDTO newPromotion = pharmacyService.createPromotion(id, newProm);
+
+		if (newPromotion == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(newPromotion, HttpStatus.OK);
 
 	}
 

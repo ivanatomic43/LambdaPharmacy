@@ -219,5 +219,8 @@ export class PharmacyDetailsComponent implements OnInit {
     });
   }
 
+  showPromotions(id:number){
+    this.router.navigate(['/promotions/' + id]);
+  }
 
 }

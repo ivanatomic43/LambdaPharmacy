@@ -1,6 +1,61 @@
-<div style="background: url(/assets/back.jpg);">
+<div style="background: url(/assets/back.jpg);  background-size: cover;
+background-position: center center;">
+
+
+
+
+
   <div class="preview-users">
-    <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Pharmacy's actions & promotions</h1>
+    <h1 style="position: center; text-align: center; color:#0f6674; font-family:'Arial Black'">Pharmacy's actions & promotions</h1>
+    <button class="btn-search" (click)="showForm()">New promotion</button>
+
+    <div class="main" *ngIf="clicked">
+      <div class="col-sm-9">
+
+        <form (ngSubmit)= "createNewPromotion()" [formGroup]="promotionForm" >
+        <div class="col-md-8">
+          <div class="card mb-3">
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Description</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="promotion.description" type="text" formControlName= "description"/>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Date from</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="promotion.dateFrom" type="date" formControlName= "dateFrom"/>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Date to</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="promotion.dateTo" type="date" formControlName = "dateTo"/>
+                </div>
+              </div>
+              <hr>
+
+
+            </div>
+            <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Create</button>
+          </div>
+        </div>
+        </form>
+
+      </div>
+    </div>
+
+
 
     <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
@@ -11,12 +66,12 @@
 
       <ng-container matColumnDef="dateFrom">
         <th mat-header-cell *matHeaderCellDef> Date from</th>
-        <td mat-cell *matCellDef="let element"> {{element.dateFrom}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.dateFromm}} </td>
       </ng-container>
 
       <ng-container matColumnDef="dateTo">
         <th mat-header-cell *matHeaderCellDef>Date to</th>
-        <td mat-cell *matCellDef="let element"> {{element.dateTo}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.dateToo}} </td>
       </ng-container>
 
 
@@ -25,39 +80,6 @@
         <td mat-cell *matCellDef="let element"> {{element.description}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef>Role</th>
-        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef>Appointment type</th>
-        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="duration">
-        <th mat-header-cell *matHeaderCellDef>Duration</th>
-        <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-      </ng-container>
-
-
-      <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef>Price</th>
-        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-      </ng-container>
-
-
-
-
-
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Action</th>
-        <td mat-cell class="action-cell" *matCellDef="let element">
-          <button (click)="cancel(element.id)">Cancel</button>
-
-
-        </td>
-      </ng-container>
 
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>

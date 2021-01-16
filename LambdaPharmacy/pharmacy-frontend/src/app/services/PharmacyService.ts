@@ -1,3 +1,4 @@
+import { PromotionDTO } from './../model/PromotionDTO';
 import { Image } from './../model/Image';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -23,6 +24,8 @@ export class PharmacyService {
   getAdministratorsUrl = pharmacyUrl+ '/getAdministrators';
   subscribeUrl = pharmacyUrl + '/subscribe/';
   getSubPharmaciesUrl = pharmacyUrl + '/getSubPharmacies';
+  fetchAllPromotionsUrl = pharmacyUrl + '/fetchAllPromotions/';
+  createPromotionUrl = pharmacyUrl + '/createPromotion/';
 
 
 
@@ -94,6 +97,44 @@ export class PharmacyService {
   getSubPharmacies(){
 
     return this.http.post(this.getSubPharmaciesUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+  fetchAllPromotions(id:number){
+
+    return this.http.post(this.fetchAllPromotionsUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+  createPromotion(id: number, promotion : PromotionDTO){
+
+    return this.http.post(this.createPromotionUrl+id, promotion, {
 
     })
       .pipe(
