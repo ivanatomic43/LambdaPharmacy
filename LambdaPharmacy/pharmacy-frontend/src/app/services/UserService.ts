@@ -21,6 +21,7 @@ export class UserService {
   updateProfileUrl = userUrl + '/updateProfile';
   registerPharmacyAdministratorUrl = pharmacyUrl + '/registerPharmacyAdministrator';
   getAdminsForPharmacyUrl = pharmacyUrl + '/getAdminsForPharmacy/';
+  checkIfSubUrl = userUrl + '/checkIfSub/';
 
   constructor(
     private apiService: ApiService,
@@ -123,6 +124,25 @@ export class UserService {
   getAdminsForPharmacy(id: number){
 
     return this.http.post(this.getAdminsForPharmacyUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+  checkIfSub(id:number){
+
+    return this.http.post(this.checkIfSubUrl + id, {
 
     })
       .pipe(

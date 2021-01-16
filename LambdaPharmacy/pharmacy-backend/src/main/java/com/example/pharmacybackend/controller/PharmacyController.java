@@ -27,6 +27,7 @@ import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
+import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.ImageService;
 import com.example.pharmacybackend.services.PharmacyService;
 import com.example.pharmacybackend.services.UserServiceImpl;
@@ -46,6 +47,9 @@ public class PharmacyController {
 
 	@Autowired
 	private PharmacyAdministratorRepository pharmacyAdminRep;
+
+	@Autowired
+	TokenUtils tokenUtils;
 
 	@RequestMapping(value = "/getAllPharmacies", method = RequestMethod.GET)
 	public ResponseEntity<?> getAllPharmacies() {
@@ -173,6 +177,35 @@ public class PharmacyController {
 
 		if (list.isEmpty())
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/subscribe/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> subscribeForNewsletter(@PathVariable("id") Long id, HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		boolean subscribed = pharmacyService.subscribeForNewsletter(id, user.getId());
+
+		return new ResponseEntity<>(subscribed, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/getSubPharmacies", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getSubPharmacies(HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		List<PharmacyDTO> list = pharmacyService.getSubPharmacies(user.getId());
+
+		if (list.isEmpty())
+			return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
 
 		return new ResponseEntity<>(list, HttpStatus.OK);
 

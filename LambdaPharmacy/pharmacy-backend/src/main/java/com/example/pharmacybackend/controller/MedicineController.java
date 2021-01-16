@@ -174,4 +174,13 @@ public class MedicineController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/getMedicineDetails/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getMedicineDetails(@PathVariable("id") Long id) {
+
+		MedicineDTO myMed = medicineService.getMedicineDetails(id);
+
+		return new ResponseEntity<>(myMed, HttpStatus.OK);
+
+	}
+
 }

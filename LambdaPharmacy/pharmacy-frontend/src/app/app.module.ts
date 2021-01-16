@@ -1,5 +1,6 @@
 
 
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -58,6 +59,8 @@ import { RegisterMedicineComponent } from './components/register-medicine/regist
 import { AddMedComponent } from './components/add-med/add-med.component';
 import { RegisterPharmacyAdminComponent } from './components/register-pharmacy-admin/register-pharmacy-admin.component';
 import { PharmacistsComponent } from './components/pharmacists/pharmacists.component';
+import { PromotionsComponent } from './components/promotions/promotions.component';
+import { MedicineDetailsComponent } from './components/medicine-details/medicine-details.component';
 
 
 
@@ -106,7 +109,9 @@ import { PharmacistsComponent } from './components/pharmacists/pharmacists.compo
     RegisterMedicineComponent,
     AddMedComponent,
     RegisterPharmacyAdminComponent,
-    PharmacistsComponent
+    PharmacistsComponent,
+    PromotionsComponent,
+    MedicineDetailsComponent
 
 
   ],

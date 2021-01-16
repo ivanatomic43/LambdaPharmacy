@@ -1,3 +1,5 @@
+import { MedicineDetailsComponent } from './components/medicine-details/medicine-details.component';
+import { PromotionsComponent } from './components/promotions/promotions.component';
 import { PharmacistsComponent } from './components/pharmacists/pharmacists.component';
 import { RegisterPharmacyAdminComponent } from './components/register-pharmacy-admin/register-pharmacy-admin.component';
 
@@ -125,13 +127,25 @@ const routes: Routes = [
       ]
   },
   {path: 'register-pharmacy-admin', component: RegisterPharmacyAdminComponent},
-  {path : 'pharmacists',
-      children : [
-        {
-          path: ':id',
-          component: PharmacistsComponent
-        }
-      ]
+  {path : 'promotions',
+    children : [
+      {
+        path: ':id',
+        component: PromotionsComponent
+      }
+    ]
+  },
+  {path : 'medicine-details',
+    children : [
+      {
+        path: ':id',
+        component: MedicineDetailsComponent
+      },
+      {
+        path: ':id/:pid',
+        component: MedicineDetailsComponent
+      }
+    ]
 
   }
 

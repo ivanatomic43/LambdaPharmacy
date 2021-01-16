@@ -19,7 +19,8 @@
           <p *ngIf="isPatient" class="u-text u-text-default u-text-2">Status: <b>{{medicine.status}}</b></p>
           <p *ngIf="anyLogged" class="u-text u-text-default u-text-2">Quantity: {{medicine.quantity}}</p>
           <h4 class="u-text u-text-default u-text-palette-1-base u-text-3">{{medicine.pharmacyName}}</h4>
-          <button class="btn-search">See details</button>
+          <button class="btn-search" (click)="showMedicineDetails(medicine.id, medicine.pharmacyID)">See details</button>
+
           <button style="margin-left: 5px;" *ngIf="isPatient" class="btn-search" (click)= "reserveMedicine(medicine.id, medicine.pharmacyID)">Reserve</button>
         </div>
       </div>

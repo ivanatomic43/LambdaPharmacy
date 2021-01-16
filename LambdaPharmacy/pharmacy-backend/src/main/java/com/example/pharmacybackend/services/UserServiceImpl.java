@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.model.Dermatologist;
+import com.example.pharmacybackend.model.Patient;
+import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.User;
+import com.example.pharmacybackend.repository.PatientRepository;
+import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.repository.UserRepository;
 
 @Service
@@ -21,6 +25,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private PharmacyRepository pharmacyRepository;
+
+	@Autowired
+	private PatientRepository patientRepository;
 
 	@Override
 	public User findById(Long id) {
@@ -149,6 +159,30 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return retList;
+
+	}
+
+	public boolean checkIfSub(Long id, Long userID) {
+
+		boolean sub = false;
+
+		Patient patient = patientRepository.findOneById(userID);
+
+		List<Pharmacy> subPharm = patient.getSubscribedPharmacies();
+
+		if (!subPharm.isEmpty()) {
+
+			for (Pharmacy p : subPharm) {
+				if (p.getId() == id) {
+					return sub = true;
+				}
+			}
+		} else {
+			System.out.println("There is no subpharm...");
+			return sub = false;
+		}
+
+		return sub;
 
 	}
 

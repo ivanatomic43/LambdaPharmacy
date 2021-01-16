@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.model.*;
 import com.example.pharmacybackend.repository.UserRepository;
+import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.*;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
@@ -30,9 +33,9 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 
-	// Za pristup ovoj metodi neophodno je da ulogovani korisnik ima ADMIN ulogu
-	// Ukoliko nema, server ce vratiti gresku 403 Forbidden
-	// Korisnik jeste autentifikovan, ali nije autorizovan da pristupi resursu
+	@Autowired
+	TokenUtils tokenUtils;
+
 	@GetMapping("/user/{userId}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public User loadById(@PathVariable Long userId) {
@@ -68,6 +71,19 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 		return new ResponseEntity<>(retUser, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/checkIfSub/{id}", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('PATIENT')")
+	public ResponseEntity<?> checkIfSub(@PathVariable("id") Long id, HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		boolean sub = userService.checkIfSub(id, user.getId());
+
+		return new ResponseEntity<>(sub, HttpStatus.OK);
 	}
 
 }

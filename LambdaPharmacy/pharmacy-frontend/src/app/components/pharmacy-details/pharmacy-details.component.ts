@@ -32,6 +32,7 @@ export class PharmacyDetailsComponent implements OnInit {
   appointmentID:number;
 
   admins : UserProfileDTO[] = [];
+  isSubscribed = false;
 
 
   //dermatologists
@@ -114,6 +115,13 @@ export class PharmacyDetailsComponent implements OnInit {
           }
           if(role == 'ROLE_PATIENT'){
             this.isPatient = true;
+            //checking subscription
+
+            this.userService.checkIfSub(this.pharmacyID).subscribe(response =>{
+              this.isSubscribed = response;
+
+            });
+
           } else {
             this.isPatient = false;
           }
@@ -200,6 +208,15 @@ export class PharmacyDetailsComponent implements OnInit {
    }, error => {
      alert("Pharmacist can not be removed because of reserved appointments!");
    });
+  }
+
+  subscribe(id:number){
+    this.pharmacyService.subscribeForNewsletter(id).subscribe(response => {
+      this.isSubscribed= true;
+      alert("Subscribed!");
+    }, error => {
+      console.log("error..");
+    });
   }
 
 

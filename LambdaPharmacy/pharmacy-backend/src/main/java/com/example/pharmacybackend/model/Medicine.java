@@ -46,6 +46,9 @@ public class Medicine {
 	@Enumerated(EnumType.STRING)
 	private MedicineStatus defaultStatus;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Pricelist pricelist;
+
 	// @Column
 	// private List<String> substituteMedicines = new ArrayList<>();
 

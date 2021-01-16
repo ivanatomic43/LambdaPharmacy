@@ -14,6 +14,10 @@
                 <h4>{{fetchedPharmacy.name}}</h4>
 
                 <button class="btn-search" (click)="showMedicines(fetchedPharmacy.id)" >See medicines</button>
+                <button *ngIf="isPatient && !isSubscribed" class="btn-search" (click)="subscribe(fetchedPharmacy.id)">Subscribe for newsletter</button>
+                <p *ngIf="isPatient && isSubscribed"><b>SUBSCRIBED</b></p>
+                <button *ngIf="isPatient && isSubscribed" class="btn-search" (click)="unsubscribe(fetchedPharmacy.id)">Unsubcribe</button>
+
 
               </div>
             </div>

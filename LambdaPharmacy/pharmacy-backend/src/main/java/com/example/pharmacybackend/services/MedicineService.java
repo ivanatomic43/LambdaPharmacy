@@ -424,4 +424,53 @@ public class MedicineService {
 		return cancelled;
 	}
 
+	public MedicineDTO getMedicineDetails(Long medicineID) {
+
+		Medicine med = medicineRepository.findOneById(medicineID);
+		PharmacyMedicine myMed = pharmacyMedicinesRepository.findOneById(medicineID);
+
+		if (myMed == null) { // ako lek ne postoji u apoteci vrati njegove detalje iz repozitorijuma svih
+								// lekova --bez pID
+
+			MedicineDTO dto = new MedicineDTO();
+			dto.setId(med.getId());
+			dto.setMedicineCode(med.getMedicine_code());
+			dto.setMedType(med.getMed_type());
+			dto.setName(med.getName());
+			dto.setContraindications(med.getContraindications());
+			dto.setDailyDose(med.getDailyDose());
+			dto.setModee(med.getMode().toString());
+			dto.setNote(med.getNote());
+			dto.setProducer(med.getProducer());
+			dto.setShape(med.getShape());
+			dto.setStructure(med.getStructure());
+
+			return dto;
+
+		} else { // lek je smesten u neku apoteku, dovuci i podatke iz apoteke
+
+			MedicineDTO dto = new MedicineDTO();
+			dto.setId(myMed.getMedicine().getId());
+			dto.setMedicineCode(myMed.getMedicine().getMedicine_code());
+			dto.setMedType(myMed.getMedicine().getMed_type());
+			dto.setName(myMed.getMedicine().getName());
+			dto.setContraindications(myMed.getMedicine().getContraindications());
+			dto.setDailyDose(myMed.getMedicine().getDailyDose());
+			dto.setModee(myMed.getMedicine().getMode().toString());
+			dto.setNote(myMed.getMedicine().getNote());
+			dto.setProducer(myMed.getMedicine().getProducer());
+			dto.setShape(myMed.getMedicine().getShape());
+			dto.setStructure(myMed.getMedicine().getStructure());
+
+			dto.setQuantity(myMed.getQuantity());
+			dto.setStatus(myMed.getStatusInPharmacy().toString());
+			dto.setPharmacyID(myMed.getPharmacy().getId());
+			dto.setPharmacyName(myMed.getPharmacy().getName());
+
+			return dto;
+
+		}
+
+	}
+
 }

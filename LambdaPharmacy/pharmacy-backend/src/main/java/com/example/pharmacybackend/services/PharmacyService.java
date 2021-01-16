@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import javassist.expr.NewArray;
 
+import com.example.pharmacybackend.repository.PatientRepository;
 import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.model.Authority;
+import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.PharmacyAdministrator;
 
@@ -28,6 +30,9 @@ public class PharmacyService {
 
 	@Autowired
 	private AuthorityService authorityService;
+
+	@Autowired
+	private PatientRepository patientRepository;
 
 	public List<Pharmacy> getAllPharmacies() {
 		return pharmacyRepository.findAll();
@@ -179,6 +184,52 @@ public class PharmacyService {
 				retList.add(dto);
 
 			}
+		}
+
+		return retList;
+
+	}
+
+	public boolean subscribeForNewsletter(Long id, Long userID) {
+
+		Patient patient = patientRepository.findOneById(userID);
+		List<Pharmacy> subPharmacy = new ArrayList<>();
+
+		subPharmacy = patient.getSubscribedPharmacies();
+
+		Pharmacy p = pharmacyRepository.findOneById(id);
+
+		subPharmacy.add(p);
+
+		patientRepository.save(patient);
+
+		return true;
+
+	}
+
+	public List<PharmacyDTO> getSubPharmacies(Long userID) {
+
+		List<PharmacyDTO> retList = new ArrayList<>();
+
+		Patient patient = patientRepository.findOneById(userID);
+
+		List<Pharmacy> subb = patient.getSubscribedPharmacies();
+
+		if (!subb.isEmpty()) {
+
+			for (Pharmacy p : subb) {
+
+				PharmacyDTO dto = new PharmacyDTO();
+				dto.setId(p.getId());
+				dto.setAddress(p.getAddress());
+				dto.setDescription(p.getDescription());
+				dto.setName(p.getName());
+
+				retList.add(dto);
+			}
+
+		} else {
+			return retList;
 		}
 
 		return retList;

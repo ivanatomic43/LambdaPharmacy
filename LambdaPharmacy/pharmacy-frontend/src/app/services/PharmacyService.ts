@@ -21,6 +21,8 @@ export class PharmacyService {
   createPharmacyUrl = pharmacyUrl + '/createPharmacy';
   getPharmacyUrl = pharmacyUrl + '/getPharmacy/';
   getAdministratorsUrl = pharmacyUrl+ '/getAdministrators';
+  subscribeUrl = pharmacyUrl + '/subscribe/';
+  getSubPharmaciesUrl = pharmacyUrl + '/getSubPharmacies';
 
 
 
@@ -68,4 +70,45 @@ export class PharmacyService {
       );
 
   }
+
+  subscribeForNewsletter(id: number){
+
+    return this.http.post(this.subscribeUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+
+  getSubPharmacies(){
+
+    return this.http.post(this.getSubPharmaciesUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+
 }

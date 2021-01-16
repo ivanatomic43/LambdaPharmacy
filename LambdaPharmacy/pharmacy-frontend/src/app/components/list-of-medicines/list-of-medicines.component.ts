@@ -112,4 +112,13 @@ export class ListOfMedicinesComponent implements OnInit {
     showMedicineForm(){
       this.router.navigate(['/register-medicine']);
     }
+
+    showMedicineDetails(id:number, pid:number){
+      if(pid == null){
+        this.router.navigate(['/medicine-details/' + id]);
+      } else {
+        this.router.navigate(['/medicine-details/'+ id +'/' + pid]);
+      }
+
+    }
 }

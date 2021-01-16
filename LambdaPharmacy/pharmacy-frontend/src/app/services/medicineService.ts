@@ -27,6 +27,7 @@ export class MedicineService {
   addMedicineToPharmacyUrl = medicineUrl + '/addMedicineToPharmacy/';
   getNotReservedMedicinesUrl = medicineUrl + '/getNotReservedMedicines';
   cancelMedicineReservationUrl = medicineUrl + '/cancelMedicineReservation/';
+  getMedicineDetailsUrl = medicineUrl + '/getMedicineDetails/';
 
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -118,5 +119,24 @@ export class MedicineService {
           return throwError(err);
         })
       );
+  }
+
+  getMedicineDetails(medicineID: number){
+
+    return this.http.get(this.getMedicineDetailsUrl + medicineID, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
   }
 }
