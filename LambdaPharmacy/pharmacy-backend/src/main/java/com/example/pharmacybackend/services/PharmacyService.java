@@ -304,4 +304,34 @@ public class PharmacyService {
 
 	}
 
+	public PharmacyDTO getMyPharmacy(Long id) {
+
+		PharmacyAdministrator admin = pharmacyAdministratorRepository.findOneById(id);
+
+		List<Pharmacy> list = pharmacyRepository.findAll();
+
+		for (Pharmacy p : list) {
+
+			List<PharmacyAdministrator> admins = new ArrayList<>();
+			admins = p.getPharmacyAdministrators();
+
+			for (PharmacyAdministrator pm : admins) {
+
+				if (pm.getId() == id) {
+					PharmacyDTO dto = new PharmacyDTO();
+
+					dto.setId(p.getId());
+					dto.setName(p.getName());
+					dto.setAddress(p.getAddress());
+					dto.setDescription(p.getDescription());
+					dto.setRating(p.getRating());
+
+					return dto;
+				}
+			}
+
+		}
+		return null;
+	}
+
 }

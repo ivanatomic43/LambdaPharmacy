@@ -1,24 +1,4 @@
-/*!
- * froala_editor v3.2.3 (https://www.froala.com/wysiwyg-editor)
- * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2020 Froala Labs
- */
- .input-field {
-  background: #0f6674;
-  border-radius: 3px;
-  height: 60px;
-  position: relative;
-  padding: 10px 15px 10px 28px;
-  margin-left: 20px;
-}
-.row.second {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
- .fr-clearfix::after {
+.fr-clearfix::after {
   clear: both;
   display: block;
   content: "";
@@ -4602,20 +4582,6 @@ ol {
 .u-effect-zoom-rotateY.u-effect-active .u-over-slide {
   transform: rotateY(360deg) scale(1, 1);
 }
-.btn-search{
-  width: 150px;
-  height: 50px;
-  padding: 0 0px;
-  background: #ff8300;
-  white-space: nowrap;
-  border-radius: 3px;
-  font-size: 16px;
-  color: #fff;
-  transition: all .2s ease-out, color .2s ease-out;
-  border: 0;
-  cursor: pointer;
-  margin-top:25px;
-}
 .u-btn {
   /*display: inline-block;*/
   display: table;
@@ -4646,6 +4612,22 @@ ol {
   border-radius: 0;
   align-self: flex-start;
 }
+.btn-search{
+  width: 200px;
+  height: 50px;
+  padding: 0 15px;
+  background: #ff8300;
+  white-space: nowrap;
+  border-radius: 3px;
+  font-size: 16px;
+  color: #fff;
+  transition: all .2s ease-out, color .2s ease-out;
+  border: 0;
+  cursor: pointer;
+  margin-top: 25px;
+
+}
+
 .u-btn:focus,
 .u-btn:active:focus,
 .u-btn.active:focus {

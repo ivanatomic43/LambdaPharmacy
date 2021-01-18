@@ -25,6 +25,12 @@ public class PharmacyMedicine {
     @Column
     private double quantity;
 
+    @Column
+    private double price;
+
+    @Column
+    private double rating;
+
     /**
      * @return Long return the id
      */
@@ -93,6 +99,34 @@ public class PharmacyMedicine {
      */
     public void setQuantity(double quantity) {
         this.quantity = quantity;
+    }
+
+    /**
+     * @return double return the price
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    /**
+     * @return double return the rating
+     */
+    public double getRating() {
+        return rating;
+    }
+
+    /**
+     * @param rating the rating to set
+     */
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
 }

@@ -60,6 +60,8 @@ public class MedicineService {
 			dto.setStructure(m.getMedicine().getStructure());
 			dto.setStatus(m.getStatusInPharmacy().toString());
 			dto.setQuantity(m.getQuantity());
+			dto.setPrice(m.getPrice());
+			dto.setRating(m.getRating());
 
 			myMed.add(dto);
 		}
@@ -89,6 +91,8 @@ public class MedicineService {
 				dto.setStructure(m.getMedicine().getStructure());
 				dto.setStatus(m.getStatusInPharmacy().toString());
 				dto.setQuantity(m.getQuantity());
+				dto.setPrice(m.getPrice());
+				dto.setRating(m.getRating());
 
 				retMed.add(dto);
 
@@ -120,6 +124,8 @@ public class MedicineService {
 				dto.setProducer(m.getMedicine().getProducer());
 				dto.setShape(m.getMedicine().getShape());
 				dto.setStructure(m.getMedicine().getStructure());
+				dto.setPrice(m.getPrice());
+				dto.setRating(m.getRating());
 
 				if (m.getQuantity() == 0) {
 					dto.setStatus(MedicineStatus.OUT_OF_STOCK.toString());
@@ -358,6 +364,8 @@ public class MedicineService {
 				dto.setStructure(m.getMedicine().getStructure());
 				dto.setStatus(m.getStatusInPharmacy().toString());
 				dto.setQuantity(m.getQuantity());
+				dto.setPrice(m.getPrice());
+				dto.setRating(m.getRating());
 
 				myMed.add(dto);
 			} else {
@@ -466,6 +474,9 @@ public class MedicineService {
 			dto.setStatus(myMed.getStatusInPharmacy().toString());
 			dto.setPharmacyID(myMed.getPharmacy().getId());
 			dto.setPharmacyName(myMed.getPharmacy().getName());
+
+			dto.setPrice(myMed.getPrice());
+			dto.setRating(myMed.getRating());
 
 			return dto;
 

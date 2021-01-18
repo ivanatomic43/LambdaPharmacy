@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 import { PromotionDTO } from './../../model/PromotionDTO';
 import { Component, OnInit } from '@angular/core';
@@ -30,7 +30,8 @@ export class PromotionsComponent implements OnInit {
   constructor(
     private pharmacyService : PharmacyService,
     private route : ActivatedRoute,
-    private formBuilder : FormBuilder
+    private formBuilder : FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -67,5 +68,9 @@ export class PromotionsComponent implements OnInit {
         this.fetchPromotions();
       });
 
+  }
+
+  backToDetails(){
+    this.router.navigate(['/pharmacy-details/' + this.pharmacyID]);
   }
 }

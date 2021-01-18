@@ -1,7 +1,9 @@
+import { UserDTO } from 'src/app/model/UserDTO';
 import { Component, OnInit } from '@angular/core';
 import {PharmacyService} from '../../services/PharmacyService';
 import {PharmacyDTO} from '../../model/PharmacyDTO';
 import {Router} from '@angular/router';
+import { AuthService } from 'src/app/services/AuthService';
 
 @Component({
   selector: 'app-list-of-pharmacies',
@@ -11,30 +13,40 @@ import {Router} from '@angular/router';
 export class ListOfPharmaciesComponent implements OnInit {
   loaded = false;
   fetchedPharmacies: PharmacyDTO[] = [];
+  profil : UserDTO;
+
+
   constructor(
     private pharmacyService: PharmacyService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(){
 
 
+            this.pharmacyService.allPharmacies().subscribe(
+              resp => {
+                this.fetchedPharmacies = resp;
+                console.log(this.fetchedPharmacies);
+                this.loaded = true;
 
-    this.pharmacyService.allPharmacies().subscribe(
-      resp => {
-        this.fetchedPharmacies = resp;
-        console.log(this.fetchedPharmacies);
-        this.loaded = true;
+              },
+              err => {
 
-      },
-      err => {
+              }
+            );
 
-      }
-    );
+            this.pharmacyService.refreshPharmacies.subscribe(refreshPharmacies => {
+              this.fetchedPharmacies = refreshPharmacies;
+            });
 
-    this.pharmacyService.refreshPharmacies.subscribe(refreshPharmacies => {
-      this.fetchedPharmacies = refreshPharmacies;
-    });
+
+
+
+
+
+
 
 
   }

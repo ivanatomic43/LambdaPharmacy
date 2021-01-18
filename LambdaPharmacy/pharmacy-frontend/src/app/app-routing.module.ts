@@ -1,3 +1,4 @@
+import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.component';
 import { MedicineDetailsComponent } from './components/medicine-details/medicine-details.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { PharmacistsComponent } from './components/pharmacists/pharmacists.component';
@@ -147,7 +148,9 @@ const routes: Routes = [
       }
     ]
 
-  }
+  },
+  {path : 'pharmacists', component: PharmacistsComponent},
+  {path : 'my-pharmacy', component: MyPharmacyComponent }
 
 ];
 

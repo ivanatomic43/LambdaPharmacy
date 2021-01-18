@@ -26,6 +26,7 @@ export class PharmacyService {
   getSubPharmaciesUrl = pharmacyUrl + '/getSubPharmacies';
   fetchAllPromotionsUrl = pharmacyUrl + '/fetchAllPromotions/';
   createPromotionUrl = pharmacyUrl + '/createPromotion/';
+  getAdminsPharmacyUrl = pharmacyUrl + '/getAdminsPharmacy';
 
 
 
@@ -135,6 +136,26 @@ export class PharmacyService {
   createPromotion(id: number, promotion : PromotionDTO){
 
     return this.http.post(this.createPromotionUrl+id, promotion, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+
+  getAdminsPharmacy(){
+
+    return this.http.post(this.getAdminsPharmacyUrl, {
 
     })
       .pipe(

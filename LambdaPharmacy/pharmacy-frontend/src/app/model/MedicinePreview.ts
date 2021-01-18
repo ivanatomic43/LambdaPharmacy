@@ -14,7 +14,9 @@ export class MedicinePreview{
     public status: string,
     public contraidications: string,
     public dailyDose : string,
-    public quantity: number
+    public quantity: number,
+    public price: number,
+    public rating: number
   ) {
   }
 

@@ -62,7 +62,7 @@ public class MedicineController {
 	}
 
 	@RequestMapping(value = "/reserveMedicine", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_PATIENT')")
+	@PreAuthorize("hasRole('PATIENT')")
 	public ResponseEntity<?> reserveMedicine(@RequestBody ReservationParamsDTO params, HttpServletRequest request) {
 
 		String myToken = tokenUtils.getToken(request);
@@ -76,7 +76,7 @@ public class MedicineController {
 	}
 
 	@RequestMapping(value = "/getPatientReservations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_PATIENT')")
+	@PreAuthorize("hasRole('PATIENT')")
 	public ResponseEntity<?> getPatientReservations(HttpServletRequest request) {
 
 		String myToken = tokenUtils.getToken(request);
@@ -94,7 +94,7 @@ public class MedicineController {
 	}
 
 	@RequestMapping(value = "/getAllMedicinesInSystem", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_SYS_ADMIN')")
+	@PreAuthorize("hasRole('SYS_ADMIN')")
 	public ResponseEntity<?> getAllMedicinesInSystem() {
 
 		List<MedicineDTO> allMedicines = medicineService.getAllMedicinesInSystem();
@@ -108,7 +108,7 @@ public class MedicineController {
 	}
 
 	@RequestMapping(value = "/registerMedicine", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_SYS_ADMIN')")
+	@PreAuthorize("hasRole('SYS_ADMIN')")
 	public ResponseEntity<?> registerMedicine(@RequestBody MedicineDTO newMedicine, HttpServletRequest request) {
 
 		MedicineDTO myMed = medicineService.registerMedicine(newMedicine);

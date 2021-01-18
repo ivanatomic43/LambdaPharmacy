@@ -184,6 +184,7 @@ public class PharmacyController {
 	}
 
 	@RequestMapping(value = "/subscribe/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PATIENT')")
 	public ResponseEntity<?> subscribeForNewsletter(@PathVariable("id") Long id, HttpServletRequest request) {
 
 		String myToken = tokenUtils.getToken(request);
@@ -197,6 +198,7 @@ public class PharmacyController {
 	}
 
 	@RequestMapping(value = "/getSubPharmacies", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PATIENT')")
 	public ResponseEntity<?> getSubPharmacies(HttpServletRequest request) {
 
 		String myToken = tokenUtils.getToken(request);
@@ -213,6 +215,7 @@ public class PharmacyController {
 	}
 
 	@RequestMapping(value = "/fetchAllPromotions/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
 	public ResponseEntity<?> fetchAllPromotions(@PathVariable("id") Long id) {
 
 		List<PromotionDTO> list = pharmacyService.fetchAllPromotions(id);
@@ -225,6 +228,7 @@ public class PharmacyController {
 	}
 
 	@RequestMapping(value = "/createPromotion/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
 	public ResponseEntity<?> fetchAllPromotions(@PathVariable("id") Long id, @RequestBody PromotionDTO newProm) {
 
 		PromotionDTO newPromotion = pharmacyService.createPromotion(id, newProm);
@@ -234,6 +238,20 @@ public class PharmacyController {
 		}
 
 		return new ResponseEntity<>(newPromotion, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/getAdminsPharmacy", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> getMyPharmacy(HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		PharmacyDTO myPharm = pharmacyService.getMyPharmacy(user.getId());
+
+		return new ResponseEntity<>(myPharm, HttpStatus.OK);
 
 	}
 

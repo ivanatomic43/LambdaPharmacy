@@ -23,6 +23,9 @@ public class MedicineDTO {
 	private String status;
 	private double quantity;
 
+	private double price;
+	private double rating;
+
 	public MedicineDTO() {
 	}
 
@@ -48,7 +51,7 @@ public class MedicineDTO {
 
 	public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer,
 			String structure, String modee, String note, Long pharmacyID, String pharmacyName, String status,
-			String contraindications, String dailyDose, double quantity) {
+			String contraindications, String dailyDose, double quantity, double price, double rating) {
 		super();
 		this.id = id;
 		this.medicineCode = medicineCode;
@@ -65,6 +68,8 @@ public class MedicineDTO {
 		this.contraindications = contraindications;
 		this.dailyDose = dailyDose;
 		this.quantity = quantity;
+		this.price = price;
+		this.rating = rating;
 	}
 
 	public Long getId() {
@@ -235,6 +240,34 @@ public class MedicineDTO {
 	 */
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
+	}
+
+	/**
+	 * @return double return the price
+	 */
+	public double getPrice() {
+		return price;
+	}
+
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	/**
+	 * @return double return the rating
+	 */
+	public double getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 }

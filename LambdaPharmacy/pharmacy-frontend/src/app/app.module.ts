@@ -61,6 +61,7 @@ import { RegisterPharmacyAdminComponent } from './components/register-pharmacy-a
 import { PharmacistsComponent } from './components/pharmacists/pharmacists.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { MedicineDetailsComponent } from './components/medicine-details/medicine-details.component';
+import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.component';
 
 
 
@@ -111,7 +112,8 @@ import { MedicineDetailsComponent } from './components/medicine-details/medicine
     RegisterPharmacyAdminComponent,
     PharmacistsComponent,
     PromotionsComponent,
-    MedicineDetailsComponent
+    MedicineDetailsComponent,
+    MyPharmacyComponent
 
 
   ],

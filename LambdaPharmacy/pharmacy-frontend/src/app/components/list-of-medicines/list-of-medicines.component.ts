@@ -1,3 +1,4 @@
+import { SortPipe } from './../../services/SortPipe';
 import { ReservationParams } from './../../model/ReservationParams';
 import { UserDTO } from './../../model/UserDTO';
 import { AuthService } from './../../services/AuthService';
@@ -25,7 +26,8 @@ export class ListOfMedicinesComponent implements OnInit {
   constructor(
     private medicineService: MedicineService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private sortPipe : SortPipe
 
   ) {}
 
@@ -72,6 +74,23 @@ export class ListOfMedicinesComponent implements OnInit {
       } else {
         this.isSysAdmin = false;
       }
+      if(role =='ROLE_PHARMACY_ADMIN'){
+        this.medicineService.allMedicines().subscribe(
+          resp => {
+            this.fetchedMedicines = resp;
+            console.log(this.fetchedMedicines);
+            this.loaded = true;
+
+          },
+          err => {
+
+          }
+        );
+
+        this.medicineService.refreshMedicines.subscribe(refreshMedicines => {
+          this.fetchedMedicines = refreshMedicines;
+        });
+      }
 
 
 
@@ -102,6 +121,36 @@ export class ListOfMedicinesComponent implements OnInit {
 
     }
 
+    sortChange(value) {
+      console.log(value);
+      if (value == 'priceA')
+        this.fetchedMedicines = this.sortPipe.transform(
+          this.fetchedMedicines,
+          'asc',
+          'price'
+        );
+
+      if (value == 'priceD')
+        this.fetchedMedicines = this.sortPipe.transform(
+          this.fetchedMedicines,
+          'desc',
+          'price'
+        );
+
+      if (value == 'ratingA')
+        this.fetchedMedicines = this.sortPipe.transform(
+          this.fetchedMedicines,
+          'asc',
+          'rating'
+        );
+
+      if (value == 'ratingD')
+        this.fetchedMedicines = this.sortPipe.transform(
+          this.fetchedMedicines,
+          'desc',
+          'rating'
+        );
+    }
 
     reserveMedicine(mid:number, pid:number){
 

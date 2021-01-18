@@ -1,15 +1,25 @@
 
-<div *ngIf="!loaded" class="row" style="margin-left: 50px;">
-  <h6>No data to show.</h6>
-</div>
 
-<section class="u-clearfix u-section-1" id="carousel_9f1d" style="margin-top: 30px; background-color: #eff2ff;" *ngIf="loaded">
+
+<section class="u-clearfix u-section-1" id="carousel_9f1d" style="margin-top: 15px; background-color: #eff2ff;" >
 
   <div *ngIf="isSysAdmin" style="display: flex;  justify-content: center;
   align-items: center;">
     <h2 style=" color:#0f6674; font-family:'Arial Black'">List of all medicines in the system</h2>
     <button style="margin-left:50px;" class="btn-search" (click)="showMedicineForm()">Register medicine</button>
   </div>
+
+  <div  style = " margin-left: auto; margin-right: auto; width: 200px;">
+    <label style = "color:#0f6674; font-family: 'Arial Black'">Sorting options:</label>
+    <select class="custom-select" (change) = "sortChange($event.target.value)" name="sorting" style = " margin-left: auto; display: block;" ngModel>
+
+      <option value = "priceA">Price ascending</option>
+      <option value = "priceD">Price descending</option>
+      <option value = "ratingA">Rate ascending</option>
+      <option value = "ratingD">Rate descending</option>
+    </select>
+  </div>
+
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
     <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-xl u-list u-repeater u-list-1">
       <div class="u-container-style u-list-item u-repeater-item u-list-item-1" style="margin-top: 15px; margin-left: 15px;"  *ngFor="let medicine of fetchedMedicines">
@@ -19,6 +29,8 @@
           <p *ngIf="isPatient" class="u-text u-text-default u-text-2">Status: <b>{{medicine.status}}</b></p>
           <p *ngIf="anyLogged" class="u-text u-text-default u-text-2">Quantity: {{medicine.quantity}}</p>
           <h4 class="u-text u-text-default u-text-palette-1-base u-text-3">{{medicine.pharmacyName}}</h4>
+          <h5 class="u-text u-text-default u-text-1">Type: {{medicine.medType}}&nbsp;</h5>
+          <h5 class="u-text u-text-default u-text-1">Rating: {{medicine.rating}}&nbsp;</h5>
           <button class="btn-search" (click)="showMedicineDetails(medicine.id, medicine.pharmacyID)">See details</button>
 
           <button style="margin-left: 5px;" *ngIf="isPatient" class="btn-search" (click)= "reserveMedicine(medicine.id, medicine.pharmacyID)">Reserve</button>
