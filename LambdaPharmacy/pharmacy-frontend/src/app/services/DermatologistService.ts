@@ -1,3 +1,4 @@
+import { DermDTO } from 'src/app/model/DermDTO';
 import { AddingStaffDTO } from '../model/AddingStaffDTO';
 import { RegistrationParams } from './../model/registrationParams';
 import { RegisterDermatologistComponent } from './../components/register-dermatologist/register-dermatologist.component';
@@ -7,7 +8,7 @@ import {ConfigService} from './ConfigService';
 import {catchError, first, map} from 'rxjs/operators';
 
 import {HttpClient} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {Observable, Subject, throwError} from 'rxjs';
 
 const dermatologistUrl = 'http://localhost:8051/dermatologist';
 
@@ -16,12 +17,16 @@ const dermatologistUrl = 'http://localhost:8051/dermatologist';
 })
 export class DermatologistService {
 
-  getAll = dermatologistUrl + '/getAllDermatologists';
+  refreshDermatologists = new Subject<DermDTO[]>();
+  getAllDermatologistsUrl = dermatologistUrl + '/getAllDermatologists'; //for select
   registerDermatologistUrl = dermatologistUrl + '/registerDermatologist';
   addDermatologistUrl = dermatologistUrl + '/addDermatologist/';
-  getAllDerm = dermatologistUrl + '/getAllDermatologistForPharmacy/';
+  getAllDerm = dermatologistUrl + '/getAllDermatologistForPharmacy/' //for each pharmacy
   removeDermatologistUrl = dermatologistUrl + '/removeDermatologist/';
 
+
+
+  getDermatologistsUrl = dermatologistUrl + '/getDermatologists';
 
   constructor(
     private http: HttpClient,
@@ -30,9 +35,28 @@ export class DermatologistService {
   ){}
 
 
-  getAllDermatologists(){
+  getAllDermatologists(){ //for select
 
-    return this.http.post(this.getAll, {
+    return this.http.post(this.getAllDermatologistsUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+  getDermatologists(){ //for pharmacy admin & patient
+
+    return this.http.post(this.getDermatologistsUrl, {
 
     })
       .pipe(
@@ -110,5 +134,7 @@ export class DermatologistService {
         })
       );
   }
+
+
 
 }

@@ -2,6 +2,7 @@ package com.example.pharmacybackend.dto;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 public class DermatologistDTO {
 
@@ -14,6 +15,14 @@ public class DermatologistDTO {
     private LocalTime workTo;
     private String from;
     private String to;
+
+    private String dateFromm;
+    private String dateToo;
+
+    private List<String> allPharm;
+    private double price;
+    private double rating;
+    private String pharmacyName;
 
     public DermatologistDTO() {
     }
@@ -40,6 +49,20 @@ public class DermatologistDTO {
         this.lastName = lastName;
         this.workFrom = workFrom;
         this.workTo = workTo;
+    }
+
+    public DermatologistDTO(Long id, String firstName, String lastName, String dateFromm, String dateToo, String from,
+            String to, String pharmacyName, double price, double rating) {
+        this.id = id;
+        this.setFirstName(firstName);
+        this.lastName = lastName;
+        this.from = from;
+        this.to = to;
+        this.dateFromm = dateFromm;
+        this.dateToo = dateToo;
+        this.pharmacyName = pharmacyName;
+        this.rating = rating;
+        this.price = price;
     }
 
     /**
@@ -152,6 +175,90 @@ public class DermatologistDTO {
      */
     public void setTo(String to) {
         this.to = to;
+    }
+
+    /**
+     * @return List<PharmacyDTO> return the allPharm
+     */
+    public List<String> getAllPharm() {
+        return allPharm;
+    }
+
+    /**
+     * @param allPharm the allPharm to set
+     */
+    public void setAllPharm(List<String> allPharm) {
+        this.allPharm = allPharm;
+    }
+
+    /**
+     * @return double return the price
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    /**
+     * @return double return the rating
+     */
+    public double getRating() {
+        return rating;
+    }
+
+    /**
+     * @param rating the rating to set
+     */
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    /**
+     * @return String return the dateFromm
+     */
+    public String getDateFromm() {
+        return dateFromm;
+    }
+
+    /**
+     * @param dateFromm the dateFromm to set
+     */
+    public void setDateFromm(String dateFromm) {
+        this.dateFromm = dateFromm;
+    }
+
+    /**
+     * @return String return the dateToo
+     */
+    public String getDateToo() {
+        return dateToo;
+    }
+
+    /**
+     * @param dateToo the dateToo to set
+     */
+    public void setDateToo(String dateToo) {
+        this.dateToo = dateToo;
+    }
+
+    /**
+     * @return String return the pharmacyName
+     */
+    public String getPharmacyName() {
+        return pharmacyName;
+    }
+
+    /**
+     * @param pharmacyName the pharmacyName to set
+     */
+    public void setPharmacyName(String pharmacyName) {
+        this.pharmacyName = pharmacyName;
     }
 
 }

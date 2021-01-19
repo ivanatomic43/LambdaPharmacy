@@ -19,6 +19,9 @@ public class PharmacistDTO {
     private String to;
     private double price;
 
+    private String pharmacyName;
+    private double rating;
+
     public PharmacistDTO() {
     }
 
@@ -31,7 +34,8 @@ public class PharmacistDTO {
     }
 
     public PharmacistDTO(Long id, String firstName, String lastName, String username, String email, String password,
-            String address, String phoneNumber, LocalTime workFrom, LocalTime workTo, double price) {
+            String address, String phoneNumber, LocalTime workFrom, LocalTime workTo, double price, String pharmacyName,
+            double rating) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,6 +48,8 @@ public class PharmacistDTO {
         this.workFrom = workFrom;
         this.workTo = workTo;
         this.price = price;
+        this.pharmacyName = pharmacyName;
+        this.rating = rating;
     }
 
     public PharmacistDTO(Long id, String firstName, String lastName, LocalTime workFrom, LocalTime workTo,
@@ -222,6 +228,34 @@ public class PharmacistDTO {
      */
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    /**
+     * @return String return the pharmacyName
+     */
+    public String getPharmacyName() {
+        return pharmacyName;
+    }
+
+    /**
+     * @param pharmacyName the pharmacyName to set
+     */
+    public void setPharmacyName(String pharmacyName) {
+        this.pharmacyName = pharmacyName;
+    }
+
+    /**
+     * @return double return the rating
+     */
+    public double getRating() {
+        return rating;
+    }
+
+    /**
+     * @param rating the rating to set
+     */
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
 }

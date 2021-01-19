@@ -1,10 +1,14 @@
 package com.example.pharmacybackend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.example.pharmacybackend.dto.PharmacistDTO;
 import com.example.pharmacybackend.dto.SearchPharmacistParams;
 import com.example.pharmacybackend.dto.UserDTO;
+import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.PharmacistService;
@@ -108,6 +112,32 @@ public class PharmacistController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getAllP", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PATIENT') or hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> getAllP(HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        List<PharmacistDTO> retPharm = new ArrayList<>();
+
+        if (user.getAuthority().getName().equals("ROLE_PATIENT")) {
+            retPharm = pharmacistService.getAllP();
+        }
+
+        if (user.getAuthority().getName().equals("ROLE_PHARMACY_ADMIN")) {
+            retPharm = pharmacistService.getAdmins(user.getId());
+        }
+
+        if (retPharm.isEmpty()) {
+            return new ResponseEntity<>(retPharm, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(retPharm, HttpStatus.OK);
+
     }
 
 }

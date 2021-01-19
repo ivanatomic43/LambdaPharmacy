@@ -13,7 +13,7 @@ INSERT INTO PHARMACY (id, address, description, name, rating) VALUES (2, 'Lasla 
 INSERT INTO PHARMACY (id, address, description, name, rating) VALUES (3, 'Kisacka 27, Novi Sad', 'Sirok asortiman proizvoda', 'Zegin',0);
 
 INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrators_id) VALUES (1, 2);
-INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrators_id) VALUES (1, 6);
+INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrators_id) VALUES (2, 6);
 
 
 

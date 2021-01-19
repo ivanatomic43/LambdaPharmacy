@@ -37,7 +37,7 @@ public class Appointment {
 	private Patient patient;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Dermatologist dermatologist;
+	private EmployedDermatologist dermatologist;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Pharmacist pharmacist;
@@ -146,14 +146,14 @@ public class Appointment {
 	/**
 	 * @return Dermatologist return the dermatologist
 	 */
-	public Dermatologist getDermatologist() {
+	public EmployedDermatologist getDermatologist() {
 		return dermatologist;
 	}
 
 	/**
 	 * @param dermatologist the dermatologist to set
 	 */
-	public void setDermatologist(Dermatologist dermatologist) {
+	public void setDermatologist(EmployedDermatologist dermatologist) {
 		this.dermatologist = dermatologist;
 	}
 

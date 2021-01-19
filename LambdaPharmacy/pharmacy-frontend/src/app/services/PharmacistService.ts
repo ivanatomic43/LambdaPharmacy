@@ -1,3 +1,4 @@
+import { DermDTO } from 'src/app/model/DermDTO';
 import { NewCounceling } from './../model/NewCounceling';
 import { SearchPharmacistParams } from './../model/SearchPharmacistParams';
 import { NewPharmacist } from './../model/NewPharmacist';
@@ -10,7 +11,7 @@ import {ConfigService} from './ConfigService';
 import {catchError, first, map} from 'rxjs/operators';
 
 import {HttpClient} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {Observable, Subject, throwError} from 'rxjs';
 
 const pharmacistUrl = 'http://localhost:8051/pharmacist';
 
@@ -19,12 +20,15 @@ const pharmacistUrl = 'http://localhost:8051/pharmacist';
 })
 export class PharmacistService {
 
+  refreshPharmacists = new Subject<DermDTO[]>();
   getAll = pharmacistUrl + '/getAllPharmacists';
  registerPharmacistUrl = pharmacistUrl + '/registerPharmacist';
   addPharmacistUrl = pharmacistUrl + '/addPharmacist/';
   getAllPharm = pharmacistUrl + '/getAllPharmacistForPharmacy/';
   seePharmacistsUrl = pharmacistUrl + '/seePharmacists/';
   removePharmacistUrl = pharmacistUrl + '/removePharmacist/';
+  getAllPUrl = pharmacistUrl + '/getAllP';
+
 
 
   constructor(
@@ -54,6 +58,25 @@ export class PharmacistService {
   }
 
 
+  getAllP(){
+
+    return this.http.post(this.getAllPUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+      }
+
   addPharmacist(pharmData : NewPharmacist, id:number){
 
     return this.http.post(this.addPharmacistUrl + id, pharmData);
@@ -79,6 +102,8 @@ export class PharmacistService {
       );
 
   }
+
+
 
 
   seePharmacists(id:number, searchParams :SearchPharmacistParams){

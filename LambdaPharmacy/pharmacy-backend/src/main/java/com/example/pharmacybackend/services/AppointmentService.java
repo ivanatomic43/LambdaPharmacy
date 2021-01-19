@@ -15,6 +15,7 @@ import com.example.pharmacybackend.enumerations.AppointmentStatus;
 import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Dermatologist;
+import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
@@ -44,6 +45,9 @@ public class AppointmentService {
     private PharmacistRepository pharmacistRepository;
 
     @Autowired
+    private EmployedDermatologistRepository employedDermatologistRepository;
+
+    @Autowired
     private EmailService emailService;
 
     @Autowired
@@ -65,11 +69,11 @@ public class AppointmentService {
     public AppointmentDTO createAppointment(AppointmentDTO newApp) {
 
         // checking if dermatologist is available
-        Dermatologist dermatologist = dermatologistRepository.findOneById(newApp.getDermatologistID());
+        EmployedDermatologist dermatologist = employedDermatologistRepository.findOneById(newApp.getDermatologistID());
         Pharmacy pharmacy = pharmacyRepository.findOneById(newApp.getPharmacyID());
 
-        LocalTime dermFrom = dermatologist.getWorkingFrom();
-        LocalTime dermTo = dermatologist.getWorkingTo();
+        LocalTime dermFrom = dermatologist.getWorkFrom();
+        LocalTime dermTo = dermatologist.getWorkTo();
 
         LocalTime timeStart = newApp.getMeetingTime();
         LocalTime timeEnd = timeStart.plusHours(newApp.getDuration());
@@ -132,12 +136,12 @@ public class AppointmentService {
         pharmacyAppointments.add(a);
 
         // save all
-        dermatologistRepository.save(dermatologist);
+        employedDermatologistRepository.save(dermatologist);
         pharmacyRepository.save(pharmacy);
 
         // creating a dto
-        String firstName = dermatologist.getFirstName();
-        String lastName = dermatologist.getLastName();
+        String firstName = dermatologist.getDermatologist().getFirstName();
+        String lastName = dermatologist.getDermatologist().getLastName();
         // double rating = dermatologist.getRating();
 
         System.out.println(firstName + lastName);
@@ -153,7 +157,7 @@ public class AppointmentService {
         // System.out.println(a.getPharmacy().getName()
         // dto.setPharmacyName(a.getPharmacy().getName());
         // dto.setRating(rating);
-        dto.setPrice(a.getPrice());
+        dto.setPrice(dermatologist.getPrice());
 
         return dto;
     }
@@ -173,8 +177,8 @@ public class AppointmentService {
                 dto.setDateOfAppointmentt(a.getDateOfAppointment().toString());
                 dto.setDermatologistID(a.getDermatologist().getId());
                 dto.setDuration(a.getDuration());
-                dto.setFirstName(a.getDermatologist().getFirstName());
-                dto.setLastName(a.getDermatologist().getLastName());
+                dto.setFirstName(a.getDermatologist().getDermatologist().getFirstName());
+                dto.setLastName(a.getDermatologist().getDermatologist().getLastName());
                 dto.setMeetingTimee(a.getMeetingTime().toString());
                 // dto.setPharmacyName(a.getPharmacy().getName());
                 // dto.setRating(a.getDermatologist().getRating());
@@ -223,8 +227,8 @@ public class AppointmentService {
 
                 if (a.getDermatologist() != null) {
 
-                    dto.setFirstName(a.getDermatologist().getFirstName());
-                    dto.setLastName(a.getDermatologist().getLastName());
+                    dto.setFirstName(a.getDermatologist().getDermatologist().getFirstName());
+                    dto.setLastName(a.getDermatologist().getDermatologist().getLastName());
                     dto.setRole("DERMATOLOGIST");
                     dto.setType(AppointmentType.EXAMINATION.toString());
                 } else {
@@ -235,7 +239,7 @@ public class AppointmentService {
                 }
 
                 dto.setDuration(a.getDuration());
-                dto.setPrice(a.getPrice());
+                dto.setPrice(a.getDermatologist().getPrice());
 
                 myList.add(dto);
             }
@@ -276,8 +280,8 @@ public class AppointmentService {
             if (currentDate.before(printDate1)) {
 
                 a.setStatus(AppointmentStatus.FREE);
-                System.out.println(a.getDermatologist().getFirstName());
-                System.out.println(a.getDermatologist().getId());
+                System.out.println(a.getDermatologist().getDermatologist().getFirstName());
+                System.out.println(a.getDermatologist().getDermatologist().getId());
                 System.out.println(a.getPatient().getId());
                 this.update(a);
 

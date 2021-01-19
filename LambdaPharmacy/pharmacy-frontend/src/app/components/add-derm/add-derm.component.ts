@@ -39,7 +39,8 @@ export class AddDermComponent implements OnInit {
           dateFrom: new FormControl('', [Validators.required]),
           dateTo: new FormControl('', [Validators.required]),
           workFrom: new FormControl('', [Validators.required]),
-          workTo: new FormControl('', [Validators.required])
+          workTo: new FormControl('', [Validators.required]),
+          priceOfAppointment: new FormControl('', [Validators.required])
         });
 
 
@@ -57,7 +58,8 @@ export class AddDermComponent implements OnInit {
       this.addingDermForm.get('dateFrom').value,
       this.addingDermForm.get('dateTo').value,
       this.addingDermForm.get('workFrom').value,
-      this.addingDermForm.get('workTo').value
+      this.addingDermForm.get('workTo').value,
+      this.addingDermForm.get('priceOfAppointment').value
     );
     console.log("DERM ID:" + this.dermData.id);
     this.dermatologistService.addDermatologist(this.dermData, this.pharmacyID).subscribe(response => {

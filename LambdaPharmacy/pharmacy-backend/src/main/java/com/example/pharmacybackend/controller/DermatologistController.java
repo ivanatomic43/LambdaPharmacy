@@ -1,6 +1,7 @@
 package com.example.pharmacybackend.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,12 +56,12 @@ public class DermatologistController {
 
     @RequestMapping(value = "/getAllDermatologists", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('PHARMACY_ADMIN') or hasRole('SYS_ADMIN')")
-    public ResponseEntity<?> getAllDermatologists() {
+    public ResponseEntity<?> getAllDermatologists(HttpServletRequest request) {
 
         List<UserDTO> list = userService.getAllDermatologist();
 
         if (list.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(list, HttpStatus.OK);
 
@@ -123,5 +124,29 @@ public class DermatologistController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getDermatologists", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PHARMACY_ADMIN') or hasRole('PATIENT')")
+    public ResponseEntity<?> getDermatologists(HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        List<DermatologistDTO> list = new ArrayList<>();
+
+        if (user.getAuthority().getName().equals("ROLE_PATIENT")) {
+            list = dermatologistService.getDermatologistPatient();
+        }
+        if (user.getAuthority().getName().equals("ROLE_PHARMACY_ADMIN")) {
+            // list = dermatologistService.getDermatologist();
+        }
+
+        if (list.isEmpty())
+            return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+
     }
 }

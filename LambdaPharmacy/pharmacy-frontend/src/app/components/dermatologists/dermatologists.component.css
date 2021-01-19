@@ -29,7 +29,7 @@ table {
 
 .mat-header-cell {
   color: white;
-  background:   #ff8300;
+  background: #0f6674;
   font-size: medium;
   text-transform: uppercase;
   text-align: center;
@@ -77,7 +77,7 @@ table {
 .mat-cell {
   border-right: 1px solid rgb(161, 161, 161);
   text-align: center;
-  background-color: lightgrey;
+  background-color: whitesmoke;
 
 }
 
@@ -85,4 +85,40 @@ table {
   margin-right: 10px;
   height: 35px;
   border-radius: 16px;
+}
+
+.custom-search{
+
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+
+}
+.custom-input{
+
+  height: 50px;
+  width: 170px;
+  margin-left: 10px;
+  border-radius: 3px;
+  border: #0f6674;
+  text-align: center;
+
+}
+.btn-search{
+  width: 150px;
+  height: 50px;
+  padding: 0 0px;
+  background: #ff8300;
+  white-space: nowrap;
+  border-radius: 3px;
+  font-size: 16px;
+  color: #fff;
+  transition: all .2s ease-out, color .2s ease-out;
+  border: 0;
+  cursor: pointer;
+  margin-left: 50px;
+
 }

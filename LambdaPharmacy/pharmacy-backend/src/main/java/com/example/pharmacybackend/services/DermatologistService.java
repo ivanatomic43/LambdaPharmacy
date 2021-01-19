@@ -9,8 +9,10 @@ import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Dermatologist;
+import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.repository.DermatologistRepository;
+import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class DermatologistService {
 
     @Autowired
     private PharmacyRepository pharmacyRepository;
+
+    @Autowired
+    private EmployedDermatologistRepository employedDermatologistRepository;
 
     public Dermatologist findById(long id) {
         return this.dermatologistRepository.findById(id);
@@ -64,19 +69,22 @@ public class DermatologistService {
         return d;
     }
 
+    // employ dermatologist
     public DermatologistDTO addDermatologist(DermatologistDTO dto, Long id) {
-
-        System.out.println(
-                "PODACI: " + dto.getId() + dto.getDateFrom() + dto.getDateTo() + dto.getWorkFrom() + dto.getWorkTo());
 
         Pharmacy pharmacy = pharmacyRepository.findOneById(id);
 
         Dermatologist d = dermatologistRepository.findOneById(dto.getId());
 
-        d.setDateFrom(dto.getDateFrom());
-        d.setDateTo(dto.getDateTo());
-        d.setWorkingFrom(dto.getWorkFrom());
-        d.setWorkingTo(dto.getWorkTo());
+        EmployedDermatologist ed = new EmployedDermatologist();
+        ed.setDateFrom(dto.getDateFrom());
+        ed.setDateTo(dto.getDateTo());
+        ed.setWorkFrom(dto.getWorkFrom());
+        ed.setWorkTo(dto.getWorkTo());
+        ed.setPrice(dto.getPrice());
+        ed.setRating(0);
+        ed.setPharmacy(pharmacy);
+        ed.setDermatologist(d);
 
         List<Dermatologist> retDer = pharmacy.getDermatologists();
 
@@ -84,13 +92,18 @@ public class DermatologistService {
 
         dermatologistRepository.save(d);
         pharmacyRepository.save(pharmacy);
+        employedDermatologistRepository.save(ed);
 
         DermatologistDTO retUser = new DermatologistDTO();
         retUser.setId(d.getId());
         retUser.setFirstName(d.getFirstName());
         retUser.setLastName(d.getLastName());
-        retUser.setFrom(d.getWorkingFrom().toString());
-        retUser.setTo(d.getWorkingTo().toString());
+        retUser.setFrom(ed.getWorkFrom().toString());
+        retUser.setTo(ed.getWorkTo().toString());
+        retUser.setDateFromm(ed.getDateFrom().toString());
+        retUser.setDateToo(ed.getDateTo().toString());
+        retUser.setPrice(ed.getPrice());
+        retUser.setRating(ed.getRating());
 
         return retUser;
 
@@ -101,24 +114,27 @@ public class DermatologistService {
         List<DermatologistDTO> retList = new ArrayList<>();
 
         Pharmacy pharmacy = pharmacyRepository.findOneById(id);
+        List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
 
-        List<Dermatologist> retDer = pharmacy.getDermatologists();
+        for (EmployedDermatologist ed : derm) {
+            if (ed.getPharmacy().getId() == id) {
 
-        for (Dermatologist d : retDer) {
+                DermatologistDTO dto = new DermatologistDTO();
+                dto.setId(ed.getDermatologist().getId());
+                dto.setFirstName(ed.getDermatologist().getFirstName());
+                dto.setLastName(ed.getDermatologist().getLastName());
+                dto.setDateFromm(ed.getDateFrom().toString());
+                dto.setDateToo(ed.getDateTo().toString());
+                dto.setPrice(ed.getPrice());
+                dto.setRating(ed.getRating());
+                dto.setFrom(ed.getWorkFrom().toString());
+                dto.setTo(ed.getWorkTo().toString());
 
-            DermatologistDTO dto = new DermatologistDTO();
-            dto.setId(d.getId());
-            dto.setFirstName(d.getFirstName());
-            dto.setLastName(d.getLastName());
-            dto.setFrom(d.getWorkingFrom().toString());
-            dto.setTo(d.getWorkingTo().toString());
-            System.out.println(dto.getFirstName());
+                retList.add(dto);
 
-            retList.add(dto);
+            }
         }
-
         return retList;
-
     }
 
     public boolean removeDermatologist(Long id, Long dermID) {
@@ -152,5 +168,34 @@ public class DermatologistService {
         }
 
         return removed;
+    }
+
+    public List<DermatologistDTO> getDermatologistPatient() {
+
+        List<DermatologistDTO> retList = new ArrayList<>();
+
+        System.out.println("USAO U GET DERM PATIENT SERVICE");
+        List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
+        List<Pharmacy> pharmList = pharmacyRepository.findAll();
+
+        for (EmployedDermatologist d : derm) {
+
+            DermatologistDTO dto = new DermatologistDTO();
+            dto.setId(d.getDermatologist().getId());
+            dto.setFirstName(d.getDermatologist().getFirstName());
+            dto.setLastName(d.getDermatologist().getLastName());
+            // dto.setUsername(d.getUsername());
+            dto.setDateFromm(d.getDateFrom().toString());
+            dto.setDateToo(d.getDateTo().toString());
+            dto.setFrom(d.getWorkFrom().toString());
+            dto.setTo(d.getWorkTo().toString());
+            dto.setRating(d.getRating());
+            dto.setPrice(d.getPrice());
+            dto.setPharmacyName(d.getPharmacy().getName());
+
+            retList.add(dto);
+
+        }
+        return retList;
     }
 }

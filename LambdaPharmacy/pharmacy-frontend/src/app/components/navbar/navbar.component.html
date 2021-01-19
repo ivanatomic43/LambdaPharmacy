@@ -35,6 +35,16 @@
         </div>
 
         <div class="nav-item">
+          <a class="nav-link" *ngIf="isPatient && anyLogged">Staff
+            <div class="dropdown-content">
+             <a class="nav-link" routerLink="/dermatologists">Dermatologists</a>
+             <a class="nav-link" routerLink="/pharmacists">Pharmacists</a>
+
+          </div>
+          </a>
+        </div>
+
+        <div class="nav-item">
           <a class="nav-link" *ngIf="isPatient && anyLogged">Medical record
             <div class="dropdown-content">
              <a class="nav-link" routerLink="/history-of-app-d">History of appointments - dermatologist</a>

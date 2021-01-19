@@ -12,7 +12,9 @@ import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.repository.PharmacistRepository;
+import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,6 +31,9 @@ public class PharmacistService {
 
     @Autowired
     private PharmacyRepository pharmacyRepository;
+
+    @Autowired
+    private PharmacyAdministratorRepository adminsRepository;
 
     public Pharmacist findById(long id) {
         return this.pharmacistRepository.findById(id);
@@ -304,6 +309,78 @@ public class PharmacistService {
         }
 
         return removed;
+    }
+
+    public List<PharmacistDTO> getAllP() {
+
+        List<Pharmacist> list = pharmacistRepository.findAll();
+        List<PharmacistDTO> retList = new ArrayList<>();
+
+        for (Pharmacist p : list) {
+
+            PharmacistDTO dto = new PharmacistDTO();
+            dto.setId(p.getId());
+            dto.setAddress(p.getAddress());
+            dto.setEmail(p.getEmail());
+            dto.setFirstName(p.getFirstName());
+            dto.setLastName(p.getLastName());
+            dto.setPhoneNumber(p.getPhoneNumber());
+            dto.setFrom(p.getWorkingFrom().toString());
+            dto.setTo(p.getWorkingTo().toString());
+            dto.setPrice(p.getPrice());
+            dto.setPharmacyName(p.getPharmacy().getName());
+            dto.setUsername(p.getUsername());
+            dto.setRating(p.getRating());
+
+            retList.add(dto);
+
+        }
+
+        return retList;
+    }
+
+    public List<PharmacistDTO> getAdmins(Long id) {
+
+        List<PharmacistDTO> retList = new ArrayList<>();
+
+        PharmacyAdministrator admin = adminsRepository.findOneById(id);
+        List<Pharmacy> pharmList = pharmacyRepository.findAll();
+
+        for (Pharmacy p : pharmList) {
+
+            List<PharmacyAdministrator> admins = new ArrayList<>();
+            admins = p.getPharmacyAdministrators();
+
+            for (PharmacyAdministrator a : admins) {
+                if (a.getId() == id) {
+
+                    List<Pharmacist> list = new ArrayList<>();
+                    list = p.getPharmacists();
+
+                    for (Pharmacist ph : list) {
+                        PharmacistDTO dto = new PharmacistDTO();
+                        dto.setId(ph.getId());
+                        dto.setAddress(ph.getAddress());
+                        dto.setEmail(ph.getEmail());
+                        dto.setFirstName(ph.getFirstName());
+                        dto.setLastName(ph.getLastName());
+                        dto.setPhoneNumber(ph.getPhoneNumber());
+                        dto.setFrom(ph.getWorkingFrom().toString());
+                        dto.setTo(ph.getWorkingTo().toString());
+                        dto.setPrice(ph.getPrice());
+                        dto.setPharmacyName(ph.getPharmacy().getName());
+                        dto.setUsername(ph.getUsername());
+                        dto.setRating(ph.getRating());
+
+                        retList.add(dto);
+                    }
+                }
+
+            }
+
+        }
+        return retList;
+
     }
 
 }
