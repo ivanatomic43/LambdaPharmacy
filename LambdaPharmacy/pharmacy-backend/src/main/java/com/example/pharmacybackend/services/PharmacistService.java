@@ -311,6 +311,7 @@ public class PharmacistService {
         return removed;
     }
 
+    // for patient
     public List<PharmacistDTO> getAllP() {
 
         List<Pharmacist> list = pharmacistRepository.findAll();
@@ -339,6 +340,7 @@ public class PharmacistService {
         return retList;
     }
 
+    // for pharmacy admin
     public List<PharmacistDTO> getAdmins(Long id) {
 
         List<PharmacistDTO> retList = new ArrayList<>();

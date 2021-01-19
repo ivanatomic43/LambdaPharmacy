@@ -133,6 +133,9 @@ fetchDermatologists(){
   this.searchName = this.searchForm.get('searchName').value;
   this.searchSurname = this.searchForm.get('searchSurname').value;
 
+
+
+
   this.searchService.searchDermByParams(this.searchName, this.searchSurname).subscribe(response => {
     this.dermatologistService.refreshDermatologists.next(response);
   });

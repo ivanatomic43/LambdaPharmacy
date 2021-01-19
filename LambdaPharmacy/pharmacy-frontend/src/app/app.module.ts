@@ -42,6 +42,7 @@ import { SubPharmaciesComponent } from './components/sub-pharmacies/sub-pharmaci
 import { MyStatsComponent } from './components/my-stats/my-stats.component';
 import {SortPipe} from "./services/SortPipe";
 import { MatTableModule } from "@angular/material/table";
+import {MatSortModule} from "@angular/material";
 import { DermatologistsComponent } from './components/dermatologists/dermatologists.component';
 import { ManagePharmacyComponent } from './components/manage-pharmacy/manage-pharmacy.component';
 import { ManageDermatologistComponent } from './components/manage-dermatologist/manage-dermatologist.component';
@@ -126,7 +127,8 @@ import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.compon
     MatTableModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    MatSortModule
   ],
   entryComponents: [
     NewPharmacyComponent

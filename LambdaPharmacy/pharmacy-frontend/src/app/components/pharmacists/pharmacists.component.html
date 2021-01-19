@@ -4,9 +4,9 @@
 
     <div class = "custom-search"  >
         <form [formGroup]="searchForm" (ngSubmit)="search()">
-      <input class="custom-input" type="text" formControlName="searchName" placeholder="First name"/>
+      <input class="custom-input" type="text" formControlName="searchName" id="searchName" name="searchName" placeholder="First name"/>
 
-      <input class="custom-input" type="text" formControlName="searchSurname" placeholder="Last name"/>
+      <input class="custom-input" type="text" formControlName="searchSurname" id= "searchSurname" name = "searchSurname" placeholder="Last name"/>
 
       <button class="btn-search" type="submit">Search</button>
     </form>
@@ -14,19 +14,7 @@
 
     </div>
 
-
-    <div  style = "margin-top:10px; margin-left: auto; margin-right: auto; width: 200px;">
-      <label style = "color:#0f6674; font-family: 'Arial Black'">Sorting options:</label>
-      <select class="custom-select" (change) = "sortChange($event.target.value)" name="sorting" style = " margin-left: auto; display: block;" ngModel>
-
-        <option value = "priceA">Price ascending</option>
-        <option value = "priceD">Price descending</option>
-        <option value = "ratingA">Rate ascending</option>
-        <option value = "ratingD">Rate descending</option>
-      </select>
-    </div>
-
-    <table mat-table [dataSource]="dataSource3" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource3" matSort class="mat-elevation-z8">
 
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -45,7 +33,7 @@
 
 
       <ng-container matColumnDef="rating">
-        <th mat-header-cell *matHeaderCellDef>Rating</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
         <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
       </ng-container>
 
@@ -61,7 +49,7 @@
 
 
       <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
         <td mat-cell *matCellDef="let element"> {{element.price}} </td>
       </ng-container>
 

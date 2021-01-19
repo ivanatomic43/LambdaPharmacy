@@ -1,3 +1,4 @@
+import { SearchUserDTO } from './../model/SearchUserDTO';
 import { SearchPharmacistParams } from './../model/SearchPharmacistParams';
 import { MedicineSearch } from './../model/MedicineSearch';
 import { Router } from '@angular/router';
@@ -19,7 +20,7 @@ export class SearchService {
   private searchPharmacyUrl = searchUrl + '/searchPharmacy';
   private searchMedicineUrl = searchUrl + '/searchMedicine/';
   private searchPharmacistUrl = searchUrl + '/searchPharmacist';
-  searchPharmByParamsUrl = searchUrl + '/searchPharmByParams/';
+  searchPharmByParamsUrl = searchUrl + '/searchPharmByParams';
   searchDermByParamsUrl = searchUrl + '/searchDermByParams/';
 
 
@@ -49,9 +50,9 @@ export class SearchService {
       return this.http.post<any>(this.searchPharmacistUrl, searchParams);
     }
 
-    searchPharmByParams(name:string, surname:string){
+    searchPharmByParams(searchUser : SearchUserDTO){
 
-      return this.http.post(this.searchPharmByParamsUrl + name + '/' + surname, {
+      return this.http.post(this.searchPharmByParamsUrl, searchUser,  {
 
       })
         .pipe(
