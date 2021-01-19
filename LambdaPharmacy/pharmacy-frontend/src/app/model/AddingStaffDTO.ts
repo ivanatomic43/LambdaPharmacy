@@ -6,6 +6,6 @@ export class AddingStaffDTO{
     public dateTo: any,
     public workFrom: any,
     public workTo: any,
-    public priceOfAppointment: number
+    public price: number
   ) {}
 }

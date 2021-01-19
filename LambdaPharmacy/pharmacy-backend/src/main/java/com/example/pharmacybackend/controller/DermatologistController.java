@@ -140,7 +140,7 @@ public class DermatologistController {
             list = dermatologistService.getDermatologistPatient();
         }
         if (user.getAuthority().getName().equals("ROLE_PHARMACY_ADMIN")) {
-            // list = dermatologistService.getDermatologist();
+            list = dermatologistService.getDermatologist(user.getId());
         }
 
         if (list.isEmpty())

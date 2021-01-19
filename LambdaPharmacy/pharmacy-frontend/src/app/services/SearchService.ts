@@ -21,7 +21,7 @@ export class SearchService {
   private searchMedicineUrl = searchUrl + '/searchMedicine/';
   private searchPharmacistUrl = searchUrl + '/searchPharmacist';
   searchPharmByParamsUrl = searchUrl + '/searchPharmByParams';
-  searchDermByParamsUrl = searchUrl + '/searchDermByParams/';
+  searchDermByParamsUrl = searchUrl + '/searchDermByParams';
 
 
   name: string;
@@ -70,9 +70,9 @@ export class SearchService {
     }
 
 
-    searchDermByParams(name:string, surname:string){
+    searchDermByParams(searchParams : SearchUserDTO){
 
-      return this.http.post(this.searchDermByParamsUrl + name + '/' + surname, {
+      return this.http.post(this.searchDermByParamsUrl, searchParams, {
 
       })
         .pipe(

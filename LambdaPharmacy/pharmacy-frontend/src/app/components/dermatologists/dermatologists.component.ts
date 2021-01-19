@@ -1,3 +1,4 @@
+import { SearchUserDTO } from './../../model/SearchUserDTO';
 import { SearchService } from 'src/app/services/SearchService';
 import { SearchComponent } from './../search/search.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -5,8 +6,8 @@ import { DermDTO } from 'src/app/model/DermDTO';
 import { DermatologistService } from './../../services/DermatologistService';
 import { Router } from '@angular/router';
 import { SessionStorageService } from 'src/app/services/SessionStorageService';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort, MatTableDataSource } from '@angular/material';
 import { UserProfileDTO } from 'src/app/model/UserProfileDTO';
 import { UserDTO } from 'src/app/model/UserDTO';
 import { AuthService } from 'src/app/services/AuthService';
@@ -58,6 +59,7 @@ export class DermatologistsComponent implements OnInit {
   searchForm: FormGroup;
   searchName : string;
   searchSurname: string;
+  searchParams : SearchUserDTO;
 
   constructor(
     private router: Router,
@@ -68,6 +70,8 @@ export class DermatologistsComponent implements OnInit {
     private searchService : SearchService
 
   ) { }
+
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
 
@@ -125,21 +129,26 @@ fetchDermatologists(){
     this.dermatologistService.getDermatologists().subscribe(response => {
       this.dermatologistsList = response;
       this.dataSource3 = new MatTableDataSource(this.dermatologistsList);
+      this.dataSource3.sort = this.sort;
     });
 }
 
  search(){
 
-  this.searchName = this.searchForm.get('searchName').value;
-  this.searchSurname = this.searchForm.get('searchSurname').value;
+  this.searchParams = new SearchUserDTO(
+    this.searchForm.get('searchName').value,
+    this.searchForm.get('searchSurname').value
+  );
 
-
-
-
-  this.searchService.searchDermByParams(this.searchName, this.searchSurname).subscribe(response => {
-    this.dermatologistService.refreshDermatologists.next(response);
+  this.searchService.searchDermByParams(this.searchParams).subscribe(response => {
+    this.dermatologistsList = response;
+    this.dataSource3 = new MatTableDataSource(this.dermatologistsList);
   });
 
+ }
+
+ cancelSearch(){
+   this.fetchDermatologists();
  }
 
 }

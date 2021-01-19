@@ -35,12 +35,13 @@ public class DermatologistDTO {
         this.firstName = firstName;
     }
 
-    public DermatologistDTO(Long id, Date dateFrom, Date dateTo, LocalTime workFrom, LocalTime workTo) {
+    public DermatologistDTO(Long id, Date dateFrom, Date dateTo, LocalTime workFrom, LocalTime workTo, double price) {
         this.id = id;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.workFrom = workFrom;
         this.workTo = workTo;
+        this.price = price;
     }
 
     public DermatologistDTO(Long id, String firstName, String lastName, LocalTime workFrom, LocalTime workTo) {

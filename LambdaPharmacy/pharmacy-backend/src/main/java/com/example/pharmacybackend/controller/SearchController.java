@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.pharmacybackend.dto.DermatologistDTO;
 import com.example.pharmacybackend.dto.MedicineDTO;
 import com.example.pharmacybackend.dto.PharmacistDTO;
 import com.example.pharmacybackend.dto.PharmacyDTO;
@@ -19,6 +20,7 @@ import com.example.pharmacybackend.dto.SearchUserDTO;
 import com.example.pharmacybackend.dto.SimpleSearchDTO;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
+import com.example.pharmacybackend.services.DermatologistService;
 import com.example.pharmacybackend.services.MedicineService;
 import com.example.pharmacybackend.services.PharmacistService;
 import com.example.pharmacybackend.services.PharmacyService;
@@ -43,6 +45,9 @@ public class SearchController {
 
 	@Autowired
 	private UserServiceImpl userService;
+
+	@Autowired
+	private DermatologistService dermatologistService;
 
 	@Autowired
 	TokenUtils tokenUtils;
@@ -143,6 +148,52 @@ public class SearchController {
 		for (PharmacistDTO p : list) {
 			System.out.println("ret list" + p.getFirstName());
 		}
+		if (list.isEmpty()) {
+
+			return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/searchDermByParams", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PATIENT') or hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> searchDermByParams(@RequestBody SearchUserDTO myUser, HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		List<DermatologistDTO> retList = new ArrayList<>();
+		List<DermatologistDTO> list = new ArrayList<>();
+
+		if (user.getAuthority().getName().equals("ROLE_PATIENT")) {
+			retList = dermatologistService.getDermatologistPatient();
+
+			for (DermatologistDTO d : retList) {
+				if (d.getFirstName().toLowerCase().equals(myUser.getSearchName().toLowerCase())
+						&& d.getLastName().toLowerCase().equals(myUser.getSearchSurname().toLowerCase())) {
+					list.add(d);
+				} else {
+					System.out.println("Ne slazu se");
+				}
+			}
+		}
+
+		if (user.getAuthority().getName().equals("ROLE_PHARMACY_ADMIN")) {
+			retList = dermatologistService.getDermatologist(user.getId());
+
+			for (DermatologistDTO d : retList) {
+
+				if (d.getFirstName().toLowerCase().equals(myUser.getSearchName().toLowerCase())
+						&& d.getLastName().toLowerCase().equals(myUser.getSearchSurname().toLowerCase())) {
+					list.add(d);
+				} else {
+					System.out.println("Ne slazu se");
+				}
+			}
+		}
+
 		if (list.isEmpty()) {
 
 			return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);

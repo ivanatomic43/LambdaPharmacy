@@ -64,8 +64,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
-          <button *ngIf="isPatient" (click)="reserveCounceling(element.id)">Reserve counceling</button>
-          <button *ngIf="isPharmacyAdmin" (click)="removePharmacist(element.id)">Remove</button>
+
 
 
         </td>

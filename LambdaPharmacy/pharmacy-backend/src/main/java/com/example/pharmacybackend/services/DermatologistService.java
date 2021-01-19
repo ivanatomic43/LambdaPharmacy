@@ -11,6 +11,7 @@ import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.repository.DermatologistRepository;
 import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
@@ -174,7 +175,6 @@ public class DermatologistService {
 
         List<DermatologistDTO> retList = new ArrayList<>();
 
-        System.out.println("USAO U GET DERM PATIENT SERVICE");
         List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
         List<Pharmacy> pharmList = pharmacyRepository.findAll();
 
@@ -196,6 +196,49 @@ public class DermatologistService {
             retList.add(dto);
 
         }
+        return retList;
+    }
+
+    // for pharmacyAdmin
+    public List<DermatologistDTO> getDermatologist(Long id) {
+
+        List<DermatologistDTO> retList = new ArrayList<>();
+        List<Pharmacy> pharmacy = pharmacyRepository.findAll();
+        List<EmployedDermatologist> dermatologists = employedDermatologistRepository.findAll();
+        Long pharmacyID;
+
+        for (Pharmacy p : pharmacy) {
+            List<PharmacyAdministrator> admins = new ArrayList<>();
+            admins = p.getPharmacyAdministrators();
+
+            for (PharmacyAdministrator pa : admins) {
+                if (pa.getId() == id) {
+                    pharmacyID = p.getId();
+
+                    for (EmployedDermatologist d : dermatologists) {
+                        if (d.getPharmacy().getId() == p.getId()) {
+
+                            DermatologistDTO dto = new DermatologistDTO();
+                            dto.setId(d.getDermatologist().getId());
+                            dto.setFirstName(d.getDermatologist().getFirstName());
+                            dto.setLastName(d.getDermatologist().getLastName());
+                            dto.setDateFromm(d.getDateFrom().toString());
+                            dto.setDateToo(d.getDateTo().toString());
+                            dto.setFrom(d.getWorkFrom().toString());
+                            dto.setTo(d.getWorkTo().toString());
+                            dto.setRating(d.getRating());
+                            dto.setPrice(d.getPrice());
+                            dto.setPharmacyName(d.getPharmacy().getName());
+
+                            retList.add(dto);
+
+                        }
+                    }
+                }
+
+            }
+        }
+
         return retList;
     }
 }
