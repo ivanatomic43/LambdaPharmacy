@@ -1,5 +1,7 @@
 package com.example.pharmacybackend.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 import com.example.pharmacybackend.enumerations.MedicineStatus;
@@ -30,6 +32,9 @@ public class PharmacyMedicine {
 
     @Column
     private double rating;
+
+    @Column
+    private Date priceLastsTo;
 
     /**
      * @return Long return the id
@@ -127,6 +132,20 @@ public class PharmacyMedicine {
      */
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    /**
+     * @return Date return the priceLastsTo
+     */
+    public Date getPriceLastsTo() {
+        return priceLastsTo;
+    }
+
+    /**
+     * @param priceLastsTo the priceLastsTo to set
+     */
+    public void setPriceLastsTo(Date priceLastsTo) {
+        this.priceLastsTo = priceLastsTo;
     }
 
 }

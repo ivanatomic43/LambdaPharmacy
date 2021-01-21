@@ -1,0 +1,40 @@
+
+<form [formGroup]="medicineService.editPriceForm" class="normal-form" (submit)="onSubmit()">
+  <mat-grid-list cols="1" rowHeight="500px">
+    <mat-grid-tile>
+      <div class="controles-container">
+
+
+        <mat-form-field >
+          <label matLabel>Medicine name</label>
+          <input formControlName="name" matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+          <label matLabel>Price</label>
+          <input formControlName="price" matInput>
+
+        </mat-form-field>
+        <mat-form-field>
+          <label matLabel>Lasts from</label>
+          <input formControlName="priceFrom" matInput [matDatepicker]="picker" >
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
+        </mat-form-field>
+        <mat-form-field>
+          <label matLabel>Lasts to</label>
+          <input formControlName="priceTo" matInput [matDatepicker]="picker1">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <button class="btn-search" type="submit">Change</button>
+      <button class="btn-search" style="margin-top: 10px;" (click)="closeDialog()">Close</button>
+      </div>
+
+
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</form>

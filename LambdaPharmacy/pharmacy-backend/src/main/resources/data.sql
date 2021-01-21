@@ -28,16 +28,16 @@ INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, med_typ
 INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,  med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (9, 'Not for children', '1','AVAILABLE','Humani lekovi','119','RECIPE','Xanax','Namenjen za lečenje anksioznosti, napetosti ili drugih somatskih (telesnih) ili psihijatrijskih simptoma povezanih sa anksioznošću','PFIZER ITALIA S.R.L.','Tableta', 'alprazolam');
 INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,  med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (10, 'None', '2','AVAILABLE','Humani lekovi','120','RECIPE','Rantudil forte 60mg','Koristi se u terapiji bola i zapaljenja kod reumatoidnog artritisa (hronični poliartritis)','MEDA MANUFACTURING GMBH','Kapsula', 'acemetacin');
 
-INSERT INTO PHARMACY_MEDICINES (id, price, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (1, 150, 5, 4.8, 'AVAILABLE', 1,1);
-INSERT INTO PHARMACY_MEDICINES (id, price, quantity, rating,status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (2, 230, 5, 4.2,'AVAILABLE', 2,1);
-INSERT INTO PHARMACY_MEDICINES (id, price, quantity, rating,status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (3,175, 5, 3.1, 'AVAILABLE', 3,1);
-INSERT INTO PHARMACY_MEDICINES (id, price, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (4,165, 5, 3.6, 'AVAILABLE', 4,1);
-INSERT INTO PHARMACY_MEDICINES (id, price,  quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (5,155, 5, 4.7, 'AVAILABLE', 1,2);
-INSERT INTO PHARMACY_MEDICINES (id, price, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (6,145, 5, 5, 'AVAILABLE', 4,2);
-INSERT INTO PHARMACY_MEDICINES (id,price, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (7,280, 5, 3.8,'AVAILABLE', 6,3);
-INSERT INTO PHARMACY_MEDICINES (id,price, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (8,300, 5, 4.9,'AVAILABLE', 7,3);
-INSERT INTO PHARMACY_MEDICINES (id,price, quantity, rating,status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (9, 210,5, 4.0,'AVAILABLE', 8,3);
-INSERT INTO PHARMACY_MEDICINES (id, price, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (10,225, 5,4.6, 'AVAILABLE', 2,3);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (1, 150,  '2021-02-06', 5, 4.8, 'AVAILABLE', 1,1);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, rating,status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (2, 230,  '2021-01-06', 5, 4.2,'AVAILABLE', 2,1);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, rating,status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (3,175, '2021-02-06', 5, 3.1, 'AVAILABLE', 3,1);
+INSERT INTO PHARMACY_MEDICINES (id, price,  price_lasts_to,quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (4,165, '2021-02-06', 5, 3.6, 'AVAILABLE', 4,1);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (5,155, '2021-02-06', 5, 4.7, 'AVAILABLE', 1,2);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (6,145, '2021-02-06', 5, 5, 'AVAILABLE', 4,2);
+INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (7,280, '2021-02-06', 5, 3.8,'AVAILABLE', 6,3);
+INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (8,300, '2021-02-06', 5, 4.9,'AVAILABLE', 7,3);
+INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity, rating,status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (9, 210, '2021-02-06',5, 4.0,'AVAILABLE', 8,3);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity,rating, status_in_pharmacy ,medicine_id, pharmacy_id) VALUES (10,225, '2021-02-06', 5,4.6, 'AVAILABLE', 2,3);
 
 
 

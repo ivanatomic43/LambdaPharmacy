@@ -17,45 +17,4 @@ public class Pricelist {
 	@Column
 	private Long id;
 
-	@Column(nullable = false)
-	private String price;
-
-	@Column(nullable = false)
-	private Date validFrom;
-
-	@Column(nullable = false)
-	private Date validTo;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getPrice() {
-		return price;
-	}
-
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
-	public Date getValidFrom() {
-		return validFrom;
-	}
-
-	public void setValidFrom(Date validFrom) {
-		this.validFrom = validFrom;
-	}
-
-	public Date getValidTo() {
-		return validTo;
-	}
-
-	public void setValidTo(Date validTo) {
-		this.validTo = validTo;
-	}
-
 }

@@ -10,6 +10,7 @@ import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.repository.ReservationRepository;
 import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.dto.MedicineDTO;
+import com.example.pharmacybackend.dto.PriceDTO;
 import com.example.pharmacybackend.dto.ReservationParamsDTO;
 import com.example.pharmacybackend.enumerations.MedicineStatus;
 import com.example.pharmacybackend.model.*;
@@ -62,6 +63,7 @@ public class MedicineService {
 			dto.setQuantity(m.getQuantity());
 			dto.setPrice(m.getPrice());
 			dto.setRating(m.getRating());
+			dto.setPriceLastsTo(m.getPriceLastsTo().toString());
 
 			myMed.add(dto);
 		}
@@ -93,7 +95,7 @@ public class MedicineService {
 				dto.setQuantity(m.getQuantity());
 				dto.setPrice(m.getPrice());
 				dto.setRating(m.getRating());
-
+				dto.setPriceLastsTo(m.getPriceLastsTo().toString());
 				retMed.add(dto);
 
 			}
@@ -126,6 +128,7 @@ public class MedicineService {
 				dto.setStructure(m.getMedicine().getStructure());
 				dto.setPrice(m.getPrice());
 				dto.setRating(m.getRating());
+				dto.setPriceLastsTo(m.getPriceLastsTo().toString());
 
 				if (m.getQuantity() == 0) {
 					dto.setStatus(MedicineStatus.OUT_OF_STOCK.toString());
@@ -212,6 +215,7 @@ public class MedicineService {
 		return retList;
 	}
 
+	// for sys admin
 	public List<MedicineDTO> getAllMedicinesInSystem() {
 
 		List<Medicine> allMed = medicineRepository.findAll();
@@ -320,6 +324,7 @@ public class MedicineService {
 
 	}
 
+	// ovo menjati
 	public boolean addMedicineToPharmacy(Long pharmacyID, Long medicineID) {
 
 		boolean added = false;
@@ -477,11 +482,41 @@ public class MedicineService {
 
 			dto.setPrice(myMed.getPrice());
 			dto.setRating(myMed.getRating());
+			dto.setPriceLastsTo(myMed.getPriceLastsTo().toString());
 
 			return dto;
 
 		}
 
+	}
+
+	public boolean editPrice(Long id, PriceDTO model) {
+
+		boolean changed = false;
+
+		List<PharmacyMedicine> medicines = pharmacyMedicinesRepository.findAll();
+
+		for (PharmacyMedicine m : medicines) {
+
+			if (m.getMedicine().getId() == model.getId() && m.getPharmacy().getId() == id) {
+
+				System.out.println(model.getPrice());
+				System.out.println(model.getLastsFrom());
+				if (model.getPrice() != 0) {
+					m.setPrice(model.getPrice());
+				}
+
+				if (!model.getLastsFrom().equals(null)) {
+					m.setPriceLastsTo(model.getLastsFrom());
+				}
+
+				pharmacyMedicinesRepository.save(m);
+				changed = true;
+			}
+
+		}
+
+		return changed;
 	}
 
 }

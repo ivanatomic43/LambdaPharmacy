@@ -1,3 +1,5 @@
+import { OrderMedicine } from './../../model/OrderMedicine';
+import { MatTableDataSource } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +16,13 @@ export class AddMedComponent implements OnInit {
   fetchedMedicines: MedicinePreview[] = [];
   pharmacyID: number;
   medicineID: number;
-  addingMedForm: FormGroup;
+  medicineForm: FormGroup;
+
+  medicineSource : MatTableDataSource<OrderMedicine>;
+  medicineData : OrderMedicine[] = [];
+  columnMedicine: string[] = ['medicine'];
+
+  respData: OrderMedicine[] = [];
 
 
   constructor(
@@ -32,24 +40,24 @@ export class AddMedComponent implements OnInit {
 
       });
 
-      this.addingMedForm = new FormGroup({
-        medicine: new FormControl('', [Validators.required])
+      this.medicineForm= new FormGroup({
+        medicine: new FormControl('', [Validators.required]),
+        addQuantity: new FormControl('',[Validators.required])
       });
+
 
   }
 
-  addMedicine(){
 
-    this.medicineID = this.addingMedForm.get('medicine').value;
+  onSubmitMedicine(){
+    const medicine = this.medicineForm.getRawValue().medicine;
+    const medicineData = { name: medicine};
+    this.medicineSource = new MatTableDataSource(this.medicineData);
 
+  }
 
+  fetchData(){
 
-    this.medicineService.addMedicineToPharmacy(this.pharmacyID, this.medicineID).subscribe(response => {
-      alert("Medicine added to pharmacy!");
-      this.router.navigate(['/pharmacy-medicines/' + this.pharmacyID]);
-    }, error => {
-      alert("error...");
-    });
 
 
   }

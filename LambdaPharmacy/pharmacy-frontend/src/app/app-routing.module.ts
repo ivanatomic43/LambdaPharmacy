@@ -1,3 +1,4 @@
+import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.component';
 import { MedicineDetailsComponent } from './components/medicine-details/medicine-details.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
@@ -150,7 +151,8 @@ const routes: Routes = [
 
   },
   {path : 'pharmacists', component: PharmacistsComponent},
-  {path : 'my-pharmacy', component: MyPharmacyComponent }
+  {path : 'my-pharmacy', component: MyPharmacyComponent },
+  {path: 'pricelist', component: PricelistComponent}
 
 ];
 

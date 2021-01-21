@@ -25,6 +25,7 @@ public class MedicineDTO {
 
 	private double price;
 	private double rating;
+	private String priceLastsTo;
 
 	public MedicineDTO() {
 	}
@@ -34,6 +35,7 @@ public class MedicineDTO {
 				m.getStructure(), m.getMode(), m.getNote());
 	}
 
+	// new medicine
 	public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer,
 			String structure, MedicineMode mode, String note) {
 		super();
@@ -49,9 +51,11 @@ public class MedicineDTO {
 
 	}
 
+	// preview
 	public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer,
 			String structure, String modee, String note, Long pharmacyID, String pharmacyName, String status,
-			String contraindications, String dailyDose, double quantity, double price, double rating) {
+			String contraindications, String dailyDose, double quantity, double price, double rating,
+			String priceLastsTo) {
 		super();
 		this.id = id;
 		this.medicineCode = medicineCode;
@@ -70,6 +74,8 @@ public class MedicineDTO {
 		this.quantity = quantity;
 		this.price = price;
 		this.rating = rating;
+		this.priceLastsTo = priceLastsTo;
+
 	}
 
 	public Long getId() {
@@ -268,6 +274,20 @@ public class MedicineDTO {
 	 */
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	/**
+	 * @return String return the priceLastsTo
+	 */
+	public String getPriceLastsTo() {
+		return priceLastsTo;
+	}
+
+	/**
+	 * @param priceLastsTo the priceLastsTo to set
+	 */
+	public void setPriceLastsTo(String priceLastsTo) {
+		this.priceLastsTo = priceLastsTo;
 	}
 
 }

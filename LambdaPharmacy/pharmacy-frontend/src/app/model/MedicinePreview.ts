@@ -16,7 +16,9 @@ export class MedicinePreview{
     public dailyDose : string,
     public quantity: number,
     public price: number,
-    public rating: number
+    public rating: number,
+    public priceFrom: string,
+    public priceTo: string
   ) {
   }
 

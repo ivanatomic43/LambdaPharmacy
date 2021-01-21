@@ -1,3 +1,5 @@
+import { EditPrice } from './../model/EditPrice';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewMedicine } from './../model/NewMedicine';
 import { ReservationParams } from './../model/ReservationParams';
 import { MedicinePreview } from './../model/MedicinePreview';
@@ -28,9 +30,25 @@ export class MedicineService {
   getNotReservedMedicinesUrl = medicineUrl + '/getNotReservedMedicines';
   cancelMedicineReservationUrl = medicineUrl + '/cancelMedicineReservation/';
   getMedicineDetailsUrl = medicineUrl + '/getMedicineDetails/';
+  getPharmacyMedicinesPricelistUrl = medicineUrl + '/getPharmacyMedicinesPricelist';
+  editPriceUrl = medicineUrl + '/editPrice/';
 
 
   constructor(private http: HttpClient, private router: Router) {}
+
+
+  editPriceForm: FormGroup = new FormGroup({
+
+
+    name: new FormControl({value: '', disabled:true}, Validators.required),
+
+    price: new FormControl('', Validators.required),
+    priceFrom: new FormControl(''),
+    priceTo: new FormControl(''),
+
+
+
+  });
 
   allMedicines() {
     return this.http.get<any>(this.allMedicinesUrl);
@@ -139,4 +157,27 @@ export class MedicineService {
       );
 
   }
+
+  getPharmacyMedicinesPricelist(){
+    return this.http.get<any>(this.getPharmacyMedicinesPricelistUrl);
+  }
+/*
+  populateForm(name: string, price:any, priceFrom: any, priceTo: any){
+
+      this.editPrice = new EditPrice(name, price, priceFrom, priceTo);
+    //console.log(element);
+       this.editPriceForm.setValue(this.editPrice);
+
+  }
+*/
+  addMedicine(medicineData:any){
+    return null;
+  }
+
+  editPrice(editPriceModel :EditPrice, pharmacyID: number){
+
+    return this.http.post<any>(this.editPriceUrl+ pharmacyID, editPriceModel);
+
+  }
+
 }

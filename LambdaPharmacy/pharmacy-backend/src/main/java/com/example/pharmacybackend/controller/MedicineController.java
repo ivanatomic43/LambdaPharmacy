@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.pharmacybackend.dto.MedicineDTO;
+import com.example.pharmacybackend.dto.PriceDTO;
 import com.example.pharmacybackend.dto.ReservationParamsDTO;
 import com.example.pharmacybackend.model.Medicine;
 import com.example.pharmacybackend.model.User;
@@ -181,6 +182,19 @@ public class MedicineController {
 
 		return new ResponseEntity<>(myMed, HttpStatus.OK);
 
+	}
+
+	@RequestMapping(value = "/editPrice/{id}", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> editPrice(@PathVariable("id") Long id, @RequestBody PriceDTO model) {
+
+		boolean changed = medicineService.editPrice(id, model);
+
+		if (!changed) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(changed, HttpStatus.OK);
 	}
 
 }

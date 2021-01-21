@@ -17,11 +17,6 @@ import { ListOfPharmaciesComponent } from './components/list-of-pharmacies/list-
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { PatientPageComponent } from './components/patient-page/patient-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AuthService} from './services/AuthService';
-import {FooService} from './services/FooService';
-import {ConfigService} from './services/ConfigService';
-import {ApiService} from './services/ApiService';
-import {UserService} from './services/UserService';
 import {TokenInterceptor} from './interceptor/TokenInterceptor';
 import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 import { AlertComponent } from './alert/alert.component';
@@ -63,6 +58,10 @@ import { PharmacistsComponent } from './components/pharmacists/pharmacists.compo
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { MedicineDetailsComponent } from './components/medicine-details/medicine-details.component';
 import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.component';
+import { PricelistComponent } from './components/pricelist/pricelist.component';
+import { EditPricelistComponent } from './components/edit-pricelist/edit-pricelist.component';
+import { MaterialModule } from './material/material.modul';
+import { MatInputModule, MatFormFieldModule } from '@angular/material';
 
 
 
@@ -114,7 +113,9 @@ import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.compon
     PharmacistsComponent,
     PromotionsComponent,
     MedicineDetailsComponent,
-    MyPharmacyComponent
+    MyPharmacyComponent,
+    PricelistComponent,
+    EditPricelistComponent
 
 
   ],
@@ -128,10 +129,14 @@ import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.compon
     MatDialogModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
-    MatSortModule
+    MatSortModule,
+    MaterialModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   entryComponents: [
-    NewPharmacyComponent
+    NewPharmacyComponent,
+    EditPricelistComponent
   ],
 
   providers: [
