@@ -3,6 +3,8 @@ package com.example.pharmacybackend.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.pharmacybackend.dto.PharmacistDTO;
 import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.dto.SearchPharmacistParams;
@@ -44,6 +46,11 @@ public class PharmacistService {
         return this.pharmacistRepository.findAll();
     }
 
+    @Transactional
+    public Pharmacist savePharmacist(Pharmacist p) {
+        return this.pharmacistRepository.save(p);
+    }
+
     public PharmacistDTO registerPharmacist(PharmacistDTO newUser, Long id) {
 
         Pharmacist p = new Pharmacist();
@@ -74,7 +81,7 @@ public class PharmacistService {
         // List<Pharmacist> retPh = pharm.getPharmacists();
         // retPh.add(p);
 
-        pharmacistRepository.save(p);
+        this.savePharmacist(p);
         pharmacyRepository.save(pharm);
 
         PharmacistDTO retUser = new PharmacistDTO();

@@ -22,6 +22,7 @@ import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.repository.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,9 @@ public class AppointmentService {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    private PharmacyService pharmacyService;
+
     public Appointment findById(long id) {
         return this.appointmentRepository.findById(id);
     }
@@ -66,6 +70,7 @@ public class AppointmentService {
         return this.appointmentRepository.findAll();
     }
 
+    @Transactional
     public Appointment update(Appointment ap) {
         return this.appointmentRepository.save(ap);
     }
@@ -129,7 +134,7 @@ public class AppointmentService {
         a.setType(AppointmentType.EXAMINATION);
         a.setStatus(AppointmentStatus.FREE);
 
-        appointmentRepository.save(a);
+        this.update(a);
         // newApp.setId(a.getId());
 
         // adding a to dermatologist
@@ -143,7 +148,7 @@ public class AppointmentService {
 
         // save all
         employedDermatologistRepository.save(dermatologist);
-        pharmacyRepository.save(pharmacy);
+        pharmacyService.savePharmacy(pharmacy);
 
         // creating a dto
         String firstName = dermatologist.getDermatologist().getFirstName();

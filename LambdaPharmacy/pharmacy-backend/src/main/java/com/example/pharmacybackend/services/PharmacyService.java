@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javassist.expr.NewArray;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacybackend.repository.PatientRepository;
 import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
@@ -43,14 +43,18 @@ public class PharmacyService {
 	@Autowired
 	private EmailService emailService;
 
+	@Autowired
+	private PatientService patientService;
+
 	public List<Pharmacy> getAllPharmacies() {
 		return pharmacyRepository.findAll();
 	}
 
-	/*
-	 * public void savePharmacy(Pharmacy createdPharmacy) { return
-	 * this.pharmacyRepository.save(createdPharmacy); }
-	 */
+	@Transactional
+	public Pharmacy savePharmacy(Pharmacy p) {
+		return this.pharmacyRepository.save(p);
+	}
+
 	public Pharmacy findById(Long id) {
 		Optional<Pharmacy> p = this.pharmacyRepository.findById(id);
 		if (p.isPresent()) {
@@ -116,15 +120,15 @@ public class PharmacyService {
 
 		pharmAdmins.add(pa);
 
-		pharmacyRepository.save(p);
-		pa.setPharmacy(p);
+		Pharmacy ph = this.savePharmacy(p);
+		pa.setPharmacy(ph);
 
 		PharmacyDTO ret = new PharmacyDTO();
-		ret.setId(p.getId());
-		ret.setName(p.getName());
-		ret.setAddress(p.getAddress());
-		ret.setDescription(p.getDescription());
-		ret.setRating(p.getRating());
+		ret.setId(ph.getId());
+		ret.setName(ph.getName());
+		ret.setAddress(ph.getAddress());
+		ret.setDescription(ph.getDescription());
+		ret.setRating(ph.getRating());
 		ret.setFirstName(pa.getFirstName());
 		ret.setLastName(pa.getLastName());
 
@@ -165,7 +169,7 @@ public class PharmacyService {
 		pharmAdmins.add(d);
 
 		pharmacyAdministratorRepository.save(d);
-		pharmacyRepository.save(p);
+		this.savePharmacy(p);
 
 		registred = true;
 		return registred;
@@ -210,7 +214,7 @@ public class PharmacyService {
 
 		subPharmacy.add(p);
 
-		patientRepository.save(patient);
+		patientService.update(patient);
 
 		return true;
 
@@ -227,7 +231,7 @@ public class PharmacyService {
 
 		subPharmacy.remove(p);
 
-		patientRepository.save(patient);
+		patientService.update(patient);
 
 		return true;
 

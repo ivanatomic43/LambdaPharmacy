@@ -21,6 +21,7 @@ import com.example.pharmacybackend.repository.PharmacyRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SysAdminService {
@@ -46,6 +47,11 @@ public class SysAdminService {
     @Autowired
     private EmployedDermatologistRepository employedDermatologistRepository;
 
+    @Transactional
+    public Complaint saveComplaint(Complaint c) {
+        return this.complaintRepository.save(c);
+    }
+
     public boolean sendComplaint(ComplaintDTO complaint, Long userID) {
 
         boolean created = false;
@@ -68,7 +74,7 @@ public class SysAdminService {
         c.setStatus(ComplaintStatus.PROCESSING);
         c.setText(complaint.getText());
 
-        complaintRepository.save(c);
+        this.saveComplaint(c);
         created = true;
         return created;
 
@@ -107,7 +113,7 @@ public class SysAdminService {
 
         if (complaint != null && patient != null) {
             complaint.setStatus(ComplaintStatus.REVIEWED);
-            complaintRepository.save(complaint);
+            this.saveComplaint(complaint);
             emailService.sendReplyToComplainment(patient, reply.getAnswer());
             done = true;
 

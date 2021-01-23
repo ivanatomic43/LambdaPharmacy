@@ -15,6 +15,7 @@ import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.repository.DermatologistRepository;
 import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +34,9 @@ public class DermatologistService {
     private PharmacyRepository pharmacyRepository;
 
     @Autowired
+    private PharmacyService pharmacyService;
+
+    @Autowired
     private EmployedDermatologistRepository employedDermatologistRepository;
 
     public Dermatologist findById(long id) {
@@ -41,6 +45,16 @@ public class DermatologistService {
 
     public List<Dermatologist> findAll() {
         return this.dermatologistRepository.findAll();
+    }
+
+    @Transactional
+    public Dermatologist save(Dermatologist dermatologist) {
+        return this.dermatologistRepository.save(dermatologist);
+    }
+
+    @Transactional
+    public EmployedDermatologist saveEmployed(EmployedDermatologist dermatologist) {
+        return this.employedDermatologistRepository.save(dermatologist);
     }
 
     public Dermatologist registerDermatologist(UserRequestDTO newUser) {
@@ -65,7 +79,7 @@ public class DermatologistService {
         role = authorityService.findByName("ROLE_DERMATOLOGIST");
         d.setAuthority(role);
 
-        this.dermatologistRepository.save(d);
+        this.save(d);
 
         return d;
     }
@@ -91,9 +105,9 @@ public class DermatologistService {
 
         retDer.add(d);
 
-        dermatologistRepository.save(d);
-        pharmacyRepository.save(pharmacy);
-        employedDermatologistRepository.save(ed);
+        this.save(d);
+        pharmacyService.savePharmacy(pharmacy);
+        this.saveEmployed(ed);
 
         DermatologistDTO retUser = new DermatologistDTO();
         retUser.setId(d.getId());
@@ -138,6 +152,7 @@ public class DermatologistService {
         return retList;
     }
 
+    @Transactional
     public boolean removeDermatologist(Long id, Long dermID) {
 
         boolean removed = false;
@@ -154,7 +169,7 @@ public class DermatologistService {
                 } else {
                     Dermatologist derm = dermatologistRepository.findOneById(dermID);
                     pharmDermatologist.remove(derm);
-                    pharmacyRepository.save(p);
+                    pharmacyService.savePharmacy(p);
                     removed = true;
                     return removed;
                 }
@@ -163,7 +178,7 @@ public class DermatologistService {
             System.out.println("There is no appointments in this pharmacy, dermatologist removed");
             Dermatologist derm = dermatologistRepository.findOneById(dermID);
             pharmDermatologist.remove(derm);
-            pharmacyRepository.save(p);
+            pharmacyService.savePharmacy(p);
             removed = true;
             return removed;
         }

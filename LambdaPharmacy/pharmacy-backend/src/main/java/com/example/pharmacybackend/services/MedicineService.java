@@ -2,6 +2,7 @@ package com.example.pharmacybackend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacybackend.repository.MedicineRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
@@ -39,6 +40,21 @@ public class MedicineService {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+
+	@Transactional
+	public Medicine save(Medicine medicine) {
+		return this.medicineRepository.save(medicine);
+	}
+
+	@Transactional
+	public MedicineReservation saveMedicineReservation(MedicineReservation mr) {
+		return this.reservationRepository.save(mr);
+	}
+
+	@Transactional
+	public PharmacyMedicine savePharmacyMedicine(PharmacyMedicine pm) {
+		return this.pharmacyMedicinesRepository.save(pm);
+	}
 
 	public List<MedicineDTO> getAllMedicine() {
 
@@ -146,6 +162,7 @@ public class MedicineService {
 		return retList;
 	}
 
+	@Transactional
 	public boolean reserveMedicine(ReservationParamsDTO dto, Long patientID) {
 
 		boolean reserved = false;
@@ -159,9 +176,11 @@ public class MedicineService {
 				MedicineReservation medRes = new MedicineReservation();
 				medRes.setDate(dto.getDate());
 
-				medRes.setMedicine(m.getMedicine());
-				medRes.setPatient(patient);
-				medRes.setPharmacy(m.getPharmacy());
+				this.saveMedicineReservation(medRes);
+
+				reservationRepository.updateResMed(dto.getMedicineID(), medRes.getId());
+				reservationRepository.updateResPatient(patient.getId(), medRes.getId());
+				reservationRepository.updateResPharmacy(m.getPharmacy().getId(), medRes.getId());
 
 				if (m.getQuantity() != 0) {
 					double newMedQuantity = m.getQuantity() - 1;
@@ -174,8 +193,8 @@ public class MedicineService {
 				} else {
 					m.setStatusInPharmacy(MedicineStatus.OUT_OF_STOCK);
 				}
-				pharmacyMedicinesRepository.save(m);
-				reservationRepository.save(medRes);
+				this.savePharmacyMedicine(m);
+				// reservationRepository.save(medRes);
 
 				emailService.sendMedicineReservationMail(patient, medRes.getId());
 
@@ -265,7 +284,7 @@ public class MedicineService {
 		dto.setProducer(newMedicine.getProducer());
 		dto.setDefaultStatus(MedicineStatus.AVAILABLE);
 
-		medicineRepository.save(dto);
+		this.save(dto);
 
 		MedicineDTO ret = new MedicineDTO();
 

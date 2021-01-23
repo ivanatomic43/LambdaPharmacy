@@ -3,6 +3,7 @@ package com.example.pharmacybackend.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacybackend.dto.UserRequestDTO;
 
@@ -27,6 +28,7 @@ public class PatientService {
 		return this.patientRepository.findByUsername(username);
 	}
 
+	@Transactional
 	public Patient update(Patient p) {
 		return this.patientRepository.save(p);
 	}
@@ -45,7 +47,7 @@ public class PatientService {
 
 		newPatient.setApproved(false);
 
-		return this.patientRepository.save(newPatient);
+		return this.update(newPatient);
 
 	}
 

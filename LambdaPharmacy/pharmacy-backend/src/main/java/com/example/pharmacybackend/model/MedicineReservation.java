@@ -8,7 +8,7 @@ import com.example.pharmacybackend.enumerations.*;
 import org.springframework.data.jpa.repository.EntityGraph;
 
 @Entity
-@Table(name = "MEDICINE_RESERVATION")
+@Table(name = "medicine_reservation")
 public class MedicineReservation {
 
     @Id

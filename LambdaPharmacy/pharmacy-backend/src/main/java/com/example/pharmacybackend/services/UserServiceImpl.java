@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.model.Dermatologist;
@@ -64,11 +65,15 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByEmail(email);
 	}
 
+	@Transactional
+	public User saveUser(User user) {
+		return this.userRepository.save(user);
+	}
+
+	@Transactional
 	public void updateActivation(boolean active, Long id) {
 
-		User user = userRepository.findById(id).get();
-		user.setApproved(active);
-		userRepository.save(user);
+		userRepository.updateActivation(active, id);
 
 	}
 
@@ -101,7 +106,7 @@ public class UserServiceImpl implements UserService {
 				}
 
 			}
-			userRepository.save(u);
+			this.saveUser(u);
 			return new UserDTO(u);
 		}
 
