@@ -197,6 +197,20 @@ public class PharmacyController {
 
 	}
 
+	@RequestMapping(value = "/unsubscribe/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PATIENT')")
+	public ResponseEntity<?> unsubscribeForNewsletter(@PathVariable("id") Long id, HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		boolean unsubscribed = pharmacyService.unsubscribeForNewsletter(id, user.getId());
+
+		return new ResponseEntity<>(unsubscribed, HttpStatus.OK);
+
+	}
+
 	@RequestMapping(value = "/getSubPharmacies", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('PATIENT')")
 	public ResponseEntity<?> getSubPharmacies(HttpServletRequest request) {

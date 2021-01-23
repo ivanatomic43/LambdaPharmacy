@@ -223,4 +223,11 @@ export class PharmacyDetailsComponent implements OnInit {
     this.router.navigate(['/promotions/' + id]);
   }
 
+  unsubscribe(id:number){
+    this.pharmacyService.unsubcribeFromNewsletter(id).subscribe(response => {
+      this.isSubscribed = false;
+      alert("Unsubcribed!");
+    });
+  }
+
 }

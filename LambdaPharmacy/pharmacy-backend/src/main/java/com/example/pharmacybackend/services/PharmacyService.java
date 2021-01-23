@@ -216,6 +216,23 @@ public class PharmacyService {
 
 	}
 
+	public boolean unsubscribeForNewsletter(Long id, Long userID) {
+
+		Patient patient = patientRepository.findOneById(userID);
+		List<Pharmacy> subPharmacy = new ArrayList<>();
+
+		subPharmacy = patient.getSubscribedPharmacies();
+
+		Pharmacy p = pharmacyRepository.findOneById(id);
+
+		subPharmacy.remove(p);
+
+		patientRepository.save(patient);
+
+		return true;
+
+	}
+
 	public List<PharmacyDTO> getSubPharmacies(Long userID) {
 
 		List<PharmacyDTO> retList = new ArrayList<>();

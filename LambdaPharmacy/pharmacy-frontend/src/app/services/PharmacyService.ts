@@ -23,6 +23,7 @@ export class PharmacyService {
   getPharmacyUrl = pharmacyUrl + '/getPharmacy/';
   getAdministratorsUrl = pharmacyUrl+ '/getAdministrators';
   subscribeUrl = pharmacyUrl + '/subscribe/';
+  unsubscribeUrl = pharmacyUrl + '/unsubscribe/';
   getSubPharmaciesUrl = pharmacyUrl + '/getSubPharmacies';
   fetchAllPromotionsUrl = pharmacyUrl + '/fetchAllPromotions/';
   createPromotionUrl = pharmacyUrl + '/createPromotion/';
@@ -92,6 +93,24 @@ export class PharmacyService {
         })
       );
 
+  }
+
+  unsubcribeFromNewsletter(id:number){
+
+    return this.http.post(this.unsubscribeUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
   }
 
 
