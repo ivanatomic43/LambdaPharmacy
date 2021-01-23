@@ -45,7 +45,7 @@ public class Pharmacy implements Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "pharmacy_dermatologist", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dermatologist_id", referencedColumnName = "id"))
-	private List<Dermatologist> dermatologists;
+	private List<EmployedDermatologist> dermatologists;
 
 	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Pharmacist> pharmacists = new ArrayList<>();
@@ -63,11 +63,11 @@ public class Pharmacy implements Serializable {
 	@ManyToOne
 	private Pricelist pricelist;
 
-	public List<Dermatologist> getDermatologists() {
+	public List<EmployedDermatologist> getDermatologists() {
 		return dermatologists;
 	}
 
-	public void setDermatologists(List<Dermatologist> dermatologists) {
+	public void setDermatologists(List<EmployedDermatologist> dermatologists) {
 		this.dermatologists = dermatologists;
 	}
 

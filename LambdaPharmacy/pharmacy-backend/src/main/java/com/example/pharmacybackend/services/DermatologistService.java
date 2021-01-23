@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.pharmacybackend.dto.DermatologistDTO;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
+import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Dermatologist;
@@ -101,11 +102,11 @@ public class DermatologistService {
         ed.setPharmacy(pharmacy);
         ed.setDermatologist(d);
 
-        List<Dermatologist> retDer = pharmacy.getDermatologists();
+        List<EmployedDermatologist> retDer = pharmacy.getDermatologists();
 
-        retDer.add(d);
+        retDer.add(ed);
 
-        this.save(d);
+        this.saveEmployed(ed);
         pharmacyService.savePharmacy(pharmacy);
         this.saveEmployed(ed);
 
@@ -156,31 +157,63 @@ public class DermatologistService {
     public boolean removeDermatologist(Long id, Long dermID) {
 
         boolean removed = false;
-
+        System.out.println("DERM" + dermID);
         Pharmacy p = pharmacyRepository.findOneById(id);
         List<Appointment> allApp = p.getPharmacyAppointments();
-        List<Dermatologist> pharmDermatologist = p.getDermatologists();
+        List<EmployedDermatologist> pharmDermatologist = p.getDermatologists();
 
         if (!allApp.isEmpty()) {
             for (Appointment a : allApp) {
-                if (a.getDermatologist().getId() == dermID) {
-                    System.out.println("Dermatologist has reserved appointment...");
-                    return removed;
+                if (a.getType().equals(AppointmentType.EXAMINATION)) {
+                    if (a.getDermatologist().getDermatologist().getId() == dermID) {
+                        System.out.println("Dermatologist has reserved appointment...");
+                        return removed;
+                    } else {
+                        System.out.println("USao u nije njegov sastanak");
+                        List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
+                        for (EmployedDermatologist ed : derm) {
+                            if (ed.getDermatologist().getId() == dermID) {
+                                pharmDermatologist.remove(ed);
+                                ed.setDermatologist(null);
+                                ed.setPharmacy(null);
+                                employedDermatologistRepository.delete(ed);
+                                pharmacyService.savePharmacy(p);
+                                removed = true;
+                                return removed;
+                            }
+                        }
+
+                    }
                 } else {
-                    Dermatologist derm = dermatologistRepository.findOneById(dermID);
-                    pharmDermatologist.remove(derm);
+                    System.out.println("Not examination, remove dermatologist");
+                    List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
+                    for (EmployedDermatologist ed : derm) {
+                        if (ed.getDermatologist().getId() == dermID) {
+                            pharmDermatologist.remove(ed);
+                            ed.setDermatologist(null);
+                            ed.setPharmacy(null);
+                            employedDermatologistRepository.delete(ed);
+                            pharmacyService.savePharmacy(p);
+                            removed = true;
+                            return removed;
+                        }
+                    }
+                }
+            }
+        } else {
+            System.out.println("There is no appointments in this pharmacy, dermatologist removed");
+            List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
+            for (EmployedDermatologist ed : derm) {
+                if (ed.getDermatologist().getId() == dermID) {
+                    pharmDermatologist.remove(ed);
+                    ed.setDermatologist(null);
+                    ed.setPharmacy(null);
+                    employedDermatologistRepository.delete(ed);
                     pharmacyService.savePharmacy(p);
                     removed = true;
                     return removed;
                 }
             }
-        } else {
-            System.out.println("There is no appointments in this pharmacy, dermatologist removed");
-            Dermatologist derm = dermatologistRepository.findOneById(dermID);
-            pharmDermatologist.remove(derm);
-            pharmacyService.savePharmacy(p);
-            removed = true;
-            return removed;
         }
 
         return removed;

@@ -143,6 +143,11 @@ export class PharmacyDetailsComponent implements OnInit {
       this.dermatologists= response;
 
       this.dataSource= new MatTableDataSource(this.dermatologists);
+  }, error => {
+    if(error.status = 404){
+      this.dataSource = new MatTableDataSource();
+      console.log("There is no dermatologists for this pharmacy...");
+    }
   });
 
   }
@@ -156,6 +161,11 @@ export class PharmacyDetailsComponent implements OnInit {
     this.pharmacistService.getAllPharmacistForPharmacy(this.pharmacyID).subscribe(response => {
       this.pharmacists = response;
       this.dataSource1 = new MatTableDataSource(this.pharmacists);
+    }, error => {
+      if(error.status == 404){
+        this.dataSource1 = new MatTableDataSource();
+        console.log("There is no pharmacists for this pharmacy...");
+      }
     });
   }
 

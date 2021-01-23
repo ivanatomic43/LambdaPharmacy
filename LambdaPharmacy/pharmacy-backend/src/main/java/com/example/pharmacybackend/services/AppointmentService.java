@@ -54,6 +54,9 @@ public class AppointmentService {
     private EndedAppointmentsRepository endedAppointmentRepository;
 
     @Autowired
+    private DermatologistService dermatologistService;
+
+    @Autowired
     private EmailService emailService;
 
     @Autowired
@@ -147,7 +150,8 @@ public class AppointmentService {
         pharmacyAppointments.add(a);
 
         // save all
-        employedDermatologistRepository.save(dermatologist);
+        dermatologistService.saveEmployed(dermatologist);
+        // employedDermatologistRepository.save(dermatologist);
         pharmacyService.savePharmacy(pharmacy);
 
         // creating a dto
@@ -202,6 +206,7 @@ public class AppointmentService {
         return retList;
     }
 
+    @Transactional
     public boolean reserveAppointment(Long id, Long userID) {
 
         boolean reserved = false;
@@ -210,13 +215,12 @@ public class AppointmentService {
         Patient patient = patientRepository.findOneById(userID);
 
         a.setStatus(AppointmentStatus.RESERVED);
-        a.setPatient(patient);
+        this.update(a);
 
-        // List<Appointment> myAppointments = patient.getAppointments();
-        // myAppointments.add(a);
+        appointmentRepository.setPatient(patient.getId(), a.getId());
 
-        appointmentRepository.save(a);
-        patientRepository.save(patient);
+        this.update(a);
+        patientService.update(patient);
 
         emailService.sendAppointmentReservationMail(patient);
         reserved = true;
@@ -309,6 +313,7 @@ public class AppointmentService {
 
     }
 
+    @Transactional
     public boolean reserveCounceling(AppointmentDTO newApp, Long userID) {
         // insert validation
         boolean reserved = false;
@@ -325,18 +330,22 @@ public class AppointmentService {
 
         a.setDateOfAppointment(newApp.getDateOfAppointment());
         a.setMeetingTime(newApp.getMeetingTime());
-        a.setPatient(p);
-        a.setPharmacist(pharmacist);
-        a.setPharmacy(pharmacy);
         a.setType(AppointmentType.COUNCELING);
         a.setStatus(AppointmentStatus.RESERVED);
         a.setDuration(1);
-        // a.setPrice(); insert pricelist;
 
-        appointmentRepository.save(a);
+        this.update(a);
+
+        appointmentRepository.setPatient(p.getId(), a.getId());
+        appointmentRepository.setPharmacist(pharmacist.getId(), a.getId());
+        appointmentRepository.setPharmacy(pharmacy.getId(), a.getId());
+
+        a.setPrice(pharmacist.getPrice());
+
+        this.update(a);
         List<Appointment> pharmacyAppointments = pharmacy.getPharmacyAppointments();
         pharmacyAppointments.add(a);
-        pharmacyRepository.save(pharmacy);
+        pharmacyService.savePharmacy(pharmacy);
 
         emailService.sendCouncelingReservationMail(p);
 
@@ -357,15 +366,6 @@ public class AppointmentService {
             appointmentRepository.save(appointment);
             ended = true;
         }
-
-        /*
-         * try { appointment.setPatient(null); appointment.setDermatologist(null);
-         * appointment.setPharmacy(null); appointment.setPharmacist(null);
-         * 
-         * appointmentRepository.delete(appointment); ended = true;
-         * 
-         * } catch (Exception e) {
-         */
 
         return ended;
 

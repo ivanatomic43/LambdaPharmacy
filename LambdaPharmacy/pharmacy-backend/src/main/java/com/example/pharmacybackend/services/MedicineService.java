@@ -41,6 +41,9 @@ public class MedicineService {
 	@Autowired
 	private ReservationRepository reservationRepository;
 
+	@Autowired
+	private PharmacyService pharmacyService;
+
 	@Transactional
 	public Medicine save(Medicine medicine) {
 		return this.medicineRepository.save(medicine);
@@ -359,7 +362,7 @@ public class MedicineService {
 
 		if (!allPharmMed.contains(medicine)) {
 			allPharmMed.add(medicine);
-			pharmacyRepository.save(pharmacy);
+			pharmacyService.savePharmacy(pharmacy);
 			added = true;
 		}
 
@@ -439,7 +442,8 @@ public class MedicineService {
 							medRes.setPharmacy(null);
 							medRes.setMedicine(null);
 							reservationRepository.delete(medRes);
-							pharmacyMedicinesRepository.save(pm);
+							this.savePharmacyMedicine(pm);
+
 							cancelled = true;
 							return cancelled;
 						}
@@ -509,6 +513,7 @@ public class MedicineService {
 
 	}
 
+	@Transactional
 	public boolean editPrice(Long id, PriceDTO model) {
 
 		boolean changed = false;
@@ -522,14 +527,17 @@ public class MedicineService {
 				System.out.println(model.getPrice());
 				System.out.println(model.getLastsFrom());
 				if (model.getPrice() != 0) {
-					m.setPrice(model.getPrice());
+
+					pharmacyMedicinesRepository.updateMedPrice(m.getMedicine().getId(), m.getPharmacy().getId(),
+							model.getPrice(), m.getId());
 				}
 
 				if (!model.getLastsFrom().equals(null)) {
-					m.setPriceLastsTo(model.getLastsFrom());
+					pharmacyMedicinesRepository.updateMedPriceLastsTo(m.getMedicine().getId(), m.getPharmacy().getId(),
+							model.getLastsFrom(), m.getId());
 				}
 
-				pharmacyMedicinesRepository.save(m);
+				this.savePharmacyMedicine(m);
 				changed = true;
 			}
 

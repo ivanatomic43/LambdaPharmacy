@@ -38,6 +38,9 @@ public class PharmacistService {
     @Autowired
     private PharmacyAdministratorRepository adminsRepository;
 
+    @Autowired
+    private PharmacyService pharmacyService;
+
     public Pharmacist findById(long id) {
         return this.pharmacistRepository.findById(id);
     }
@@ -82,7 +85,7 @@ public class PharmacistService {
         // retPh.add(p);
 
         this.savePharmacist(p);
-        pharmacyRepository.save(pharm);
+        pharmacyService.savePharmacy(pharm);
 
         PharmacistDTO retUser = new PharmacistDTO();
         retUser.setId(p.getId());
@@ -391,13 +394,23 @@ public class PharmacistService {
 
         if (!allApp.isEmpty()) {
             for (Appointment a : allApp) {
-                if (a.getPharmacist().getId() == pharmID) {
-                    System.out.println("Pharmacist has reserved appointment...");
-                    return removed;
+                if (a.getType().equals(AppointmentType.COUNCELING)) { // proveri samo savetovanja
+                    if (a.getPharmacist().getId() == pharmID) {
+                        System.out.println("Pharmacist has reserved appointment...");
+                        return removed;
+                    } else {
+                        Pharmacist pharmacist = pharmacistRepository.findOneById(pharmID);
+                        pharmPharmacist.remove(pharmacist);
+                        pharmacyService.savePharmacy(p);
+                        removed = true;
+                        return removed;
+                    }
+
                 } else {
-                    Pharmacist pharmacist = pharmacistRepository.findOneById(pharmID);
-                    pharmPharmacist.remove(pharmacist);
-                    pharmacyRepository.save(p);
+                    System.out.println("Not counceling, you can remove pharmacist...");
+                    Pharmacist pharm = pharmacistRepository.findOneById(pharmID);
+                    pharmPharmacist.remove(pharm);
+                    pharmacyService.savePharmacy(p);
                     removed = true;
                     return removed;
                 }
@@ -406,7 +419,7 @@ public class PharmacistService {
             System.out.println("There is no appointments in this pharmacy, pharmacist removed");
             Pharmacist pharm = pharmacistRepository.findOneById(pharmID);
             pharmPharmacist.remove(pharm);
-            pharmacyRepository.save(p);
+            pharmacyService.savePharmacy(p);
             removed = true;
             return removed;
         }
