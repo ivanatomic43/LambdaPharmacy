@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit {
   isPharmacyAdmin = false;
   isFirstLogin = false;
   profil : UserDTO;
-  show = false;
+  show = true;
 
   constructor(
     private searchService : SearchService,
@@ -69,10 +69,14 @@ export class SearchComponent implements OnInit {
       this.isPharmacyAdmin = true;
       this.isFirstLogin = true;
       this.show = false;
+    } else if( role == 'ROLE_PHARMACY_ADMIN' && firstTime == false) {
+      this.isPharmacyAdmin = true;
+      this.isFirstLogin = false;
+      this.show= false;
     } else {
       this.isPharmacyAdmin = false;
       this.isFirstLogin = false;
-      this.show= true;
+      this.show = true;
     }
 
 

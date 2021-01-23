@@ -8,7 +8,8 @@ constructor(
   public workTo : any,
   public price: any,
   public rating:any,
-  public pharmacyName: string
+  public pharmacyName: string,
+  public role : string
 ){}
 
 

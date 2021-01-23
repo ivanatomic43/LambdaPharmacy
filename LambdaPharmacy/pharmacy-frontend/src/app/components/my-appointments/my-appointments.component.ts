@@ -62,6 +62,7 @@ export class MyAppointmentsComponent implements OnInit {
         this.dataSource2 = new MatTableDataSource(this.appointments);
       }, error => {
         if(error.status == 404){
+          this.dataSource2 = new MatTableDataSource();
           console.log("There is no appointments for this patient...");
         }
       }
@@ -81,4 +82,13 @@ export class MyAppointmentsComponent implements OnInit {
 
 
   }
+
+   end(id:number){
+    this.appointmentService.endAppointment(id).subscribe(response => {
+      alert("Ended..The appointment is now in your history of appointments...");
+      this.fetchAppointments();
+    });
+
+
+   }
 }

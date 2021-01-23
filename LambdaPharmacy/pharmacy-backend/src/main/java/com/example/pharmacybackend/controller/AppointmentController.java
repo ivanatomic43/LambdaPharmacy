@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.example.pharmacybackend.dto.AppointmentDTO;
+import com.example.pharmacybackend.dto.DermatologistDTO;
+import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.AppointmentService;
 
@@ -130,6 +132,71 @@ public class AppointmentController {
         }
 
         return new ResponseEntity<>(reserved, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/endAppointment/{id}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> endAppointment(@PathVariable("id") Long id, HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        boolean ended = appointmentService.endAppointment(id, user.getId());
+
+        if (!ended) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getVisitedDoctors", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> getVisitedDoctors(HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        List<DermatologistDTO> retList = appointmentService.getVisitedDoctors(user.getId());
+
+        if (retList == null)
+            return new ResponseEntity<>(retList, HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getEndedAppointments", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> getEndedAppointments(HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        List<AppointmentDTO> retList = appointmentService.getEndedAppointments(user.getId());
+
+        if (retList == null)
+            return new ResponseEntity<>(retList, HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getVisitedPharmacies", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> getVisitedPharmacies(HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        List<PharmacyDTO> retList = appointmentService.getVisitedPharmacies(user.getId());
+
+        if (retList == null)
+            return new ResponseEntity<>(retList, HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
     }
 
 }

@@ -136,7 +136,8 @@ import { MatInputModule, MatFormFieldModule } from '@angular/material';
   ],
   entryComponents: [
     NewPharmacyComponent,
-    EditPricelistComponent
+    EditPricelistComponent,
+    ComplaintComponent
   ],
 
   providers: [

@@ -63,7 +63,6 @@ public class UserController {
 
 	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
 	public ResponseEntity<?> updateProfile(@RequestBody UserDTO user) {
-		System.out.println("usao u UpdateProfile" + user.getUsername() + " " + user.getId());
 
 		UserDTO retUser = userService.updateUser(user);
 

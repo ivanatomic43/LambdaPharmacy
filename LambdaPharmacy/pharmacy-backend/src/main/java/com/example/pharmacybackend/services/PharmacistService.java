@@ -8,6 +8,7 @@ import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.dto.SearchPharmacistParams;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
+import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Pharmacist;
@@ -128,14 +129,13 @@ public class PharmacistService {
 
     // for counceling reservation
     public List<PharmacyDTO> searchPharmacist(SearchPharmacistParams params) {
-        System.out.println("pronasao searchPharmacist");
+
         List<PharmacyDTO> retPharm = new ArrayList<>();
 
         List<Pharmacy> allPharm = pharmacyRepository.findAll();
 
         for (Pharmacy p : allPharm) {
 
-            System.out.println("Usao u for za apoteke");
             List<Pharmacist> pharmacists = new ArrayList<>();
             List<Appointment> appointments = new ArrayList<>();
             pharmacists = p.getPharmacists();
@@ -143,40 +143,79 @@ public class PharmacistService {
 
             if (!appointments.isEmpty() && !pharmacists.isEmpty()) {
                 for (Appointment a : appointments) {
+                    if (a.getType().equals(AppointmentType.COUNCELING)) {
+                        for (Pharmacist ph : pharmacists) {
+                            System.out.println("Farmaceuti nisu prazni");
+                            if (a.getPharmacist().getId() == ph.getId()) {
+                                if (!a.getMeetingTime().equals(params.getTime())
+                                        && !a.getDateOfAppointment().equals(params.getDate())) {
+                                    if (ph.getWorkingFrom().compareTo(params.getTime()) <= 0
+                                            && ph.getWorkingTo().compareTo(params.getTime()) > 0) {
+                                        System.out.println("ID se poklapa ali je farmaceut slobodan");
 
-                    for (Pharmacist ph : pharmacists) {
-                        System.out.println("Farmaceuti nisu prazni");
-                        if (a.getPharmacist().getId() == ph.getId()) {
-                            if (!a.getMeetingTime().equals(params.getTime())
-                                    && !a.getDateOfAppointment().equals(params.getDate())) {
-                                if (ph.getWorkingFrom().compareTo(params.getTime()) <= 0
-                                        && ph.getWorkingTo().compareTo(params.getTime()) > 0) {
-                                    System.out.println("ID se poklapa ali je farmaceut slobodan");
+                                        PharmacyDTO dto = new PharmacyDTO();
+                                        dto.setId(p.getId());
+                                        dto.setName(p.getName());
+                                        dto.setAddress(p.getAddress());
+                                        dto.setRating(p.getRating());
+                                        dto.setPrice(a.getPrice());
 
-                                    PharmacyDTO dto = new PharmacyDTO();
-                                    dto.setId(p.getId());
-                                    dto.setName(p.getName());
-                                    dto.setAddress(p.getAddress());
-                                    dto.setRating(p.getRating());
-                                    dto.setPrice(a.getPrice());
+                                        if (retPharm.isEmpty()) {
+                                            retPharm.add(dto);
+                                        } else {
+                                            for (PharmacyDTO dp : retPharm) {
+                                                if (dp.getId() != dto.getId()) {
+                                                    retPharm.add(dto);
+                                                }
+                                            }
+                                        }
 
+                                    } else {
+                                        System.out.println("Working time does not match...");
+                                    }
+                                }
+                            } else if (a.getPharmacist().getId() != ph.getId()) {
+
+                                System.out.println("ID se ne poklapa, farmaceut sloobodan");
+
+                                PharmacyDTO dto = new PharmacyDTO();
+                                dto.setId(p.getId());
+                                dto.setName(p.getName());
+                                dto.setAddress(p.getAddress());
+                                dto.setRating(p.getRating());
+                                dto.setPrice(a.getPrice());
+
+                                if (retPharm.isEmpty()) {
                                     retPharm.add(dto);
                                 } else {
-                                    System.out.println("Working time does not match...");
+                                    for (PharmacyDTO dp : retPharm) {
+                                        if (dp.getId() != dto.getId()) {
+                                            retPharm.add(dto);
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    } else {
+                        System.out.println(
+                                "Zakazani sastanci su kod dermatologa, znaci da je apoteka slobodna sto se tice farmaceuta...");
+
+                        PharmacyDTO dto = new PharmacyDTO();
+                        dto.setId(p.getId());
+                        dto.setName(p.getName());
+                        dto.setAddress(p.getAddress());
+                        dto.setRating(p.getRating());
+                        dto.setPrice(a.getPrice());
+
+                        if (retPharm.isEmpty()) {
+                            retPharm.add(dto);
+                        } else {
+                            for (PharmacyDTO dp : retPharm) {
+                                if (dp.getId() != dto.getId()) {
+                                    retPharm.add(dto);
                                 }
                             }
-                        } else if (a.getPharmacist().getId() != ph.getId()) {
-
-                            System.out.println("ID se ne poklapa, farmaceut sloobodan");
-
-                            PharmacyDTO dto = new PharmacyDTO();
-                            dto.setId(p.getId());
-                            dto.setName(p.getName());
-                            dto.setAddress(p.getAddress());
-                            dto.setRating(p.getRating());
-                            dto.setPrice(a.getPrice());
-
-                            retPharm.add(dto);
                         }
                     }
 
@@ -192,8 +231,15 @@ public class PharmacistService {
                 dto.setAddress(p.getAddress());
                 dto.setRating(p.getRating());
                 // dto.setPrice(a.getPrice());
-
-                retPharm.add(dto);
+                if (retPharm.isEmpty()) {
+                    retPharm.add(dto);
+                } else {
+                    for (PharmacyDTO dp : retPharm) {
+                        if (dp.getId() != dto.getId()) {
+                            retPharm.add(dto);
+                        }
+                    }
+                }
 
             } else {
                 System.out.println("Niti ima sastanaka niti su definisani farmaceuti u sklopu apoteke..");
@@ -225,9 +271,18 @@ public class PharmacistService {
                     dto.setFirstName(ph.getFirstName());
                     dto.setFrom(ph.getWorkingFrom().toString());
                     dto.setTo(ph.getWorkingTo().toString());
-                    // ubaciti rating
+                    dto.setRating(ph.getRating());
 
-                    retList.add(dto);
+                    if (retList.isEmpty()) {
+                        retList.add(dto);
+                    } else {
+                        for (PharmacistDTO dp : retList) {
+                            if (dp.getId() != dto.getId()) {
+                                retList.add(dto);
+                            }
+                        }
+                    }
+
                 } else {
                     System.out.println("Working time does not match...");
                 }
@@ -236,30 +291,61 @@ public class PharmacistService {
         } else {
 
             for (Appointment a : appointments) {
+                if (a.getType().equals(AppointmentType.COUNCELING)) {
+                    for (Pharmacist ph : pharmacists) {
+                        System.out.println("Farmaceuti nisu prazni");
 
-                for (Pharmacist ph : pharmacists) {
-                    System.out.println("Farmaceuti nisu prazni");
-                    if (a.getPharmacist().getId() == ph.getId()) {
-                        if (!a.getMeetingTime().equals(params.getTime())
-                                && !a.getDateOfAppointment().equals(params.getDate())) {
-                            if (ph.getWorkingFrom().compareTo(params.getTime()) <= 0
-                                    && ph.getWorkingTo().compareTo(params.getTime()) > 0) {
+                        if (a.getPharmacist().getId() == ph.getId()) {
+                            if (!a.getMeetingTime().equals(params.getTime())
+                                    && !a.getDateOfAppointment().equals(params.getDate())) {
+                                if (ph.getWorkingFrom().compareTo(params.getTime()) <= 0
+                                        && ph.getWorkingTo().compareTo(params.getTime()) > 0) {
 
-                                PharmacistDTO dto = new PharmacistDTO();
-                                dto.setId(ph.getId());
-                                dto.setLastName(ph.getLastName());
-                                dto.setFirstName(ph.getFirstName());
-                                dto.setFrom(ph.getWorkingFrom().toString());
-                                dto.setTo(ph.getWorkingTo().toString());
-                                retList.add(dto);
+                                    PharmacistDTO dto = new PharmacistDTO();
+                                    dto.setId(ph.getId());
+                                    dto.setLastName(ph.getLastName());
+                                    dto.setFirstName(ph.getFirstName());
+                                    dto.setFrom(ph.getWorkingFrom().toString());
+                                    dto.setTo(ph.getWorkingTo().toString());
+
+                                    if (retList.isEmpty()) {
+                                        retList.add(dto);
+                                    } else {
+                                        for (PharmacistDTO dp : retList) {
+                                            if (dp.getId() != dto.getId()) {
+                                                retList.add(dto);
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                System.out.println("Working time does not match...");
                             }
-                        } else {
-                            System.out.println("Working time does not match...");
+                        } else if (a.getPharmacist().getId() != ph.getId()) {
+
+                            System.out.println("ID se ne poklapa, farmaceut sloobodan");
+
+                            PharmacistDTO dto = new PharmacistDTO();
+                            dto.setId(ph.getId());
+                            dto.setLastName(ph.getLastName());
+                            dto.setFirstName(ph.getFirstName());
+                            dto.setFrom(ph.getWorkingFrom().toString());
+                            dto.setTo(ph.getWorkingTo().toString());
+
+                            if (retList.isEmpty()) {
+                                retList.add(dto);
+                            } else {
+                                for (PharmacistDTO dp : retList) {
+                                    if (dp.getId() != dto.getId()) {
+                                        retList.add(dto);
+                                    }
+                                }
+                            }
                         }
-                    } else if (a.getPharmacist().getId() != ph.getId()) {
+                    }
+                } else { // zakazani sastanak nije kod farmaceuta, dodaj sve farmaceute iz apoteke
 
-                        System.out.println("ID se ne poklapa, farmaceut sloobodan");
-
+                    for (Pharmacist ph : pharmacists) {
                         PharmacistDTO dto = new PharmacistDTO();
                         dto.setId(ph.getId());
                         dto.setLastName(ph.getLastName());
@@ -267,8 +353,18 @@ public class PharmacistService {
                         dto.setFrom(ph.getWorkingFrom().toString());
                         dto.setTo(ph.getWorkingTo().toString());
 
-                        retList.add(dto);
+                        if (retList.isEmpty()) {
+                            retList.add(dto);
+                        } else {
+                            for (PharmacistDTO dp : retList) {
+                                if (dp.getId() != dto.getId()) {
+                                    retList.add(dto);
+                                }
+                            }
+                        }
+
                     }
+
                 }
 
             }

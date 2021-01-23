@@ -152,7 +152,20 @@ const routes: Routes = [
   },
   {path : 'pharmacists', component: PharmacistsComponent},
   {path : 'my-pharmacy', component: MyPharmacyComponent },
-  {path: 'pricelist', component: PricelistComponent}
+  {path: 'pricelist', component: PricelistComponent},
+  {path: 'complaint',
+    children : [
+      {
+        path: ' ',
+        component :ComplaintComponent
+      },
+      {
+        path: ':id',
+        component: ComplaintComponent
+      }
+    ]
+
+  }
 
 ];
 

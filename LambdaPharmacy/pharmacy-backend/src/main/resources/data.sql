@@ -17,6 +17,8 @@ INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrato
 
 
 
+
+
 INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (1, 'None', '3', 'AVAILABLE', 'Humani lekovi','111','NO_RECIPE','Strepsils','Pogodno za decu','RECKITT BENCKISER HEALTHCARE','Lozenga', '2,4-dihlorbenzilalkohol, amilmetakrezol');
 INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,  med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (2, 'None', '4', 'AVAILABLE','Humani lekovi','112','NO_RECIPE','Andol','Za sve vrste bolova u telu','Pliva Hrvatska','Tableta', 'acetilsalicilna kiselina');
 INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,  med_type, medicine_code, mode, name, note, producer, shape,  structure) VALUES (3, 'None', '2','AVAILABLE','Humani lekovi','113','NO_RECIPE','Aspirin 500mg','Za jaku glavobolju','	BAYER BITTERFELD GMBH','Tableta','acetilsalicilna kiselina');
@@ -55,3 +57,10 @@ INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (3,3);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (4,3);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (5,5);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (6,4);
+
+INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (1, '2020-11-01', '2021-02-01', 120, 0,'06:00:00', '14:00:00', 3, 1 );
+INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (2, '2020-11-01', '2021-02-01', 100, 0, '18:00:00', '21:00:00', 3, 2);
+INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (3, '2020-11-01', '2021-02-01', 110, 0, '07:00:00', '15:00:00', 4, 1);
+
+INSERT INTO APPOINTMENT (id, date_of_appointment, duration, meeting_time, price, status, type, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (1, '2021-01-20', 2, '08:22:00', 50, 'RESERVED', 'EXAMINATION', 1, 1, NULL, 1);
+INSERT INTO APPOINTMENT (id, date_of_appointment, duration, meeting_time, price, status, type, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (2, '2021-01-23', 2, '10:22:00', 50, 'RESERVED', 'EXAMINATION', 2, 1, NULL, 1);

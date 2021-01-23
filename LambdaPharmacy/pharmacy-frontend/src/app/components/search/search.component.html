@@ -101,5 +101,5 @@
   </form>
 </div>
 
-<app-list-of-pharmacies *ngIf="pharmacyShow && !show"></app-list-of-pharmacies>
+<app-list-of-pharmacies *ngIf="pharmacyShow && !isPharmacyAdmin"></app-list-of-pharmacies>
 <app-list-of-medicines *ngIf="medicineShow"></app-list-of-medicines>

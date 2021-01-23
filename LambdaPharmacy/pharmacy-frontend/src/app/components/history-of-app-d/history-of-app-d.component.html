@@ -1,59 +1,156 @@
-<div class="preview-users" style="background: url(/assets/searchimage.jpg);">
-  <h2 style="position: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">History of appointments - dermatologist</h2>
-  <div style = "width: 200px; position: center; margin-top: 30px;">
-    <select class="custom-select" (change) = "sortChange($event.target.value)" name="sorting" style = "position: center; display: block;" ngModel>
-      <option value="" disabled selected>Sorting options..</option>
-      <option value = "dateA">Date ascending</option>
-      <option value = "dateD">Date descending</option>
-      <option value = "priceA">Price ascending</option>
-      <option value = "priceD">Price descending</option>
-      <option value = "durationA">Duration ascending</option>
-      <option value = "durationD">Duration descending</option>
-    </select>
+<div style="background: url(/assets/back.jpg);">
+  <div class="preview-users">
+    <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">History of appointments</h1>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateOfAppointment">
+        <th mat-header-cell *matHeaderCellDef> Date of appointment </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfAppointmentt}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="meetingTime">
+        <th mat-header-cell *matHeaderCellDef>Meeting time</th>
+        <td mat-cell *matCellDef="let element"> {{element.meetingTimee}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="doctor">
+        <th mat-header-cell *matHeaderCellDef>Doctor</th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Appointment type</th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef>Duration</th>
+        <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <td mat-cell class="action-cell" *matCellDef="let element">
+
+
+
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
   </div>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<!--DOCTORS -->
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
+<div style="background: url(/assets/back.jpg);">
+  <div class="preview-users">
+    <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Staff</h1>
 
-    <ng-container matColumnDef="dateOfAppointment">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.dateOfAppointment | date: 'dd-MM-yyyy'}} </td>
-    </ng-container>
+    <table mat-table [dataSource]="dataSourceD" class="mat-elevation-z8">
 
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Doctor </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef> Price </th>
-      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-    </ng-container>
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+      </ng-container>
 
+      <ng-container matColumnDef="rating">
+        <th mat-header-cell *matHeaderCellDef>Rating</th>
+        <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="duration">
-      <th mat-header-cell *matHeaderCellDef>Duration</th>
-      <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="dermatologistName">
-      <th mat-header-cell *matHeaderCellDef>Dermatologist name </th>
-      <td mat-cell *matCellDef="let element"> {{element.dermatologistName}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="dermatologistSurname">
-      <th mat-header-cell *matHeaderCellDef>Dermatologist surname</th>
-      <td mat-cell *matCellDef="let element">{{element.dermatologistSurname}}</td>
-    </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <td mat-cell class="action-cell" *matCellDef="let element">
+          <button (click)="rate(element.id)">Rate</button>
+          <button (click)="writeComplaint(element.id)">Write a complaint</button>
 
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        </td>
+      </ng-container>
 
-</div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsD"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsD;"></tr>
+    </table>
+
+  </div>
+  </div>
+
+<!--PHARMACIES-->
+
+  <div style="background: url(/assets/back.jpg);">
+    <div class="preview-users">
+      <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Pharmacies</h1>
+
+      <table mat-table [dataSource]="dataSourcePh" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef>Address</th>
+          <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rating">
+          <th mat-header-cell *matHeaderCellDef>Rating</th>
+          <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action</th>
+          <td mat-cell class="action-cell" *matCellDef="let element">
+            <button (click)="ratePharmacy(element.id)">Rate</button>
+            <button (click)="writeComplaint(element.id)">Write a complaint</button>
+
+
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsPh"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsPh;"></tr>
+      </table>
+
+    </div>
+    </div>

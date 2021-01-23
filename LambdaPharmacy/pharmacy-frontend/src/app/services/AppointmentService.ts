@@ -26,6 +26,11 @@ export class AppointmentService {
   getPatientAppointmentsUrl = appointmentUrl + '/getPatientAppointments'; //all types
   cancelAppointmentUrl = appointmentUrl + '/cancelAppointment/';
   reserveCouncelingUrl = appointmentUrl + '/reserveCounceling';
+  endAppointmentUrl = appointmentUrl + '/endAppointment/';
+  getVisitedDoctorsUrl = appointmentUrl + '/getVisitedDoctors'; //for rating
+  getVisitedPharmaciesUrl = appointmentUrl + '/getVisitedPharmacies';
+  getEndedAppointmentsUrl = appointmentUrl + '/getEndedAppointments';
+
 
   constructor(
     private apiService: ApiService,
@@ -142,5 +147,75 @@ export class AppointmentService {
       );
   }
 
+  endAppointment(id:number){
+
+    return this.http.post<any>(this.endAppointmentUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+
+  }
+
+  getVisitedDoctors() {
+    return this.http.post<any>(this.getVisitedDoctorsUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getVisitedPharmacies() {
+    return this.http.post<any>(this.getVisitedPharmaciesUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getEndedAppointments() {
+    return this.http.post<any>(this.getEndedAppointmentsUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
 
 }

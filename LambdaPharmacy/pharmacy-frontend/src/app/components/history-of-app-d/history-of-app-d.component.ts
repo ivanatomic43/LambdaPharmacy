@@ -1,3 +1,8 @@
+import { FormGroup } from '@angular/forms';
+import { ComplaintComponent } from './../complaint/complaint.component';
+import { UserService } from './../../services/UserService';
+import { PharmacyDTO } from './../../model/PharmacyDTO';
+import { AppointmentPreview } from 'src/app/model/AppointmentPreview';
 
 import { SessionStorageService } from 'src/app/services/SessionStorageService';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +11,8 @@ import {SortPipe} from "../../services/SortPipe";
 import {MatTableDataSource} from '@angular/material/table';
 import { AppointmentDDTO } from 'src/app/model/AppointmentDDTO';
 import { AppointmentService} from "../../services/AppointmentService";
+import { DermDTO } from 'src/app/model/DermDTO';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 @Component({
   selector: 'app-history-of-app-d',
@@ -14,80 +21,86 @@ import { AppointmentService} from "../../services/AppointmentService";
 })
 export class HistoryOfAppDComponent implements OnInit {
 
-  dataSource: MatTableDataSource<AppointmentDDTO>;
-  appointments: AppointmentDDTO[] = [];
+  dataSource: MatTableDataSource<AppointmentPreview>;
+  appointments: AppointmentPreview[] = [];
   displayedColumns: string[] = [
     'id',
-    'type',
     'dateOfAppointment',
+    'meetingTime',
+    'doctor',
+    'role',
+    'type',
     'duration',
-    'dermatologistName',
-    'dermatologistSurname'
+    'price',
+    'action'
   ];
 
+  dataSourceD: MatTableDataSource<DermDTO>;
+  doctors: DermDTO[]= [];
+  displayedColumnsD: string[]= [
+    'id',
+    'name',
+    'role',
+    'rating',
+    'action'
+  ];
 
+  dataSourcePh : MatTableDataSource<PharmacyDTO>;
+  pharmacies: PharmacyDTO[] = [];
+  displayedColumnsPh : string[] = [
+    'id',
+    'name',
+    'address',
+    'rating',
+    'action'
+  ];
+
+  complaintForm : FormGroup;
 
   constructor(
     private router : Router,
     private route: ActivatedRoute,
     private appointmentService: AppointmentService,
     private sessionStorageService: SessionStorageService,
-    private sortPipe : SortPipe
+    private sortPipe : SortPipe,
+    private userService: UserService,
+
   ) { }
 
   ngOnInit() {
-    this.fetchAppointments();
+    this.fetchEndedAppointments();
+    this.fetchDoctors();
+    this.fetchPharmacies();
+
   }
 
-  fetchAppointments(){
-      this.appointmentService.getAllAppointments().subscribe(response => {
+  fetchEndedAppointments(){
+      this.appointmentService.getEndedAppointments().subscribe(response => {
           this.appointments= response;
           this.dataSource= new MatTableDataSource(this.appointments);
       });
   }
 
-  sortChange(value) {
-    console.log(value);
-    if (value == 'dateA')
-      this.appointments = this.sortPipe.transform(
-        this.appointments,
-        'asc',
-        'dateOfAppointment'
-      );
+  fetchDoctors(){
+    this.appointmentService.getVisitedDoctors().subscribe(response => {
+      this.doctors = response;
+      this.dataSourceD = new MatTableDataSource(this.doctors);
+    });
 
-    if (value == 'dateD')
-      this.appointments = this.sortPipe.transform(
-        this.appointments,
-        'desc',
-        'dateOfAppointment'
-      );
 
-    if (value == 'priceA')
-      this.appointments = this.sortPipe.transform(
-        this.appointments,
-        'asc',
-        'price'
-      );
+  }
 
-    if (value == 'priceD')
-      this.appointments = this.sortPipe.transform(
-        this.appointments,
-        'desc',
-        'price'
-      );
+  fetchPharmacies(){
+    this.appointmentService.getVisitedPharmacies().subscribe(response => {
+      this.pharmacies = response;
+      this.dataSourcePh = new MatTableDataSource(this.pharmacies);
+    });
+  }
 
-      if (value == 'durationA')
-      this.appointments = this.sortPipe.transform(
-        this.appointments,
-        'asc',
-        'duration'
-      );
-      if (value == 'durationD')
-      this.appointments = this.sortPipe.transform(
-        this.appointments,
-        'desc',
-        'duration'
-      );
+  writeComplaint(id:number){
+
+    this.router.navigate(['/complaint/' + id]);
+
   }
 
 }

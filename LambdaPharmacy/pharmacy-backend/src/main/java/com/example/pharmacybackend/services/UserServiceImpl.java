@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public UserDTO updateUser(UserDTO user) {
-		System.out.println("Usao u updateUser u service");
+
 		List<User> allUsers = userRepository.findAll();
 
 		for (User u : allUsers) {
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
 		List<UserDTO> retList = new ArrayList<>();
 
 		for (User u : userList) {
-			System.out.println(u.getAuthority().getName());
+
 			if (u.getAuthority().getName().toString().equals("ROLE_DERMATOLOGIST")) {
 				UserDTO dto = new UserDTO(u);
 				dto.setRole(u.getAuthority().getName());

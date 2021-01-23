@@ -11,6 +11,8 @@ import java.util.List;
 //import java.util.Date;
 
 import com.example.pharmacybackend.dto.AppointmentDTO;
+import com.example.pharmacybackend.dto.DermatologistDTO;
+import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.enumerations.AppointmentStatus;
 import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
@@ -48,6 +50,9 @@ public class AppointmentService {
     private EmployedDermatologistRepository employedDermatologistRepository;
 
     @Autowired
+    private EndedAppointmentsRepository endedAppointmentRepository;
+
+    @Autowired
     private EmailService emailService;
 
     @Autowired
@@ -69,7 +74,7 @@ public class AppointmentService {
     public AppointmentDTO createAppointment(AppointmentDTO newApp) {
 
         // checking if dermatologist is available
-        EmployedDermatologist dermatologist = employedDermatologistRepository.findOneById(newApp.getDermatologistID());
+        EmployedDermatologist dermatologist = employedDermatologistRepository.findByDermId(newApp.getDermatologistID());
         Pharmacy pharmacy = pharmacyRepository.findOneById(newApp.getPharmacyID());
 
         LocalTime dermFrom = dermatologist.getWorkFrom();
@@ -123,6 +128,7 @@ public class AppointmentService {
         a.setPharmacy(pharmacy);
         a.setType(AppointmentType.EXAMINATION);
         a.setStatus(AppointmentStatus.FREE);
+
         appointmentRepository.save(a);
         // newApp.setId(a.getId());
 
@@ -155,7 +161,7 @@ public class AppointmentService {
         dto.setLastName(lastName);
         dto.setMeetingTime(a.getMeetingTime());
         // System.out.println(a.getPharmacy().getName()
-        // dto.setPharmacyName(a.getPharmacy().getName());
+        dto.setPharmacyName(a.getPharmacy().getName());
         // dto.setRating(rating);
         dto.setPrice(dermatologist.getPrice());
 
@@ -180,7 +186,7 @@ public class AppointmentService {
                 dto.setFirstName(a.getDermatologist().getDermatologist().getFirstName());
                 dto.setLastName(a.getDermatologist().getDermatologist().getLastName());
                 dto.setMeetingTimee(a.getMeetingTime().toString());
-                // dto.setPharmacyName(a.getPharmacy().getName());
+                dto.setPharmacyName(a.getPharmacy().getName());
                 // dto.setRating(a.getDermatologist().getRating());
                 dto.setPrice(a.getPrice());
 
@@ -231,15 +237,18 @@ public class AppointmentService {
                     dto.setLastName(a.getDermatologist().getDermatologist().getLastName());
                     dto.setRole("DERMATOLOGIST");
                     dto.setType(AppointmentType.EXAMINATION.toString());
+                    dto.setPrice(a.getDermatologist().getPrice());
                 } else {
                     dto.setFirstName(a.getPharmacist().getFirstName());
                     dto.setLastName(a.getPharmacist().getLastName());
                     dto.setRole("PHARMACIST");
                     dto.setType(AppointmentType.COUNCELING.toString());
+                    dto.setPrice(a.getPharmacist().getPrice());
                 }
 
                 dto.setDuration(a.getDuration());
-                dto.setPrice(a.getDermatologist().getPrice());
+
+                dto.setPharmacyName(a.getPharmacy().getName());
 
                 myList.add(dto);
             }
@@ -329,6 +338,159 @@ public class AppointmentService {
         reserved = true;
 
         return reserved;
+    }
+
+    public boolean endAppointment(Long id, Long userID) {
+
+        boolean ended = false;
+
+        Appointment appointment = appointmentRepository.findOneById(id);
+        Patient p = patientRepository.findOneById(id);
+
+        if (appointment != null) {
+            appointment.setStatus(AppointmentStatus.DONE);
+            appointmentRepository.save(appointment);
+            ended = true;
+        }
+
+        /*
+         * try { appointment.setPatient(null); appointment.setDermatologist(null);
+         * appointment.setPharmacy(null); appointment.setPharmacist(null);
+         * 
+         * appointmentRepository.delete(appointment); ended = true;
+         * 
+         * } catch (Exception e) {
+         */
+
+        return ended;
+
+    }
+
+    public List<DermatologistDTO> getVisitedDoctors(Long userID) {
+
+        List<DermatologistDTO> retList = new ArrayList<>();
+
+        List<Appointment> endedAppointments = appointmentRepository.findByPatientId(userID);
+
+        for (Appointment a : endedAppointments) {
+            if (a.getStatus().equals(AppointmentStatus.DONE)) {
+                if (a.getType().equals(AppointmentType.EXAMINATION)) { // u pitanju je pregled kod dermatologa
+
+                    DermatologistDTO dto = new DermatologistDTO();
+                    dto.setId(a.getDermatologist().getDermatologist().getId());
+                    dto.setFirstName(a.getDermatologist().getDermatologist().getFirstName());
+                    dto.setLastName(a.getDermatologist().getDermatologist().getLastName());
+                    dto.setRole(a.getDermatologist().getDermatologist().getAuthority().getName());
+                    dto.setRating(a.getDermatologist().getRating());
+
+                    if (!retList.isEmpty()) {
+                        for (DermatologistDTO t : retList) {
+                            if (t.getId() != dto.getId()) {
+                                retList.add(dto);
+                            }
+                        }
+                    } else {
+                        retList.add(dto);
+                    }
+
+                } else if (a.getType().equals(AppointmentType.COUNCELING)) {
+
+                    DermatologistDTO dto = new DermatologistDTO();
+                    dto.setId(a.getPharmacist().getId());
+                    dto.setFirstName(a.getPharmacist().getFirstName());
+                    dto.setLastName(a.getPharmacist().getLastName());
+                    dto.setRole(a.getPharmacist().getAuthority().getName());
+                    dto.setRating(a.getPharmacist().getRating());
+
+                    if (!retList.contains(dto)) {
+                        retList.add(dto);
+                    }
+
+                }
+
+            }
+
+        }
+        return retList;
+    }
+
+    public List<AppointmentDTO> getEndedAppointments(Long userID) {
+
+        List<AppointmentDTO> retList = new ArrayList<>();
+        List<Appointment> appointments = appointmentRepository.findAll();
+
+        for (Appointment a : appointments) {
+            if (a.getStatus().equals(AppointmentStatus.DONE)) {
+                if (a.getPatient().getId() == userID) {
+
+                    AppointmentDTO dto = new AppointmentDTO();
+                    dto.setId(a.getId());
+                    dto.setDateOfAppointmentt(a.getDateOfAppointment().toString());
+                    dto.setMeetingTimee(a.getMeetingTime().toString());
+
+                    if (a.getDermatologist() != null) {
+
+                        dto.setFirstName(a.getDermatologist().getDermatologist().getFirstName());
+                        dto.setLastName(a.getDermatologist().getDermatologist().getLastName());
+                        dto.setRole("DERMATOLOGIST");
+                        dto.setType(AppointmentType.EXAMINATION.toString());
+                        dto.setPrice(a.getDermatologist().getPrice());
+                    } else {
+
+                        dto.setFirstName(a.getPharmacist().getFirstName());
+                        dto.setLastName(a.getPharmacist().getLastName());
+                        dto.setRole("PHARMACIST");
+                        dto.setType(AppointmentType.COUNCELING.toString());
+                        dto.setPrice(a.getPharmacist().getPrice());
+                    }
+
+                    dto.setDuration(a.getDuration());
+
+                    dto.setPharmacyName(a.getPharmacy().getName());
+
+                    if (!retList.contains(dto)) {
+                        retList.add(dto);
+                    }
+
+                }
+            }
+        }
+
+        return retList;
+
+    }
+
+    public List<PharmacyDTO> getVisitedPharmacies(Long userID) {
+
+        List<PharmacyDTO> retList = new ArrayList<>();
+        List<Appointment> endedAppointments = appointmentRepository.findAll();
+
+        for (Appointment a : endedAppointments) {
+            if (a.getStatus().equals(AppointmentStatus.DONE) && a.getPatient().getId() == userID) {
+
+                PharmacyDTO dto = new PharmacyDTO();
+                dto.setId(a.getPharmacy().getId());
+                dto.setName(a.getPharmacy().getName());
+                dto.setAddress(a.getPharmacy().getAddress());
+                dto.setDescription(a.getPharmacy().getDescription());
+                dto.setRating(a.getPharmacy().getRating());
+
+                if (!retList.isEmpty()) {
+                    for (PharmacyDTO t : retList) {
+                        if (t.getId() != dto.getId()) {
+                            retList.add(dto);
+                        }
+                    }
+                } else {
+                    retList.add(dto);
+                }
+
+            }
+
+        }
+
+        return retList;
+
     }
 
 }

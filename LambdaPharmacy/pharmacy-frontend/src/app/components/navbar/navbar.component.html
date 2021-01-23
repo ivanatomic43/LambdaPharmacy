@@ -47,8 +47,7 @@
         <div class="nav-item">
           <a class="nav-link" *ngIf="isPatient && anyLogged">Medical record
             <div class="dropdown-content">
-             <a class="nav-link" routerLink="/history-of-app-d">History of appointments - dermatologist</a>
-             <a class="nav-link" routerLink="/history-of-app-p">History of appointments - pharmacist</a>
+             <a class="nav-link" routerLink="/history-of-app-d">History of appointments</a>
              <a class="nav-link" routerLink="/alergies">List of alergies</a>
 
           </div>
@@ -86,6 +85,8 @@
               </div>
         </a>
       </div>
+
+      <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/complaint" class="nav-link">Complaints</a></li>
 
 
       <li class="nav-item"><a *ngIf="anyLogged" routerLink="/patient-profile" class="nav-link">My profile</a></li>

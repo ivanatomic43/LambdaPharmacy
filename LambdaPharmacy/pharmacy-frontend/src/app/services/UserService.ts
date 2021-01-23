@@ -1,3 +1,4 @@
+import { ComplaintDTO } from './../model/ComplaintDTO';
 import { AdministratorParams } from 'src/app/model/AdministratorParams';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,6 +8,7 @@ import {ConfigService} from './ConfigService';
 import {map} from 'rxjs/operators';
 import {catchError} from 'rxjs/operators';
 import {Observable, throwError} from "rxjs";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 const authUrl = 'http://localhost:8051/auth';
 const userUrl = 'http://localhost:8051/api';
@@ -22,6 +24,15 @@ export class UserService {
   registerPharmacyAdministratorUrl = pharmacyUrl + '/registerPharmacyAdministrator';
   getAdminsForPharmacyUrl = pharmacyUrl + '/getAdminsForPharmacy/';
   checkIfSubUrl = userUrl + '/checkIfSub/';
+  sendComplaintUrl = userUrl + '/sendComplaint';
+
+
+  complaintForm: FormGroup = new FormGroup({
+     id: new FormControl({value: '', disabled:true}, Validators.required),
+    text: new FormControl('', Validators.required)
+  });
+
+  complaintModel : ComplaintDTO;
 
   constructor(
     private apiService: ApiService,
@@ -30,6 +41,11 @@ export class UserService {
   ) {
   }
 
+ /* populateForm(id:number){
+    this.complaintModel = new ComplaintDTO(id);
+    this.complaintForm.setValue(this.complaintModel);
+    }
+*/
   initUser() {
     const promise = this.apiService.get(this.config.refresh_token_url).toPromise()
       .then(res => {
@@ -158,6 +174,8 @@ export class UserService {
       );
 
   }
+
+
 
   }
 

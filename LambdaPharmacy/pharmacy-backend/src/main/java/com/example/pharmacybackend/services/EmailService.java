@@ -93,6 +93,18 @@ public class EmailService {
 		mail.setSubject("New promotion in our pharmacy " + pharmacy.getName());
 		mail.setText("There is new promotion in our pharmacy: " + promotion.getDescription() + "It's available from: "
 				+ promotion.getDateFrom().toString() + "to " + promotion.getDateTo()
+				+ " Best regards, your LambdaPharmacy team.");
+		javaMailSender.send(mail);
+	}
+
+	@Async
+	public void sendReplyToComplainment(Patient patient, String answer) throws MailException {
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(patient.getEmail());
+		mail.setFrom("no.reply.medclinic@gmail.com");
+		mail.setSubject("Reply to your complainment");
+		mail.setText("Dear " + patient.getFirstName() + " " + patient.getLastName() + ", " + answer
 				+ "Best regards, your LambdaPharmacy team.");
 		javaMailSender.send(mail);
 	}

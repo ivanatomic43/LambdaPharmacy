@@ -29,7 +29,7 @@ table {
 
 .mat-header-cell {
   color: white;
-  background:   #ff8300;
+  background: #0f6674;
   font-size: medium;
   text-transform: uppercase;
   text-align: center;
@@ -77,6 +77,8 @@ table {
 .mat-cell {
   border-right: 1px solid rgb(161, 161, 161);
   text-align: center;
+  background-color: whitesmoke;
+
 }
 
 .mat-cell.action-cell button {
