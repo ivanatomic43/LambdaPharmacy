@@ -18,6 +18,6 @@ public interface EmployedDermatologistRepository extends JpaRepository<EmployedD
     EmployedDermatologist findOneById(Long id);
 
     @Query("SELECT e FROM EmployedDermatologist e WHERE e.dermatologist.id=:id")
-    EmployedDermatologist findByDermId(Long id);
+    List<EmployedDermatologist> findByDermId(Long id);
 
 }

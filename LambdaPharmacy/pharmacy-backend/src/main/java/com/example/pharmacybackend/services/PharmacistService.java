@@ -1,6 +1,7 @@
 package com.example.pharmacybackend.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -151,6 +152,12 @@ public class PharmacistService {
             pharmacists = p.getPharmacists();
             appointments = p.getPharmacyAppointments();
 
+            if (!retPharm.isEmpty()) {
+                for (PharmacyDTO dt : retPharm) {
+                    System.out.println("ISPIS IS RETPHARM " + dt.getName());
+                }
+            }
+
             if (!appointments.isEmpty() && !pharmacists.isEmpty()) {
                 for (Appointment a : appointments) {
                     if (a.getType().equals(AppointmentType.COUNCELING)) {
@@ -241,21 +248,22 @@ public class PharmacistService {
                 dto.setAddress(p.getAddress());
                 dto.setRating(p.getRating());
                 // dto.setPrice(a.getPrice());
-                if (retPharm.isEmpty()) {
-                    retPharm.add(dto);
-                } else {
-                    for (PharmacyDTO dp : retPharm) {
-                        if (dp.getId() != dto.getId()) {
-                            retPharm.add(dto);
-                        }
-                    }
-                }
+                retPharm.add(dto);
 
             } else {
                 System.out.println("Niti ima sastanaka niti su definisani farmaceuti u sklopu apoteke..");
             }
         }
-        return retPharm;
+
+        List<PharmacyDTO> newRetList = new ArrayList<>();
+
+        for (PharmacyDTO t : retPharm) {
+            if (!newRetList.contains(t)) {
+                newRetList.add(t);
+            }
+        }
+
+        return newRetList;
     }
 
     // available pharmacists for counceling

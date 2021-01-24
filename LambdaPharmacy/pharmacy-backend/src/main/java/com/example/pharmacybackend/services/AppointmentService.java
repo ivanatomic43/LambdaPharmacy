@@ -82,99 +82,190 @@ public class AppointmentService {
     public AppointmentDTO createAppointment(AppointmentDTO newApp) {
 
         // checking if dermatologist is available
-        EmployedDermatologist dermatologist = employedDermatologistRepository.findByDermId(newApp.getDermatologistID());
+        List<EmployedDermatologist> dermatologistList = employedDermatologistRepository
+                .findByDermId(newApp.getDermatologistID());
         Pharmacy pharmacy = pharmacyRepository.findOneById(newApp.getPharmacyID());
+        List<EmployedDermatologist> freeDermatologists = new ArrayList<>();
 
-        LocalTime dermFrom = dermatologist.getWorkFrom();
-        LocalTime dermTo = dermatologist.getWorkTo();
+        for (EmployedDermatologist dermatologist : dermatologistList) {
+            if (dermatologist.getPharmacy().getId() == newApp.getPharmacyID()) {
+                System.out.println("ID DERMATOLOGA KOJIS E PROVERAVA" + dermatologist.getDermatologist().getId());
+                LocalTime dermFrom = dermatologist.getWorkFrom();
+                LocalTime dermTo = dermatologist.getWorkTo();
 
-        LocalTime timeStart = newApp.getMeetingTime();
-        LocalTime timeEnd = timeStart.plusHours(newApp.getDuration());
+                LocalTime timeStart = newApp.getMeetingTime();
+                LocalTime timeEnd = timeStart.plusHours(newApp.getDuration());
 
-        System.out.println("TIME START:" + timeStart);
-        System.out.println("TIME END: " + timeEnd);
+                System.out.println("TIME START:" + timeStart);
+                System.out.println("TIME END: " + timeEnd);
+                System.out.println("DERM FROM" + dermatologist.getWorkFrom());
+                System.out.println("DERM TO: " + dermatologist.getWorkTo());
 
-        if (timeStart.compareTo(dermFrom) < 0 || timeEnd.compareTo(dermTo) > 0) {
-            System.out.println("Time invalid");
-            return null;
+                if (timeStart.compareTo(dermFrom) < 0 || timeEnd.compareTo(dermTo) > 0) {
+                    System.out.println("Time invalid");
+
+                } else {
+                    System.out.println("USao u add free");
+                    freeDermatologists.add(dermatologist);
+                }
+
+            } else {
+                System.out.println("Not in my pharmacy...");
+            }
+
         }
 
+        List<EmployedDermatologist> withoutDuplicates = new ArrayList<>();
+        for (EmployedDermatologist dd : freeDermatologists) {
+            if (!withoutDuplicates.contains(dd)) {
+                System.out.println("USao u dodavanje dupl");
+                withoutDuplicates.add(dd);
+            }
+        }
         // checking other appointments
         List<Appointment> allApp = appointmentRepository.findAll();
         if (!allApp.isEmpty()) {
 
             for (Appointment app : allApp) {
+                for (EmployedDermatologist ddd : withoutDuplicates) {
+                    if (app.getDermatologist().getId() == ddd.getDermatologist().getId()) { // ako ima sastanaka za
+                                                                                            // njega
 
-                if (app.getDermatologist().getId() == dermatologist.getId()) {
+                        if (app.getDateOfAppointment().compareTo(newApp.getDateOfAppointment()) == 0) {
 
-                    if (app.getDateOfAppointment().compareTo(newApp.getDateOfAppointment()) == 0) {
+                            LocalTime appStart = app.getMeetingTime();
+                            LocalTime appEnd = appStart.plusHours(app.getDuration());
+                            LocalTime timeStart = newApp.getMeetingTime();
 
-                        LocalTime appStart = app.getMeetingTime();
-                        LocalTime appEnd = appStart.plusHours(app.getDuration());
+                            if (appStart.compareTo(newApp.getMeetingTime()) == 0 || timeStart.compareTo(appEnd) < 0) { // timeEnd
+                                // -
+                                // for
+                                // new
+                                // appointment
+                                System.out.println("Time invalid, dermatologist is busy...");
 
-                        if (appStart.compareTo(newApp.getMeetingTime()) == 0 || timeStart.compareTo(appEnd) < 0) { // timeEnd
-                            // -
-                            // for
-                            // new
-                            // appointment
-                            System.out.println("Time invalid, dermatologist is busy...");
+                                return null;
+                            } else {
+                                // ako se id poslatog dermatologa poklapa sa slobodnim ddd onda napravi sastanak
+                                // za njegaa
+                                System.out.println("USAO u kreiranje app");
+                                if (newApp.getDermatologistID() == ddd.getDermatologist().getId()) {
+                                    Appointment a = new Appointment();
+                                    a.setDateOfAppointment(newApp.getDateOfAppointment());
+                                    a.setMeetingTime(newApp.getMeetingTime());
+                                    a.setDuration(newApp.getDuration());
+                                    a.setPrice(newApp.getPrice());
+                                    a.setDermatologist(ddd);
+                                    a.setPharmacy(pharmacy);
+                                    a.setType(AppointmentType.EXAMINATION);
+                                    a.setStatus(AppointmentStatus.FREE);
 
-                            return null;
+                                    this.update(a);
+                                    // newApp.setId(a.getId());
+
+                                    // adding a to dermatologist
+                                    List<Appointment> reservedAppointments = ddd.getReservedAppointments();
+                                    reservedAppointments.add(a);
+
+                                    // adding a to pharmacy
+
+                                    List<Appointment> pharmacyAppointments = pharmacy.getPharmacyAppointments();
+                                    pharmacyAppointments.add(a);
+
+                                    // save all
+                                    dermatologistService.saveEmployed(ddd);
+                                    // employedDermatologistRepository.save(dermatologist);
+                                    pharmacyService.savePharmacy(pharmacy);
+
+                                    // creating a dto
+                                    String firstName = ddd.getDermatologist().getFirstName();
+                                    String lastName = ddd.getDermatologist().getLastName();
+                                    // double rating = dermatologist.getRating();
+
+                                    System.out.println(firstName + lastName);
+
+                                    AppointmentDTO dto = new AppointmentDTO();
+                                    dto.setId(a.getId());
+                                    dto.setDateOfAppointment(a.getDateOfAppointment());
+                                    dto.setDermatologistID(a.getDermatologist().getId());
+                                    dto.setDuration(a.getDuration());
+                                    dto.setFirstName(firstName);
+                                    dto.setLastName(lastName);
+                                    dto.setMeetingTime(a.getMeetingTime());
+                                    // System.out.println(a.getPharmacy().getName()
+                                    dto.setPharmacyName(a.getPharmacy().getName());
+                                    // dto.setRating(rating);
+                                    dto.setPrice(ddd.getPrice());
+
+                                    return dto;
+                                }
+
+                            }
+
                         }
+                    } else { // ne postoje kreirani sastanci za izabranog dermatologa, znaci slobodan je da
+                             // se zakaze
+
+                        System.out.println("USAO u kreiranje app za dermatologa koji nema sastanke");
+                        if (newApp.getDermatologistID() == ddd.getDermatologist().getId()) {
+                            Appointment a = new Appointment();
+                            a.setDateOfAppointment(newApp.getDateOfAppointment());
+                            a.setMeetingTime(newApp.getMeetingTime());
+                            a.setDuration(newApp.getDuration());
+                            a.setPrice(newApp.getPrice());
+                            a.setDermatologist(ddd);
+                            a.setPharmacy(pharmacy);
+                            a.setType(AppointmentType.EXAMINATION);
+                            a.setStatus(AppointmentStatus.FREE);
+
+                            this.update(a);
+                            // newApp.setId(a.getId());
+
+                            // adding a to dermatologist
+                            List<Appointment> reservedAppointments = ddd.getReservedAppointments();
+                            reservedAppointments.add(a);
+
+                            // adding a to pharmacy
+
+                            List<Appointment> pharmacyAppointments = pharmacy.getPharmacyAppointments();
+                            pharmacyAppointments.add(a);
+
+                            // save all
+                            dermatologistService.saveEmployed(ddd);
+                            // employedDermatologistRepository.save(dermatologist);
+                            pharmacyService.savePharmacy(pharmacy);
+
+                            // creating a dto
+                            String firstName = ddd.getDermatologist().getFirstName();
+                            String lastName = ddd.getDermatologist().getLastName();
+                            // double rating = dermatologist.getRating();
+
+                            System.out.println(firstName + lastName);
+
+                            AppointmentDTO dto = new AppointmentDTO();
+                            dto.setId(a.getId());
+                            dto.setDateOfAppointment(a.getDateOfAppointment());
+                            dto.setDermatologistID(a.getDermatologist().getId());
+                            dto.setDuration(a.getDuration());
+                            dto.setFirstName(firstName);
+                            dto.setLastName(lastName);
+                            dto.setMeetingTime(a.getMeetingTime());
+                            // System.out.println(a.getPharmacy().getName()
+                            dto.setPharmacyName(a.getPharmacy().getName());
+                            // dto.setRating(rating);
+                            dto.setPrice(ddd.getPrice());
+
+                            return dto;
+                        }
+
                     }
+
                 }
 
             }
         }
 
-        Appointment a = new Appointment();
-        a.setDateOfAppointment(newApp.getDateOfAppointment());
-        a.setMeetingTime(newApp.getMeetingTime());
-        a.setDuration(newApp.getDuration());
-        a.setPrice(newApp.getPrice());
-        a.setDermatologist(dermatologist);
-        a.setPharmacy(pharmacy);
-        a.setType(AppointmentType.EXAMINATION);
-        a.setStatus(AppointmentStatus.FREE);
-
-        this.update(a);
-        // newApp.setId(a.getId());
-
-        // adding a to dermatologist
-        List<Appointment> reservedAppointments = dermatologist.getReservedAppointments();
-        reservedAppointments.add(a);
-
-        // adding a to pharmacy
-
-        List<Appointment> pharmacyAppointments = pharmacy.getPharmacyAppointments();
-        pharmacyAppointments.add(a);
-
-        // save all
-        dermatologistService.saveEmployed(dermatologist);
-        // employedDermatologistRepository.save(dermatologist);
-        pharmacyService.savePharmacy(pharmacy);
-
-        // creating a dto
-        String firstName = dermatologist.getDermatologist().getFirstName();
-        String lastName = dermatologist.getDermatologist().getLastName();
-        // double rating = dermatologist.getRating();
-
-        System.out.println(firstName + lastName);
-
-        AppointmentDTO dto = new AppointmentDTO();
-        dto.setId(a.getId());
-        dto.setDateOfAppointment(a.getDateOfAppointment());
-        dto.setDermatologistID(a.getDermatologist().getId());
-        dto.setDuration(a.getDuration());
-        dto.setFirstName(firstName);
-        dto.setLastName(lastName);
-        dto.setMeetingTime(a.getMeetingTime());
-        // System.out.println(a.getPharmacy().getName()
-        dto.setPharmacyName(a.getPharmacy().getName());
-        // dto.setRating(rating);
-        dto.setPrice(dermatologist.getPrice());
-
-        return dto;
+        return null;
     }
 
     public List<AppointmentDTO> getAllPredefined(Long id) {
@@ -314,6 +405,12 @@ public class AppointmentService {
     }
 
     @Transactional
+    public void updatePatient(Long patientID, Long id) {
+        appointmentRepository.setPatient(patientID, id);
+
+    }
+
+    @Transactional
     public boolean reserveCounceling(AppointmentDTO newApp, Long userID) {
         // insert validation
         boolean reserved = false;
@@ -333,16 +430,21 @@ public class AppointmentService {
         a.setType(AppointmentType.COUNCELING);
         a.setStatus(AppointmentStatus.RESERVED);
         a.setDuration(1);
-
-        this.update(a);
-
-        appointmentRepository.setPatient(p.getId(), a.getId());
-        appointmentRepository.setPharmacist(pharmacist.getId(), a.getId());
-        appointmentRepository.setPharmacy(pharmacy.getId(), a.getId());
-
+        a.setPatient(p);
+        a.setPharmacist(pharmacist);
+        a.setPharmacy(pharmacy);
         a.setPrice(pharmacist.getPrice());
 
         this.update(a);
+
+        System.out.println("APP ID" + a.getId());
+        System.out.println("PATIENT ID" + p.getId());
+        System.out.println("PHARM ID " + pharmacist.getId());
+        System.out.println("PHARMACIY ID " + pharmacy.getId());
+        // this.updatePatient(p.getId(), a.getId());
+        // appointmentRepository.setPharmacist(pharmacist.getId(), a.getId());
+        // appointmentRepository.setPharmacy(pharmacy.getId(), a.getId());
+
         List<Appointment> pharmacyAppointments = pharmacy.getPharmacyAppointments();
         pharmacyAppointments.add(a);
         pharmacyService.savePharmacy(pharmacy);
@@ -480,13 +582,7 @@ public class AppointmentService {
                 dto.setDescription(a.getPharmacy().getDescription());
                 dto.setRating(a.getPharmacy().getRating());
 
-                if (!retList.isEmpty()) {
-                    for (PharmacyDTO t : retList) {
-                        if (t.getId() != dto.getId()) {
-                            retList.add(dto);
-                        }
-                    }
-                } else {
+                if (!retList.contains(dto)) {
                     retList.add(dto);
                 }
 
