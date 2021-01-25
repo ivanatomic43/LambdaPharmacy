@@ -21,6 +21,7 @@ public class PharmacistDTO {
 
     private String pharmacyName;
     private double rating;
+    private String role;
 
     public PharmacistDTO() {
     }
@@ -35,7 +36,7 @@ public class PharmacistDTO {
 
     public PharmacistDTO(Long id, String firstName, String lastName, String username, String email, String password,
             String address, String phoneNumber, LocalTime workFrom, LocalTime workTo, double price, String pharmacyName,
-            double rating) {
+            double rating, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,16 +51,19 @@ public class PharmacistDTO {
         this.price = price;
         this.pharmacyName = pharmacyName;
         this.rating = rating;
+        this.role = role;
     }
 
-    public PharmacistDTO(Long id, String firstName, String lastName, LocalTime workFrom, LocalTime workTo,
-            double price) {
+    public PharmacistDTO(Long id, String firstName, String lastName, LocalTime workFrom, LocalTime workTo, double price,
+            double rating, String role) {
         this.id = id;
         this.setFirstName(firstName);
         this.lastName = lastName;
         this.workFrom = workFrom;
         this.workTo = workTo;
         this.price = price;
+        this.rating = rating;
+        this.role = role;
     }
 
     /**
@@ -256,6 +260,20 @@ public class PharmacistDTO {
      */
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    /**
+     * @return String return the role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(String role) {
+        this.role = role;
     }
 
 }

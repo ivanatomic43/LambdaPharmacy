@@ -35,4 +35,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query(value = "update appointment a set a.pharmacy_id = ?1 where a.id = ?2", nativeQuery = true)
     public void setPharmacy(Long pharmacyID, Long id);
 
+    @Modifying
+    @Query(value = "delete from appointment where a.id = ?1", nativeQuery = true)
+    void deleteCounceling(Long id);
 }

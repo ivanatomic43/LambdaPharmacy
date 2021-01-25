@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.example.pharmacybackend.dto.AppointmentDTO;
 import com.example.pharmacybackend.dto.DermatologistDTO;
+import com.example.pharmacybackend.dto.PharmacistDTO;
 import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.enumerations.AppointmentStatus;
 import com.example.pharmacybackend.enumerations.AppointmentType;
@@ -591,6 +592,58 @@ public class AppointmentService {
         }
 
         return retList;
+
+    }
+
+    public boolean deleteCounceling(Long id) {
+        this.appointmentRepository.deleteCounceling(id);
+        return true;
+    }
+
+    @Transactional
+    public boolean cancelCounceling(Long id, Long patientID) {
+
+        boolean cancelled = false;
+
+        Appointment a = appointmentRepository.findOneById(id);
+        Patient p = patientRepository.findOneById(patientID);
+
+        // checking dates
+
+        Calendar myDate = Calendar.getInstance();
+
+        Date dateOfApp = a.getDateOfAppointment();
+        int hours = a.getMeetingTime().getHour();
+
+        myDate.setTime(dateOfApp);
+        myDate.set(Calendar.HOUR_OF_DAY, hours);
+
+        Date printDate = myDate.getTime();
+
+        System.out.println("MY DATE AND TIME OF APP:" + printDate);
+
+        myDate.add(Calendar.HOUR_OF_DAY, -24);
+
+        Date printDate1 = myDate.getTime();
+        System.out.println("MY DATE -24:  " + printDate1);
+
+        Date currentDate = Calendar.getInstance().getTime();
+
+        if (a.getPatient().getId() == patientID) {
+            if (currentDate.before(printDate1)) {
+
+                a.setPharmacy(null);
+                a.setPharmacist(null);
+                a.setPatient(null);
+                appointmentRepository.delete(a);
+
+                this.patientService.update(p);
+
+                cancelled = true;
+            }
+        }
+
+        return cancelled;
 
     }
 

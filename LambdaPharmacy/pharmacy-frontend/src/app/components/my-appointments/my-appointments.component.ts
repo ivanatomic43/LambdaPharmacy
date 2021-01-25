@@ -70,15 +70,29 @@ export class MyAppointmentsComponent implements OnInit {
   }
 
 
-  cancel(id:number){
-    this.appointmentService.cancelAppointment(id).subscribe(response => {
-      alert("Appointment is cancelled!");
-      this.fetchAppointments();
-    }, error => {
-      if(error.status == 400){
-        alert("You can't cancel appointment!");
+  cancel(id:number, type:string){
+
+    if(type == 'EXAMINATION'){
+       this.appointmentService.cancelAppointment(id).subscribe(response => {
+          alert("Appointment is cancelled!");
+          this.fetchAppointments();
+        }, error => {
+          if(error.status == 400){
+            alert("You can't cancel appointment!");
+          }
+        });
+    }
+
+      if(type =='COUNCELING'){
+        this.appointmentService.cancelCounceling(id).subscribe(response => {
+          alert("Counceling in cancelled!");
+          this.fetchAppointments();
+        }, error => {
+          if(error.status == 400){
+            alert("You can't cancel counceling!");
+          }
+        });
       }
-    });
 
 
   }

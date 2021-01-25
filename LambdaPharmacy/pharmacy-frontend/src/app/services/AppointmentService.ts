@@ -30,6 +30,7 @@ export class AppointmentService {
   getVisitedDoctorsUrl = appointmentUrl + '/getVisitedDoctors'; //for rating
   getVisitedPharmaciesUrl = appointmentUrl + '/getVisitedPharmacies';
   getEndedAppointmentsUrl = appointmentUrl + '/getEndedAppointments';
+  cancelCouncelingUrl = appointmentUrl + '/cancelCounceling/';
 
 
   constructor(
@@ -203,6 +204,24 @@ export class AppointmentService {
 
   getEndedAppointments() {
     return this.http.post<any>(this.getEndedAppointmentsUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
+
+  cancelCounceling(id:number) {
+    return this.http.put<any>(this.cancelCouncelingUrl+ id, {
 
     })
       .pipe(

@@ -59,7 +59,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action</th>
       <td mat-cell class="action-cell" *matCellDef="let element">
-        <button (click)="cancel(element.id)">Cancel</button>
+        <button (click)="cancel(element.id, element.type)">Cancel</button>
         <button (click)="end(element.id)">End</button>
 
 

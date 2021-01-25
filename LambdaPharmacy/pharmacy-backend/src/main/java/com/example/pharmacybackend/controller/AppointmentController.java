@@ -99,7 +99,7 @@ public class AppointmentController {
         return new ResponseEntity<>(myAppointments, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/cancelAppointment/{id}")
+    @RequestMapping(value = "/cancelAppointment/{id}", method = RequestMethod.PUT)
     @PreAuthorize("hasRole('PATIENT')")
     public ResponseEntity<?> cancelAppointment(@PathVariable("id") Long id, HttpServletRequest request) {
 
@@ -197,6 +197,23 @@ public class AppointmentController {
             return new ResponseEntity<>(retList, HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cancelCounceling/{id}", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> cancelCounceling(@PathVariable("id") Long id, HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        boolean cancelled = appointmentService.cancelCounceling(id, user.getId());
+
+        if (!cancelled) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
