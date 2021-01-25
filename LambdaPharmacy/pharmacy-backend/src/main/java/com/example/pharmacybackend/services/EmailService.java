@@ -108,4 +108,29 @@ public class EmailService {
 				+ "Best regards, your LambdaPharmacy team.");
 		javaMailSender.send(mail);
 	}
+
+	@Async
+	public void sendApprovedVacationMail(User user) throws MailException {
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(user.getEmail());
+		mail.setFrom("no.reply.medclinic@gmail.com");
+		mail.setSubject("Vacation approved");
+		mail.setText("Dear " + user.getFirstName() + " " + user.getLastName() + ", "
+				+ "your vacation request has been approved. " + "Best regards, your LambdaPharmacy team.");
+		javaMailSender.send(mail);
+	}
+
+	@Async
+	public void sendDeniedVacationMail(User user, String text) throws MailException {
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(user.getEmail());
+		mail.setFrom("no.reply.medclinic@gmail.com");
+		mail.setSubject("Vacation denied");
+		mail.setText("Dear " + user.getFirstName() + " " + user.getLastName() + ", "
+				+ "your vacation request has been denied. Reason: " + text
+				+ ". Best regards, your LambdaPharmacy team.");
+		javaMailSender.send(mail);
+	}
 }

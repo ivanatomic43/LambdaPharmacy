@@ -62,6 +62,7 @@ import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { EditPricelistComponent } from './components/edit-pricelist/edit-pricelist.component';
 import { MaterialModule } from './material/material.modul';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
+import { VacationsComponent } from './components/vacations/vacations.component';
 
 
 
@@ -115,7 +116,8 @@ import { MatInputModule, MatFormFieldModule } from '@angular/material';
     MedicineDetailsComponent,
     MyPharmacyComponent,
     PricelistComponent,
-    EditPricelistComponent
+    EditPricelistComponent,
+    VacationsComponent
 
 
   ],

@@ -64,3 +64,6 @@ INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_
 
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, meeting_time, price, status, type, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (1, '2021-01-20', 2, '08:22:00', 50, 'RESERVED', 'EXAMINATION', 1, 1, NULL, 1);
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, meeting_time, price, status, type, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (2, '2021-01-23', 2, '10:22:00', 50, 'RESERVED', 'EXAMINATION', 2, 1, NULL, 1);
+
+INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id) VALUES (1, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 1, NULL);
+INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id) VALUES (2, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 2, NULL);

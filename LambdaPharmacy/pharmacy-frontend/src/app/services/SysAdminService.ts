@@ -19,6 +19,9 @@ export class SysAdminService {
 sendComplaintUrl = sysAdminUrl + '/sendComplaint';
 getAllComplaintsUrl = sysAdminUrl + '/getAllComplaints';
 sendReplyUrl = sysAdminUrl + '/sendReply';
+getAllVacationRequestsUrl = sysAdminUrl + '/getAllVacationRequests';
+approveRequestUrl = sysAdminUrl + '/approveVacation/';
+denyRequestUrl = sysAdminUrl + '/denyVacation/';
 
   constructor(
 
@@ -80,6 +83,59 @@ sendReplyUrl = sysAdminUrl + '/sendReply';
 
 
   }
+
+
+  getAllVacationRequests(){
+    return this.http.post(this.getAllVacationRequestsUrl,  {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  approveRequest(id:number, userid:number){
+    return this.http.put(this.approveRequestUrl+id +'/'+userid,  {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  denyRequest(id:number, userid:number, text:string){
+    return this.http.put(this.denyRequestUrl+id +'/'+userid+ '/'+ text,  {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
 
 
   }

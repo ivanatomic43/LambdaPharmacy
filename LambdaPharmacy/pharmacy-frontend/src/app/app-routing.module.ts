@@ -1,3 +1,4 @@
+import { VacationsComponent } from './components/vacations/vacations.component';
 import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.component';
 import { MedicineDetailsComponent } from './components/medicine-details/medicine-details.component';
@@ -165,7 +166,8 @@ const routes: Routes = [
       }
     ]
 
-  }
+  },
+  {path: 'vacations', component: VacationsComponent}
 
 ];
 

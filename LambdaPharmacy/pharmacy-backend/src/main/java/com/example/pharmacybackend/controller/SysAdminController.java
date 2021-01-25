@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.example.pharmacybackend.dto.ComplaintDTO;
 import com.example.pharmacybackend.dto.ReplyDTO;
+import com.example.pharmacybackend.dto.VacationDTO;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.SysAdminService;
@@ -75,6 +76,43 @@ public class SysAdminController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(done, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getAllVacationRequests", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> getAllVacations(HttpServletRequest request) {
+
+        List<VacationDTO> vacations = this.sysAdminService.getAllVacationRequests();
+
+        if (vacations.isEmpty())
+            return new ResponseEntity<>(vacations, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(vacations, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/approveVacation/{id}/{userid}", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> approveVacation(@PathVariable("id") Long id, @PathVariable("userid") Long userid) {
+
+        boolean approved = this.sysAdminService.approveVacation(id, userid);
+
+        if (!approved)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(approved, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/denyVacation/{id}/{userid}/{text}", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> denyVacation(@PathVariable("id") Long id, @PathVariable("userid") Long userid,
+            @PathVariable("text") String text) {
+
+        boolean denied = this.sysAdminService.denyVacation(id, userid, text);
+
+        if (!denied)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(denied, HttpStatus.OK);
     }
 
 }

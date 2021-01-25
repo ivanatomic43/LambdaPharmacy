@@ -5,19 +5,25 @@ import java.util.List;
 
 import com.example.pharmacybackend.dto.ComplaintDTO;
 import com.example.pharmacybackend.dto.ReplyDTO;
+import com.example.pharmacybackend.dto.VacationDTO;
 import com.example.pharmacybackend.enumerations.ComplaintStatus;
+import com.example.pharmacybackend.enumerations.VacationStatus;
 import com.example.pharmacybackend.model.Complaint;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.model.User;
+import com.example.pharmacybackend.model.Vacation;
 import com.example.pharmacybackend.repository.ComplaintRepository;
 import com.example.pharmacybackend.repository.DermatologistRepository;
 import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
 import com.example.pharmacybackend.repository.PharmacistRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
+import com.example.pharmacybackend.repository.UserRepository;
+import com.example.pharmacybackend.repository.VacationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,14 +48,25 @@ public class SysAdminService {
     private DermatologistRepository dermatologistRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private EmailService emailService;
 
     @Autowired
     private EmployedDermatologistRepository employedDermatologistRepository;
 
+    @Autowired
+    private VacationRepository vacationRepository;
+
     @Transactional
     public Complaint saveComplaint(Complaint c) {
         return this.complaintRepository.save(c);
+    }
+
+    @Transactional
+    public Vacation saveVacation(Vacation v) {
+        return this.vacationRepository.save(v);
     }
 
     public boolean sendComplaint(ComplaintDTO complaint, Long userID) {
@@ -66,8 +83,9 @@ public class SysAdminService {
             }
         }
 
-        Pharmacist pharmacist = pharmacistRepository.findOneById(complaint.getMyID());
-        Pharmacy pharmacy = pharmacyRepository.findOneById(complaint.getMyID());
+        // Pharmacist pharmacist =
+        // pharmacistRepository.findOneById(complaint.getMyID());
+        // Pharmacy pharmacy = pharmacyRepository.findOneById(complaint.getMyID());
 
         Complaint c = new Complaint();
         c.setPatient(patient);
@@ -119,6 +137,82 @@ public class SysAdminService {
 
         }
         return done;
+    }
+
+    public List<VacationDTO> getAllVacationRequests() {
+
+        List<VacationDTO> retList = new ArrayList<>();
+
+        List<Vacation> vacations = vacationRepository.findAll();
+
+        for (Vacation v : vacations) {
+
+            VacationDTO dto = new VacationDTO();
+            dto.setId(v.getId());
+            dto.setStatus(v.getStatus().toString());
+            dto.setVacationFrom(v.getVacationFrom().toString());
+            dto.setVacationTo(v.getVacationTo().toString());
+
+            if (v.getDermatologist() != null) {
+                dto.setName(v.getDermatologist().getDermatologist().getFirstName());
+                dto.setSurname(v.getDermatologist().getDermatologist().getLastName());
+                dto.setUserID(v.getDermatologist().getDermatologist().getId());
+                dto.setRole(v.getDermatologist().getDermatologist().getAuthority().getName().toString());
+
+            }
+
+            if (v.getPharmacist() != null) {
+                dto.setName(v.getPharmacist().getFirstName());
+                dto.setSurname(v.getPharmacist().getLastName());
+                dto.setUserID(v.getPharmacist().getId());
+                dto.setRole(v.getPharmacist().getAuthority().getName().toString());
+            }
+
+            retList.add(dto);
+
+        }
+
+        return retList;
+
+    }
+
+    public boolean approveVacation(Long id, Long userid) {
+
+        boolean approved = false;
+
+        Vacation vacation = vacationRepository.findOneById(id);
+
+        User user = userRepository.findOneById(userid);
+
+        if (vacation != null && user != null) {
+            vacation.setStatus(VacationStatus.APPROVED);
+            emailService.sendApprovedVacationMail(user);
+            vacationRepository.save(vacation);
+            approved = true;
+            return approved;
+        }
+
+        return false;
+    }
+
+    public boolean denyVacation(Long id, Long userid, String text) {
+
+        boolean denied = false;
+
+        Vacation vacation = vacationRepository.findOneById(id);
+
+        User user = userRepository.findOneById(userid);
+
+        if (vacation != null && user != null) {
+            vacation.setStatus(VacationStatus.DENIED);
+            emailService.sendDeniedVacationMail(user, text);
+            vacationRepository.save(vacation);
+            denied = true;
+            return denied;
+        }
+
+        return false;
+
     }
 
 }

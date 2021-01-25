@@ -129,7 +129,12 @@ export class ComplaintComponent implements OnInit {
 
    }
 
-   reply(cid: number, id:number){
+   reply(cid: number, id:number, status: string){
+
+    if(status == 'REVIEWED'){
+      alert("This complaint has been reviewed!");
+      return;
+    }
        this.showAnswerForm = true;
        this.comid = cid;
        this.userid = id;
@@ -139,6 +144,8 @@ export class ComplaintComponent implements OnInit {
      this.showAnswerForm = false;
    }
    sendReply(){
+
+
 
     this.replyModel = new Reply(
       this.replyForm.get('comid').value,
