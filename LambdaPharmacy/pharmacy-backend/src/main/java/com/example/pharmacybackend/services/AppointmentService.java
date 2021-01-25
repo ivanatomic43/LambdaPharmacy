@@ -91,23 +91,36 @@ public class AppointmentService {
         for (EmployedDermatologist dermatologist : dermatologistList) {
             if (dermatologist.getPharmacy().getId() == newApp.getPharmacyID()) {
                 System.out.println("ID DERMATOLOGA KOJIS E PROVERAVA" + dermatologist.getDermatologist().getId());
-                LocalTime dermFrom = dermatologist.getWorkFrom();
-                LocalTime dermTo = dermatologist.getWorkTo();
 
-                LocalTime timeStart = newApp.getMeetingTime();
-                LocalTime timeEnd = timeStart.plusHours(newApp.getDuration());
+                Date date = newApp.getDateOfAppointment();
+                Date date1 = dermatologist.getDateFrom();
+                Date date2 = dermatologist.getDateTo();
 
-                System.out.println("TIME START:" + timeStart);
-                System.out.println("TIME END: " + timeEnd);
-                System.out.println("DERM FROM" + dermatologist.getWorkFrom());
-                System.out.println("DERM TO: " + dermatologist.getWorkTo());
+                if ((date.compareTo(date1) > 0 && date.compareTo(date2) < 0) || (date.compareTo(date1) == 0)
+                        || (date.compareTo(date2) == 0)) {
 
-                if (timeStart.compareTo(dermFrom) < 0 || timeEnd.compareTo(dermTo) > 0) {
-                    System.out.println("Time invalid");
+                    LocalTime dermFrom = dermatologist.getWorkFrom();
+                    LocalTime dermTo = dermatologist.getWorkTo();
 
+                    LocalTime timeStart = newApp.getMeetingTime();
+                    LocalTime timeEnd = timeStart.plusHours(newApp.getDuration());
+
+                    System.out.println("TIME START:" + timeStart);
+                    System.out.println("TIME END: " + timeEnd);
+                    System.out.println("DERM FROM" + dermatologist.getWorkFrom());
+                    System.out.println("DERM TO: " + dermatologist.getWorkTo());
+
+                    if (timeStart.compareTo(dermFrom) < 0 || timeEnd.compareTo(dermTo) > 0) {
+                        System.out.println("Time invalid");
+                        return null;
+
+                    } else {
+                        System.out.println("USao u add free");
+                        freeDermatologists.add(dermatologist);
+                    }
                 } else {
-                    System.out.println("USao u add free");
-                    freeDermatologists.add(dermatologist);
+                    System.out.println("Not in date range...");
+                    return null;
                 }
 
             } else {

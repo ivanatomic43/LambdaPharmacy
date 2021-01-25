@@ -43,6 +43,8 @@ export class PharmacyDetailsComponent implements OnInit {
     'id',
     'firstName',
     'lastName',
+    'dateFrom',
+    'dateTo',
     'workFrom',
     'workTo',
     'action'

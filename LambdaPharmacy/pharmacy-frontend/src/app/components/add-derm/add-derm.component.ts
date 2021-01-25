@@ -65,6 +65,11 @@ export class AddDermComponent implements OnInit {
     this.dermatologistService.addDermatologist(this.dermData, this.pharmacyID).subscribe(response => {
             alert("Dermatologist added to pharmacy!");
             this.router.navigate(['/pharmacy-details/' + this.pharmacyID]);
+    }, error => {
+      if(error.status == 400){
+        alert("Dermatologist is employed in another pharmacy at exact time/ Dates and time overlap");
+        return;
+      }
     });
 
 

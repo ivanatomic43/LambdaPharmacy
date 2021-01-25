@@ -1,6 +1,8 @@
 package com.example.pharmacybackend.services;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.example.pharmacybackend.dto.DermatologistDTO;
@@ -91,37 +93,107 @@ public class DermatologistService {
         Pharmacy pharmacy = pharmacyRepository.findOneById(id);
 
         Dermatologist d = dermatologistRepository.findOneById(dto.getId());
+        List<EmployedDermatologist> employed = employedDermatologistRepository.findAll();
 
-        EmployedDermatologist ed = new EmployedDermatologist();
-        ed.setDateFrom(dto.getDateFrom());
-        ed.setDateTo(dto.getDateTo());
-        ed.setWorkFrom(dto.getWorkFrom());
-        ed.setWorkTo(dto.getWorkTo());
-        ed.setPrice(dto.getPrice());
-        ed.setRating(0);
-        ed.setPharmacy(pharmacy);
-        ed.setDermatologist(d);
+        for (EmployedDermatologist ed : employed) { // checking if date and time match in another pharmacy where
+                                                    // dermatologist is employed
+            if (ed.getDermatologist().getId() == dto.getId()) {
+                Date date1 = ed.getDateFrom();
+                Date date2 = ed.getDateTo();
+                Date date3 = dto.getDateFrom();
+                Date date4 = dto.getDateTo();
 
-        List<EmployedDermatologist> retDer = pharmacy.getDermatologists();
+                LocalTime time1 = ed.getWorkFrom();
+                LocalTime time2 = ed.getWorkTo();
+                LocalTime time3 = dto.getWorkFrom();
+                LocalTime time4 = dto.getWorkTo();
 
-        retDer.add(ed);
+                if ((date3.compareTo(date1) < 0 && date4.compareTo(date1) > 0)
+                        || (date3.compareTo(date1) < 0 && date4.compareTo(date2) > 0)
+                        || (date3.compareTo(date2) < 0 && date4.compareTo(date2) > 0)
+                        || (date3.compareTo(date1) > 0 && date4.compareTo(date2) < 0)
+                        || (date3.compareTo(date1) == 0 && date4.compareTo(date2) == 0)) {
 
-        this.saveEmployed(ed);
-        pharmacyService.savePharmacy(pharmacy);
-        this.saveEmployed(ed);
+                    if ((time3.isBefore(time1) && time4.isAfter(time1))
+                            || (time3.isBefore(time2) && time4.isAfter(time2))
+                            || (time3.isAfter(time1) && time4.isBefore(time2))
+                            || (time3.equals(time1) && time4.equals(time2))) {
+                        System.out.println("Dermatologist is employed in another pharmacy at exact time...");
+                    } else {
 
-        DermatologistDTO retUser = new DermatologistDTO();
-        retUser.setId(d.getId());
-        retUser.setFirstName(d.getFirstName());
-        retUser.setLastName(d.getLastName());
-        retUser.setFrom(ed.getWorkFrom().toString());
-        retUser.setTo(ed.getWorkTo().toString());
-        retUser.setDateFromm(ed.getDateFrom().toString());
-        retUser.setDateToo(ed.getDateTo().toString());
-        retUser.setPrice(ed.getPrice());
-        retUser.setRating(ed.getRating());
+                        EmployedDermatologist edd = new EmployedDermatologist();
+                        edd.setDateFrom(dto.getDateFrom());
+                        edd.setDateTo(dto.getDateTo());
+                        edd.setWorkFrom(dto.getWorkFrom());
+                        edd.setWorkTo(dto.getWorkTo());
+                        edd.setPrice(dto.getPrice());
+                        edd.setRating(0);
+                        edd.setPharmacy(pharmacy);
+                        edd.setDermatologist(d);
 
-        return retUser;
+                        List<EmployedDermatologist> retDer = pharmacy.getDermatologists();
+
+                        retDer.add(edd);
+
+                        this.saveEmployed(edd);
+                        pharmacyService.savePharmacy(pharmacy);
+                        this.saveEmployed(edd);
+
+                        DermatologistDTO retUser = new DermatologistDTO();
+                        retUser.setId(d.getId());
+                        retUser.setFirstName(d.getFirstName());
+                        retUser.setLastName(d.getLastName());
+                        retUser.setFrom(ed.getWorkFrom().toString());
+                        retUser.setTo(ed.getWorkTo().toString());
+                        retUser.setDateFromm(ed.getDateFrom().toString());
+                        retUser.setDateToo(ed.getDateTo().toString());
+                        retUser.setPrice(ed.getPrice());
+                        retUser.setRating(ed.getRating());
+
+                        return retUser;
+
+                    }
+
+                } else { // nor dates or time match
+
+                    EmployedDermatologist edd = new EmployedDermatologist();
+                    edd.setDateFrom(dto.getDateFrom());
+                    edd.setDateTo(dto.getDateTo());
+                    edd.setWorkFrom(dto.getWorkFrom());
+                    edd.setWorkTo(dto.getWorkTo());
+                    edd.setPrice(dto.getPrice());
+                    edd.setRating(0);
+                    edd.setPharmacy(pharmacy);
+                    edd.setDermatologist(d);
+
+                    List<EmployedDermatologist> retDer = pharmacy.getDermatologists();
+
+                    retDer.add(edd);
+
+                    this.saveEmployed(edd);
+                    pharmacyService.savePharmacy(pharmacy);
+                    this.saveEmployed(edd);
+
+                    DermatologistDTO retUser = new DermatologistDTO();
+                    retUser.setId(d.getId());
+                    retUser.setFirstName(d.getFirstName());
+                    retUser.setLastName(d.getLastName());
+                    retUser.setFrom(ed.getWorkFrom().toString());
+                    retUser.setTo(ed.getWorkTo().toString());
+                    retUser.setDateFromm(ed.getDateFrom().toString());
+                    retUser.setDateToo(ed.getDateTo().toString());
+                    retUser.setPrice(ed.getPrice());
+                    retUser.setRating(ed.getRating());
+
+                    return retUser;
+
+                }
+
+            }
+
+        }
+
+        return null;
 
     }
 
