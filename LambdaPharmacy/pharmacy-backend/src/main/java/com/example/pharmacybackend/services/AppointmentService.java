@@ -632,16 +632,19 @@ public class AppointmentService {
                         dto.setMyRate(0);
                     }
                 }
-
-                if (!retList.contains(dto)) {
-                    retList.add(dto);
-                }
+                retList.add(dto);
 
             }
 
         }
 
-        return retList;
+        List<PharmacyDTO> newRetList = new ArrayList<>();
+        for (PharmacyDTO dd : retList) {
+            if (!newRetList.contains(dd)) {
+                newRetList.add(dd);
+            }
+        }
+        return newRetList;
 
     }
 

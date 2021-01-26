@@ -141,14 +141,15 @@
       <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Pharmacies</h1>
 
       <div *ngIf="clickedPharmacy;" class = "custom-search">
-        <form [formGroup]="ratePharmacyForm" (ngSubmit)="ratePharmacy()">
+        <form [formGroup]="ratePharmacyForm">
 
         <input class = "custom-input" type= "text"  formControlName="ratePharmacyID" [(ngModel)]="ratePharmacyID"/>
 
         <input class="custom-input" type="text" formControlName="ratePharm" [(ngModel)]="ratePharm"/>
 
 
-        <button style="margin-left: 15px;" class="btn-search" type="submit">Rate</button>
+        <button *ngIf="!clickedChangePharm" style="margin-left: 15px;" class="btn-search" type="submit" (click)="ratePharmacy()">Rate</button>
+        <button *ngIf="clickedChangePharm" style= "margin-left: 15px;" class ="btn-search" type ="submit" (click)="changeRatePharmacy()">Change rate</button>
       </form>
 
         <button style="margin-left: 15px;" class="btn-search" (click)="cancelPharmacyRate()">Cancel</button>
@@ -178,10 +179,16 @@
           <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="myRate">
+          <th mat-header-cell *matHeaderCellDef>My rate</th>
+          <td mat-cell *matCellDef="let element"> {{element.myRate}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef> Action</th>
           <td mat-cell class="action-cell" *matCellDef="let element">
-            <button (click)="ratePharmacyClick(element.id)">Rate</button>
+            <button *ngIf="element.myRate ===0" (click)="ratePharmacyClick(element.id)">Rate</button>
+            <button *ngIf="element.myRate != 0" (click)="changeRatePharmacyClick(element.id)">Change rate</button>
 
             <button (click)="writeComplaint(element.id)">Write a complaint</button>
 

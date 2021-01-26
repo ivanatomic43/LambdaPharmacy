@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 import com.example.pharmacybackend.model.User;
-
+import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.RatingService;
@@ -75,6 +75,42 @@ public class RatingController {
             return new ResponseEntity<>(rating, HttpStatus.OK);
         } else if (myUser.getAuthority().getName().equals("ROLE_PHARMACIST")) {
             double rating = ratingService.changeRatePharmacist(id, rate, user);
+            return new ResponseEntity<>(rating, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/ratePharmacy/{id}/{rate}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> ratePharmacy(@PathVariable("id") Long id, @PathVariable("rate") Integer rate,
+            HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        double rating = ratingService.ratePharmacy(id, rate, user);
+
+        if (rating != 0) {
+            return new ResponseEntity<>(rating, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/changeRatePharmacy/{id}/{rate}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> changeRatePharmacy(@PathVariable("id") Long id, @PathVariable("rate") Integer rate,
+            HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        double rating = ratingService.changeRatePharmacy(id, rate, user);
+
+        if (rating != 0) {
             return new ResponseEntity<>(rating, HttpStatus.OK);
         }
 

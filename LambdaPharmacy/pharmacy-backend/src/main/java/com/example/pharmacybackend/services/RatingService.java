@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.pharmacybackend.enumerations.RateStatus;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.Pharmacist;
+import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.Rating;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.repository.DermatologistRepository;
@@ -140,7 +141,6 @@ public class RatingService {
         for (Rating r : allRates) {
             if (r.getUser().getId() == user.getId() && r.getPharmacist().getId() == id) {
 
-                System.out.println("Pronasao zamenu");
                 r.setRate(rate);
                 this.save(r);
 
@@ -152,6 +152,56 @@ public class RatingService {
                 double rating = (double) zbir / rates.size();
 
                 pharmacistService.updatePharmacistRating(id, rating);
+                return rating;
+
+            }
+
+        }
+        return 0;
+    }
+
+    public double ratePharmacy(Long id, Integer rate, User user) {
+
+        Pharmacy pharmacy = pharmacyRepository.findOneById(id);
+
+        Rating rateModel = new Rating();
+        rateModel.setRate(rate);
+        rateModel.setUser(user);
+        rateModel.setPharmacy(pharmacy);
+        this.save(rateModel);
+
+        List<Integer> rates = this.pharmacyRates(id);
+        int zbir = 0;
+        for (int i = 0; i < rates.size(); i++)
+            zbir += rates.get(i);
+
+        double rating = (double) zbir / rates.size();
+
+        pharmacyService.updatePharmacyRating(id, rate);
+
+        return rating;
+
+    }
+
+    public double changeRatePharmacy(Long id, Integer rate, User user) {
+
+        Pharmacy pharmacy = pharmacyRepository.findOneById(id);
+        List<Rating> allRates = ratingRepository.findAll();
+
+        for (Rating r : allRates) {
+            if (r.getUser().getId() == user.getId() && r.getPharmacy().getId() == id) {
+
+                r.setRate(rate);
+                this.save(r);
+
+                List<Integer> rates = this.pharmacyRates(id);
+                int zbir = 0;
+                for (int i = 0; i < rates.size(); i++)
+                    zbir += rates.get(i);
+
+                double rating = (double) zbir / rates.size();
+
+                pharmacyService.updatePharmacyRating(id, rating);
                 return rating;
 
             }

@@ -20,6 +20,7 @@ export class RatingService {
   rateUserUrl = ratingUrl + '/rateUser/';
   rateMedicineUrl = ratingUrl + '/rateMedicine/';
   changeRateUserUrl = ratingUrl + '/changeRateUser/';
+  changeRatePharmacyUrl = ratingUrl + '/changeRatePharmacy/';
 
 
 
@@ -85,6 +86,25 @@ export class RatingService {
   changeRateUser(id:number, rate:number){
 
     return this.http.post(this.changeRateUserUrl+id +'/'+rate, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+  changeRatePharmacy(id:number, rate:number){
+
+    return this.http.post(this.changeRatePharmacyUrl+id +'/'+rate, {
 
     })
       .pipe(

@@ -55,6 +55,7 @@ export class HistoryOfAppDComponent implements OnInit {
     'name',
     'address',
     'rating',
+    'myRate',
     'action'
   ];
 
@@ -72,6 +73,7 @@ export class HistoryOfAppDComponent implements OnInit {
   ratePharm:number;
   clickedChange= false;
   clickedRate = false;
+  clickedChangePharm = false;
 
 
 
@@ -172,6 +174,7 @@ export class HistoryOfAppDComponent implements OnInit {
 
       this.ratingService.ratePharmacy(this.ratePharmacyID, this.ratePharm).subscribe(response =>{
         alert("Pharmacy rated!");
+        this.clickedPharmacy = false;
         this.fetchPharmacies();
       });
   }
@@ -197,6 +200,25 @@ export class HistoryOfAppDComponent implements OnInit {
     });
   }
 
+  changeRatePharmacyClick(id:number){
+    this.clickedPharmacy= true;
+    this.ratePharmacyID = id;
+    this.clickedChangePharm= true;
+  }
+
+  changeRatePharmacy(id:number, rate:number){
+
+    this.ratePharmacyID = this.ratePharmacyForm.get('ratePharmacyID').value;
+    this.ratePharm = this.ratePharmacyForm.get('ratePharm').value;
+
+    this.ratingService.changeRatePharmacy(this.ratePharmacyID, this.ratePharm).subscribe(response => {
+
+      alert("Pharmacy rate changed!");
+      this.clickedPharmacy = false;
+
+      this.fetchPharmacies();
+    });
+  }
 
 
 }

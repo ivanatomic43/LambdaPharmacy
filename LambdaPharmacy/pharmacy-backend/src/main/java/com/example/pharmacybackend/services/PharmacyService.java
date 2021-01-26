@@ -55,6 +55,13 @@ public class PharmacyService {
 		return this.pharmacyRepository.save(p);
 	}
 
+	@Transactional
+	public void updatePharmacyRating(Long id, double rate) {
+		Pharmacy p = pharmacyRepository.findOneById(id);
+		p.setRating(rate);
+		this.savePharmacy(p);
+	}
+
 	public Pharmacy findById(Long id) {
 		Optional<Pharmacy> p = this.pharmacyRepository.findById(id);
 		if (p.isPresent()) {
