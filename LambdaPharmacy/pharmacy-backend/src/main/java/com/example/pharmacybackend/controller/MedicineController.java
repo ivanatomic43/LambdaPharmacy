@@ -1,12 +1,9 @@
 package com.example.pharmacybackend.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.impl.bootstrap.HttpServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.pharmacybackend.dto.MedicineDTO;
 import com.example.pharmacybackend.dto.PriceDTO;
 import com.example.pharmacybackend.dto.ReservationParamsDTO;
-import com.example.pharmacybackend.model.Medicine;
+
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.MedicineService;

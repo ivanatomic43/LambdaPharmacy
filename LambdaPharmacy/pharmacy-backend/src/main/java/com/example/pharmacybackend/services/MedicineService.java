@@ -81,7 +81,7 @@ public class MedicineService {
 			dto.setStatus(m.getStatusInPharmacy().toString());
 			dto.setQuantity(m.getQuantity());
 			dto.setPrice(m.getPrice());
-			dto.setRating(m.getRating());
+			dto.setRating(m.getMedicine().getRating());
 			dto.setPriceLastsTo(m.getPriceLastsTo().toString());
 
 			myMed.add(dto);
@@ -113,7 +113,7 @@ public class MedicineService {
 				dto.setStatus(m.getStatusInPharmacy().toString());
 				dto.setQuantity(m.getQuantity());
 				dto.setPrice(m.getPrice());
-				dto.setRating(m.getRating());
+				dto.setRating(m.getMedicine().getRating());
 				dto.setPriceLastsTo(m.getPriceLastsTo().toString());
 				retMed.add(dto);
 
@@ -146,7 +146,7 @@ public class MedicineService {
 				dto.setShape(m.getMedicine().getShape());
 				dto.setStructure(m.getMedicine().getStructure());
 				dto.setPrice(m.getPrice());
-				dto.setRating(m.getRating());
+				dto.setRating(m.getMedicine().getRating());
 				dto.setPriceLastsTo(m.getPriceLastsTo().toString());
 
 				if (m.getQuantity() == 0) {
@@ -256,6 +256,7 @@ public class MedicineService {
 			dto.setStructure(m.getStructure());
 			dto.setContraindications(m.getContraindications());
 			dto.setDailyDose(m.getDailyDose());
+			dto.setRating(m.getRating());
 
 			retList.add(dto);
 		}
@@ -286,6 +287,7 @@ public class MedicineService {
 		dto.setNote(newMedicine.getNote());
 		dto.setProducer(newMedicine.getProducer());
 		dto.setDefaultStatus(MedicineStatus.AVAILABLE);
+		dto.setRating(0);
 
 		this.save(dto);
 
@@ -303,6 +305,7 @@ public class MedicineService {
 		ret.setNote(dto.getNote());
 		ret.setProducer(dto.getProducer());
 		ret.setStatus(dto.getDefaultStatus().toString());
+		ret.setRating(dto.getRating());
 
 		return ret;
 
@@ -392,7 +395,7 @@ public class MedicineService {
 				dto.setStatus(m.getStatusInPharmacy().toString());
 				dto.setQuantity(m.getQuantity());
 				dto.setPrice(m.getPrice());
-				dto.setRating(m.getRating());
+				dto.setRating(m.getMedicine().getRating());
 
 				myMed.add(dto);
 			} else {
@@ -480,6 +483,7 @@ public class MedicineService {
 			dto.setProducer(med.getProducer());
 			dto.setShape(med.getShape());
 			dto.setStructure(med.getStructure());
+			dto.setRating(med.getRating());
 
 			return dto;
 
@@ -504,7 +508,7 @@ public class MedicineService {
 			dto.setPharmacyName(myMed.getPharmacy().getName());
 
 			dto.setPrice(myMed.getPrice());
-			dto.setRating(myMed.getRating());
+			dto.setRating(myMed.getMedicine().getRating());
 			dto.setPriceLastsTo(myMed.getPriceLastsTo().toString());
 
 			return dto;

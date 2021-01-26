@@ -31,6 +31,7 @@ export class PharmacyService {
 
 
 
+
   constructor(private http: HttpClient, private router: Router) {}
 
   allPharmacies() {
@@ -191,5 +192,7 @@ export class PharmacyService {
 
   }
 
-
 }
+
+
+

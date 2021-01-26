@@ -49,6 +49,12 @@ public class Medicine {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Pricelist pricelist;
 
+	@Column
+	private double rating;
+
+	@Version
+	private int version;
+
 	// @Column
 	// private List<String> substituteMedicines = new ArrayList<>();
 
@@ -167,6 +173,48 @@ public class Medicine {
 	 */
 	public void setDefaultStatus(MedicineStatus defaultStatus) {
 		this.defaultStatus = defaultStatus;
+	}
+
+	/**
+	 * @return Pricelist return the pricelist
+	 */
+	public Pricelist getPricelist() {
+		return pricelist;
+	}
+
+	/**
+	 * @param pricelist the pricelist to set
+	 */
+	public void setPricelist(Pricelist pricelist) {
+		this.pricelist = pricelist;
+	}
+
+	/**
+	 * @return int return the version
+	 */
+	public int getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	/**
+	 * @return double return the rating
+	 */
+	public double getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 }

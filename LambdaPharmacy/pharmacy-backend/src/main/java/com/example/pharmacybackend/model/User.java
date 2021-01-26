@@ -56,6 +56,9 @@ public class User implements UserDetails {
 	@Column(name = "firstLogin", nullable = false)
 	private boolean firstLogin;
 
+	@Version
+	private int version;
+
 	public boolean isFirstLogin() {
 		return firstLogin;
 	}
@@ -179,6 +182,20 @@ public class User implements UserDetails {
 		List<Authority> authorities = new ArrayList<Authority>();
 		authorities.add(this.authority);
 		return authorities;
+	}
+
+	/**
+	 * @return int return the version
+	 */
+	public int getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 }

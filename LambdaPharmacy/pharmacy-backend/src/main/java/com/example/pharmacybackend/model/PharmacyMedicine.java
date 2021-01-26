@@ -31,9 +31,6 @@ public class PharmacyMedicine {
     private double price;
 
     @Column
-    private double rating;
-
-    @Column
     private Date priceLastsTo;
 
     /**
@@ -118,20 +115,6 @@ public class PharmacyMedicine {
      */
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    /**
-     * @return double return the rating
-     */
-    public double getRating() {
-        return rating;
-    }
-
-    /**
-     * @param rating the rating to set
-     */
-    public void setRating(double rating) {
-        this.rating = rating;
     }
 
     /**

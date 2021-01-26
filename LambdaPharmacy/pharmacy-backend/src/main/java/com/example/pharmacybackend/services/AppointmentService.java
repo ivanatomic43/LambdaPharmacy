@@ -22,6 +22,7 @@ import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.model.Rating;
 import com.example.pharmacybackend.repository.*;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,6 +63,9 @@ public class AppointmentService {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private RatingRepository ratingRepository;
 
     @Autowired
     private PharmacyService pharmacyService;
@@ -492,6 +496,7 @@ public class AppointmentService {
         List<DermatologistDTO> retList = new ArrayList<>();
 
         List<Appointment> endedAppointments = appointmentRepository.findByPatientId(userID);
+        List<Rating> allRates = ratingRepository.findAll();
 
         for (Appointment a : endedAppointments) {
             if (a.getStatus().equals(AppointmentStatus.DONE)) {
@@ -502,7 +507,17 @@ public class AppointmentService {
                     dto.setFirstName(a.getDermatologist().getDermatologist().getFirstName());
                     dto.setLastName(a.getDermatologist().getDermatologist().getLastName());
                     dto.setRole(a.getDermatologist().getDermatologist().getAuthority().getName());
-                    dto.setRating(a.getDermatologist().getRating());
+                    dto.setRating(a.getDermatologist().getDermatologist().getRating());
+
+                    for (Rating r : allRates) {
+                        if (r.getDermatologist() != null) {
+                            if (r.getUser().getId() == userID && r.getDermatologist().getId() == dto.getId()) {
+                                dto.setMyRate(r.getRate());
+                            }
+                        } else {
+                            dto.setMyRate(0);
+                        }
+                    }
 
                     if (!retList.isEmpty()) {
                         for (DermatologistDTO t : retList) {
@@ -522,6 +537,16 @@ public class AppointmentService {
                     dto.setLastName(a.getPharmacist().getLastName());
                     dto.setRole(a.getPharmacist().getAuthority().getName());
                     dto.setRating(a.getPharmacist().getRating());
+
+                    for (Rating r : allRates) {
+                        if (r.getPharmacist() != null) {
+                            if (r.getUser().getId() == userID && r.getPharmacist().getId() == dto.getId()) {
+                                dto.setMyRate(r.getRate());
+                            }
+                        } else {
+                            dto.setMyRate(0);
+                        }
+                    }
 
                     if (!retList.contains(dto)) {
                         retList.add(dto);
@@ -585,6 +610,7 @@ public class AppointmentService {
 
         List<PharmacyDTO> retList = new ArrayList<>();
         List<Appointment> endedAppointments = appointmentRepository.findAll();
+        List<Rating> allRates = ratingRepository.findAll();
 
         for (Appointment a : endedAppointments) {
             if (a.getStatus().equals(AppointmentStatus.DONE) && a.getPatient().getId() == userID) {
@@ -594,7 +620,18 @@ public class AppointmentService {
                 dto.setName(a.getPharmacy().getName());
                 dto.setAddress(a.getPharmacy().getAddress());
                 dto.setDescription(a.getPharmacy().getDescription());
+
                 dto.setRating(a.getPharmacy().getRating());
+
+                for (Rating r : allRates) {
+                    if (r.getPharmacy() != null) {
+                        if (r.getUser().getId() == userID && r.getPharmacy().getId() == dto.getId()) {
+                            dto.setMyRate(r.getRate());
+                        }
+                    } else {
+                        dto.setMyRate(0);
+                    }
+                }
 
                 if (!retList.contains(dto)) {
                     retList.add(dto);

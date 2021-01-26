@@ -17,6 +17,9 @@ public class Dermatologist extends User implements Serializable {
 	@OneToMany(mappedBy = "dermatologist", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Appointment> reservedAppointments = new ArrayList<>();
 
+	@Column
+	private double rating;
+
 	public Dermatologist() {
 
 	}
@@ -33,6 +36,20 @@ public class Dermatologist extends User implements Serializable {
 	 */
 	public void setReservedAppointments(List<Appointment> reservedAppointments) {
 		this.reservedAppointments = reservedAppointments;
+	}
+
+	/**
+	 * @return double return the rating
+	 */
+	public double getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 }

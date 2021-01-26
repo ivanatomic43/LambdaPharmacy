@@ -6,7 +6,9 @@ import com.example.pharmacybackend.model.Appointment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface EndedAppointmentsRepository extends JpaRepository<Appointment, Long> {
 
     Appointment findOneById(Long id);

@@ -16,8 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.bytebuddy.description.type.PackageDescription;
-
 import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.dto.PromotionDTO;
 import com.example.pharmacybackend.dto.UserDTO;
@@ -27,7 +25,7 @@ import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
-import com.example.pharmacybackend.repository.PharmacyRepository;
+
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.ImageService;
 import com.example.pharmacybackend.services.PharmacyService;

@@ -47,7 +47,7 @@
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <th mat-header-cell *matHeaderCellDef > Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
 
 
@@ -68,6 +68,25 @@
 <div style="background: url(/assets/back.jpg);">
   <div class="preview-users">
     <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Staff</h1>
+
+    <div *ngIf="clickedUser" class = "custom-search">
+      <form [formGroup]="rateForm" >
+
+      <input class = "custom-input" type= "text"  formControlName="rateUserID" [(ngModel)]="rateUserID"/>
+
+      <input class="custom-input" type="text" formControlName="rate" [(ngModel)]="rate"/>
+
+
+      <button *ngIf="!clickedChange"  style="margin-left: 15px;" class="btn-search" type="submit" (click)="rateUser()">Rate</button>
+      <button *ngIf="clickedChange" style ="margin-left: 15px;" class = "btn-search" type="submit" (click)="changeUserRate()">Change rate</button>
+
+    </form>
+      <button style="margin-left: 15px;" class="btn-search" (click)="cancelUserRate()">Cancel</button>
+
+    </div>
+
+
+
 
     <table mat-table [dataSource]="dataSourceD" class="mat-elevation-z8">
 
@@ -91,10 +110,16 @@
         <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="myRate">
+        <th mat-header-cell *matHeaderCellDef>My rate</th>
+        <td mat-cell *matCellDef="let element"> {{element.myRate}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action</th>
-        <td mat-cell class="action-cell" *matCellDef="let element">
-          <button (click)="rate(element.id)">Rate</button>
+        <td  mat-cell class="action-cell" *matCellDef="let element">
+          <button *ngIf="element.myRate === 0" (click)="rateUserClick(element.id)">Rate</button>
+          <button *ngIf="element.myRate != 0" (click)="changeUserRateClick(element.id)">Change rate</button>
           <button (click)="writeComplaint(element.id)">Write a complaint</button>
 
 
@@ -114,6 +139,22 @@
   <div style="background: url(/assets/back.jpg);">
     <div class="preview-users">
       <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Pharmacies</h1>
+
+      <div *ngIf="clickedPharmacy;" class = "custom-search">
+        <form [formGroup]="ratePharmacyForm" (ngSubmit)="ratePharmacy()">
+
+        <input class = "custom-input" type= "text"  formControlName="ratePharmacyID" [(ngModel)]="ratePharmacyID"/>
+
+        <input class="custom-input" type="text" formControlName="ratePharm" [(ngModel)]="ratePharm"/>
+
+
+        <button style="margin-left: 15px;" class="btn-search" type="submit">Rate</button>
+      </form>
+
+        <button style="margin-left: 15px;" class="btn-search" (click)="cancelPharmacyRate()">Cancel</button>
+
+      </div>
+
 
       <table mat-table [dataSource]="dataSourcePh" class="mat-elevation-z8">
 
@@ -140,7 +181,8 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef> Action</th>
           <td mat-cell class="action-cell" *matCellDef="let element">
-            <button (click)="ratePharmacy(element.id)">Rate</button>
+            <button (click)="ratePharmacyClick(element.id)">Rate</button>
+
             <button (click)="writeComplaint(element.id)">Write a complaint</button>
 
 

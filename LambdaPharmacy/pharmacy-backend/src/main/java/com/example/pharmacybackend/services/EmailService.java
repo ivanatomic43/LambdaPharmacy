@@ -19,9 +19,6 @@ public class EmailService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	@Autowired
-	private PatientRepository patientRepository;
-
 	@Async
 	public void sendActivationLink(Patient user) throws MailException {
 

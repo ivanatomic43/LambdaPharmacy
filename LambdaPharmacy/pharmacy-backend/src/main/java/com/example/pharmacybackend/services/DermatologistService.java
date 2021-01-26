@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.pharmacybackend.dto.DermatologistDTO;
-import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
@@ -58,6 +57,14 @@ public class DermatologistService {
     @Transactional
     public EmployedDermatologist saveEmployed(EmployedDermatologist dermatologist) {
         return this.employedDermatologistRepository.save(dermatologist);
+    }
+
+    @Transactional
+    public void updateDermatologistRating(Long id, double rate) {
+        Dermatologist d = dermatologistRepository.findOneById(id);
+        d.setRating(rate);
+        this.save(d);
+
     }
 
     public Dermatologist registerDermatologist(UserRequestDTO newUser) {
@@ -129,6 +136,7 @@ public class DermatologistService {
                         edd.setPrice(dto.getPrice());
                         edd.setRating(0);
                         edd.setPharmacy(pharmacy);
+                        // d.setRating(dto.getRating());
                         edd.setDermatologist(d);
 
                         List<EmployedDermatologist> retDer = pharmacy.getDermatologists();
@@ -149,6 +157,7 @@ public class DermatologistService {
                         retUser.setDateToo(ed.getDateTo().toString());
                         retUser.setPrice(ed.getPrice());
                         retUser.setRating(ed.getRating());
+                        retUser.setRating(ed.getDermatologist().getRating());
 
                         return retUser;
 
@@ -164,6 +173,7 @@ public class DermatologistService {
                     edd.setPrice(dto.getPrice());
                     edd.setRating(0);
                     edd.setPharmacy(pharmacy);
+                    // d.setRating(dto.getRating());
                     edd.setDermatologist(d);
 
                     List<EmployedDermatologist> retDer = pharmacy.getDermatologists();
@@ -309,7 +319,7 @@ public class DermatologistService {
             dto.setDateToo(d.getDateTo().toString());
             dto.setFrom(d.getWorkFrom().toString());
             dto.setTo(d.getWorkTo().toString());
-            dto.setRating(d.getRating());
+            dto.setRating(d.getDermatologist().getRating());
             dto.setPrice(d.getPrice());
             dto.setPharmacyName(d.getPharmacy().getName());
 
@@ -346,7 +356,7 @@ public class DermatologistService {
                             dto.setDateToo(d.getDateTo().toString());
                             dto.setFrom(d.getWorkFrom().toString());
                             dto.setTo(d.getWorkTo().toString());
-                            dto.setRating(d.getRating());
+                            dto.setRating(d.getDermatologist().getRating());
                             dto.setPrice(d.getPrice());
                             dto.setPharmacyName(d.getPharmacy().getName());
 

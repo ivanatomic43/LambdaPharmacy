@@ -28,6 +28,9 @@ public class MedicineReservation {
     @Column
     private Date date;
 
+    @Version
+    private int version;
+
     @Enumerated(EnumType.STRING)
     private MedicineStatus status;
 
@@ -113,6 +116,20 @@ public class MedicineReservation {
      */
     public void setStatus(MedicineStatus status) {
         this.status = status;
+    }
+
+    /**
+     * @return int return the version
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(int version) {
+        this.version = version;
     }
 
 }

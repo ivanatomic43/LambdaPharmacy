@@ -8,7 +8,9 @@ import com.example.pharmacybackend.model.PharmacyMedicine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PharmacyMedicinesRepository extends JpaRepository<PharmacyMedicine, Long> {
 
     PharmacyMedicine findOneById(Long id);

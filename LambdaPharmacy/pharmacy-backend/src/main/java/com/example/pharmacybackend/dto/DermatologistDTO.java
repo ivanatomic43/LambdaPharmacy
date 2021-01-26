@@ -24,6 +24,8 @@ public class DermatologistDTO {
     private double rating;
     private String pharmacyName;
     private String role;
+    private String rateStatus;
+    private double myRate;
 
     public DermatologistDTO() {
     }
@@ -54,7 +56,8 @@ public class DermatologistDTO {
     }
 
     public DermatologistDTO(Long id, String firstName, String lastName, String dateFromm, String dateToo, String from,
-            String to, String pharmacyName, double price, double rating, String role) {
+            String to, String pharmacyName, double price, double rating, String role, String rateStatus,
+            double myRate) {
         this.id = id;
         this.setFirstName(firstName);
         this.lastName = lastName;
@@ -66,6 +69,8 @@ public class DermatologistDTO {
         this.rating = rating;
         this.price = price;
         this.role = role;
+        this.rateStatus = rateStatus;
+        this.myRate = myRate;
     }
 
     /**
@@ -276,6 +281,34 @@ public class DermatologistDTO {
      */
     public void setRole(String role) {
         this.role = role;
+    }
+
+    /**
+     * @return String return the rateStatus
+     */
+    public String getRateStatus() {
+        return rateStatus;
+    }
+
+    /**
+     * @param rateStatus the rateStatus to set
+     */
+    public void setRateStatus(String rateStatus) {
+        this.rateStatus = rateStatus;
+    }
+
+    /**
+     * @return double return the myRate
+     */
+    public double getMyRate() {
+        return myRate;
+    }
+
+    /**
+     * @param myRate the myRate to set
+     */
+    public void setMyRate(double myRate) {
+        this.myRate = myRate;
     }
 
 }

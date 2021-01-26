@@ -12,16 +12,14 @@ import com.example.pharmacybackend.model.Complaint;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Patient;
-import com.example.pharmacybackend.model.Pharmacist;
-import com.example.pharmacybackend.model.Pharmacy;
+
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.model.Vacation;
 import com.example.pharmacybackend.repository.ComplaintRepository;
-import com.example.pharmacybackend.repository.DermatologistRepository;
+
 import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
-import com.example.pharmacybackend.repository.PharmacistRepository;
-import com.example.pharmacybackend.repository.PharmacyRepository;
+
 import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.repository.VacationRepository;
 
@@ -37,15 +35,6 @@ public class SysAdminService {
 
     @Autowired
     private PatientRepository patientRepository;
-
-    @Autowired
-    private PharmacyRepository pharmacyRepository;
-
-    @Autowired
-    private PharmacistRepository pharmacistRepository;
-
-    @Autowired
-    private DermatologistRepository dermatologistRepository;
 
     @Autowired
     private UserRepository userRepository;

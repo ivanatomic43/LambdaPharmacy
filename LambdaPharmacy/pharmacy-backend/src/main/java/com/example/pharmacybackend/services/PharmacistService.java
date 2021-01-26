@@ -1,7 +1,7 @@
 package com.example.pharmacybackend.services;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.pharmacybackend.dto.PharmacistDTO;
 import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.dto.SearchPharmacistParams;
-import com.example.pharmacybackend.dto.UserDTO;
-import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Authority;
@@ -53,6 +51,13 @@ public class PharmacistService {
     @Transactional
     public Pharmacist savePharmacist(Pharmacist p) {
         return this.pharmacistRepository.save(p);
+    }
+
+    @Transactional
+    public void updatePharmacistRating(Long id, double rate) {
+        Pharmacist p = pharmacistRepository.findOneById(id);
+        p.setRating(rate);
+        this.savePharmacist(p);
     }
 
     public PharmacistDTO registerPharmacist(PharmacistDTO newUser, Long id) {

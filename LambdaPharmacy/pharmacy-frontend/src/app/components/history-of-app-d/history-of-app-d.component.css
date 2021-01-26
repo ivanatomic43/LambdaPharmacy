@@ -86,3 +86,37 @@ table {
   height: 35px;
   border-radius: 16px;
 }
+.custom-search{
+
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+
+}
+.custom-input{
+
+  height: 30px;
+  width: 170px;
+  margin-left: 10px;
+  border-radius: 3px;
+  border: #0f6674;
+  text-align: center;
+
+}
+.btn-search{
+  min-width: 100px;
+  height: 50px;
+  padding: 0 15px;
+  background: #ff8300;
+  white-space: nowrap;
+  border-radius: 3px;
+  font-size: 16px;
+  color: #fff;
+  transition: all .2s ease-out, color .2s ease-out;
+  border: 0;
+  cursor: pointer;
+
+}

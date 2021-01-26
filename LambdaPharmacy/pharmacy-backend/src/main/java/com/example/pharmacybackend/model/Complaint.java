@@ -22,6 +22,9 @@ public class Complaint {
     @ManyToOne
     private Patient patient;
 
+    @Version
+    private int version;
+
     /*
      * @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) private
      * Dermatologist dermatologist;
@@ -89,6 +92,20 @@ public class Complaint {
      */
     public void setStatus(ComplaintStatus status) {
         this.status = status;
+    }
+
+    /**
+     * @return int return the version
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(int version) {
+        this.version = version;
     }
 
 }

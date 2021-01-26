@@ -45,6 +45,9 @@ public class Appointment {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Pharmacy pharmacy;
 
+	@Version
+	private int version;
+
 	/**
 	 * @return Long return the id
 	 */
@@ -197,6 +200,20 @@ public class Appointment {
 	 */
 	public void setPharmacy(Pharmacy pharmacy) {
 		this.pharmacy = pharmacy;
+	}
+
+	/**
+	 * @return int return the version
+	 */
+	public int getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 }

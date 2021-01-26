@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacybackend.dto.UserDTO;
-import com.example.pharmacybackend.model.Dermatologist;
+
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.repository.PatientRepository;
-import com.example.pharmacybackend.repository.PharmacyRepository;
+
 import com.example.pharmacybackend.repository.UserRepository;
 
 @Service
@@ -26,9 +26,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@Autowired
-	private PharmacyRepository pharmacyRepository;
 
 	@Autowired
 	private PatientRepository patientRepository;

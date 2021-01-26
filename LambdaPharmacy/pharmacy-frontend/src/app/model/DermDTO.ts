@@ -11,7 +11,9 @@ constructor(
   public price: any,
   public rating:any,
   public pharmacyName: string,
-  public role : string
+  public role : string,
+  public rateStatus: string,
+  public myRate: any
 ){}
 
 
