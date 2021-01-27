@@ -26,6 +26,7 @@ public class MedicineDTO {
 	private double price;
 	private double rating;
 	private String priceLastsTo;
+	private double myRate;
 
 	public MedicineDTO() {
 	}
@@ -55,7 +56,7 @@ public class MedicineDTO {
 	public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer,
 			String structure, String modee, String note, Long pharmacyID, String pharmacyName, String status,
 			String contraindications, String dailyDose, double quantity, double price, double rating,
-			String priceLastsTo) {
+			String priceLastsTo, double myRate) {
 		super();
 		this.id = id;
 		this.medicineCode = medicineCode;
@@ -75,6 +76,7 @@ public class MedicineDTO {
 		this.price = price;
 		this.rating = rating;
 		this.priceLastsTo = priceLastsTo;
+		this.myRate = myRate;
 
 	}
 
@@ -288,6 +290,20 @@ public class MedicineDTO {
 	 */
 	public void setPriceLastsTo(String priceLastsTo) {
 		this.priceLastsTo = priceLastsTo;
+	}
+
+	/**
+	 * @return double return the myRate
+	 */
+	public double getMyRate() {
+		return myRate;
+	}
+
+	/**
+	 * @param myRate the myRate to set
+	 */
+	public void setMyRate(double myRate) {
+		this.myRate = myRate;
 	}
 
 }

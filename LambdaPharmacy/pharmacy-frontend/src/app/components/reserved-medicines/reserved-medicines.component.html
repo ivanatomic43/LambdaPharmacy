@@ -38,7 +38,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
-          <button (click)="pickUp(element.id)">Pick up</button>
+          <button (click)="pickUp(element.medicineID, element.pharmacyID)">Pick up</button>
           <button (click)="cancel(element.id)">Cancel</button>
 
 

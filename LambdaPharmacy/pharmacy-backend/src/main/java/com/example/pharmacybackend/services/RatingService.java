@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.example.pharmacybackend.enumerations.RateStatus;
 import com.example.pharmacybackend.model.Dermatologist;
+import com.example.pharmacybackend.model.Medicine;
 import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.Rating;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.repository.DermatologistRepository;
+import com.example.pharmacybackend.repository.MedicineRepository;
 import com.example.pharmacybackend.repository.PharmacistRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.repository.RatingRepository;
@@ -39,6 +41,12 @@ public class RatingService {
 
     @Autowired
     private PharmacyRepository pharmacyRepository;
+
+    @Autowired
+    private MedicineRepository medicineRepository;
+
+    @Autowired
+    private MedicineService medicineService;
 
     public Rating save(Rating r) {
         return this.ratingRepository.save(r);
@@ -202,6 +210,56 @@ public class RatingService {
                 double rating = (double) zbir / rates.size();
 
                 pharmacyService.updatePharmacyRating(id, rating);
+                return rating;
+
+            }
+
+        }
+        return 0;
+    }
+
+    public double rateMedicine(Long id, Integer rate, User user) {
+
+        Medicine medicine = medicineRepository.findOneById(id);
+
+        Rating rateModel = new Rating();
+        rateModel.setRate(rate);
+        rateModel.setUser(user);
+        rateModel.setMedicine(medicine);
+        this.save(rateModel);
+
+        List<Integer> rates = this.medicineRates(id);
+        int zbir = 0;
+        for (int i = 0; i < rates.size(); i++)
+            zbir += rates.get(i);
+
+        double rating = (double) zbir / rates.size();
+
+        medicineService.updateMedicineRating(id, rate);
+
+        return rating;
+
+    }
+
+    public double changeRateMedicine(Long id, Integer rate, User user) {
+
+        Medicine medicine = medicineRepository.findOneById(id);
+        List<Rating> allRates = ratingRepository.findAll();
+
+        for (Rating r : allRates) {
+            if (r.getUser().getId() == user.getId() && r.getMedicine().getId() == id) {
+
+                r.setRate(rate);
+                this.save(r);
+
+                List<Integer> rates = this.medicineRates(id);
+                int zbir = 0;
+                for (int i = 0; i < rates.size(); i++)
+                    zbir += rates.get(i);
+
+                double rating = (double) zbir / rates.size();
+
+                medicineService.updateMedicineRating(id, rating);
                 return rating;
 
             }

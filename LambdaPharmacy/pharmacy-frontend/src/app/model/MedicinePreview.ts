@@ -18,7 +18,8 @@ export class MedicinePreview{
     public price: number,
     public rating: number,
     public priceFrom: string,
-    public priceTo: string
+    public priceTo: string,
+    public myRate: string
   ) {
   }
 

@@ -194,4 +194,39 @@ public class MedicineController {
 		return new ResponseEntity<>(changed, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/pickUpMedicine/{id}/{pharmacyID}")
+	@PreAuthorize("hasRole('PATIENT')")
+	public ResponseEntity<?> pickUpMedicine(@PathVariable("id") Long id, @PathVariable("pharmacyID") Long pharmacyID,
+			HttpServletRequest request) {
+		System.out.println("USAo ovde");
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		boolean picked = medicineService.pickUpMedicine(id, pharmacyID, user.getId());
+
+		if (!picked) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/getPickedUpMedicines", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('PATIENT')")
+	public ResponseEntity<?> getPickedUpMedicines(HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		List<MedicineDTO> retList = medicineService.getAllPicked(user.getId());
+
+		if (retList.isEmpty()) {
+			return new ResponseEntity<>(retList, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(retList, HttpStatus.OK);
+	}
+
 }

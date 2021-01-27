@@ -8,6 +8,7 @@ import com.example.pharmacybackend.repository.MedicineRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
 import com.example.pharmacybackend.repository.PharmacyMedicinesRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
+import com.example.pharmacybackend.repository.RatingRepository;
 import com.example.pharmacybackend.repository.ReservationRepository;
 import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.dto.MedicineDTO;
@@ -44,6 +45,9 @@ public class MedicineService {
 	@Autowired
 	private PharmacyService pharmacyService;
 
+	@Autowired
+	private RatingRepository ratingRepository;
+
 	@Transactional
 	public Medicine save(Medicine medicine) {
 		return this.medicineRepository.save(medicine);
@@ -57,6 +61,13 @@ public class MedicineService {
 	@Transactional
 	public PharmacyMedicine savePharmacyMedicine(PharmacyMedicine pm) {
 		return this.pharmacyMedicinesRepository.save(pm);
+	}
+
+	@Transactional
+	public void updateMedicineRating(Long id, double rate) {
+		Medicine m = medicineRepository.findOneById(id);
+		m.setRating(rate);
+		this.save(m);
 	}
 
 	public List<MedicineDTO> getAllMedicine() {
@@ -178,6 +189,7 @@ public class MedicineService {
 
 				MedicineReservation medRes = new MedicineReservation();
 				medRes.setDate(dto.getDate());
+				medRes.setStatus(MedicineStatus.RESERVED);
 
 				this.saveMedicineReservation(medRes);
 
@@ -218,20 +230,22 @@ public class MedicineService {
 
 		if (!myRes.isEmpty()) {
 			for (MedicineReservation m : myRes) {
+				if (m.getStatus().equals(MedicineStatus.RESERVED)) {
 
-				ReservationParamsDTO dto = new ReservationParamsDTO();
-				dto.setId(m.getId());
-				dto.setDatee(m.getDate().toString());
-				dto.setMedicineID(m.getMedicine().getId());
-				dto.setMedicineName(m.getMedicine().getName());
-				dto.setPharmacyID(m.getPharmacy().getId());
-				dto.setPharmacyName(m.getPharmacy().getName());
-				dto.setStatus(MedicineStatus.RESERVED.toString());
-				dto.setQuantity(1);
+					ReservationParamsDTO dto = new ReservationParamsDTO();
+					dto.setId(m.getId());
+					dto.setDatee(m.getDate().toString());
+					dto.setMedicineID(m.getMedicine().getId());
+					dto.setMedicineName(m.getMedicine().getName());
+					dto.setPharmacyID(m.getPharmacy().getId());
+					dto.setPharmacyName(m.getPharmacy().getName());
+					dto.setStatus(m.getStatus().toString());
 
-				retList.add(dto);
+					dto.setQuantity(1);
+
+					retList.add(dto);
+				}
 			}
-
 		}
 
 		return retList;
@@ -548,6 +562,75 @@ public class MedicineService {
 		}
 
 		return changed;
+	}
+
+	public boolean pickUpMedicine(Long id, Long pharmacyID, Long userID) {
+
+		boolean picked = false;
+
+		List<MedicineReservation> medicines = reservationRepository.findAll();
+
+		for (MedicineReservation mr : medicines) {
+			if (mr.getMedicine().getId() == id && mr.getPharmacy().getId() == pharmacyID
+					&& mr.getPatient().getId() == userID) {
+				mr.setStatus(MedicineStatus.PICKED_UP);
+				reservationRepository.save(mr);
+				picked = true;
+			}
+
+		}
+
+		return picked;
+
+	}
+
+	public List<MedicineDTO> getAllPicked(Long userID) {
+
+		List<MedicineReservation> allmeds = reservationRepository.findAll();
+		List<Rating> allRates = ratingRepository.findAll();
+
+		List<MedicineDTO> retList = new ArrayList<>();
+
+		for (MedicineReservation myMed : allmeds) {
+
+			if (myMed.getPatient().getId() == userID && myMed.getStatus().equals(MedicineStatus.PICKED_UP)) {
+
+				MedicineDTO dto = new MedicineDTO();
+				dto.setId(myMed.getMedicine().getId());
+				dto.setMedicineCode(myMed.getMedicine().getMedicine_code());
+				dto.setMedType(myMed.getMedicine().getMed_type());
+				dto.setName(myMed.getMedicine().getName());
+				dto.setContraindications(myMed.getMedicine().getContraindications());
+				dto.setDailyDose(myMed.getMedicine().getDailyDose());
+				dto.setModee(myMed.getMedicine().getMode().toString());
+				dto.setNote(myMed.getMedicine().getNote());
+				dto.setProducer(myMed.getMedicine().getProducer());
+				dto.setShape(myMed.getMedicine().getShape());
+				dto.setStructure(myMed.getMedicine().getStructure());
+
+				for (Rating r : allRates) {
+					if (r.getMedicine() != null) {
+						if (r.getUser().getId() == userID && r.getMedicine().getId() == dto.getId()) {
+							dto.setMyRate(r.getRate());
+						}
+					} else {
+						dto.setMyRate(0);
+					}
+				}
+
+				dto.setPharmacyID(myMed.getPharmacy().getId());
+				dto.setPharmacyName(myMed.getPharmacy().getName());
+
+				dto.setRating(myMed.getMedicine().getRating());
+
+				retList.add(dto);
+
+			}
+
+		}
+
+		return retList;
+
 	}
 
 }

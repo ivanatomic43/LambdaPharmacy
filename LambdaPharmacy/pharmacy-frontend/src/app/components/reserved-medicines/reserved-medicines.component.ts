@@ -67,4 +67,18 @@ export class ReservedMedicinesComponent implements OnInit {
     });
   }
 
+  pickUp(id:number, pharmacyID: number){
+
+
+    this.medicineService.pickUpMedicine(id, pharmacyID).subscribe(response => {
+      alert("Medicine picked up!");
+      this.fetchReservations();
+    }, error => {
+      if(error.status == 404){
+        this.dataSource2 = new MatTableDataSource();
+      }
+    });
+
+  }
+
 }

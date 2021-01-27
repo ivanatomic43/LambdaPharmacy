@@ -41,7 +41,7 @@ public class Rating implements Serializable {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", nullable = true)
-    private PharmacyMedicine medicine;
+    private Medicine medicine;
 
     @Version
     private int version;
@@ -137,14 +137,14 @@ public class Rating implements Serializable {
     /**
      * @return PharmacyMedicine return the medicine
      */
-    public PharmacyMedicine getMedicine() {
+    public Medicine getMedicine() {
         return medicine;
     }
 
     /**
      * @param medicine the medicine to set
      */
-    public void setMedicine(PharmacyMedicine medicine) {
+    public void setMedicine(Medicine medicine) {
         this.medicine = medicine;
     }
 

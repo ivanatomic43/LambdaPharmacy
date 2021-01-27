@@ -2,20 +2,20 @@ package com.example.pharmacybackend.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.example.pharmacybackend.model.User;
-import com.example.pharmacybackend.repository.PharmacyRepository;
+
 import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.RatingService;
 import com.example.pharmacybackend.services.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.*;
 
@@ -109,6 +109,42 @@ public class RatingController {
         User user = userService.findByUsername(username);
 
         double rating = ratingService.changeRatePharmacy(id, rate, user);
+
+        if (rating != 0) {
+            return new ResponseEntity<>(rating, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/rateMedicine/{id}/{rate}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> rateMedicine(@PathVariable("id") Long id, @PathVariable("rate") Integer rate,
+            HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        double rating = ratingService.rateMedicine(id, rate, user);
+
+        if (rating != 0) {
+            return new ResponseEntity<>(rating, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/changeRateMedicine/{id}/{rate}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> changeRateMedicine(@PathVariable("id") Long id, @PathVariable("rate") Integer rate,
+            HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        double rating = ratingService.changeRateMedicine(id, rate, user);
 
         if (rating != 0) {
             return new ResponseEntity<>(rating, HttpStatus.OK);

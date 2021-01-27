@@ -20,6 +20,6 @@ public interface PharmacistRepository extends JpaRepository<Pharmacist, Long> {
 
     @Modifying
     @Query(value = "update pharmacist set pharmacist.rating=?1 where pharmacist.id=?2", nativeQuery = true)
-    public void updatePharmacistRating(double rating, Long dermID);
+    public void updatePharmacistRating(double rating, Long pharmID);
 
 }

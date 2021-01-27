@@ -1,3 +1,65 @@
-<p>
-  all-my-medicines works!
-</p>
+<div style="background: url(/assets/back.jpg);">
+  <div class="preview-users">
+    <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Consumed medicines</h1>
+
+    <div *ngIf="clicked" class = "custom-search">
+      <form [formGroup]="rateForm" >
+
+      <input class = "custom-input" type= "text"  formControlName="rateMedicineID" [(ngModel)]="rateMedicineID"/>
+      <input class = "custom-input" type= "text"  formControlName="rateName" [(ngModel)]="rateName"/>
+
+      <input class="custom-input" type="text" formControlName="rate" [(ngModel)]="rate"/>
+
+
+      <button *ngIf="!clickedChange"  style="margin-left: 15px;" class="btn-search" type="submit" (click)="rateMedicine()">Rate</button>
+      <button *ngIf="clickedChange" style ="margin-left: 15px;" class = "btn-search" type="submit" (click)="changeMedicineRate()">Change rate</button>
+
+    </form>
+      <button style="margin-left: 15px;" class="btn-search" (click)="cancelUserRate()">Cancel</button>
+
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Medicine code </th>
+        <td mat-cell *matCellDef="let element"> {{element.medicineCode}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Medicine name</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rating">
+        <th mat-header-cell *matHeaderCellDef>Rating</th>
+        <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="myRate">
+        <th mat-header-cell *matHeaderCellDef>My rate</th>
+        <td mat-cell *matCellDef="let element"> {{element.myRate}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef > Action</th>
+        <td mat-cell class="action-cell" *matCellDef="let element">
+          <button *ngIf="element.myRate ===0" (click)="rateMedicineClick(element.id, element.name)">Rate</button>
+          <button *ngIf="element.myRate !=0" (click)="rateMedicineClick(element.id, element.name)">Change rate</button>
+
+
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+  </div>
