@@ -49,7 +49,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef > Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
-          <button *ngIf="element.myRate ===0" (click)="rateMedicineClick(element.id, element.name)">Rate</button>
+          <button *ngIf="element.myRate === 0" (click)="rateMedicineClick(element.id, element.name)">Rate</button>
           <button *ngIf="element.myRate !=0" (click)="rateMedicineClick(element.id, element.name)">Change rate</button>
 
 

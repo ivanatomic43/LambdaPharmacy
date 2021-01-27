@@ -79,7 +79,7 @@ public class SysAdminController {
     }
 
     @RequestMapping(value = "/getAllVacationRequests", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('SYS_ADMIN')")
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
     public ResponseEntity<?> getAllVacations(HttpServletRequest request) {
 
         List<VacationDTO> vacations = this.sysAdminService.getAllVacationRequests();
@@ -91,7 +91,7 @@ public class SysAdminController {
     }
 
     @RequestMapping(value = "/approveVacation/{id}/{userid}", method = RequestMethod.PUT)
-    @PreAuthorize("hasRole('SYS_ADMIN')")
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
     public ResponseEntity<?> approveVacation(@PathVariable("id") Long id, @PathVariable("userid") Long userid) {
 
         boolean approved = this.sysAdminService.approveVacation(id, userid);
@@ -103,7 +103,7 @@ public class SysAdminController {
     }
 
     @RequestMapping(value = "/denyVacation/{id}/{userid}/{text}", method = RequestMethod.PUT)
-    @PreAuthorize("hasRole('SYS_ADMIN')")
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
     public ResponseEntity<?> denyVacation(@PathVariable("id") Long id, @PathVariable("userid") Long userid,
             @PathVariable("text") String text) {
 
