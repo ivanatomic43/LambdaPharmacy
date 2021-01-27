@@ -9,10 +9,12 @@ import {map} from 'rxjs/operators';
 import {catchError} from 'rxjs/operators';
 import {Observable, throwError} from "rxjs";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RegistrationParams } from '../model/registrationParams';
 
 const authUrl = 'http://localhost:8051/auth';
 const userUrl = 'http://localhost:8051/api';
 const pharmacyUrl = 'http://localhost:8051/pharmacy';
+const sysAdminUrl = 'http://localhost:8051/sysAdmin';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +27,8 @@ export class UserService {
   getAdminsForPharmacyUrl = pharmacyUrl + '/getAdminsForPharmacy/';
   checkIfSubUrl = userUrl + '/checkIfSub/';
   sendComplaintUrl = userUrl + '/sendComplaint';
+  registerSysAdminUrl= sysAdminUrl + '/registerSysAdmin';
+  registerSupplierUrl = sysAdminUrl + '/registerSupplier';
 
 
   complaintForm: FormGroup = new FormGroup({
@@ -159,6 +163,44 @@ export class UserService {
   checkIfSub(id:number){
 
     return this.http.post(this.checkIfSubUrl + id, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+  registerSysAdmin(adminParams : RegistrationParams){
+
+    return this.http.post(this.registerSysAdminUrl, adminParams, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+  }
+
+  registerSupplier(supplierParams : RegistrationParams){
+
+    return this.http.post(this.registerSupplierUrl, supplierParams, {
 
     })
       .pipe(

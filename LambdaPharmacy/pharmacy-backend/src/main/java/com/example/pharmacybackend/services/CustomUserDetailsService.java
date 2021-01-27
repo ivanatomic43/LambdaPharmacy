@@ -66,6 +66,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (user.getAuthority().getName().equals("ROLE_PHARMACY_ADMIN")) {
 			user.setFirstLogin(false);
 		}
+		if (user.getAuthority().getName().equals("ROLE_SYS_ADMIN")) {
+			user.setFirstLogin(false);
+		}
+		if (user.getAuthority().getName().equals("ROLE_SUPPLIER")) {
+			user.setFirstLogin(false);
+		}
 
 		userRepository.save(user);
 

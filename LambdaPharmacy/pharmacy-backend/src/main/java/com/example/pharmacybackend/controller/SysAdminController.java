@@ -6,7 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.example.pharmacybackend.dto.ComplaintDTO;
 import com.example.pharmacybackend.dto.ReplyDTO;
+import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.dto.VacationDTO;
+import com.example.pharmacybackend.model.Supplier;
+import com.example.pharmacybackend.model.SystemAdministrator;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.SysAdminService;
@@ -28,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/sysAdmin")
 public class SysAdminController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     TokenUtils tokenUtils;
@@ -113,6 +118,48 @@ public class SysAdminController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(denied, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/registerSysAdmin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> registerSysAdmin(@RequestBody UserRequestDTO userRequest) {
+
+        User exist = userService.findByUsername(userRequest.getUsername());
+
+        if (exist != null) {
+            logger.warn("SYSADMINUSERNAMEEXIST");
+            return new ResponseEntity<>(exist, HttpStatus.CONFLICT);
+        }
+
+        SystemAdministrator a = new SystemAdministrator();
+        a = sysAdminService.registerSysAdmin(userRequest);
+
+        if (a == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(a, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/registerSupplier", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> registerSupplier(@RequestBody UserRequestDTO userRequest) {
+
+        User exist = userService.findByUsername(userRequest.getUsername());
+
+        if (exist != null) {
+            logger.warn("SUPPLIERUSERNAMEEXIST");
+            return new ResponseEntity<>(exist, HttpStatus.CONFLICT);
+        }
+
+        Supplier s = new Supplier();
+        s = sysAdminService.registerSupplier(userRequest);
+
+        if (s == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(s, HttpStatus.OK);
     }
 
 }

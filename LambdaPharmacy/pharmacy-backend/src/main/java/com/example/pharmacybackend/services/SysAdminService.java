@@ -5,25 +5,30 @@ import java.util.List;
 
 import com.example.pharmacybackend.dto.ComplaintDTO;
 import com.example.pharmacybackend.dto.ReplyDTO;
+import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.dto.VacationDTO;
 import com.example.pharmacybackend.enumerations.ComplaintStatus;
 import com.example.pharmacybackend.enumerations.VacationStatus;
+import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Complaint;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Patient;
-
+import com.example.pharmacybackend.model.Supplier;
+import com.example.pharmacybackend.model.SystemAdministrator;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.model.Vacation;
 import com.example.pharmacybackend.repository.ComplaintRepository;
 
 import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
-
+import com.example.pharmacybackend.repository.SupplierRepository;
+import com.example.pharmacybackend.repository.SysAdminRepository;
 import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.repository.VacationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +45,12 @@ public class SysAdminService {
     private UserRepository userRepository;
 
     @Autowired
+    private SysAdminRepository sysAdminRepository;
+
+    @Autowired
+    private SupplierRepository supplierRepository;
+
+    @Autowired
     private EmailService emailService;
 
     @Autowired
@@ -47,6 +58,9 @@ public class SysAdminService {
 
     @Autowired
     private VacationRepository vacationRepository;
+
+    @Autowired
+    private AuthorityService authorityService;
 
     @Transactional
     public Complaint saveComplaint(Complaint c) {
@@ -56,6 +70,14 @@ public class SysAdminService {
     @Transactional
     public Vacation saveVacation(Vacation v) {
         return this.vacationRepository.save(v);
+    }
+
+    public SystemAdministrator saveAdmin(SystemAdministrator sysAdmin) {
+        return this.sysAdminRepository.save(sysAdmin);
+    }
+
+    public Supplier saveSupplier(Supplier supplier) {
+        return this.supplierRepository.save(supplier);
     }
 
     public boolean sendComplaint(ComplaintDTO complaint, Long userID) {
@@ -202,6 +224,60 @@ public class SysAdminService {
 
         return false;
 
+    }
+
+    public SystemAdministrator registerSysAdmin(UserRequestDTO newUser) {
+
+        SystemAdministrator a = new SystemAdministrator();
+
+        a.setUsername(newUser.getUsername());
+        a.setFirstName(newUser.getFirstName());
+        a.setLastName(newUser.getLastName());
+        a.setEmail(newUser.getEmail());
+        a.setAddress(newUser.getAddress());
+        a.setPhoneNumber(newUser.getPhoneNumber());
+        a.setFirstLogin(true);
+        a.setApproved(true);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
+        String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
+        a.setPassword(hashedPass);
+
+        Authority role = new Authority();
+        role = authorityService.findByName("ROLE_SYS_ADMIN");
+        a.setAuthority(role);
+
+        this.saveAdmin(a);
+
+        return a;
+    }
+
+    public Supplier registerSupplier(UserRequestDTO newUser) {
+
+        Supplier s = new Supplier();
+
+        s.setUsername(newUser.getUsername());
+        s.setFirstName(newUser.getFirstName());
+        s.setLastName(newUser.getLastName());
+        s.setEmail(newUser.getEmail());
+        s.setAddress(newUser.getAddress());
+        s.setPhoneNumber(newUser.getPhoneNumber());
+        s.setFirstLogin(true);
+        s.setApproved(true);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
+        String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
+        s.setPassword(hashedPass);
+
+        Authority role = new Authority();
+        role = authorityService.findByName("ROLE_SUPPLIER");
+        s.setAuthority(role);
+
+        this.saveSupplier(s);
+
+        return s;
     }
 
 }

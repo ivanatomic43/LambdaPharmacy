@@ -1,3 +1,5 @@
+import { RegisterSupplierComponent } from './components/register-supplier/register-supplier.component';
+import { RegisterSysAdminComponent } from './components/register-sys-admin/register-sys-admin.component';
 import { VacationsComponent } from './components/vacations/vacations.component';
 import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { MyPharmacyComponent } from './components/my-pharmacy/my-pharmacy.component';
@@ -167,7 +169,9 @@ const routes: Routes = [
     ]
 
   },
-  {path: 'vacations', component: VacationsComponent}
+  {path: 'vacations', component: VacationsComponent},
+  {path: 'register-sys-admin', component :RegisterSysAdminComponent},
+  {path: 'register-supplier', component: RegisterSupplierComponent}
 
 ];
 

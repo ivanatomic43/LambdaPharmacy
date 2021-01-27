@@ -33,6 +33,8 @@ export class SearchComponent implements OnInit {
   pharmacyRating: number;
 
   isPharmacyAdmin = false;
+  isSysAdmin = false;
+  isSupplier = false;
   isFirstLogin = false;
   profil : UserDTO;
   show = true;
@@ -73,8 +75,28 @@ export class SearchComponent implements OnInit {
       this.isPharmacyAdmin = true;
       this.isFirstLogin = false;
       this.show= false;
+    } else if( role =='ROLE_SYS_ADMIN' && firstTime == true) {
+      this.isSysAdmin = true;
+      this.isFirstLogin = true;
+      this.show = false;
+
+    } else if( role == 'ROLE_SYS_ADMIN' && firstTime == false) {
+      this.isPharmacyAdmin = true;
+      this.isFirstLogin = false;
+      this.show= false;
+    } else if( role =='ROLE_SUPPLIER' && firstTime == true) {
+      this.isSysAdmin = true;
+      this.isFirstLogin = true;
+      this.show = false;
+
+    } else if( role == 'ROLE_SUPPLIER' && firstTime == false) {
+      this.isPharmacyAdmin = true;
+      this.isFirstLogin = false;
+      this.show= false;
     } else {
       this.isPharmacyAdmin = false;
+      this.isSysAdmin = false;
+      this.isSupplier = false;
       this.isFirstLogin = false;
       this.show = true;
     }

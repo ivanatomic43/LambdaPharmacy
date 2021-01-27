@@ -63,6 +63,8 @@ import { EditPricelistComponent } from './components/edit-pricelist/edit-priceli
 import { MaterialModule } from './material/material.modul';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { VacationsComponent } from './components/vacations/vacations.component';
+import { RegisterSysAdminComponent } from './components/register-sys-admin/register-sys-admin.component';
+import { RegisterSupplierComponent } from './components/register-supplier/register-supplier.component';
 
 
 
@@ -117,7 +119,9 @@ import { VacationsComponent } from './components/vacations/vacations.component';
     MyPharmacyComponent,
     PricelistComponent,
     EditPricelistComponent,
-    VacationsComponent
+    VacationsComponent,
+    RegisterSysAdminComponent,
+    RegisterSupplierComponent
 
 
   ],
