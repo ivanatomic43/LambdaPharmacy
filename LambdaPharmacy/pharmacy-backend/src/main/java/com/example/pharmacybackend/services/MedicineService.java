@@ -70,6 +70,11 @@ public class MedicineService {
 		this.save(m);
 	}
 
+	@Transactional
+	public void deleteMedicineFromPharmacy(Long id) {
+		pharmacyMedicinesRepository.deleteMedicineFromPharmacy(id);
+	}
+
 	public List<MedicineDTO> getAllMedicine() {
 
 		List<PharmacyMedicine> medicinesInPharmacies = pharmacyMedicinesRepository.findAll();
@@ -631,6 +636,40 @@ public class MedicineService {
 
 		return retList;
 
+	}
+
+	@Transactional
+	public boolean removeMedicine(Long id, Long pharmacyID) {
+
+		boolean removed = false;
+		List<MedicineReservation> reservations = reservationRepository.findAll();
+
+		for (MedicineReservation mr : reservations) {
+
+			if (mr.getMedicine().getId() == id && mr.getPharmacy().getId() == pharmacyID
+					&& mr.getStatus().equals(MedicineStatus.RESERVED)) {
+				System.out.println("Can't remove, it's reserved");
+				return removed;
+
+			}
+
+		}
+
+		List<PharmacyMedicine> medicines = pharmacyMedicinesRepository.findAll();
+
+		for (PharmacyMedicine pm : medicines) {
+			if (pm.getMedicine().getId() == id && pm.getPharmacy().getId() == pharmacyID) {
+
+				pm.setMedicine(null);
+				pm.setPharmacy(null);
+
+				this.deleteMedicineFromPharmacy(pm.getId());
+				return removed = true;
+
+			}
+		}
+
+		return removed;
 	}
 
 }

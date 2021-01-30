@@ -57,4 +57,20 @@ export class MedicineDetailsComponent implements OnInit {
 
   }
 
+  removeMedicine(id:number, pharmID: number){
+
+    this.medicineService.removeMedicine(id, pharmID).subscribe(response =>{
+      alert("Medicine removed from pharmacy!");
+      this.router.navigate(['/pharmacy-medicines/' + pharmID]);
+    }, error => {
+      if(error.status == 404){
+        alert("Medicine not found!");
+      }
+      if(error.status ==400){
+        alert("Reserved medicine can not be deleted!");
+      }
+    });
+
+  }
+
 }

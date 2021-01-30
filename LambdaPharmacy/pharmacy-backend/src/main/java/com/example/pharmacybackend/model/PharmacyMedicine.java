@@ -33,6 +33,9 @@ public class PharmacyMedicine {
     @Column
     private Date priceLastsTo;
 
+    @Version
+    private int version;
+
     /**
      * @return Long return the id
      */
@@ -129,6 +132,20 @@ public class PharmacyMedicine {
      */
     public void setPriceLastsTo(Date priceLastsTo) {
         this.priceLastsTo = priceLastsTo;
+    }
+
+    /**
+     * @return int return the version
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(int version) {
+        this.version = version;
     }
 
 }

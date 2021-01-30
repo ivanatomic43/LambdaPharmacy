@@ -229,4 +229,17 @@ public class MedicineController {
 		return new ResponseEntity<>(retList, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/removeMedicine/{id}/{pharmacyID}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> removeMedicine(@PathVariable("id") Long id, @PathVariable("pharmacyID") Long pharmacyID) {
+
+		boolean removed = medicineService.removeMedicine(id, pharmacyID);
+
+		if (!removed) {
+			return new ResponseEntity<>(removed, HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(removed, HttpStatus.OK);
+	}
+
 }

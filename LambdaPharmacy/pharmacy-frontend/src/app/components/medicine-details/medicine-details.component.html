@@ -33,6 +33,8 @@
                   <h4>{{fetchedMedicine.name}}</h4>
                   <h5>Price: {{fetchedMedicine.price}},00 din.</h5>
                   <h5>Rating: {{fetchedMedicine.rating}}</h5>
+                  <button *ngIf="isPharmacyAdmin" style="margin-left: 15px;" class="btn-search" (click)="editMedicine(fetchedMedicine.id)" >Edit</button>
+                  <button *ngIf="isPharmacyAdmin" style="margin-left: 15px;" class="btn-search" (click)="removeMedicine(fetchedMedicine.id, fetchedMedicine.pharmacyID)">Remove</button>
 
 
 

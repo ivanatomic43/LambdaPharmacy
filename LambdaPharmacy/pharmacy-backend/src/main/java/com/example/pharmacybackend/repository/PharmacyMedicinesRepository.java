@@ -25,4 +25,7 @@ public interface PharmacyMedicinesRepository extends JpaRepository<PharmacyMedic
     @Query(value = "update pharmacy_medicines pm set pm.medicine_id = ?1, pm.pharmacy_id = ?2, pm.price_lasts_to = ?3 where pm.id = ?4", nativeQuery = true)
     public void updateMedPriceLastsTo(Long medID, Long pharmID, Date priceLastsTo, Long id);
 
+    @Modifying
+    @Query(value = "delete from pharmacy_medicines where pharmacy_medicines.id=?1", nativeQuery = true)
+    public void deleteMedicineFromPharmacy(Long id);
 }

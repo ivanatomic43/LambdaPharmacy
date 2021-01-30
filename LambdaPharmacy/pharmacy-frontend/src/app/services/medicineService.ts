@@ -34,6 +34,7 @@ export class MedicineService {
   editPriceUrl = medicineUrl + '/editPrice/';
   pickUpMedicineUrl = medicineUrl +'/pickUpMedicine/';
   getAllPickedUrl = medicineUrl + '/getPickedUpMedicines';
+  removeMedicineUrl = medicineUrl + '/removeMedicine/';
 
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -203,6 +204,24 @@ export class MedicineService {
   getAllPicked(){
 
     return this.http.post(this.getAllPickedUrl, {
+
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  removeMedicine(id:number, pharmacyID: number){
+
+    return this.http.delete(this.removeMedicineUrl + id + '/'+pharmacyID, {
 
     })
       .pipe(
