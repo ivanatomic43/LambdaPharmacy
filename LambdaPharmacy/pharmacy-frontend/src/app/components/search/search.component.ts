@@ -147,7 +147,8 @@ export class SearchComponent implements OnInit {
           this.pharmacyService.refreshPharmacies.next(response);
         },
         error => {
-               this.alertService.error("No search results.");
+               //this.alertService.error("No search results.");
+               alert("No search results!");
         }
     );
   }
@@ -164,7 +165,8 @@ export class SearchComponent implements OnInit {
           this.medicineService.refreshMedicines.next(response);
         },
         error =>{
-            this.alertService.error("No search results.");
+            //this.alertService.error("No search results.");
+            alert("No search results!");
         }
       );
 

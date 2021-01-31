@@ -65,6 +65,7 @@ import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { VacationsComponent } from './components/vacations/vacations.component';
 import { RegisterSysAdminComponent } from './components/register-sys-admin/register-sys-admin.component';
 import { RegisterSupplierComponent } from './components/register-supplier/register-supplier.component';
+import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 
 
 
@@ -121,7 +122,8 @@ import { RegisterSupplierComponent } from './components/register-supplier/regist
     EditPricelistComponent,
     VacationsComponent,
     RegisterSysAdminComponent,
-    RegisterSupplierComponent
+    RegisterSupplierComponent,
+    EditMedicineComponent
 
 
   ],

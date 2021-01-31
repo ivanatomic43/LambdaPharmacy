@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
 
     this.authService.login(this.loginParams).subscribe(response => {
-        console.log('Prosao login u auth servisu');
+
         this.profil = response;
         this.sessionStorageService.saveToken(response.token);
         this.sessionStorageService.saveUsername(response.username);
@@ -107,7 +107,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       error => {
         this.submitted = false;
         //this.notification = {msgType: 'error', msgBody: 'Incorrect username or password.'};
-        this.alertService.error("Incorrect username/password!");
+        //this.alertService.error("Incorrect username/password!");
+        alert("Wrong username or password!");
       }
 
     );

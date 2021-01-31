@@ -1,3 +1,4 @@
+import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 import { RegisterSupplierComponent } from './components/register-supplier/register-supplier.component';
 import { RegisterSysAdminComponent } from './components/register-sys-admin/register-sys-admin.component';
 import { VacationsComponent } from './components/vacations/vacations.component';
@@ -171,7 +172,16 @@ const routes: Routes = [
   },
   {path: 'vacations', component: VacationsComponent},
   {path: 'register-sys-admin', component :RegisterSysAdminComponent},
-  {path: 'register-supplier', component: RegisterSupplierComponent}
+  {path: 'register-supplier', component: RegisterSupplierComponent},
+  {path: 'edit-medicine',
+      children : [
+        {
+          path: ':mid/:pid',
+          component: EditMedicineComponent
+        }
+      ]
+
+  }
 
 ];
 

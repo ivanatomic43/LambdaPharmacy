@@ -74,7 +74,7 @@ export class PharmacyMedicinesComponent implements OnInit {
   }
 
   showAddForm(){
-    alert(this.pharmacyID);
+
     this.router.navigate(['/add-med/' + this.pharmacyID]);
   }
 
@@ -83,7 +83,7 @@ export class PharmacyMedicinesComponent implements OnInit {
   }
 
   showMedicineDetails(id:number, pid:number){
-    alert(pid);
+
     this.router.navigate(['/medicine-details/' + id +'/'+ pid]);
   }
 

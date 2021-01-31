@@ -672,4 +672,64 @@ public class MedicineService {
 		return removed;
 	}
 
+	public MedicineDTO getMedicineForEdit(Long id, Long pharmacyID) {
+
+		List<PharmacyMedicine> medicines = pharmacyMedicinesRepository.findAll();
+
+		for (PharmacyMedicine pm : medicines) {
+			if (pm.getMedicine().getId() == id && pm.getPharmacy().getId() == pharmacyID) {
+
+				MedicineDTO dto = new MedicineDTO();
+
+				dto.setId(pm.getMedicine().getId());
+				dto.setName(pm.getMedicine().getName());
+				dto.setMedType(pm.getMedicine().getMed_type());
+				dto.setMedicineCode(pm.getMedicine().getMedicine_code());
+				dto.setShape(pm.getMedicine().getShape());
+				dto.setStructure(pm.getMedicine().getStructure());
+				dto.setProducer(pm.getMedicine().getProducer());
+				dto.setNote(pm.getMedicine().getNote());
+				dto.setContraindications(pm.getMedicine().getContraindications());
+				dto.setDailyDose(pm.getMedicine().getDailyDose());
+				dto.setPharmacyID(pm.getPharmacy().getId());
+				dto.setPharmacyName(pm.getPharmacy().getName());
+
+				return dto;
+			}
+		}
+
+		return null;
+
+	}
+
+	@Transactional
+	public boolean editMedicine(Long pharmacyID, MedicineDTO medicine) {
+
+		boolean edited = false;
+
+		List<PharmacyMedicine> allMeds = pharmacyMedicinesRepository.findAll();
+
+		for (PharmacyMedicine pm : allMeds) {
+			if (pm.getMedicine().getId() == medicine.getId() && pm.getPharmacy().getId() == pharmacyID) {
+
+				pm.getMedicine().setName(medicine.getName());
+				pm.getMedicine().setShape(medicine.getShape());
+				pm.getMedicine().setProducer(medicine.getProducer());
+				pm.getMedicine().setStructure(medicine.getStructure());
+				pm.getMedicine().setMed_type(medicine.getMedType());
+				pm.getMedicine().setContraindications(medicine.getContraindications());
+				pm.getMedicine().setDailyDose(medicine.getDailyDose());
+				pm.getMedicine().setNote(medicine.getNote());
+
+				if (medicine.getMode() != null) {
+					pm.getMedicine().setMode(medicine.getMode());
+				}
+				this.savePharmacyMedicine(pm);
+				edited = true;
+
+			}
+		}
+		return edited;
+	}
+
 }

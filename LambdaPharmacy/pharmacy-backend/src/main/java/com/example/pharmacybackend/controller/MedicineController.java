@@ -242,4 +242,30 @@ public class MedicineController {
 		return new ResponseEntity<>(removed, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/getMedicineForEdit/{id}/{pharmacyID}", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> getMed(@PathVariable("id") Long id, @PathVariable("pharmacyID") Long pharmacyID) {
+
+		MedicineDTO medicine = medicineService.getMedicineForEdit(id, pharmacyID);
+
+		if (medicine == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(medicine, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/editMedicine/{pharmacyID}", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> editMedicine(@PathVariable("pharmacyID") Long pharmacyID, @RequestBody MedicineDTO med) {
+
+		boolean edited = medicineService.editMedicine(pharmacyID, med);
+
+		if (!edited) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(edited, HttpStatus.OK);
+	}
+
 }

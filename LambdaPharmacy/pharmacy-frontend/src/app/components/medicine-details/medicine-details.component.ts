@@ -73,4 +73,12 @@ export class MedicineDetailsComponent implements OnInit {
 
   }
 
+  editMedicine(id:number, pharmID: number){
+
+    this.router.navigate(['/edit-medicine/'+ id +'/' + pharmID]);
+  }
+  backToList(){
+    this.router.navigate(['/pharmacy-medicines/'+ this.pharmacyID]);
+  }
+
 }
