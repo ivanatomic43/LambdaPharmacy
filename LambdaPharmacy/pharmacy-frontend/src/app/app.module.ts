@@ -66,6 +66,7 @@ import { VacationsComponent } from './components/vacations/vacations.component';
 import { RegisterSysAdminComponent } from './components/register-sys-admin/register-sys-admin.component';
 import { RegisterSupplierComponent } from './components/register-supplier/register-supplier.component';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
+import { AgmCoreModule} from '@agm/core';
 
 
 
@@ -140,7 +141,10 @@ import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.
     MatSortModule,
     MaterialModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBLBXRgczQ3dIN3_ev-hJL0JqMPoQCXpio'
+    })
   ],
   entryComponents: [
     NewPharmacyComponent,

@@ -2,7 +2,7 @@ package com.example.pharmacybackend.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.*;
@@ -20,7 +20,10 @@ public class Pharmacy implements Serializable {
 	@Column(nullable = false)
 	private String name;
 
-	@Column(nullable = false)
+	@OneToOne
+	private Address add;
+
+	@Column
 	private String address;
 
 	@Column(nullable = false)
@@ -28,9 +31,6 @@ public class Pharmacy implements Serializable {
 
 	@Column(nullable = false)
 	private double rating = 0;
-
-	// @Column(nullable = false)
-	// private List<Date> freeDates;
 
 	public double getRating() {
 		return rating;
@@ -87,11 +87,6 @@ public class Pharmacy implements Serializable {
 		this.listOfMedicines = listOfMedicines;
 	}
 
-	/*
-	 * public Image getImage() { return image; }
-	 * 
-	 * public void setImage(Image image) { this.image = image; }
-	 */
 	@OneToOne(mappedBy = "pharmacy", fetch = FetchType.LAZY)
 	private Image image;
 
@@ -111,14 +106,6 @@ public class Pharmacy implements Serializable {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -127,21 +114,6 @@ public class Pharmacy implements Serializable {
 		this.description = description;
 	}
 
-	/*
-	 * public List<Date> getFreeDates() { return freeDates; }
-	 * 
-	 * 
-	 * public void setFreeDates(List<Date> freeDates) { this.freeDates = freeDates;
-	 * }
-	 * 
-	 * 
-	 * public List<Dermatologist> getDermatologists() { return dermatologists; }
-	 * 
-	 * 
-	 * public void setDermatologists(List<Dermatologist> dermatologists) {
-	 * this.dermatologists = dermatologists; }
-	 * 
-	 */
 	public List<Pharmacist> getPharmacists() {
 		return pharmacists;
 	}
@@ -149,14 +121,6 @@ public class Pharmacy implements Serializable {
 	public void setPharmacists(List<Pharmacist> pharmacists) {
 		this.pharmacists = pharmacists;
 	}
-
-	/*
-	 * public List<Medicine> getListOfMedicines() { return listOfMedicines; }
-	 * 
-	 * 
-	 * public void setListOfMedicines(List<Medicine> listOfMedicines) {
-	 * this.listOfMedicines = listOfMedicines; }
-	 */
 
 	public Pricelist getPricelist() {
 		return pricelist;
@@ -178,6 +142,48 @@ public class Pharmacy implements Serializable {
 	 */
 	public void setPharmacyAppointments(List<Appointment> pharmacyAppointments) {
 		this.pharmacyAppointments = pharmacyAppointments;
+	}
+
+	/**
+	 * @return Image return the image
+	 */
+	public Image getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	/**
+	 * @return Address return the add
+	 */
+	public Address getAdd() {
+		return add;
+	}
+
+	/**
+	 * @param add the add to set
+	 */
+	public void setAdd(Address add) {
+		this.add = add;
+	}
+
+	/**
+	 * @return String return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }

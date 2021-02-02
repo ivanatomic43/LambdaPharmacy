@@ -1,5 +1,6 @@
 package com.example.pharmacybackend.dto;
 
+import com.example.pharmacybackend.model.Address;
 import com.example.pharmacybackend.model.Pharmacy;
 
 public class PharmacyDTO {
@@ -10,6 +11,11 @@ public class PharmacyDTO {
 	private String name;
 	private double rating;
 	private double price;
+
+	private String street;
+	private String city;
+	private double latitude;
+	private double longitude;
 
 	private Long pharmacyAdministrator;
 	private String firstName;
@@ -24,19 +30,26 @@ public class PharmacyDTO {
 		this(p.getId(), p.getAddress(), p.getDescription(), p.getName(), p.getRating());
 	}
 
-	public PharmacyDTO(Long id, String address, String description, String name, double rating, double price) {
+	public PharmacyDTO(Long id, String street, String city, double latitude, double longitude, String description,
+			String name, double rating, double price) {
 		this.id = id;
-		this.address = address;
+		this.street = street;
+		this.city = city;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.description = description;
 		this.name = name;
 		this.rating = rating;
 		this.price = price;
 	}
 
-	public PharmacyDTO(Long id, String address, String description, String name, double rating,
-			Long pharmacyAdministrator, String firstName, String lastName) {
+	public PharmacyDTO(Long id, String street, String city, double latitude, double longitude, String description,
+			String name, double rating, Long pharmacyAdministrator, String firstName, String lastName) {
 		this.id = id;
-		this.address = address;
+		this.street = street;
+		this.city = city;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.description = description;
 		this.name = name;
 		this.rating = rating;
@@ -55,9 +68,13 @@ public class PharmacyDTO {
 
 	}
 
-	public PharmacyDTO(Long id, String address, String description, double myRate, String name, double rating) {
+	public PharmacyDTO(Long id, String street, String city, double latitude, double longitude, String description,
+			double myRate, String name, double rating) {
 		this.id = id;
-		this.address = address;
+		this.street = street;
+		this.city = city;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.description = description;
 		this.name = name;
 		this.rating = rating;
@@ -65,10 +82,13 @@ public class PharmacyDTO {
 
 	}
 
-	public PharmacyDTO(Long id, String address, String description, String name, double rating,
-			Long pharmacyAdministrator) {
+	public PharmacyDTO(Long id, String street, String city, double latitude, double longitude, String description,
+			String name, double rating, Long pharmacyAdministrator) {
 		this.id = id;
-		this.address = address;
+		this.street = street;
+		this.city = city;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.description = description;
 		this.name = name;
 		this.rating = rating;
@@ -184,6 +204,62 @@ public class PharmacyDTO {
 	 */
 	public void setMyRate(double myRate) {
 		this.myRate = myRate;
+	}
+
+	/**
+	 * @return String return the street
+	 */
+	public String getStreet() {
+		return street;
+	}
+
+	/**
+	 * @param street the street to set
+	 */
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	/**
+	 * @return String return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * @return double return the latitude
+	 */
+	public double getLatitude() {
+		return latitude;
+	}
+
+	/**
+	 * @param latitude the latitude to set
+	 */
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	/**
+	 * @return double return the longitude
+	 */
+	public double getLongitude() {
+		return longitude;
+	}
+
+	/**
+	 * @param longitude the longitude to set
+	 */
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 }

@@ -1,11 +1,11 @@
 <div class="main">
-  <div class="col-sm-9" style="background-color: #0f6674">
+  <div class="col-sm-9" style="background-color: #0f6674; ">
     <h3 class="mgbt-xs-15">Register new pharmacy</h3>
     <form (ngSubmit)= "registerPharmacy()" [formGroup]="pharmacyForm" >
-    <div class="col-md-8">
-      <div class="card mb-3">
+    <div class="col-md-8" style="width: 800px; height:800px; margin-left: auto; margin-right: auto;">
+      <div class="card mb-3" style="width: 800px; height: 800px;" >
 
-        <div class="card-body">
+        <div class="card-body" >
           <div class="row">
             <div class="col-sm-3">
               <h6 class="mb-0">Name</h6>
@@ -17,14 +17,31 @@
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Address</h6>
+              <h6 class="mb-0">Street</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input type="text" formControlName= "address" id="address" name ="address"/>
+              <input type="text" formControlName= "street" id="street" name ="street"/>
             </div>
           </div>
           <hr>
           <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">City</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <input type="text" formControlName= "city" id="city" name ="city"/>
+            </div>
+          </div>
+          <hr>
+
+
+
+              <agm-map [latitude]="lat" [longitude]="lon" style="margin-left:auto; margin-right:auto;">
+                <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+              </agm-map>
+
+
+          <div class="row" style="margin-top:10px;">
             <div class="col-sm-3">
               <h6 class="mb-0">Description</h6>
             </div>
@@ -48,10 +65,10 @@
           <hr>
 
         </div>
-        <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Create</button>
+          <button type="submit" class="btn-search" style="margin-left: 100px; margin-right: 100px; margin-bottom: 50px">Create</button>
+        </div>
       </div>
-    </div>
-    </form>
+   </form>
 
   </div>
 </div>

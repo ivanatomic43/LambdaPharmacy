@@ -87,7 +87,6 @@ public class AuthController {
 
 		int expiresIn = tokenUtils.getExpiredIn();
 		boolean firstLogin = user.isFirstLogin();
-		System.out.println("FIRSTLOGIN:0" + firstLogin);
 
 		List<String> authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
@@ -100,7 +99,7 @@ public class AuthController {
 	public ResponseEntity<?> registerPatient(@RequestBody UserRequestDTO userRequest) {
 
 		User existUser = this.userService.findByUsername(userRequest.getUsername());
-		System.out.println("Registruje se pacijent: " + userRequest.getUsername());
+
 		if (existUser != null) {
 			throw new ResourceConflictException(existUser.getId(), "Username already exists");
 
@@ -177,7 +176,6 @@ public class AuthController {
 			// request.getHeader("Authorization"));
 			UserTokenState loggedUser = new UserTokenState(user.getUsername(), request.getHeader("TokenAuthBic"),
 					authorities, firstLogin);
-			System.out.println(loggedUser.getUsername());
 
 			return new ResponseEntity<UserTokenState>(loggedUser, HttpStatus.OK);
 		} else {
@@ -189,13 +187,12 @@ public class AuthController {
 
 	@RequestMapping(value = "/getMyUser", method = RequestMethod.POST)
 	public ResponseEntity<?> getMyUser(@RequestBody UserDTO person, HttpServletRequest request) {
-		System.out.println("usao u getmyuser" + person.getUsername());
 
 		String token = tokenUtils.getToken(request);
 		System.out.println("Token: " + token);
 
 		String username = tokenUtils.getUsernameFromToken(token);
-		System.out.println("Username u getMYUser: " + username);
+
 		User personRet = userService.findOneByUsername(username);
 
 		return new ResponseEntity<>(new UserDTO(personRet), HttpStatus.OK);
@@ -207,11 +204,9 @@ public class AuthController {
 
 		String token = tokenUtils.getToken(request);
 		String username = tokenUtils.getUsernameFromToken(token);
-		System.out.println("Username koji menja sifru: " + username);
 
 		User user = customUserDetailsService.changePassword(passDTO.getOldPassword(), passDTO.getNewPassword());
 
-		System.out.println(user.getAuthority().getName());
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

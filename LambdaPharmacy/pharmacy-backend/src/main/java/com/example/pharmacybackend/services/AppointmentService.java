@@ -6,18 +6,15 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 //import java.util.Date;
 
 import com.example.pharmacybackend.dto.AppointmentDTO;
 import com.example.pharmacybackend.dto.DermatologistDTO;
-import com.example.pharmacybackend.dto.PharmacistDTO;
 import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.enumerations.AppointmentStatus;
 import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
-import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacist;
@@ -29,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.joda.LocalDateParser;
 
 @Service
 public class AppointmentService {
@@ -41,9 +37,6 @@ public class AppointmentService {
     private PatientRepository patientRepository;
 
     @Autowired
-    private DermatologistRepository dermatologistRepository;
-
-    @Autowired
     private PharmacyRepository pharmacyRepository;
 
     @Autowired
@@ -51,9 +44,6 @@ public class AppointmentService {
 
     @Autowired
     private EmployedDermatologistRepository employedDermatologistRepository;
-
-    @Autowired
-    private EndedAppointmentsRepository endedAppointmentRepository;
 
     @Autowired
     private DermatologistService dermatologistService;
@@ -618,7 +608,10 @@ public class AppointmentService {
                 PharmacyDTO dto = new PharmacyDTO();
                 dto.setId(a.getPharmacy().getId());
                 dto.setName(a.getPharmacy().getName());
-                dto.setAddress(a.getPharmacy().getAddress());
+                dto.setStreet(a.getPharmacy().getAdd().getStreet());
+                dto.setCity(a.getPharmacy().getAdd().getCity());
+                dto.setLatitude(a.getPharmacy().getAdd().getLatitude());
+                dto.setLongitude(a.getPharmacy().getAdd().getLongitude());
                 dto.setDescription(a.getPharmacy().getDescription());
 
                 dto.setRating(a.getPharmacy().getRating());

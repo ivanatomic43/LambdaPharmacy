@@ -59,8 +59,15 @@ public class PharmacyController {
 
 		for (Pharmacy p : pharmacies) {
 
-			PharmacyDTO newPha = new PharmacyDTO(p.getId(), p.getAddress(), p.getDescription(), p.getName(),
-					p.getRating());
+			PharmacyDTO newPha = new PharmacyDTO();
+			newPha.setId(p.getId());
+			newPha.setName(p.getName());
+			newPha.setStreet(p.getAdd().getStreet());
+			newPha.setCity(p.getAdd().getCity());
+			newPha.setLatitude(p.getAdd().getLatitude());
+			newPha.setLongitude(p.getAdd().getLongitude());
+			newPha.setDescription(p.getDescription());
+			newPha.setRating(p.getRating());
 
 			/*
 			 * for (PharmacyAdministrator pa : admins) { if() if (pa.getPharmacy().getId()
@@ -78,7 +85,7 @@ public class PharmacyController {
 	@RequestMapping(value = "/createPharmacy", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('SYS_ADMIN')")
 	public ResponseEntity<?> createPharmacy(@RequestBody PharmacyDTO pharmacy, HttpServletRequest request) {
-		System.out.println(pharmacy.getName() + pharmacy.getAddress() + pharmacy.getDescription());
+
 		PharmacyDTO createdPharmacy = pharmacyService.createPharmacy(pharmacy);
 
 		if (createdPharmacy == null) {
@@ -108,8 +115,6 @@ public class PharmacyController {
 	@RequestMapping(value = "/getImage/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> allImages(@PathVariable("id") Long id) throws UnsupportedEncodingException {
 
-		System.out.println("Usao u get images sa id : " + id);
-
 		Pharmacy ph = this.pharmacyService.findById(id);
 		Image img = this.imageService.getImage(ph);
 
@@ -122,17 +127,24 @@ public class PharmacyController {
 
 	@RequestMapping(value = "/getPharmacy/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getPharmacy(@PathVariable("id") Long id) {
-		System.out.println("USAO U GET PH" + id);
 
 		Pharmacy p = this.pharmacyService.getPharmacy(id);
 
-		PharmacyDTO dto = new PharmacyDTO(p);
+		PharmacyDTO newPha = new PharmacyDTO();
+		newPha.setId(p.getId());
+		newPha.setName(p.getName());
+		newPha.setStreet(p.getAdd().getStreet());
+		newPha.setCity(p.getAdd().getCity());
+		newPha.setLatitude(p.getAdd().getLatitude());
+		newPha.setLongitude(p.getAdd().getLongitude());
+		newPha.setDescription(p.getDescription());
+		newPha.setRating(p.getRating());
 
-		if (dto == null) {
+		if (newPha == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(dto, HttpStatus.OK);
+		return new ResponseEntity<>(newPha, HttpStatus.OK);
 
 	}
 

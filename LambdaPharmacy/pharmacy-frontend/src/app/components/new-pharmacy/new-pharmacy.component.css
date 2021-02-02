@@ -91,3 +91,6 @@ body{
 .main{
   margin-top: 25px;
 }
+agm-map{
+  height: 300px;
+}

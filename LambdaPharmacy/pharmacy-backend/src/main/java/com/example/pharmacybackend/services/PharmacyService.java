@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.pharmacybackend.repository.AddressRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
 import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
@@ -16,6 +17,7 @@ import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.dto.PromotionDTO;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
+import com.example.pharmacybackend.model.Address;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacy;
@@ -39,6 +41,9 @@ public class PharmacyService {
 
 	@Autowired
 	private PromotionRepository promotionRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
 
 	@Autowired
 	private EmailService emailService;
@@ -86,6 +91,7 @@ public class PharmacyService {
 		for (Pharmacy p : list) {
 			System.out.println(p.getName());
 			if (!name.equals("") && location.equals("")) {
+
 				if (p.getName().toLowerCase().equals(name.toLowerCase())) {
 					System.out.println("usao u name" + p.getName());
 					pha.add(p);
@@ -93,13 +99,15 @@ public class PharmacyService {
 					retPha.add(dto);
 				}
 			} else if (name.equals("") && !location.equals("")) {
-				if (p.getAddress().toLowerCase().contains(location.toLowerCase())) {
+				String address = p.getAdd().getStreet() + " " + p.getAdd().getCity();
+				if (address.toLowerCase().contains(location.toLowerCase())) {
 					PharmacyDTO dto = new PharmacyDTO(p);
 					retPha.add(dto);
 				}
 			} else if (!name.equals("") && !location.equals("")) {
+				String address = p.getAdd().getStreet() + " " + p.getAdd().getCity();
 				if (p.getName().toLowerCase().equals(name.toLowerCase())
-						&& p.getAddress().toLowerCase().contains(location.toLowerCase())) {
+						&& address.toLowerCase().contains(location.toLowerCase())) {
 					PharmacyDTO dto = new PharmacyDTO(p);
 					retPha.add(dto);
 				}
@@ -110,13 +118,17 @@ public class PharmacyService {
 		return retPha;
 	}
 
+	// menjati kreiranje apoteke
 	public PharmacyDTO createPharmacy(PharmacyDTO pharmacy) {
 
 		Pharmacy p = new Pharmacy();
-		// System.out.println(pharmacy.getName() + pharmacy.getAddress() +
-		// pharmacy.get);
+		Address a = new Address();
+		a.setStreet(pharmacy.getStreet());
+		a.setCity(pharmacy.getCity());
+		addressRepository.save(a);
+
 		p.setName(pharmacy.getName());
-		p.setAddress(pharmacy.getAddress());
+		p.setAdd(a);
 		p.setDescription(pharmacy.getDescription());
 		p.setRating(0);
 
@@ -133,7 +145,8 @@ public class PharmacyService {
 		PharmacyDTO ret = new PharmacyDTO();
 		ret.setId(ph.getId());
 		ret.setName(ph.getName());
-		ret.setAddress(ph.getAddress());
+		ret.setStreet(ph.getAdd().getStreet());
+		ret.setCity(ph.getAdd().getCity());
 		ret.setDescription(ph.getDescription());
 		ret.setRating(ph.getRating());
 		ret.setFirstName(pa.getFirstName());
@@ -258,9 +271,12 @@ public class PharmacyService {
 
 				PharmacyDTO dto = new PharmacyDTO();
 				dto.setId(p.getId());
-				dto.setAddress(p.getAddress());
 				dto.setDescription(p.getDescription());
 				dto.setName(p.getName());
+				dto.setStreet(p.getAdd().getStreet());
+				dto.setCity(p.getAdd().getCity());
+				dto.setLatitude(p.getAdd().getLatitude());
+				dto.setLongitude(p.getAdd().getLongitude());
 
 				retList.add(dto);
 			}
@@ -350,9 +366,12 @@ public class PharmacyService {
 
 					dto.setId(p.getId());
 					dto.setName(p.getName());
-					dto.setAddress(p.getAddress());
 					dto.setDescription(p.getDescription());
 					dto.setRating(p.getRating());
+					dto.setStreet(p.getAdd().getStreet());
+					dto.setCity(p.getAdd().getCity());
+					dto.setLatitude(p.getAdd().getLatitude());
+					dto.setLongitude(p.getAdd().getLongitude());
 
 					return dto;
 				}

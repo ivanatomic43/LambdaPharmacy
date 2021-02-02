@@ -33,7 +33,8 @@ export class NewPharmacyComponent implements OnInit {
 
     this.pharmacyForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      address: new FormControl('', [Validators.required]),
+      street: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
       pharmacyAdministrator : new FormControl('', [Validators.required])
     });

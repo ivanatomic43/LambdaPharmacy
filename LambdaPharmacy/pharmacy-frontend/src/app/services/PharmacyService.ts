@@ -12,6 +12,11 @@ import { catchError, map } from 'rxjs/operators';
 const pharmacyUrl = 'http://localhost:8051/pharmacy';
 const pharmacyAdminUrl = 'http://localhost:8051/pharmacyAdmin';
 
+interface Location{
+  latitude : string;
+  longitude: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { AppointmentService } from './../../services/AppointmentService';
 
 import { DermatologistService } from './../../services/DermatologistService';
@@ -14,6 +15,7 @@ import { PharmacyService } from 'src/app/services/PharmacyService';
 import { PharmacistService } from 'src/app/services/PharmacistService';
 import { AppointmentPreview } from './../../model/AppointmentPreview';
 import { UserService } from 'src/app/services/UserService';
+
 
 @Component({
   selector: 'app-pharmacy-details',
@@ -76,6 +78,9 @@ export class PharmacyDetailsComponent implements OnInit {
     'action'
   ];
 
+  lat : string = '';
+  lon : string = '';
+
   constructor(
     private route: ActivatedRoute,
     private pharmacyService: PharmacyService,
@@ -84,7 +89,8 @@ export class PharmacyDetailsComponent implements OnInit {
     private dermatologistService: DermatologistService,
     private pharmacistService: PharmacistService,
     private appointmentService :AppointmentService,
-    private userService: UserService
+    private userService: UserService,
+
   ) { }
 
   ngOnInit() {
@@ -93,6 +99,8 @@ export class PharmacyDetailsComponent implements OnInit {
 
       this.pharmacyService.getPharmacyById(this.pharmacyID).subscribe(response=>{
         this.fetchedPharmacy = response;
+        this.lat = this.fetchedPharmacy.latitude;
+        this.lon = this.fetchedPharmacy.longitude;
         this.loaded= true;
       });
 
