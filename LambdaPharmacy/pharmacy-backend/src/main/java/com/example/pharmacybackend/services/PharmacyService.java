@@ -137,6 +137,19 @@ public class PharmacyService {
 		PharmacyAdministrator pa = pharmacyAdministratorRepository.findOneById(pharmacy.getPharmacyAdministrator());
 		List<PharmacyAdministrator> pharmAdmins = new ArrayList<>();
 
+		List<Pharmacy> pharmacies = pharmacyRepository.findAll();
+		for (Pharmacy ph : pharmacies) {
+			List<PharmacyAdministrator> admins = new ArrayList<>();
+			admins = ph.getPharmacyAdministrators();
+
+			for (PharmacyAdministrator pad : admins) {
+				if (pad.getId() == pharmacy.getPharmacyAdministrator()) {
+					System.out.println("Administrator has been employed in another pharmacy...");
+					return null;
+				}
+			}
+		}
+
 		pharmAdmins.add(pa);
 
 		Pharmacy ph = this.savePharmacy(p);

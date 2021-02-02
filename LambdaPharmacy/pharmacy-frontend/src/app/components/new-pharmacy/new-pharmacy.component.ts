@@ -64,7 +64,10 @@ export class NewPharmacyComponent implements OnInit {
 
       },
       error => {
-        alert("Something is wrong...");
+        if(error.status == 400){
+          alert("Administrator has been employed in other pharmacy...");
+          return;
+        }
       }
     );
 

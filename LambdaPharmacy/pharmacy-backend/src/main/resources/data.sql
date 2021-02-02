@@ -1,6 +1,17 @@
 
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) values ('USER_PHARMA_ADMIN', 2, 'Narodnog fronta 34, Novi Sad', true, 'admin@gmail.com', false, 'Marko', 'Markovic', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0633216547', 'markomarkovic',0);
+
+INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (1, 'Novi Sad', 45.26125996629874, 19.834538133520123, 'Bulevar Kralja Petra I 11'); 
+INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (2, 'Novi Sad', 45.24608736237126, 19.830979426522536, 'Puškinova 2');
+INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (3, 'Novi Sad', 45.26420970934681, 19.817092640017577, 'Rumenacka 34');
+
+
+INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (1, 'Bulevar Oslobodjenja 56, Novi Sad', 'Otvorena 24/7', 'Jankovic DOO',0,1);
+INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (2, 'Lasla Gala 12, Novi Sad', 'Sirok asortiman proizvoda', 'BENU apoteka',0,2);
+INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (3, 'Kisacka 27, Novi Sad', 'Sirok asortiman proizvoda', 'Zegin',0,3);
+
+
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) values ('USER_PATIENT',1,'Bulevar Kralja Petra I 12, Novi Sad',true,'ivana@gmail.com',false,'Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','ivanatomic',0);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) values ('USER_PHARMA_ADMIN', 2, 'Narodnog fronta 34, Novi Sad', true, 'admin@gmail.com', false, 'Marko', 'Markovic', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0633216547', 'markomarkovic',0);
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version, rating) values ('USER_DERMATOLOGIST',3,'Bulevar Oslobodjenja 56, Novi Sad',true,'derma@gmail.com',false,'Pera','Peric','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234488','peraperic',0,0);
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version, rating) values ('USER_DERMATOLOGIST',4,'Jevrejska 33, Novi Sad',true,'dermamika@gmail.com',false,'Mika','Mikic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601277567','mikamikic',0,0);
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) values ('USER_SYS_ADMIN',5,'Masarikova 7, Novi Sad',true,'adminsistema@gmail.com',false,'Petar','Petrovic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601277444','petarpetrovic',0);
@@ -8,13 +19,7 @@ INSERT INTO USER (user_type, id, address, approved, email, first_login, first_na
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) values ('USER_PATIENT',7,'Bulevar Kralja Petra I 12, Novi Sad',true,'ivana@gmail.com',false,'Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','tomic',0);
 
 
-INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (1, 'Novi Sad', 45.26125996629874, 19.834538133520123, 'Bulevar Kralja Petra I 11'); 
-INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (2, 'Novi Sad', 45.24608736237126, 19.830979426522536, 'Puškinova 2');
-INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (3, 'Novi Sad', 45.26420970934681, 19.817092640017577, 'Rumenacka 34');
 
-INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (1, 'Bulevar Oslobodjenja 56, Novi Sad', 'Otvorena 24/7', 'Jankovic DOO',0,1);
-INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (2, 'Lasla Gala 12, Novi Sad', 'Sirok asortiman proizvoda', 'BENU apoteka',0,2);
-INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (3, 'Kisacka 27, Novi Sad', 'Sirok asortiman proizvoda', 'Zegin',0,3);
 
 INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrators_id) VALUES (1, 2);
 INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrators_id) VALUES (2, 6);
