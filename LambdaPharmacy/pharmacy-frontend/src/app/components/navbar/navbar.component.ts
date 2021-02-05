@@ -41,12 +41,12 @@ export class NavbarComponent implements OnInit {
     });
 
     this.shareService.shareProfile.subscribe(data => {
-      console.log('ng on init navabr');
+
       this.profil = data;
       const role = this.profil.authorities[0];
       console.log(role);
       if (role == 'ROLE_PATIENT') {
-        console.log('usao u role patient navbar');
+
         this.isPatient  = true;
       } else {
         this.isPatient = false;
@@ -62,8 +62,13 @@ export class NavbarComponent implements OnInit {
       } else {
         this.isSysAdmin = false;
       }
+      if(role =="ROLE_SUPPLIER"){
+        this.isSupplier = true;
+      } else {
+        this.isSupplier = false;
+      }
     });
-    console.log('dosao dovde');
+
     this.getLoggedUser();
   }
 
@@ -72,13 +77,14 @@ export class NavbarComponent implements OnInit {
 
       },
       error => {
-        alert('greska');
+        alert('No one is logged');
       });
     this.sessionStorageService.signOut();
     this.anyLogged = false;
     this.isPatient = false;
     this.isPharmacyAdmin = false;
     this.isSysAdmin = false;
+    this.isSupplier = false;
     this.router.navigate(['/login']);
   }
 
@@ -92,7 +98,7 @@ export class NavbarComponent implements OnInit {
           this.shareService.sendIsLogged(this.anyLogged);
           this.shareService.sendProfile(this.profil);
           const role = this.profil.authorities[0];
-          console.log('Uloga u get logged navbar:' + role);
+
           if (role == 'ROLE_PHARMACY_ADMIN') {
             this.isPharmacyAdmin = true;
           } else {
@@ -111,6 +117,11 @@ export class NavbarComponent implements OnInit {
           } else {
             this.isSysAdmin = false;
           }
+          if(role =="ROLE_SUPPLIER"){
+            this.isSupplier = true;
+          } else {
+            this.isSupplier = false;
+          }
         },
         error => {
 
@@ -118,6 +129,7 @@ export class NavbarComponent implements OnInit {
           this.anyLogged = false;
           this.isPatient = false;
           this.isPharmacyAdmin = false;
+          this.isSupplier= false;
         });
 
   }

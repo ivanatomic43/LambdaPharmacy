@@ -26,18 +26,18 @@ public class PurchaseOrder {
     private List<OrderItem> items;
 
     @ManyToOne
-    @JoinColumn(name = "pharmacy_admininistrator_id")
+    @JoinColumn(name = "pharmacy_administrator_id")
     private PharmacyAdministrator admin;
 
     @ManyToOne
     @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;
 
-    @Column
-    private double totalPrice;
+    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Offer> offers;
 
-    @Column
-    private Date deliveryTime;
+    @Version
+    private int version;
 
     /**
      * @return Long return the id
@@ -124,31 +124,31 @@ public class PurchaseOrder {
     }
 
     /**
-     * @return double return the totalPrice
+     * @return List<Offer> return the offers
      */
-    public double getTotalPrice() {
-        return totalPrice;
+    public List<Offer> getOffers() {
+        return offers;
     }
 
     /**
-     * @param totalPrice the totalPrice to set
+     * @param offers the offers to set
      */
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     /**
-     * @return Date return the deliveryTime
+     * @return int return the version
      */
-    public Date getDeliveryTime() {
-        return deliveryTime;
+    public int getVersion() {
+        return version;
     }
 
     /**
-     * @param deliveryTime the deliveryTime to set
+     * @param version the version to set
      */
-    public void setDeliveryTime(Date deliveryTime) {
-        this.deliveryTime = deliveryTime;
+    public void setVersion(int version) {
+        this.version = version;
     }
 
 }

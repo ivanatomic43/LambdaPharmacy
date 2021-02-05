@@ -16,8 +16,7 @@ INSERT INTO USER (user_type, id, address, approved, email, first_login, first_na
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version, rating) values ('USER_DERMATOLOGIST',4,'Jevrejska 33, Novi Sad',true,'dermamika@gmail.com',false,'Mika','Mikic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601277567','mikamikic',0,0);
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) values ('USER_SYS_ADMIN',5,'Masarikova 7, Novi Sad',true,'adminsistema@gmail.com',false,'Petar','Petrovic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601277444','petarpetrovic',0);
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) values ('USER_PHARMA_ADMIN', 6, 'Branka Bajica 13, Novi Sad', true, 'pharmadmin@gmail.com', false, 'Drugi admin', 'Apoteke', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0644567894','adminapoteke',0 );
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) values ('USER_PATIENT',7,'Bulevar Kralja Petra I 12, Novi Sad',true,'ivana@gmail.com',false,'Ivana','Tomic','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234567','tomic',0);
-
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, password, phone_number, username, version) VALUES ('USER_SUPPLIER', 7, 'Bulevar Evrope 67, Novi Sad', true, 'supplier@gmail.com', false, 'Dobavljac', 'Dobavljacic', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','0601234444','dobavljac',0);
 
 
 
@@ -57,6 +56,7 @@ INSERT INTO AUTHORITY (id, name) VALUES (2,'ROLE_PHARMACIST');
 INSERT INTO AUTHORITY (id, name) VALUES (3, 'ROLE_DERMATOLOGIST');
 INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_PHARMACY_ADMIN');
 INSERT INTO AUTHORITY (id, name) VALUES (5, 'ROLE_SYS_ADMIN');
+INSERT INTO AUTHORITY (id, name) VALUES (6, 'ROLE_SUPPLIER');
 
 
 
@@ -66,7 +66,7 @@ INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (3,3);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (4,3);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (5,5);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (6,4);
-INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (7,1);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (7,6);
 
 INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (1, '2020-11-01', '2021-02-01', 120, 0,'06:00:00', '14:00:00', 3, 1 );
 INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (2, '2020-11-01', '2021-02-01', 100, 0, '18:00:00', '21:00:00', 3, 2);
@@ -77,3 +77,9 @@ INSERT INTO APPOINTMENT (id, date_of_appointment, duration, meeting_time, price,
 
 INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id) VALUES (1, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 1, NULL);
 INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id) VALUES (2, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 2, NULL);
+
+INSERT INTO PURCHASE_ORDER (id, date, status,version, pharmacy_administrator_id, pharmacy_id) VALUES (1, '2021-02-26', 'WAITING_FOR_OFFER',0, 2, 1);
+
+
+INSERT INTO ORDER_ITEM (id, quantity, medicine_id, purchase_order_id ) VALUES (1, 5, 2, 1);
+INSERT INTO ORDER_ITEM (id, quantity, medicine_id, purchase_order_id ) VALUES (2, 10, 5, 1);

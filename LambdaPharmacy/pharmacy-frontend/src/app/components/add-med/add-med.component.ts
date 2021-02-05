@@ -100,7 +100,7 @@ export class AddMedComponent implements OnInit {
 
     this.medicineService.orderMedicine(this.purchaseOrder, this.pharmacyID).subscribe(response =>{
       alert("Order sent!");
-      this.router.navigate(['/pharmacy-details/'+ this.pharmacyID]);
+      this.router.navigate(['/orders']);
       this.itemList= [];
     });
 

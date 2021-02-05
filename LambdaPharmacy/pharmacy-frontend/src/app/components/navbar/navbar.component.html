@@ -97,7 +97,8 @@
         </a>
       </div>
 
-
+      <!--SUPPLIER-->
+      <li class="nav-item"><a *ngIf="anyLogged && isSupplier" routerLink="/orders" class="nav-link">Orders</a></li>
 
       <li class="nav-item"><a *ngIf="anyLogged" routerLink="/patient-profile" class="nav-link">My profile</a></li>
 

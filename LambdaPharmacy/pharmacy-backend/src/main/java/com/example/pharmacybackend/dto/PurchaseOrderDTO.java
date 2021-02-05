@@ -21,6 +21,10 @@ public class PurchaseOrderDTO {
     private List<String> medicineName;
     private List<OrderItemDTO> items;
 
+    private String name;
+    private String surname;
+    private String pharmacyName;
+
     public PurchaseOrderDTO() {
     }
 
@@ -153,6 +157,48 @@ public class PurchaseOrderDTO {
      */
     public void setItems(List<OrderItemDTO> items) {
         this.items = items;
+    }
+
+    /**
+     * @return String return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return String return the surname
+     */
+    public String getSurname() {
+        return surname;
+    }
+
+    /**
+     * @param surname the surname to set
+     */
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    /**
+     * @return String return the pharmacyName
+     */
+    public String getPharmacyName() {
+        return pharmacyName;
+    }
+
+    /**
+     * @param pharmacyName the pharmacyName to set
+     */
+    public void setPharmacyName(String pharmacyName) {
+        this.pharmacyName = pharmacyName;
     }
 
 }

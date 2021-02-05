@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subject, throwError } from 'rxjs';
 
 import { catchError, map } from 'rxjs/operators';
+import { Offer } from '../model/Offer';
 
 const orderUrl = 'http://localhost:8051/order';
 
@@ -14,7 +15,9 @@ const orderUrl = 'http://localhost:8051/order';
 })
 export class OrderService {
 
-  getAllOrdersUrl = orderUrl + '/getAllOrders/';
+  getAllOrdersUrl = orderUrl + '/getAllOrders';
+  giveOfferUrl = orderUrl + '/giveOffer';
+
 
 
 
@@ -24,6 +27,12 @@ export class OrderService {
 
     return this.http.get<any>(this.getAllOrdersUrl);
   }
+
+  giveOffer(offer:Offer){
+    return this.http.post<any>(this.giveOfferUrl, offer);
+  }
+
+
 
 
 }

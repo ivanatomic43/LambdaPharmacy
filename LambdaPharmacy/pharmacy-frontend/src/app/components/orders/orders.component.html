@@ -1,6 +1,6 @@
 <div style="background: url(/assets/back.jpg);" *ngIf="isPharmacyAdmin">
   <div class="preview-users">
-    <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">My orders</h1>
+    <h1 style="position: center; text-align: center;  color:#0f6674; font-family:'Arial Black'">My orders</h1>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -11,11 +11,11 @@
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Order date </th>
-        <td mat-cell *matCellDef="let element"> {{element.datee}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.orderDatee}} </td>
       </ng-container>
 
       <ng-container matColumnDef="administrator">
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th mat-header-cell *matHeaderCellDef>Made by</th>
         <td mat-cell *matCellDef="let element"> {{element.name}} {{element.surname}} </td>
       </ng-container>
 
@@ -28,9 +28,8 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef > Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
-          <button >Edit</button>
-          <button>Delete</button>
-          <button>See offers</button>
+
+          <button (click)="showDetails(element.id)">See offers</button>
 
 
 
@@ -44,3 +43,76 @@
 
   </div>
   </div>
+
+
+  <div style="background: url(/assets/back.jpg);" *ngIf="isSupplier">
+    <div class="preview-users">
+      <h1 style="position: center; text-align: center;  color:#0f6674; font-family:'Arial Black'">Orders from pharmacies</h1>
+
+      <div *ngIf="clickedOffer" class = "custom-search">
+        <form [formGroup]="giveOfferForm">
+
+        <input class = "custom-input" type= "text"  formControlName="orderID" [(ngModel)]="orderID"/>
+
+        <input class="custom-input" type="text" formControlName="totalPrice" [(ngModel)]="totalPrice" placeholder="Total price"/>
+
+        <input class="custom-input" type="date" formControlName="deliveryTime" [(ngModel)]="deliveryTime"/>
+
+
+        <button style="margin-left: 15px;" class="btn-search" type="submit" (click)="giveOffer()">Give offer</button>
+
+      </form>
+
+        <button style="margin-left: 15px;" class="btn-search" (click)="cancelOffer()">Cancel</button>
+
+      </div>
+
+
+
+
+      <table mat-table [dataSource]="dataSource1" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Order date </th>
+          <td mat-cell *matCellDef="let element"> {{element.orderDatee}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="administrator">
+          <th mat-header-cell *matHeaderCellDef>Made by</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} {{element.surname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="pharmacy">
+          <th mat-header-cell *matHeaderCellDef>Pharmacy</th>
+          <td mat-cell *matCellDef="let element"> {{element.pharmacyName}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef > Action</th>
+          <td mat-cell class="action-cell" *matCellDef="let element">
+
+            <button (click)="show(element.id)">Give offer</button>
+
+
+
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+      </table>
+
+    </div>
+    </div>
