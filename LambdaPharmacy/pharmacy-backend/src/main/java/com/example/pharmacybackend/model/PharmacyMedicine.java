@@ -25,7 +25,7 @@ public class PharmacyMedicine {
     private MedicineStatus statusInPharmacy;
 
     @Column
-    private double quantity;
+    private int quantity;
 
     @Column
     private double price;
@@ -95,14 +95,14 @@ public class PharmacyMedicine {
     /**
      * @return double return the quantity
      */
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
     /**
      * @param quantity the quantity to set
      */
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

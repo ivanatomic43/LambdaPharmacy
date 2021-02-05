@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.pharmacybackend.dto.MedicineDTO;
 import com.example.pharmacybackend.dto.PriceDTO;
+import com.example.pharmacybackend.dto.PurchaseOrderDTO;
 import com.example.pharmacybackend.dto.ReservationParamsDTO;
-
+import com.example.pharmacybackend.model.PurchaseOrder;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.MedicineService;
@@ -115,7 +116,7 @@ public class MedicineController {
 
 	}
 
-	@RequestMapping(value = "/getMedForAdd/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getMedForAdd/{id}", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
 	public ResponseEntity<?> getMedForAdd(@PathVariable("id") Long id) {
 
@@ -266,6 +267,24 @@ public class MedicineController {
 		}
 
 		return new ResponseEntity<>(edited, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/createOrder/{pharmacyID}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> createOrder(@PathVariable("pharmacyID") Long pharmacyID,
+			@RequestBody PurchaseOrderDTO order, HttpServletRequest request) {
+
+		String myToken = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(myToken);
+		User user = userService.findByUsername(username);
+
+		boolean created = medicineService.createOrder(order, pharmacyID, user.getId());
+
+		if (!created) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

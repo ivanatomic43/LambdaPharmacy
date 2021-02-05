@@ -1,10 +1,13 @@
+import { PurchaseOrder } from './../../model/PurchaseOrder';
+
 import { OrderMedicine } from './../../model/OrderMedicine';
 import { MatTableDataSource } from '@angular/material';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MedicinePreview } from 'src/app/model/MedicinePreview';
 import { MedicineService } from 'src/app/services/medicineService';
+import { MedicineDTO } from 'src/app/model/MedicineDTO';
 
 @Component({
   selector: 'app-add-med',
@@ -18,17 +21,36 @@ export class AddMedComponent implements OnInit {
   medicineID: number;
   medicineForm: FormGroup;
 
-  medicineSource : MatTableDataSource<OrderMedicine>;
+  dataSource : MatTableDataSource<OrderMedicine>;
   medicineData : OrderMedicine[] = [];
-  columnMedicine: string[] = ['medicine'];
+  displayedColumns : string[] = [
+    'id',
+    'quantity'
+  ];
 
-  respData: OrderMedicine[] = [];
+
+
+  medID: number;
+  medicineName : string;
+  quantity: number;
+
+  item: OrderMedicine;
+  itemList: Array<OrderMedicine> = [];
+
+  orderForm : FormGroup;
+  orderDate: any;
+  purchaseOrder : PurchaseOrder;
+
+
+
+
 
 
   constructor(
     private router: Router,
     private medicineService: MedicineService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -45,21 +67,46 @@ export class AddMedComponent implements OnInit {
         addQuantity: new FormControl('',[Validators.required])
       });
 
+      this.orderForm = new FormGroup({
+        orderDate: new FormControl('', [Validators.required])
+      });
+
+
+  }
+
+  addToList(){
+
+     this.item = new OrderMedicine(
+       this.medicineForm.get('medicine').value,
+       this.medicineForm.get('addQuantity').value
+     );
+
+     this.itemList.push(this.item);
+      this.dataSource = new MatTableDataSource(this.itemList);
+
 
   }
 
 
-  onSubmitMedicine(){
-    const medicine = this.medicineForm.getRawValue().medicine;
-    const medicineData = { name: medicine};
-    this.medicineSource = new MatTableDataSource(this.medicineData);
+  orderMedicine(){
+
+    this.orderDate = this.orderForm.get('orderDate').value;
+    console.log(this.itemList);
+
+    this.purchaseOrder = new PurchaseOrder(
+      this.itemList,
+      this.orderDate
+    );
+
+    this.medicineService.orderMedicine(this.purchaseOrder, this.pharmacyID).subscribe(response =>{
+      alert("Order sent!");
+      this.router.navigate(['/pharmacy-details/'+ this.pharmacyID]);
+      this.itemList= [];
+    });
+
 
   }
 
-  fetchData(){
 
-
-
-  }
 
 }

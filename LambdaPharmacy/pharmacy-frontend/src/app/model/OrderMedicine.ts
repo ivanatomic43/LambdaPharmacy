@@ -1,8 +1,7 @@
 export class OrderMedicine{
 
   constructor(
-    id:number,
-    name: string,
-    quantity : number
+    public id: number,
+    public quantity: number
   ){}
 }

@@ -1,3 +1,4 @@
+import { OrdersComponent } from './components/orders/orders.component';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 import { RegisterSupplierComponent } from './components/register-supplier/register-supplier.component';
 import { RegisterSysAdminComponent } from './components/register-sys-admin/register-sys-admin.component';
@@ -181,7 +182,8 @@ const routes: Routes = [
         }
       ]
 
-  }
+  },
+  {path: 'orders', component: OrdersComponent}
 
 ];
 

@@ -1,5 +1,4 @@
-Uncaught TypeError: Object(...) is not a function
-    at Module../node_modules/@agm/core/fesm2015/agm-core.js (agm-core.js:483){
+{
   "name": "pharmacy-frontend",
   "version": "0.0.0",
   "scripts": {

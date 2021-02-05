@@ -133,7 +133,7 @@ public class PharmacyService {
 		p.setRating(0);
 
 		// setting pharmacy administrator
-		System.out.println("ID ADMINA APOTeke" + pharmacy.getPharmacyAdministrator());
+
 		PharmacyAdministrator pa = pharmacyAdministratorRepository.findOneById(pharmacy.getPharmacyAdministrator());
 		List<PharmacyAdministrator> pharmAdmins = new ArrayList<>();
 

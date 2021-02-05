@@ -1,3 +1,4 @@
+import { PurchaseOrder } from './../model/PurchaseOrder';
 import { EditPrice } from './../model/EditPrice';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewMedicine } from './../model/NewMedicine';
@@ -37,6 +38,7 @@ export class MedicineService {
   removeMedicineUrl = medicineUrl + '/removeMedicine/';
   getMedicineForEditUrl = medicineUrl + '/getMedicineForEdit/';
   editMedicineUrl = medicineUrl + '/editMedicine/';
+  createOrderUrl = medicineUrl + '/createOrder/';
 
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -262,4 +264,9 @@ export class MedicineService {
     return this.http.post<any>(this.editMedicineUrl+ pharmacyID, medicineDTO);
 
 }
+
+orderMedicine( order: PurchaseOrder, id:number){
+ console.log("order" + order);
+  return this.http.post(this.createOrderUrl + id, order);
+  }
 }

@@ -60,6 +60,9 @@ public class Pharmacy implements Serializable {
 	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Appointment> pharmacyAppointments = new ArrayList<>();
 
+	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PurchaseOrder> orders;
+
 	@ManyToOne
 	private Pricelist pricelist;
 
@@ -184,6 +187,20 @@ public class Pharmacy implements Serializable {
 	 */
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	/**
+	 * @return List<PurchaseOrder> return the orders
+	 */
+	public List<PurchaseOrder> getOrders() {
+		return orders;
+	}
+
+	/**
+	 * @param orders the orders to set
+	 */
+	public void setOrders(List<PurchaseOrder> orders) {
+		this.orders = orders;
 	}
 
 }

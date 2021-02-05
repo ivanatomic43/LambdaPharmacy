@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import java.util.*;
 
 @Entity
 @DiscriminatorValue("USER_PHARMA_ADMIN")
@@ -16,6 +19,9 @@ public class PharmacyAdministrator extends User {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pharmacy_id")
 	private Pharmacy pharmacy;
+
+	@OneToMany(mappedBy = "admin")
+	private List<PurchaseOrder> myOrderList;
 
 	/**
 	 * @return Pharmacy return the pharmacy

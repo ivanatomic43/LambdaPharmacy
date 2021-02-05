@@ -5,16 +5,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacybackend.repository.MedicineRepository;
+import com.example.pharmacybackend.repository.OrderItemRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
+import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyMedicinesRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
+import com.example.pharmacybackend.repository.PurchaseOrderRepository;
 import com.example.pharmacybackend.repository.RatingRepository;
 import com.example.pharmacybackend.repository.ReservationRepository;
 import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.dto.MedicineDTO;
+import com.example.pharmacybackend.dto.OrderItemDTO;
 import com.example.pharmacybackend.dto.PriceDTO;
+import com.example.pharmacybackend.dto.PurchaseOrderDTO;
 import com.example.pharmacybackend.dto.ReservationParamsDTO;
 import com.example.pharmacybackend.enumerations.MedicineStatus;
+import com.example.pharmacybackend.enumerations.OrderStatus;
 import com.example.pharmacybackend.model.*;
 import java.util.*;
 
@@ -31,10 +37,16 @@ public class MedicineService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private OrderItemRepository orderItemRepository;
+
+	@Autowired
 	private PatientRepository patientRepository;
 
 	@Autowired
 	private PharmacyMedicinesRepository pharmacyMedicinesRepository;
+
+	@Autowired
+	private PharmacyAdministratorRepository pharmacyAdministratorRepository;
 
 	@Autowired
 	private EmailService emailService;
@@ -47,6 +59,9 @@ public class MedicineService {
 
 	@Autowired
 	private RatingRepository ratingRepository;
+
+	@Autowired
+	private PurchaseOrderRepository orderRepository;
 
 	@Transactional
 	public Medicine save(Medicine medicine) {
@@ -203,7 +218,7 @@ public class MedicineService {
 				reservationRepository.updateResPharmacy(m.getPharmacy().getId(), medRes.getId());
 
 				if (m.getQuantity() != 0) {
-					double newMedQuantity = m.getQuantity() - 1;
+					int newMedQuantity = m.getQuantity() - 1;
 					m.setQuantity(newMedQuantity);
 					if (m.getQuantity() == 0) {
 						m.setStatusInPharmacy(MedicineStatus.OUT_OF_STOCK);
@@ -457,7 +472,7 @@ public class MedicineService {
 						if (medRes.getMedicine().getId() == pm.getMedicine().getId()
 								&& medRes.getPharmacy().getId() == pm.getPharmacy().getId()) {
 
-							double newQuantity = pm.getQuantity() + 1;
+							int newQuantity = pm.getQuantity() + 1;
 							pm.setQuantity(newQuantity);
 							System.out.println(pm.getQuantity());
 							medRes.setPatient(null);
@@ -730,6 +745,44 @@ public class MedicineService {
 			}
 		}
 		return edited;
+	}
+
+	public boolean createOrder(PurchaseOrderDTO order, Long pharmacyID, Long adminID) {
+		boolean created = false;
+
+		PharmacyAdministrator admin = pharmacyAdministratorRepository.findOneById(adminID);
+		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyID);
+		List<Medicine> allMeds = medicineRepository.findAll();
+
+		PurchaseOrder newOrder = new PurchaseOrder();
+		newOrder.setDate(order.getDate());
+		newOrder.setPharmacy(pharmacy);
+		newOrder.setAdmin(admin);
+		newOrder.setStatus(OrderStatus.WAITING_FOR_OFFER);
+		orderRepository.save(newOrder);
+
+		List<OrderItemDTO> orderList = new ArrayList<>();
+		orderList = order.getItems();
+
+		for (OrderItemDTO ot : orderList) {
+
+			OrderItem item = new OrderItem();
+			item.setQuantity(ot.getQuantity());
+			item.setPurchaseOrder(newOrder);
+
+			for (Medicine m : allMeds) {
+				if (ot.getId() == m.getId()) {
+					item.setMedicine(m);
+				}
+			}
+
+			orderItemRepository.save(item);
+
+		}
+
+		created = true;
+
+		return created;
 	}
 
 }
