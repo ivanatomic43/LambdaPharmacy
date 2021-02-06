@@ -1,6 +1,5 @@
 package com.example.pharmacybackend.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;

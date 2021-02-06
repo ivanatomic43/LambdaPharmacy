@@ -17,33 +17,7 @@
 
   </div>
 
-  <div *ngIf="isPharmacyAdmin" style=" display: flex; justify-content: center;">
 
-
-      <div class="input-field">
-
-        <input [(ngModel)]="medicine.name" formControlName="medName" name="medName" type="text" placeholder="Medicine name" />
-      </div>
-
-
-
-      <div class="input-field">
-
-        <input [(ngModel)]="medicine.code" formControlName="medCode" name="medCode" type="text" placeholder="Medicine code" />
-      </div>
-
-      <div class="input-field">
-        <button style=" width: 100px;
-        height: 30px;
-        font-size: 16px;
-  color: #fff;
-  transition: all .2s ease-out, color .2s ease-out;
-  border-radius: 3px;
-        background: #ff8300;;" type="submit">Search</button>
-      </div>
-
-
-  </div>
 
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
     <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-xl u-list u-repeater u-list-1">

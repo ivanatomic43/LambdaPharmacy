@@ -28,7 +28,6 @@ import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.repository.VacationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -239,7 +238,6 @@ public class SysAdminService {
         a.setFirstLogin(true);
         a.setApproved(true);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
         String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
         a.setPassword(hashedPass);
@@ -266,7 +264,6 @@ public class SysAdminService {
         s.setFirstLogin(true);
         s.setApproved(true);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
         String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
         s.setPassword(hashedPass);

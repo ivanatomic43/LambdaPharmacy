@@ -13,8 +13,6 @@ import com.example.pharmacybackend.services.AppointmentService;
 import com.example.pharmacybackend.services.UserServiceImpl;
 import com.example.pharmacybackend.model.User;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,8 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/appointment")
 public class AppointmentController {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     TokenUtils tokenUtils;

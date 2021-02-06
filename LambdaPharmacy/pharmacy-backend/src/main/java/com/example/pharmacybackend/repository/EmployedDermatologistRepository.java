@@ -2,8 +2,6 @@ package com.example.pharmacybackend.repository;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import com.example.pharmacybackend.model.EmployedDermatologist;
 
 import org.springframework.data.jpa.repository.JpaRepository;

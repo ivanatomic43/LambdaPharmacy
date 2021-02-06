@@ -17,6 +17,10 @@ export class OrderService {
 
   getAllOrdersUrl = orderUrl + '/getAllOrders';
   giveOfferUrl = orderUrl + '/giveOffer';
+  getOrderDetailsUrl = orderUrl + '/getOrderDetails/';
+  getOrdersMedicinesUrl = orderUrl + '/getOrdersMedicines/';
+  getOffersUrl = orderUrl + '/getOffers/';
+  acceptOfferUrl = orderUrl + '/acceptOffer/';
 
 
 
@@ -32,6 +36,21 @@ export class OrderService {
     return this.http.post<any>(this.giveOfferUrl, offer);
   }
 
+  getOrderDetails(id:number){
+    return this.http.get<any>(this.getOrderDetailsUrl + id);
+  }
+
+  getOrdersMedicines(id:number){
+    return this.http.get<any>(this.getOrdersMedicinesUrl+ id);
+  }
+
+  getOffers(id:number){
+      return this.http.get<any>(this.getOffersUrl + id);
+  }
+
+  acceptOffer(id:number){
+    return this.http.get(this.acceptOfferUrl +id);
+  }
 
 
 

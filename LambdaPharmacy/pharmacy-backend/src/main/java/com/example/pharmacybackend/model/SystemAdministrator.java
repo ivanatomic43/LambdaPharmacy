@@ -5,6 +5,11 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("USER_SYS_ADMIN")
-public class SystemAdministrator extends User{
+public class SystemAdministrator extends User {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
 }

@@ -1,9 +1,9 @@
 package com.example.pharmacybackend.controller;
 
+import com.example.pharmacybackend.dto.MedicineDTO;
 import com.example.pharmacybackend.dto.OfferDTO;
 import com.example.pharmacybackend.dto.PurchaseOrderDTO;
 import com.example.pharmacybackend.model.User;
-import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.OrderService;
 import com.example.pharmacybackend.services.UserServiceImpl;
@@ -26,9 +26,6 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private UserServiceImpl userService;
@@ -70,6 +67,62 @@ public class OrderController {
         }
 
         return new ResponseEntity<>(done, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getOrderDetails/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> getOrderDetails(HttpServletRequest request, @PathVariable("id") Long orderID) {
+
+        PurchaseOrderDTO dto = orderService.getOrderDetails(orderID);
+
+        if (dto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getOrdersMedicines/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> getOrdersMedicines(HttpServletRequest request, @PathVariable("id") Long orderID) {
+
+        List<MedicineDTO> retList = orderService.getOrdersMedicines(orderID);
+
+        if (retList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getOffers/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> getOffers(HttpServletRequest request, @PathVariable("id") Long orderID) {
+
+        List<OfferDTO> retList = orderService.getOffers(orderID);
+
+        if (retList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/acceptOffer/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> acceptOffer(HttpServletRequest request, @PathVariable("id") Long offerID) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        boolean accepted = orderService.acceptOffer(offerID, user.getId());
+
+        if (!accepted) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

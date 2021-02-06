@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Offer } from './../../model/Offer';
 
 import { AuthService } from './../../services/AuthService';
@@ -60,7 +61,8 @@ export class OrdersComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private authService : AuthService,
-    private formBuilder : FormBuilder
+    private formBuilder : FormBuilder,
+    private router: Router
 
   ) { }
 
@@ -119,6 +121,11 @@ export class OrdersComponent implements OnInit {
     this.clickedOffer= true;
   }
 
+  showDetails(id:number){
+
+    this.router.navigate(['/order-details/' + id]);
+  }
+
   cancelOffer(){
     this.clickedOffer= false;
   }
@@ -138,5 +145,7 @@ export class OrdersComponent implements OnInit {
     });
 
   }
+
+
 
 }

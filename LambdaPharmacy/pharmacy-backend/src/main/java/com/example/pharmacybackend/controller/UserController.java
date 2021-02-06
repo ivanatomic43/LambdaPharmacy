@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.model.*;
-import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.*;
 

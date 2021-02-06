@@ -370,7 +370,6 @@ public class AppointmentService {
         boolean cancelled = false;
 
         Appointment a = appointmentRepository.findOneById(id);
-        Patient p = patientRepository.findOneById(patientID);
 
         // checking dates
 
@@ -469,7 +468,6 @@ public class AppointmentService {
         boolean ended = false;
 
         Appointment appointment = appointmentRepository.findOneById(id);
-        Patient p = patientRepository.findOneById(id);
 
         if (appointment != null) {
             appointment.setStatus(AppointmentStatus.DONE);

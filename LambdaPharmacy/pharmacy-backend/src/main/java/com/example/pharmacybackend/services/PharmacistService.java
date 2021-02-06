@@ -16,10 +16,9 @@ import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.repository.PharmacistRepository;
-import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,9 +32,6 @@ public class PharmacistService {
 
     @Autowired
     private PharmacyRepository pharmacyRepository;
-
-    @Autowired
-    private PharmacyAdministratorRepository adminsRepository;
 
     @Autowired
     private PharmacyService pharmacyService;
@@ -76,7 +72,6 @@ public class PharmacistService {
         p.setPrice(newUser.getPrice());
         p.setApproved(true);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
         String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
         p.setPassword(hashedPass);
@@ -502,7 +497,6 @@ public class PharmacistService {
 
         List<PharmacistDTO> retList = new ArrayList<>();
 
-        PharmacyAdministrator admin = adminsRepository.findOneById(id);
         List<Pharmacy> pharmList = pharmacyRepository.findAll();
 
         for (Pharmacy p : pharmList) {

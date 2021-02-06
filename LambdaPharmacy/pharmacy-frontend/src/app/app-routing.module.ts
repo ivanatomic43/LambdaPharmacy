@@ -1,3 +1,4 @@
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 import { RegisterSupplierComponent } from './components/register-supplier/register-supplier.component';
@@ -183,7 +184,15 @@ const routes: Routes = [
       ]
 
   },
-  {path: 'orders', component: OrdersComponent}
+  {path: 'orders', component: OrdersComponent},
+  {path: 'order-details',
+      children : [
+        {
+          path: ':id',
+          component: OrderDetailsComponent
+        }
+      ]
+  }
 
 ];
 

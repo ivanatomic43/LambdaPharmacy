@@ -22,9 +22,7 @@ import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.model.Image;
 import com.example.pharmacybackend.model.Pharmacy;
-import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.model.User;
-import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.ImageService;
@@ -45,9 +43,6 @@ public class PharmacyController {
 	private UserServiceImpl userService;
 
 	@Autowired
-	private PharmacyAdministratorRepository pharmacyAdminRep;
-
-	@Autowired
 	TokenUtils tokenUtils;
 
 	@RequestMapping(value = "/getAllPharmacies", method = RequestMethod.GET)
@@ -55,7 +50,6 @@ public class PharmacyController {
 
 		List<Pharmacy> pharmacies = pharmacyService.getAllPharmacies();
 		List<PharmacyDTO> retPha = new ArrayList<>();
-		List<PharmacyAdministrator> admins = pharmacyAdminRep.findAll();
 
 		for (Pharmacy p : pharmacies) {
 
@@ -69,12 +63,6 @@ public class PharmacyController {
 			newPha.setDescription(p.getDescription());
 			newPha.setRating(p.getRating());
 
-			/*
-			 * for (PharmacyAdministrator pa : admins) { if() if (pa.getPharmacy().getId()
-			 * == p.getId()) { newPha.setFirstName(pa.getFirstName());
-			 * newPha.setLastName(pa.getLastName());
-			 * newPha.setPharmacyAdministrator(pa.getId()); } }
-			 */
 			retPha.add(newPha);
 
 		}
@@ -104,9 +92,7 @@ public class PharmacyController {
 
 		byte[] data = file.getBytes();
 		Image image = new Image(data, pharm);
-		if (image == null) {
-			System.out.println("NULL IMAGE");
-		}
+
 		this.imageService.save(image);
 
 		return new ResponseEntity<>(HttpStatus.OK);

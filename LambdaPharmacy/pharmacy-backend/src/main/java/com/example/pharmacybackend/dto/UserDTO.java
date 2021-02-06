@@ -1,7 +1,6 @@
 package com.example.pharmacybackend.dto;
 
 import com.example.pharmacybackend.model.User;
-import com.rabbitmq.client.DnsSrvRecordAddressResolver.SrvRecord;
 
 public class UserDTO {
 

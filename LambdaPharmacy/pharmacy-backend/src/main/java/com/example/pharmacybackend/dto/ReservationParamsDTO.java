@@ -1,6 +1,5 @@
 package com.example.pharmacybackend.dto;
 
-import java.time.LocalTime;
 import java.util.Date;
 
 public class ReservationParamsDTO {

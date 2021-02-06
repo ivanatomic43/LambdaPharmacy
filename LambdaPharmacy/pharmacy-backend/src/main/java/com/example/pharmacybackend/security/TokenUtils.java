@@ -1,7 +1,6 @@
 package com.example.pharmacybackend.security;
 
 import com.example.pharmacybackend.model.User;
-import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.model.TimeProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.example.pharmacybackend.dto.PharmacistDTO;
 import com.example.pharmacybackend.dto.SearchPharmacistParams;
 import com.example.pharmacybackend.dto.UserDTO;
-import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.PharmacistService;

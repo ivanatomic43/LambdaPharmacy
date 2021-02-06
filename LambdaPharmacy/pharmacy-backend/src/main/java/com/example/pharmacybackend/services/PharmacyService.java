@@ -3,7 +3,6 @@ package com.example.pharmacybackend.services;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -187,7 +186,6 @@ public class PharmacyService {
 		d.setFirstLogin(true);
 		d.setApproved(true);
 
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
 		String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
 		d.setPassword(hashedPass);

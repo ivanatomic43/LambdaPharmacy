@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.example.pharmacybackend.enumerations.OfferStatus;
+
 @Entity
 public class Offer {
 
@@ -17,6 +19,9 @@ public class Offer {
 
     @Column
     private Date deliveryTime;
+
+    @Enumerated(EnumType.STRING)
+    private OfferStatus status;
 
     @ManyToOne
     @JoinColumn(name = "purchase_order_id")
@@ -111,6 +116,20 @@ public class Offer {
      */
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    /**
+     * @return OfferStatus return the status
+     */
+    public OfferStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(OfferStatus status) {
+        this.status = status;
     }
 
 }

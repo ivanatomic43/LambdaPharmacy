@@ -17,7 +17,6 @@ import com.example.pharmacybackend.dto.MedicineDTO;
 import com.example.pharmacybackend.dto.PriceDTO;
 import com.example.pharmacybackend.dto.PurchaseOrderDTO;
 import com.example.pharmacybackend.dto.ReservationParamsDTO;
-import com.example.pharmacybackend.model.PurchaseOrder;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
 import com.example.pharmacybackend.services.MedicineService;
@@ -186,6 +185,7 @@ public class MedicineController {
 	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
 	public ResponseEntity<?> editPrice(@PathVariable("id") Long id, @RequestBody PriceDTO model) {
 
+		System.out.println("USAO U EDIT PRICE" + model.getPrice() + model.getId());
 		boolean changed = medicineService.editPrice(id, model);
 
 		if (!changed) {

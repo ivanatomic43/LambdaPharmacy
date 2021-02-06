@@ -11,7 +11,6 @@ import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.Promotion;
 import com.example.pharmacybackend.model.User;
-import com.example.pharmacybackend.repository.PatientRepository;
 
 @Service
 public class EmailService {

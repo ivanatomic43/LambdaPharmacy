@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.pharmacybackend.enumerations.OrderStatus;
-import com.example.pharmacybackend.model.OrderItem;
 
 public class PurchaseOrderDTO {
 

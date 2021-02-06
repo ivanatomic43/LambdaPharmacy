@@ -1,4 +1,4 @@
-<div style="background: url(/assets/back.jpg);" *ngIf="isPharmacyAdmin">
+<div style="background: url(/assets/back.jpg); background-size: cover; background-position: center center;" *ngIf="isPharmacyAdmin">
   <div class="preview-users">
     <h1 style="position: center; text-align: center;  color:#0f6674; font-family:'Arial Black'">My orders</h1>
 
@@ -29,7 +29,7 @@
         <th mat-header-cell *matHeaderCellDef > Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
 
-          <button (click)="showDetails(element.id)">See offers</button>
+          <button (click)=" showDetails(element.id)">See offers</button>
 
 
 

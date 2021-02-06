@@ -163,8 +163,6 @@ public class AuthController {
 
 		String myToken = tokenUtils.getToken(request);
 
-		String username = tokenUtils.getUsernameFromToken(myToken);
-
 		User user = this.userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		if (user != null) {
@@ -203,7 +201,6 @@ public class AuthController {
 	public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody PasswordDTO passDTO) {
 
 		String token = tokenUtils.getToken(request);
-		String username = tokenUtils.getUsernameFromToken(token);
 
 		User user = customUserDetailsService.changePassword(passDTO.getOldPassword(), passDTO.getNewPassword());
 

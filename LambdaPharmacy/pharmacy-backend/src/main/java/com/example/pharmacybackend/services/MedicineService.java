@@ -13,7 +13,6 @@ import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.repository.PurchaseOrderRepository;
 import com.example.pharmacybackend.repository.RatingRepository;
 import com.example.pharmacybackend.repository.ReservationRepository;
-import com.example.pharmacybackend.repository.UserRepository;
 import com.example.pharmacybackend.dto.MedicineDTO;
 import com.example.pharmacybackend.dto.OrderItemDTO;
 import com.example.pharmacybackend.dto.PriceDTO;
@@ -32,9 +31,6 @@ public class MedicineService {
 
 	@Autowired
 	private PharmacyRepository pharmacyRepository;
-
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private OrderItemRepository orderItemRepository;
@@ -560,10 +556,8 @@ public class MedicineService {
 
 		for (PharmacyMedicine m : medicines) {
 
-			if (m.getMedicine().getId() == model.getId() && m.getPharmacy().getId() == id) {
+			if (m.getId() == model.getId() && m.getPharmacy().getId() == id) {
 
-				System.out.println(model.getPrice());
-				System.out.println(model.getLastsFrom());
 				if (model.getPrice() != 0) {
 
 					pharmacyMedicinesRepository.updateMedPrice(m.getMedicine().getId(), m.getPharmacy().getId(),

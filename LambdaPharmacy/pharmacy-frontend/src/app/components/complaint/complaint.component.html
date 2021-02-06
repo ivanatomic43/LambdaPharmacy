@@ -1,4 +1,4 @@
-<div *ngIf="isPatient && anyLogged" class="main" style="background: url(/assets/back.jpg);">
+<div *ngIf="isPatient && anyLogged" class="main" style="background: url(/assets/back.jpg); background-size: cover; background-position: center center;">
   <div class="col-sm-9" style="background-color: #0f6674">
     <h3 class="mgbt-xs-15">COMPLAINT</h3>
     <form (ngSubmit)= "sendComplaint()" [formGroup]="complaintForm" >

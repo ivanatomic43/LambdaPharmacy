@@ -1,0 +1,154 @@
+<div style="background: url(/assets/back.jpg); background-size: cover; background-position: center center;">
+  <h1 style="position: center; text-align: center;  color:#0f6674; font-family:'Arial Black'" >Order details</h1>
+  <button class ="btn-search"  (click)="back()">Back</button>
+<div class="col-md-8" style="margin-left:auto; margin-right: auto; background-color: lightgray ;" >
+  <div class="card mb-3" >
+    <div class="card-body" >
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Order ID:</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          {{fetchedOrder.id}}
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Date of order</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <p>{{fetchedOrder.orderDatee}}</p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Made by</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <p>{{fetchedOrder.name}} {{fetchedOrder.surname}}</p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Status</h6>
+        </div>
+        <div class="col-sm-9 text-secondary"  >
+          <p> {{fetchedOrder.status}}</p>
+        </div>
+      </div>
+      <hr>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <h6 class="mb-0">Pharmacy</h6>
+        </div>
+        <div class="col-sm-9 text-secondary">
+          <p>{{fetchedOrder.pharmacyName}}</p>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+
+</div>
+
+<!--medicines-->
+
+<div style="background: url(/assets/back.jpg);">
+  <div class="preview-users">
+
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Medicine name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+  </div>
+
+<!--offers-->
+
+  <div style="background: url(/assets/back.jpg);">
+    <div class="preview-users">
+      <h1 style="position: center; text-align: center;  color:#0f6674; font-family:'Arial Black'">Offers for this order</h1>
+
+      <table mat-table [dataSource]="dataSource1" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supplier">
+          <th mat-header-cell *matHeaderCellDef> Supplier </th>
+          <td mat-cell *matCellDef="let element"> {{element.supplierName}} {{element.supplierSurname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPrice">
+          <th mat-header-cell *matHeaderCellDef>Total price</th>
+          <td mat-cell *matCellDef="let element"> {{element.totalPrice}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deliveryTime">
+          <th mat-header-cell *matHeaderCellDef>Delivery time</th>
+          <td mat-cell *matCellDef="let element"> {{element.deliveryTimee}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef > Action</th>
+          <td mat-cell class="action-cell" *matCellDef="let element">
+
+            <button (click)="accept(element.id, element.status)">Accept</button>
+
+
+
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+      </table>
+
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>

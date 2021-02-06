@@ -92,7 +92,6 @@ public class RatingService {
 
     public double changeRateDermatologist(Long id, Integer rate, User user) {
 
-        Dermatologist dermatologist = dermatologistRepository.findOneById(id);
         List<Rating> allRates = ratingRepository.findAll();
 
         for (Rating r : allRates) {
@@ -143,7 +142,6 @@ public class RatingService {
 
     public double changeRatePharmacist(Long id, Integer rate, User user) {
 
-        Pharmacist pharmacist = pharmacistRepository.findOneById(id);
         List<Rating> allRates = ratingRepository.findAll();
 
         for (Rating r : allRates) {
@@ -193,7 +191,6 @@ public class RatingService {
 
     public double changeRatePharmacy(Long id, Integer rate, User user) {
 
-        Pharmacy pharmacy = pharmacyRepository.findOneById(id);
         List<Rating> allRates = ratingRepository.findAll();
 
         for (Rating r : allRates) {
@@ -243,7 +240,6 @@ public class RatingService {
 
     public double changeRateMedicine(Long id, Integer rate, User user) {
 
-        Medicine medicine = medicineRepository.findOneById(id);
         List<Rating> allRates = ratingRepository.findAll();
 
         for (Rating r : allRates) {

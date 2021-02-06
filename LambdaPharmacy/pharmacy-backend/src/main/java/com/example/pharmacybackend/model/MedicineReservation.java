@@ -5,8 +5,6 @@ import java.util.Date;
 import javax.persistence.*;
 import com.example.pharmacybackend.enumerations.*;
 
-import org.springframework.data.jpa.repository.EntityGraph;
-
 @Entity
 @Table(name = "medicine_reservation")
 public class MedicineReservation {

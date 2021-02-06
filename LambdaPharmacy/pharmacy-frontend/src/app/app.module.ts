@@ -68,6 +68,7 @@ import { RegisterSupplierComponent } from './components/register-supplier/regist
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 import { AgmCoreModule} from '@agm/core';
 import { OrdersComponent } from './components/orders/orders.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 
 
@@ -126,7 +127,8 @@ import { OrdersComponent } from './components/orders/orders.component';
     RegisterSysAdminComponent,
     RegisterSupplierComponent,
     EditMedicineComponent,
-    OrdersComponent
+    OrdersComponent,
+    OrderDetailsComponent
 
 
   ],

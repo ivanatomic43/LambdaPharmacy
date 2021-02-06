@@ -20,7 +20,7 @@ import com.example.pharmacybackend.repository.PharmacyRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -80,7 +80,6 @@ public class DermatologistService {
         d.setPhoneNumber(newUser.getPhoneNumber());
         d.setApproved(true);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
         String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
         d.setPassword(hashedPass);
@@ -211,7 +210,6 @@ public class DermatologistService {
 
         List<DermatologistDTO> retList = new ArrayList<>();
 
-        Pharmacy pharmacy = pharmacyRepository.findOneById(id);
         List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
 
         for (EmployedDermatologist ed : derm) {
@@ -239,7 +237,7 @@ public class DermatologistService {
     public boolean removeDermatologist(Long id, Long dermID) {
 
         boolean removed = false;
-        System.out.println("DERM" + dermID);
+
         Pharmacy p = pharmacyRepository.findOneById(id);
         List<Appointment> allApp = p.getPharmacyAppointments();
         List<EmployedDermatologist> pharmDermatologist = p.getDermatologists();
@@ -306,7 +304,6 @@ public class DermatologistService {
         List<DermatologistDTO> retList = new ArrayList<>();
 
         List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
-        List<Pharmacy> pharmList = pharmacyRepository.findAll();
 
         for (EmployedDermatologist d : derm) {
 
@@ -314,7 +311,6 @@ public class DermatologistService {
             dto.setId(d.getDermatologist().getId());
             dto.setFirstName(d.getDermatologist().getFirstName());
             dto.setLastName(d.getDermatologist().getLastName());
-            // dto.setUsername(d.getUsername());
             dto.setDateFromm(d.getDateFrom().toString());
             dto.setDateToo(d.getDateTo().toString());
             dto.setFrom(d.getWorkFrom().toString());

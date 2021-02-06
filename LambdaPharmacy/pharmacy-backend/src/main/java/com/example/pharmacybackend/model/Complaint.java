@@ -1,7 +1,5 @@
 package com.example.pharmacybackend.model;
 
-import static javax.persistence.CascadeType.ALL;
-
 import javax.persistence.*;
 import javax.persistence.Table;
 
