@@ -39,7 +39,7 @@
 
 <div *ngIf="isSysAdmin && anyLogged && showTable" style="background: url(/assets/back.jpg);">
   <div class="preview-users">
-    <h1 style="position: center; text-align: center; margin-top: 20px; color:#0f6674; font-family:'Arial Black'">Complaints</h1>
+    <h1 style="position: center; text-align: center;  color:#0f6674; font-family:'Arial Black'">Complaints</h1>
 
     <div *ngIf="showAnswerForm" class = "custom-search">
       <form [formGroup]="replyForm" (ngSubmit)="sendReply()">

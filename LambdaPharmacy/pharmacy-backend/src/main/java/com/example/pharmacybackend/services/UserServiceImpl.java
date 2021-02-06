@@ -13,9 +13,10 @@ import com.example.pharmacybackend.dto.UserDTO;
 
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.repository.PatientRepository;
-
+import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.UserRepository;
 
 @Service
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PatientRepository patientRepository;
+
+	@Autowired
+	private PharmacyAdministratorRepository adminRepository;
 
 	@Override
 	public User findById(Long id) {
@@ -149,15 +153,23 @@ public class UserServiceImpl implements UserService {
 	public List<UserDTO> getAdministrators() {
 
 		List<User> userList = userRepository.findAll();
+		List<PharmacyAdministrator> adminList = adminRepository.findAll();
 		List<UserDTO> retList = new ArrayList<>();
 
-		for (User u : userList) {
-			System.out.println(u.getAuthority().getName());
-			if (u.getAuthority().getName().toString().equals("ROLE_PHARMACY_ADMIN")) {
-				UserDTO dto = new UserDTO(u);
-				dto.setRole(u.getAuthority().getName());
-				retList.add(dto);
-			}
+		for (PharmacyAdministrator a : adminList) {
+
+			UserDTO dto = new UserDTO();
+			dto.setId(a.getId());
+			dto.setFirstName(a.getFirstName());
+			dto.setLastName(a.getLastName());
+			dto.setAddress(a.getAddress());
+			dto.setPhoneNumber(a.getPhoneNumber());
+			dto.setUsername(a.getUsername());
+			dto.setEmail(a.getEmail());
+			dto.setRole(a.getAuthority().getName());
+
+			retList.add(dto);
+
 		}
 
 		return retList;

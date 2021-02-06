@@ -1,6 +1,9 @@
 server: 
   port: 8051
 
+
+  
+
 spring: 
   application: 
     name: user
@@ -27,3 +30,8 @@ spring:
           ssl.trust: smtp.gmail.com
           auth: true
           starttls.enable: true
+
+penalty:
+    cron: 0 20 */1 * * * 
+resetpenalty:
+    cron: 0 0 0 1 * * 
