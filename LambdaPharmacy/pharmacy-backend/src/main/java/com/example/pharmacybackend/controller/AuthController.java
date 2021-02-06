@@ -143,6 +143,7 @@ public class AuthController {
 			}
 
 			confirm.setAuthority(role);
+			confirm.setPenalty(0);
 
 			userService.updateActivation(true, confirm.getId());
 			response.sendRedirect("http://localhost:4200/login");

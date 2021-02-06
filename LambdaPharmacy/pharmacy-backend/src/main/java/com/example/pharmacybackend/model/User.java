@@ -59,6 +59,9 @@ public class User implements UserDetails {
 	@Version
 	private int version;
 
+	@Column
+	private int penalty;
+
 	public boolean isFirstLogin() {
 		return firstLogin;
 	}
@@ -196,6 +199,20 @@ public class User implements UserDetails {
 	 */
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	/**
+	 * @return int return the penalty
+	 */
+	public int getPenalty() {
+		return penalty;
+	}
+
+	/**
+	 * @param penalty the penalty to set
+	 */
+	public void setPenalty(int penalty) {
+		this.penalty = penalty;
 	}
 
 }

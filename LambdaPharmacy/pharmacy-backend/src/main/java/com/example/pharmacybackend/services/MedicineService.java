@@ -196,7 +196,30 @@ public class MedicineService {
 	public boolean reserveMedicine(ReservationParamsDTO dto, Long patientID) {
 
 		boolean reserved = false;
+
+		// checking if user have 3 penalties
 		Patient patient = patientRepository.findOneById(patientID);
+		List<MedicineReservation> allRes = reservationRepository.findAll();
+
+		for (MedicineReservation mr : allRes) {
+			if (mr.getPatient().getId() == patient.getId()) {
+				Date date = new Date();
+				if (mr.getDate().before(date) && mr.getStatus().equals(MedicineStatus.RESERVED)) { // reserved date has
+																									// passed and
+																									// medicine status
+																									// is still reserved
+					int pen = patient.getPenalty();
+					int newP = pen + 1;
+					patient.setPenalty(newP);
+
+					if (newP >= 3) {
+						System.out.println("Patient can't reserve medicine because of penalties...");
+						return reserved = false;
+					}
+
+				}
+			}
+		}
 
 		List<PharmacyMedicine> medicinesInPharmacy = pharmacyMedicinesRepository.findAll();
 
