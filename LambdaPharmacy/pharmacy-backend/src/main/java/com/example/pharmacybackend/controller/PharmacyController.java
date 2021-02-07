@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.pharmacybackend.dto.DermatologistDTO;
 import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.dto.PromotionDTO;
 import com.example.pharmacybackend.dto.UserDTO;
@@ -262,6 +263,20 @@ public class PharmacyController {
 		PharmacyDTO myPharm = pharmacyService.getMyPharmacy(user.getId());
 
 		return new ResponseEntity<>(myPharm, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/getEmployedStaff/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('PHARMACY_ADMIN')")
+	public ResponseEntity<?> getEmployedStaff(@PathVariable("id") Long pharmacyID) {
+
+		List<DermatologistDTO> retList = pharmacyService.getEmployedStaff(pharmacyID);
+
+		if (retList.isEmpty()) {
+			return new ResponseEntity<>(retList, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(retList, HttpStatus.OK);
 
 	}
 

@@ -21,7 +21,7 @@
                 <button *ngIf="isPatient && !isSubscribed" class="btn-search" (click)="subscribe(fetchedPharmacy.id)">Subscribe for newsletter</button>
                 <p *ngIf="isPatient && isSubscribed"><b>SUBSCRIBED</b></p>
                 <button *ngIf="isPatient && isSubscribed" class="btn-search" (click)="unsubscribe(fetchedPharmacy.id)">Unsubcribe</button>
-
+                <button *ngIf="isPharmacyAdmin" class="btn-search" (click)="showStats(fetchedPharmacy.id)">Statistic</button>
 
               </div>
             </div>

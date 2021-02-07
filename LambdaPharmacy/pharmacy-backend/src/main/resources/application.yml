@@ -32,6 +32,6 @@ spring:
           starttls.enable: true
 
 penalty:
-    cron: 0 20 */1 * * * 
+    cron: 0 0 */1 * * * 
 resetpenalty:
     cron: 0 0 0 1 * * 

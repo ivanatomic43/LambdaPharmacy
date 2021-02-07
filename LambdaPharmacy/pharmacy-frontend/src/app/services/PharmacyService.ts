@@ -33,6 +33,7 @@ export class PharmacyService {
   fetchAllPromotionsUrl = pharmacyUrl + '/fetchAllPromotions/';
   createPromotionUrl = pharmacyUrl + '/createPromotion/';
   getAdminsPharmacyUrl = pharmacyUrl + '/getAdminsPharmacy';
+  getEmployedStaffUrl = pharmacyUrl + '/getEmployedStaff/';
 
 
 
@@ -61,6 +62,10 @@ export class PharmacyService {
 
   getPharmacyById(id: number){
     return this.http.get<any>(this.getPharmacyUrl + id);
+  }
+
+  getEmployedStaff(id: number){
+    return this.http.get<any>(this.getEmployedStaffUrl + id);
   }
 
   getAdministrators(){

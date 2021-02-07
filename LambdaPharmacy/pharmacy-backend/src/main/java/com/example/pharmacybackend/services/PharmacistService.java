@@ -106,8 +106,6 @@ public class PharmacistService {
 
     public List<PharmacistDTO> getAllPharmForPharmacy(Long id) {
 
-        System.out.println("USAO OVDE U ALL PHARM");
-        System.out.println(id);
         List<PharmacistDTO> retList = new ArrayList<>();
         List<Pharmacist> pharmaList = new ArrayList<>();
 

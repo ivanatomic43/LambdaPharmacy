@@ -250,4 +250,8 @@ export class PharmacyDetailsComponent implements OnInit {
     });
   }
 
+  showStats(id:number){
+    this.router.navigate(['/statistic/' + id]);
+  }
+
 }

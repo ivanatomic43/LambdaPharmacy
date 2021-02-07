@@ -8,17 +8,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacybackend.repository.AddressRepository;
+import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
+import com.example.pharmacybackend.repository.PharmacistRepository;
 import com.example.pharmacybackend.repository.PharmacyAdministratorRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.repository.PromotionRepository;
+import com.example.pharmacybackend.dto.DermatologistDTO;
 import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.dto.PromotionDTO;
 import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.model.Address;
 import com.example.pharmacybackend.model.Authority;
+import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Patient;
+import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.model.Promotion;
@@ -42,7 +47,13 @@ public class PharmacyService {
 	private PromotionRepository promotionRepository;
 
 	@Autowired
+	private PharmacistRepository pharmacistRepository;
+
+	@Autowired
 	private AddressRepository addressRepository;
+
+	@Autowired
+	private EmployedDermatologistRepository employedDermatologistRepository;
 
 	@Autowired
 	private EmailService emailService;
@@ -390,6 +401,52 @@ public class PharmacyService {
 
 		}
 		return null;
+	}
+
+	public List<DermatologistDTO> getEmployedStaff(Long pharmacyID) {
+
+		List<DermatologistDTO> retList = new ArrayList<>();
+
+		List<EmployedDermatologist> derm = employedDermatologistRepository.findAll();
+
+		for (EmployedDermatologist ed : derm) {
+			if (ed.getPharmacy().getId() == pharmacyID) {
+
+				DermatologistDTO dto = new DermatologistDTO();
+				dto.setId(ed.getDermatologist().getId());
+				dto.setFirstName(ed.getDermatologist().getFirstName());
+				dto.setLastName(ed.getDermatologist().getLastName());
+				dto.setDateFromm(ed.getDateFrom().toString());
+				dto.setDateToo(ed.getDateTo().toString());
+				dto.setPrice(ed.getPrice());
+				dto.setRating(ed.getRating());
+				dto.setFrom(ed.getWorkFrom().toString());
+				dto.setTo(ed.getWorkTo().toString());
+				dto.setRole(ed.getDermatologist().getAuthority().getName());
+
+				retList.add(dto);
+
+			}
+		}
+
+		List<Pharmacist> pharm = pharmacistRepository.findAll();
+		for (Pharmacist p : pharm) {
+			if (p.getPharmacy().getId() == pharmacyID) {
+
+				DermatologistDTO dto = new DermatologistDTO();
+				dto.setId(p.getId());
+				dto.setFirstName(p.getFirstName());
+				dto.setLastName(p.getLastName());
+				dto.setPrice(p.getPrice());
+				dto.setRating(p.getRating());
+				dto.setRole(p.getAuthority().getName());
+
+				retList.add(dto);
+			}
+		}
+
+		return retList;
+
 	}
 
 }

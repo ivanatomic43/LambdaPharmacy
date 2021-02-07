@@ -63,7 +63,7 @@ public class AppointmentController {
 
     @RequestMapping(value = "/reserveAppointment/{id}")
     @PreAuthorize("hasRole('PATIENT')")
-    public ResponseEntity<?> getAll(@PathVariable("id") Long id, HttpServletRequest request) {
+    public ResponseEntity<?> reserve(@PathVariable("id") Long id, HttpServletRequest request) {
 
         String myToken = tokenUtils.getToken(request);
         String username = tokenUtils.getUsernameFromToken(myToken);
@@ -114,7 +114,7 @@ public class AppointmentController {
 
     @RequestMapping(value = "/reserveCounceling")
     @PreAuthorize("hasRole('PATIENT')")
-    public ResponseEntity<?> getAll(@RequestBody AppointmentDTO newApp, HttpServletRequest request) {
+    public ResponseEntity<?> reserveCounceling(@RequestBody AppointmentDTO newApp, HttpServletRequest request) {
 
         String myToken = tokenUtils.getToken(request);
         String username = tokenUtils.getUsernameFromToken(myToken);

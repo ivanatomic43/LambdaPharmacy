@@ -1,3 +1,4 @@
+import { StatisticComponent } from './components/statistic/statistic.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
@@ -192,6 +193,15 @@ const routes: Routes = [
           component: OrderDetailsComponent
         }
       ]
+  },
+  {path: 'statistic',
+      children: [
+        {
+          path: ':id',
+          component: StatisticComponent
+        }
+      ]
+
   }
 
 ];

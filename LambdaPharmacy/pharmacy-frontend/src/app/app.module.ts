@@ -69,6 +69,7 @@ import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.
 import { AgmCoreModule} from '@agm/core';
 import { OrdersComponent } from './components/orders/orders.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { StatisticComponent } from './components/statistic/statistic.component';
 
 
 
@@ -128,7 +129,8 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
     RegisterSupplierComponent,
     EditMedicineComponent,
     OrdersComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    StatisticComponent
 
 
   ],
