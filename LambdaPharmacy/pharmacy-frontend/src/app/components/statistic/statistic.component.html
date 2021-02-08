@@ -20,7 +20,7 @@
 </div>
 
 
-<div  style="background: url(/assets/back.jpg);">
+<div  style="background: url(/assets/back.jpg); background-size: cover; background-position: center;">
   <div class="preview-users">
     <h1 style="position: center; text-align: center;  color:#0f6674; font-family:'Arial Black'">Employed staff and ratings</h1>
 
@@ -51,7 +51,33 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
+
+
+  <div class="custom-search">
+    <button class ="btn-search" (click) = "appointments()">Statistic for appointments </button>
+    <button class="btn-search"  style="margin-left:10px;" (click) = "medicines()">Statistic for medicines </button>
+
   </div>
+
+
+  <div class="chart-wrapper" *ngIf = "chart" style = "width: 80%; background-color: lightgray; margin-top: 15px; margin-left:auto; margin-right:auto;">
+    <canvas baseChart
+    [datasets]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [colors]="chartColors"
+    [plugins]="barChartPlugins"
+    [legend]="barChartLegend"
+    [chartType]="barChartType">
+    </canvas>
+  </div>
+
+
+
+  </div>
+
+
+
 
 
   </div>

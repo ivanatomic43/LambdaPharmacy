@@ -151,4 +151,13 @@ table {
   margin-top: 25px;
 
 }
+.custom-search{
 
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+
+}

@@ -26,7 +26,6 @@ import { ListOfPrescriptionsComponent } from './components/list-of-prescriptions
 import { ReservedMedicinesComponent } from './components/reserved-medicines/reserved-medicines.component';
 import { AllMyMedicinesComponent } from './components/all-my-medicines/all-my-medicines.component';
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
-import { PenaltyInsightComponent } from './components/penalty-insight/penalty-insight.component';
 import { MakeAnAppDComponent } from './components/make-an-app-d/make-an-app-d.component';
 import { MakeAnAppPComponent } from './components/make-an-app-p/make-an-app-p.component';
 import { ComplaintComponent } from './components/complaint/complaint.component';
@@ -70,6 +69,7 @@ import { AgmCoreModule} from '@agm/core';
 import { OrdersComponent } from './components/orders/orders.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { StatisticComponent } from './components/statistic/statistic.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 
@@ -95,7 +95,6 @@ import { StatisticComponent } from './components/statistic/statistic.component';
     ReservedMedicinesComponent,
     AllMyMedicinesComponent,
     MyAppointmentsComponent,
-    PenaltyInsightComponent,
     MakeAnAppDComponent,
     MakeAnAppPComponent,
     ComplaintComponent,
@@ -150,7 +149,8 @@ import { StatisticComponent } from './components/statistic/statistic.component';
     MatFormFieldModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBLBXRgczQ3dIN3_ev-hJL0JqMPoQCXpio'
-    })
+    }),
+    ChartsModule
   ],
   entryComponents: [
     NewPharmacyComponent,

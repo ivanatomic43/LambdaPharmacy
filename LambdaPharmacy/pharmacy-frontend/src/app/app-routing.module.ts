@@ -44,7 +44,6 @@ import {PatientProfileComponent} from './components/patient-profile/patient-prof
 import { ReservedMedicinesComponent } from './components/reserved-medicines/reserved-medicines.component';
 import { AllMyMedicinesComponent } from './components/all-my-medicines/all-my-medicines.component';
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
-import { PenaltyInsightComponent } from './components/penalty-insight/penalty-insight.component';
 import { MakeAnAppDComponent } from './components/make-an-app-d/make-an-app-d.component';
 import { ComplaintComponent } from './components/complaint/complaint.component';
 import { AddMedComponent } from './components/add-med/add-med.component';
@@ -62,7 +61,6 @@ const routes: Routes = [
   {path: 'reserved-medicines', component: ReservedMedicinesComponent },
   {path: 'all-my-medicines', component: AllMyMedicinesComponent },
   {path: 'my-appointments', component: MyAppointmentsComponent },
-  {path: 'penalty-insight', component: PenaltyInsightComponent },
   {path: 'make-an-app-d',
       children : [
         {
