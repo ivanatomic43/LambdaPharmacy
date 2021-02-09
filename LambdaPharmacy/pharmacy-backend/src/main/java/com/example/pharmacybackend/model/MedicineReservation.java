@@ -26,6 +26,9 @@ public class MedicineReservation {
     @Column
     private Date date;
 
+    @Column
+    private double price;
+
     @Version
     private int version;
 
@@ -128,6 +131,20 @@ public class MedicineReservation {
      */
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    /**
+     * @return double return the price
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 }

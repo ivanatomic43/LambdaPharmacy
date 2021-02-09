@@ -32,6 +32,7 @@ export class StatisticComponent implements OnInit {
   //charts
   appointmentList : Array<AppointmentStatistic> = [];
   medicinesList : Array<AppointmentStatistic> = [];
+  earningsList : Array<AppointmentStatistic> = [];
   barChartOptions : ChartOptions = {
     responsive: true,
   };
@@ -119,6 +120,29 @@ export class StatisticComponent implements OnInit {
     });
 
     this.barChartData.push({data: this.dataList, label: 'Number of sold medicines per month'});
+  }
+
+  totalEarnings(){
+    this.dataList = [];
+    this.chart = true;
+    this.barChartData = [];
+
+    this.statisticService.totalEarnings(this.pharmacyID).subscribe(response => {
+
+      this.barChartLabels = [];
+      this.earningsList = response as Array<AppointmentStatistic>;
+
+      for(var sum of this.earningsList) {
+
+
+        this.barChartLabels.push(sum.month);
+        this.dataList.push(sum.appointmentCounter);
+      }
+    }, error => {
+      alert("Error");
+    });
+
+    this.barChartData.push({data: this.dataList, label: 'Total earnings per month'});
   }
 
 

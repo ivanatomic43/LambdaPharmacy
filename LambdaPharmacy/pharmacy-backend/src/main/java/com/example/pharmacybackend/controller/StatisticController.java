@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Path;
 
+import com.example.pharmacybackend.dto.EarningsDTO;
 import com.example.pharmacybackend.dto.StatisticDTO;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.security.TokenUtils;
@@ -55,6 +56,15 @@ public class StatisticController {
     public ResponseEntity<?> getMedicinesStatistic(@PathVariable("id") Long id) throws ParseException {
 
         List<StatisticDTO> retList = statisticService.getMedicinesStatistic(id);
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getTotalEarnings/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PHARMACY_ADMIN')")
+    public ResponseEntity<?> getTotalEarnings(@PathVariable("id") Long id) throws ParseException {
+
+        List<EarningsDTO> retList = statisticService.getTotalEarnings(id);
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }

@@ -15,6 +15,7 @@ export class StatisticService {
 
   appointmentsUrl = statisticUrl + '/getAppointmentStatistic/';
   medicinesUrl = statisticUrl + '/getMedicinesStatistic/';
+  totalEarningsUrl = statisticUrl + '/getTotalEarnings/';
 
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -26,6 +27,10 @@ export class StatisticService {
 
   medicines(id:number){
     return this.http.get<any>(this.medicinesUrl + id);
+  }
+
+  totalEarnings(id:number){
+    return this.http.get<any>(this.totalEarningsUrl + id);
   }
 
 

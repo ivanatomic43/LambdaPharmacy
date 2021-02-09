@@ -212,6 +212,7 @@ public class MedicineService {
 				MedicineReservation medRes = new MedicineReservation();
 				medRes.setDate(dto.getDate());
 				medRes.setStatus(MedicineStatus.RESERVED);
+				medRes.setPrice(m.getPrice());
 
 				this.saveMedicineReservation(medRes);
 
