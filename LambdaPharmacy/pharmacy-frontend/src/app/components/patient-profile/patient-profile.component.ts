@@ -24,7 +24,7 @@ export class PatientProfileComponent implements OnInit {
 
   ngOnInit() {
     this.usernameForm = this.sessionStorageService.getUserName();
-    console.log('Username iz patient profile: ' + this.usernameForm);
+
     this.getMyUser();
   }
 

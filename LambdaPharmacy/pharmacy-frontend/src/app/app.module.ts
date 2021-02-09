@@ -70,6 +70,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { StatisticComponent } from './components/statistic/statistic.component';
 import { ChartsModule } from 'ng2-charts';
+import { LoyaltyProgramComponent } from './components/loyalty-program/loyalty-program.component';
 
 
 
@@ -129,7 +130,8 @@ import { ChartsModule } from 'ng2-charts';
     EditMedicineComponent,
     OrdersComponent,
     OrderDetailsComponent,
-    StatisticComponent
+    StatisticComponent,
+    LoyaltyProgramComponent
 
 
   ],

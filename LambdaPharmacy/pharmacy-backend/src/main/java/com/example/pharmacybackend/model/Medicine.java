@@ -54,6 +54,9 @@ public class Medicine implements Serializable {
 	@Column
 	private double rating;
 
+	@Column
+	private int loyaltyPoints;
+
 	@Version
 	private int version;
 
@@ -217,6 +220,20 @@ public class Medicine implements Serializable {
 	 */
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	/**
+	 * @return int return the loyaltyPoints
+	 */
+	public int getLoyaltyPoints() {
+		return loyaltyPoints;
+	}
+
+	/**
+	 * @param loyaltyPoints the loyaltyPoints to set
+	 */
+	public void setLoyaltyPoints(int loyaltyPoints) {
+		this.loyaltyPoints = loyaltyPoints;
 	}
 
 }

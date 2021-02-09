@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.pharmacybackend.dto.CategoryDTO;
 import com.example.pharmacybackend.dto.ComplaintDTO;
 import com.example.pharmacybackend.dto.ReplyDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
@@ -160,6 +161,24 @@ public class SysAdminController {
         }
 
         return new ResponseEntity<>(s, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getCategories", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> getCategories() {
+
+        List<CategoryDTO> retList = sysAdminService.getCategories();
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/editCategory", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> editCategory(@RequestBody CategoryDTO cat) {
+
+        boolean edited = sysAdminService.editCategory(cat);
+
+        return new ResponseEntity<>(edited, HttpStatus.OK);
     }
 
 }

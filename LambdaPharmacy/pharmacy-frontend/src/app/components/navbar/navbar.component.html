@@ -57,7 +57,7 @@
           <a class="nav-link" *ngIf="isPatient && anyLogged">Loyalty program
                <div class="dropdown-content">
                    <a class="nav-link" routerLink="/sub-pharmacies">Subscribed pharmacies</a>
-                   <a class="nav-link" routerLink="/my-stats">My stats</a>
+
 
                 </div>
           </a>
@@ -95,6 +95,7 @@
               </div>
         </a>
       </div>
+      <li class="nav-item"><a *ngIf="anyLogged && isSysAdmin" routerLink="/loyalty-program" class ="nav-link">Loyalty program</a></li>
 
       <!--SUPPLIER-->
       <li class="nav-item"><a *ngIf="anyLogged && isSupplier" routerLink="/orders" class="nav-link">Orders</a></li>

@@ -3,6 +3,7 @@ package com.example.pharmacybackend.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.pharmacybackend.dto.CategoryDTO;
 import com.example.pharmacybackend.dto.ComplaintDTO;
 import com.example.pharmacybackend.dto.ReplyDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
@@ -13,6 +14,7 @@ import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Complaint;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.EmployedDermatologist;
+import com.example.pharmacybackend.model.LoyaltyCategory;
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Supplier;
 import com.example.pharmacybackend.model.SystemAdministrator;
@@ -21,6 +23,7 @@ import com.example.pharmacybackend.model.Vacation;
 import com.example.pharmacybackend.repository.ComplaintRepository;
 
 import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
+import com.example.pharmacybackend.repository.LoyaltyCategoryRepository;
 import com.example.pharmacybackend.repository.PatientRepository;
 import com.example.pharmacybackend.repository.SupplierRepository;
 import com.example.pharmacybackend.repository.SysAdminRepository;
@@ -61,6 +64,9 @@ public class SysAdminService {
     @Autowired
     private AuthorityService authorityService;
 
+    @Autowired
+    private LoyaltyCategoryRepository categoryRepository;
+
     @Transactional
     public Complaint saveComplaint(Complaint c) {
         return this.complaintRepository.save(c);
@@ -69,6 +75,11 @@ public class SysAdminService {
     @Transactional
     public Vacation saveVacation(Vacation v) {
         return this.vacationRepository.save(v);
+    }
+
+    @Transactional
+    public void updateCategory(LoyaltyCategory cat) {
+        this.categoryRepository.save(cat);
     }
 
     public SystemAdministrator saveAdmin(SystemAdministrator sysAdmin) {
@@ -275,6 +286,40 @@ public class SysAdminService {
         this.saveSupplier(s);
 
         return s;
+    }
+
+    public List<CategoryDTO> getCategories() {
+
+        List<CategoryDTO> retList = new ArrayList<>();
+        List<LoyaltyCategory> allCat = categoryRepository.findAll();
+
+        for (LoyaltyCategory c : allCat) {
+            CategoryDTO dto = new CategoryDTO();
+            dto.setId(c.getId());
+            dto.setType(c.getType().toString());
+            dto.setDiscount(c.getDiscount());
+            dto.setPointsBorder(c.getPointsBorder());
+            retList.add(dto);
+        }
+
+        return retList;
+    }
+
+    @Transactional
+    public boolean editCategory(CategoryDTO cat) {
+
+        List<LoyaltyCategory> list = categoryRepository.findAll();
+        for (LoyaltyCategory c : list) {
+            if (cat.getId() == c.getId()) {
+                c.setDiscount(cat.getDiscount());
+                c.setPointsBorder(cat.getPointsBorder());
+
+                this.updateCategory(c);
+
+                return true;
+            }
+        }
+        return false;
     }
 
 }

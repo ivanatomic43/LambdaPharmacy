@@ -1,3 +1,4 @@
+import { LoyaltyProgramComponent } from './components/loyalty-program/loyalty-program.component';
 import { StatisticComponent } from './components/statistic/statistic.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrdersComponent } from './components/orders/orders.component';
@@ -200,7 +201,8 @@ const routes: Routes = [
         }
       ]
 
-  }
+  },
+  {path : 'loyalty-program', component : LoyaltyProgramComponent}
 
 ];
 

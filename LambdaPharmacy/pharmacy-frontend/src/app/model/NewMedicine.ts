@@ -11,6 +11,7 @@ export class NewMedicine {
     note ?: string;
     contraindications ?: string;
     dailyDose ?:string;
+    loyaltyPoints ?: number;
   }
 
 

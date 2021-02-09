@@ -36,7 +36,8 @@ export class RegisterMedicineComponent implements OnInit {
       medicineMode: ['', Validators.required],
       contraindications: ['', Validators.required],
       note: ['', Validators.required],
-      dailyDose: ['', Validators.required]
+      dailyDose: ['', Validators.required],
+      loyaltyPoints: ['', Validators.required]
     });
 
 

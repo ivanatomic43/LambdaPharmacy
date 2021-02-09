@@ -1,0 +1,67 @@
+<div style="background: url(/assets/back.jpg);">
+  <div class="preview-users">
+    <h1 style="position: center; text-align: center;  color:#0f6674; font-family:'Arial Black'">Loyalty program</h1>
+
+    <div *ngIf="clicked" class = "custom-search">
+      <form [formGroup]="editForm" (ngSubmit)="save()">
+
+      <input class = "custom-input" type= "text"  formControlName="editID" [(ngModel)]="editID"/>
+
+      <input class="custom-input" type="text" formControlName="editName" [(ngModel)]="editName"/>
+
+      <input class="custom-input" type="text" formControlName="editDiscount" [(ngModel)]="editDiscount"/>
+
+      <input class="custom-input" type="text" formControlName="editPointsBorder" [ngModel]="editPointsBorder"/>
+
+      <button class="btn-search" type="submit">Save</button>
+    </form>
+      <button class="btn-search" (click)="cancel()">Cancel</button>
+
+    </div>
+
+
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef > ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef >Type</th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="discount">
+        <th mat-header-cell *matHeaderCellDef >Discount</th>
+        <td mat-cell *matCellDef="let element"> {{element.discount}}%</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="pointLimit">
+        <th mat-header-cell *matHeaderCellDef >Points limit</th>
+        <td mat-cell *matCellDef="let element"> {{element.pointsBorder}}pts</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <td mat-cell class="action-cell" *matCellDef="let element">
+        <button (click)="editClick(element.id, element.type, element.discount, element.pointsBorder)">Change category</button>
+
+
+
+        </td>
+      </ng-container>
+
+
+
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+  </div>

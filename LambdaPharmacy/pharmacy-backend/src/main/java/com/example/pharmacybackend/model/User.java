@@ -62,6 +62,13 @@ public class User implements UserDetails {
 	@Column
 	private int penalty;
 
+	@Column
+	private int loyaltyPoints;
+
+	@ManyToOne
+	@JoinColumn(name = "loyalty_category_id")
+	private LoyaltyCategory loyaltyCategory;
+
 	public boolean isFirstLogin() {
 		return firstLogin;
 	}
@@ -213,6 +220,34 @@ public class User implements UserDetails {
 	 */
 	public void setPenalty(int penalty) {
 		this.penalty = penalty;
+	}
+
+	/**
+	 * @return int return the loyaltyPoints
+	 */
+	public int getLoyaltyPoints() {
+		return loyaltyPoints;
+	}
+
+	/**
+	 * @param loyaltyPoints the loyaltyPoints to set
+	 */
+	public void setLoyaltyPoints(int loyaltyPoints) {
+		this.loyaltyPoints = loyaltyPoints;
+	}
+
+	/**
+	 * @return LoyaltyCategory return the loyaltyCategory
+	 */
+	public LoyaltyCategory getLoyaltyCategory() {
+		return loyaltyCategory;
+	}
+
+	/**
+	 * @param loyaltyCategory the loyaltyCategory to set
+	 */
+	public void setLoyaltyCategory(LoyaltyCategory loyaltyCategory) {
+		this.loyaltyCategory = loyaltyCategory;
 	}
 
 }

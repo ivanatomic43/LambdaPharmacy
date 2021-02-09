@@ -16,6 +16,7 @@ public class MedicineDTO {
 	private String note;
 	private String contraindications;
 	private String dailyDose;
+	private int loyaltyPoints;
 
 	private Long pharmacyID;
 	private String pharmacyName;
@@ -56,7 +57,7 @@ public class MedicineDTO {
 	public MedicineDTO(Long id, String medicineCode, String medicineType, String name, String shape, String producer,
 			String structure, String modee, String note, Long pharmacyID, String pharmacyName, String status,
 			String contraindications, String dailyDose, double quantity, double price, double rating,
-			String priceLastsTo, double myRate) {
+			String priceLastsTo, double myRate, int loyaltyPoints) {
 		super();
 		this.id = id;
 		this.medicineCode = medicineCode;
@@ -77,6 +78,7 @@ public class MedicineDTO {
 		this.rating = rating;
 		this.priceLastsTo = priceLastsTo;
 		this.myRate = myRate;
+		this.loyaltyPoints = loyaltyPoints;
 
 	}
 
@@ -304,6 +306,20 @@ public class MedicineDTO {
 	 */
 	public void setMyRate(double myRate) {
 		this.myRate = myRate;
+	}
+
+	/**
+	 * @return int return the loyaltyPoints
+	 */
+	public int getLoyaltyPoints() {
+		return loyaltyPoints;
+	}
+
+	/**
+	 * @param loyaltyPoints the loyaltyPoints to set
+	 */
+	public void setLoyaltyPoints(int loyaltyPoints) {
+		this.loyaltyPoints = loyaltyPoints;
 	}
 
 }

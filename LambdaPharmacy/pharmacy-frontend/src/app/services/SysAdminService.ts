@@ -1,3 +1,4 @@
+import { Category } from 'src/app/model/Category';
 
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -22,6 +23,8 @@ sendReplyUrl = sysAdminUrl + '/sendReply';
 getAllVacationRequestsUrl = sysAdminUrl + '/getAllVacationRequests';
 approveRequestUrl = sysAdminUrl + '/approveVacation/';
 denyRequestUrl = sysAdminUrl + '/denyVacation/';
+editCategoryUrl = sysAdminUrl + '/editCategory';
+getCategoriesUrl = sysAdminUrl + '/getCategories';
 
   constructor(
 
@@ -136,6 +139,13 @@ denyRequestUrl = sysAdminUrl + '/denyVacation/';
       );
   }
 
+  editCategory(category: Category){
+      return this.http.post<any>(this.editCategoryUrl, category);
+  }
+
+  getCategories(){
+    return this.http.get<any>(this.getCategoriesUrl);
+  }
 
 
   }

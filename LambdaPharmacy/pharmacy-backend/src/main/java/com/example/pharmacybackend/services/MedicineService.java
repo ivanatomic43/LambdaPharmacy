@@ -325,6 +325,7 @@ public class MedicineService {
 		dto.setProducer(newMedicine.getProducer());
 		dto.setDefaultStatus(MedicineStatus.AVAILABLE);
 		dto.setRating(0);
+		dto.setLoyaltyPoints(newMedicine.getLoyaltyPoints());
 
 		this.save(dto);
 
@@ -343,6 +344,7 @@ public class MedicineService {
 		ret.setProducer(dto.getProducer());
 		ret.setStatus(dto.getDefaultStatus().toString());
 		ret.setRating(dto.getRating());
+		ret.setLoyaltyPoints(dto.getLoyaltyPoints());
 
 		return ret;
 
@@ -386,7 +388,6 @@ public class MedicineService {
 
 	}
 
-	// ovo menjati
 	public boolean addMedicineToPharmacy(Long pharmacyID, Long medicineID) {
 
 		boolean added = false;
@@ -433,6 +434,7 @@ public class MedicineService {
 				dto.setQuantity(m.getQuantity());
 				dto.setPrice(m.getPrice());
 				dto.setRating(m.getMedicine().getRating());
+				dto.setLoyaltyPoints(m.getMedicine().getLoyaltyPoints());
 
 				myMed.add(dto);
 			} else {
@@ -521,6 +523,7 @@ public class MedicineService {
 			dto.setShape(med.getShape());
 			dto.setStructure(med.getStructure());
 			dto.setRating(med.getRating());
+			dto.setLoyaltyPoints(med.getLoyaltyPoints());
 
 			return dto;
 
@@ -538,6 +541,7 @@ public class MedicineService {
 			dto.setProducer(myMed.getMedicine().getProducer());
 			dto.setShape(myMed.getMedicine().getShape());
 			dto.setStructure(myMed.getMedicine().getStructure());
+			dto.setLoyaltyPoints(myMed.getMedicine().getLoyaltyPoints());
 
 			dto.setQuantity(myMed.getQuantity());
 			dto.setStatus(myMed.getStatusInPharmacy().toString());
@@ -628,6 +632,7 @@ public class MedicineService {
 				dto.setProducer(myMed.getMedicine().getProducer());
 				dto.setShape(myMed.getMedicine().getShape());
 				dto.setStructure(myMed.getMedicine().getStructure());
+				dto.setLoyaltyPoints(myMed.getMedicine().getLoyaltyPoints());
 
 				for (Rating r : allRates) {
 					if (r.getMedicine() != null) {
@@ -748,6 +753,7 @@ public class MedicineService {
 		return edited;
 	}
 
+	// adding medicines in pharmacy
 	public boolean createOrder(PurchaseOrderDTO order, Long pharmacyID, Long adminID) {
 		boolean created = false;
 
@@ -764,10 +770,9 @@ public class MedicineService {
 
 		List<OrderItemDTO> orderList = new ArrayList<>();
 		orderList = order.getItems();
-		System.out.println("DOBAVIO ITEMSE");
 
 		for (OrderItemDTO ot : orderList) {
-			System.out.println("USao ovde u order listu)");
+
 			OrderItem item = new OrderItem();
 			item.setQuantity(ot.getQuantity());
 			item.setPurchaseOrder(newOrder);
