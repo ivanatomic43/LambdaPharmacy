@@ -35,6 +35,11 @@
         <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="points">
+        <th mat-header-cell *matHeaderCellDef>Loyalty points</th>
+        <td mat-cell *matCellDef="let element"> {{element.loyaltyPoints}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">

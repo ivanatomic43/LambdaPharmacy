@@ -1,30 +1,38 @@
 
-
+/*
+Password za sve naloge je 123.
+Komunikacija se odvija preko e-mail naloga  no.reply.medclinic@gmail.com, password je sifra123.
+*/
 INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (1, 'Novi Sad', 45.26125996629874, 19.834538133520123, 'Bulevar Kralja Petra I 11'); 
 INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (2, 'Novi Sad', 45.24608736237126, 19.830979426522536, 'Puškinova 2');
 INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (3, 'Novi Sad', 45.26420970934681, 19.817092640017577, 'Rumenacka 34');
 
-INSERT INTO LOYALTY_CATEGORY (id, discount, points_border, type) VALUES (1, 10, 250, 'REGULAR');
+INSERT INTO LOYALTY_CATEGORY (id, discount, points_border, type) VALUES (1, 0, 250, 'REGULAR');
 INSERT INTO LOYALTY_CATEGORY (id, discount, points_border, type) VALUES (2, 20, 500, 'SILVER');
 INSERT INTO LOYALTY_CATEGORY (id, discount, points_border, type) VALUES (3, 30, 1000, 'GOLD');
+
+INSERT INTO APPOINTMENT_LOYALTY(id, points, type) VALUES (1, 20, 'EXAMINATION');
+INSERT INTO APPOINTMENT_LOYALTY(id, points, type) VALUES (2, 15, 'COUNCELING');
 
 INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (1, 'Bulevar Oslobodjenja 56, Novi Sad', 'Otvorena 24/7', 'Jankovic DOO',0,1);
 INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (2, 'Lasla Gala 12, Novi Sad', 'Sirok asortiman proizvoda', 'BENU apoteka',0,2);
 INSERT INTO PHARMACY (id, address, description, name, rating, add_id) VALUES (3, 'Kisacka 27, Novi Sad', 'Sirok asortiman proizvoda', 'Zegin',0,3);
 
 
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points, password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PATIENT',1,'Bulevar Kralja Petra I 12, Novi Sad',true,'ivana@gmail.com',false,'Ivana','Tomic',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601234567','ivanatomic',0,1);
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PHARMA_ADMIN', 2, 'Narodnog fronta 34, Novi Sad', true, 'admin@gmail.com', false, 'Marko', 'Markovic',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0633216547', 'markomarkovic',0,1);
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points,  password, penalty, phone_number, username, version, rating, loyalty_category_id) values ('USER_DERMATOLOGIST',3,'Bulevar Oslobodjenja 56, Novi Sad',true,'derma@gmail.com',false,'Pera','Peric',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601234488','peraperic',0,0,1);
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, rating, loyalty_category_id) values ('USER_DERMATOLOGIST',4,'Jevrejska 33, Novi Sad',true,'dermamika@gmail.com',false,'Mika','Mikic',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601277567','mikamikic',0,0,1);
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_SYS_ADMIN',5,'Masarikova 7, Novi Sad',true,'adminsistema@gmail.com',false,'Petar','Petrovic',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601277444','petarpetrovic',0,1);
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PHARMA_ADMIN', 6, 'Branka Bajica 13, Novi Sad', true, 'pharmadmin@gmail.com', false, 'Drugi admin', 'Apoteke',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0, '0644567894','adminapoteke',0,1 );
-INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) VALUES ('USER_SUPPLIER', 7, 'Bulevar Evrope 67, Novi Sad', true, 'supplier@gmail.com', false, 'Dobavljac', 'Dobavljacic',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601234444','dobavljac',0,1);
-
-
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points, password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PATIENT',1,'Bulevar Kralja Petra I 12, Novi Sad',true,'no.reply.medclinic@gmail.com',false,'Ivana','Tomic',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601234567','ivanatomic',0,1);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PHARMA_ADMIN', 2, 'Narodnog fronta 34, Novi Sad', true, 'no.reply.medclinic@gmail.com', false, 'Marko', 'Markovic',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0633216547', 'adminjankovic',0,1);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points,  password, penalty, phone_number, username, version, rating, loyalty_category_id) values ('USER_DERMATOLOGIST',3,'Bulevar Oslobodjenja 56, Novi Sad',true,'no.reply.medclinic@gmail.com',false,'Pera','Peric',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601234488','peraperic',0,0,1);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, rating, loyalty_category_id) values ('USER_DERMATOLOGIST',4,'Jevrejska 33, Novi Sad',true,'no.reply.medclinic@gmail.com',false,'Mika','Mikic',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601277567','mikamikic',0,0,1);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_SYS_ADMIN',5,'Masarikova 7, Novi Sad',true,'no.reply.medclinic@gmail.com',false,'Petar','Petrovic',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601277444','adminsistema',0,1);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PHARMA_ADMIN', 6, 'Branka Bajica 13, Novi Sad', true, 'no.reply.medclinic@gmail.com', false, 'Drugi admin', 'Apoteke',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0, '0644567894','adminbenu',0,1 );
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) VALUES ('USER_SUPPLIER', 7, 'Bulevar Evrope 67, Novi Sad', true, 'no.reply.medclinic@gmail.com', false, 'Dobavljac', 'Dobavljacic',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601234444','dobavljac',0,1);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PHARMA_ADMIN', 8, 'Gunduliceva 12, Novi Sad', true, 'no.reply.medclinic@gmail.com', false, 'Admin Zegin', 'Zegin Admin',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0633216588', 'adminzegin',0,1);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PHARMA_ADMIN', 9, 'Drage Spasic 4, Novi Sad', true, 'no.reply.medclinic@gmail.com', false, 'Admin Jankovic 2', 'Admin Jankovic 2',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0633277588', 'adminjankovic2',0,1);
 
 INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrators_id) VALUES (1, 2);
+INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrator_id) VALUES (1, 9);
 INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrators_id) VALUES (2, 6);
+INSERT INTO PHARMACY_PHARMACY_ADMINISTRATORS (pharmacy_id, pharmacy_administrators_id) VALUES (3, 8);
 
 
 
@@ -70,14 +78,15 @@ INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (4,3);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (5,5);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (6,4);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (7,6);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (8,4);
 
 INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (1, '2020-11-01', '2021-02-01', 120, 0,'06:00:00', '14:00:00', 3, 1 );
 INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (2, '2020-11-01', '2021-02-01', 100, 0, '18:00:00', '21:00:00', 3, 2);
 INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (3, '2020-11-01', '2021-02-01', 110, 0, '07:00:00', '15:00:00', 4, 1);
 
-INSERT INTO APPOINTMENT (id, date_of_appointment, duration, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (1, '2021-01-20', 2, '08:22:00', 50, 'RESERVED', 'EXAMINATION',0, 1, 1, NULL, 1);
-INSERT INTO APPOINTMENT (id, date_of_appointment, duration, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (2, '2021-01-23', 2, '10:22:00', 50, 'RESERVED', 'EXAMINATION',0, 2, 7, NULL, 1);
-
+INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (1, '2021-01-20', 2,0, '08:22:00', 50, 'RESERVED', 'EXAMINATION',0, 1, 1, NULL, 1);
+INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (2, '2021-01-23', 2, 0,'10:22:00', 50, 'RESERVED', 'EXAMINATION',0, 2, 1, NULL, 1);
+INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (3, '2021-02-25', 1, 0, '09:00:00', 50, 'FREE', 'EXAMINATION',   0, 1,NULL, NULL, 1);
 INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id) VALUES (1, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 1, NULL);
 INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id) VALUES (2, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 2, NULL);
 

@@ -10,6 +10,7 @@ import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.dto.VacationDTO;
 import com.example.pharmacybackend.enumerations.ComplaintStatus;
 import com.example.pharmacybackend.enumerations.VacationStatus;
+import com.example.pharmacybackend.model.AppointmentLoyalty;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Complaint;
 import com.example.pharmacybackend.model.Dermatologist;
@@ -20,6 +21,7 @@ import com.example.pharmacybackend.model.Supplier;
 import com.example.pharmacybackend.model.SystemAdministrator;
 import com.example.pharmacybackend.model.User;
 import com.example.pharmacybackend.model.Vacation;
+import com.example.pharmacybackend.repository.AppointmentLoyaltyRepository;
 import com.example.pharmacybackend.repository.ComplaintRepository;
 
 import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
@@ -67,6 +69,9 @@ public class SysAdminService {
     @Autowired
     private LoyaltyCategoryRepository categoryRepository;
 
+    @Autowired
+    private AppointmentLoyaltyRepository appointmentLoyaltyRepository;
+
     @Transactional
     public Complaint saveComplaint(Complaint c) {
         return this.complaintRepository.save(c);
@@ -80,6 +85,11 @@ public class SysAdminService {
     @Transactional
     public void updateCategory(LoyaltyCategory cat) {
         this.categoryRepository.save(cat);
+    }
+
+    @Transactional
+    public void updateAppLoy(AppointmentLoyalty cat) {
+        this.appointmentLoyaltyRepository.save(cat);
     }
 
     public SystemAdministrator saveAdmin(SystemAdministrator sysAdmin) {
@@ -315,6 +325,40 @@ public class SysAdminService {
                 c.setPointsBorder(cat.getPointsBorder());
 
                 this.updateCategory(c);
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<CategoryDTO> getAppLoyalty() {
+
+        List<CategoryDTO> retList = new ArrayList<>();
+        List<AppointmentLoyalty> allApp = appointmentLoyaltyRepository.findAll();
+
+        for (AppointmentLoyalty c : allApp) {
+            CategoryDTO dto = new CategoryDTO();
+            dto.setId(c.getId());
+            dto.setAppointmentType(c.getType().toString());
+            dto.setAppPoints(c.getPoints());
+
+            retList.add(dto);
+        }
+
+        return retList;
+    }
+
+    @Transactional
+    public boolean editAppLoyalty(CategoryDTO cat) {
+
+        List<AppointmentLoyalty> list = appointmentLoyaltyRepository.findAll();
+        for (AppointmentLoyalty c : list) {
+            if (cat.getId() == c.getId()) {
+
+                c.setPoints(cat.getAppPoints());
+
+                this.updateAppLoy(c);
 
                 return true;
             }

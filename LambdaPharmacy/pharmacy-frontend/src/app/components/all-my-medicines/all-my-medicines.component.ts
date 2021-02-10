@@ -18,6 +18,7 @@ export class AllMyMedicinesComponent implements OnInit {
     'id',
   'code',
   'name',
+  'points',
   'rating',
   'myRate',
   'action'

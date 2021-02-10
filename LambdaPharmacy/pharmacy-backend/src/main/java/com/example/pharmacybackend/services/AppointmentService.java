@@ -14,6 +14,7 @@ import com.example.pharmacybackend.dto.PharmacyDTO;
 import com.example.pharmacybackend.enumerations.AppointmentStatus;
 import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
+import com.example.pharmacybackend.model.AppointmentLoyalty;
 import com.example.pharmacybackend.model.EmployedDermatologist;
 import com.example.pharmacybackend.model.Patient;
 import com.example.pharmacybackend.model.Pharmacist;
@@ -43,6 +44,9 @@ public class AppointmentService {
 
     @Autowired
     private EmployedDermatologistRepository employedDermatologistRepository;
+
+    @Autowired
+    private AppointmentLoyaltyRepository appLoyaltyRepository;
 
     @Autowired
     private DermatologistService dermatologistService;
@@ -312,6 +316,13 @@ public class AppointmentService {
         Appointment a = appointmentRepository.findOneById(id);
         Patient patient = patientRepository.findOneById(userID);
 
+        List<AppointmentLoyalty> appList = appLoyaltyRepository.findAll();
+        for (AppointmentLoyalty al : appList) {
+            if (al.getType().equals(a.getType())) {
+                a.setLoyaltyPoints(al.getPoints());
+            }
+        }
+
         a.setStatus(AppointmentStatus.RESERVED);
         this.update(a);
 
@@ -345,12 +356,14 @@ public class AppointmentService {
                     dto.setRole("DERMATOLOGIST");
                     dto.setType(AppointmentType.EXAMINATION.toString());
                     dto.setPrice(a.getDermatologist().getPrice());
+                    dto.setLoyaltyPoints(a.getLoyaltyPoints());
                 } else {
                     dto.setFirstName(a.getPharmacist().getFirstName());
                     dto.setLastName(a.getPharmacist().getLastName());
                     dto.setRole("PHARMACIST");
                     dto.setType(AppointmentType.COUNCELING.toString());
                     dto.setPrice(a.getPharmacist().getPrice());
+                    dto.setLoyaltyPoints(a.getLoyaltyPoints());
                 }
 
                 dto.setDuration(a.getDuration());
@@ -441,12 +454,15 @@ public class AppointmentService {
         a.setPharmacy(pharmacy);
         a.setPrice(pharmacist.getPrice());
 
+        List<AppointmentLoyalty> appList = appLoyaltyRepository.findAll();
+        for (AppointmentLoyalty al : appList) {
+            if (al.getType().equals(a.getType())) {
+                a.setLoyaltyPoints(al.getPoints());
+            }
+        }
+
         this.update(a);
 
-        System.out.println("APP ID" + a.getId());
-        System.out.println("PATIENT ID" + p.getId());
-        System.out.println("PHARM ID " + pharmacist.getId());
-        System.out.println("PHARMACIY ID " + pharmacy.getId());
         // this.updatePatient(p.getId(), a.getId());
         // appointmentRepository.setPharmacist(pharmacist.getId(), a.getId());
         // appointmentRepository.setPharmacy(pharmacy.getId(), a.getId());
@@ -462,15 +478,22 @@ public class AppointmentService {
         return reserved;
     }
 
+    @Transactional
     public boolean endAppointment(Long id, Long userID) {
 
+        // loyalty points will be added after patient ends appointment
         boolean ended = false;
 
         Appointment appointment = appointmentRepository.findOneById(id);
 
         if (appointment != null) {
             appointment.setStatus(AppointmentStatus.DONE);
+            Patient patient = appointment.getPatient();
+            int p = patient.getLoyaltyPoints();
+            int newp = p + appointment.getLoyaltyPoints();
+            patient.setLoyaltyPoints(newp);
             appointmentRepository.save(appointment);
+            patientService.update(patient);
             ended = true;
         }
 

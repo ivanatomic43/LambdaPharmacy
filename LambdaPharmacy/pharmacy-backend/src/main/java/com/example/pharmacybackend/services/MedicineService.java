@@ -18,6 +18,7 @@ import com.example.pharmacybackend.dto.OrderItemDTO;
 import com.example.pharmacybackend.dto.PriceDTO;
 import com.example.pharmacybackend.dto.PurchaseOrderDTO;
 import com.example.pharmacybackend.dto.ReservationParamsDTO;
+import com.example.pharmacybackend.enumerations.CategoryType;
 import com.example.pharmacybackend.enumerations.MedicineStatus;
 import com.example.pharmacybackend.enumerations.OrderStatus;
 import com.example.pharmacybackend.model.*;
@@ -37,6 +38,9 @@ public class MedicineService {
 
 	@Autowired
 	private PatientRepository patientRepository;
+
+	@Autowired
+	private PatientService patientService;
 
 	@Autowired
 	private PharmacyMedicinesRepository pharmacyMedicinesRepository;
@@ -212,7 +216,23 @@ public class MedicineService {
 				MedicineReservation medRes = new MedicineReservation();
 				medRes.setDate(dto.getDate());
 				medRes.setStatus(MedicineStatus.RESERVED);
-				medRes.setPrice(m.getPrice());
+
+				// price calculation depending on the category
+				double price = m.getPrice();
+
+				if (patient.getLoyaltyCategory().getType().equals(CategoryType.REGULAR)) {
+					medRes.setPrice(price);
+				}
+				if (patient.getLoyaltyCategory().getType().equals(CategoryType.SILVER)) {
+					int discount = patient.getLoyaltyCategory().getDiscount();
+					double newPrice = (price * (100 - discount)) / 100;
+					medRes.setPrice(newPrice);
+				}
+				if (patient.getLoyaltyCategory().getType().equals(CategoryType.GOLD)) {
+					int discount = patient.getLoyaltyCategory().getDiscount();
+					double newPrice = (price * (100 - discount)) / 100;
+					medRes.setPrice(newPrice);
+				}
 
 				this.saveMedicineReservation(medRes);
 
@@ -232,6 +252,7 @@ public class MedicineService {
 					m.setStatusInPharmacy(MedicineStatus.OUT_OF_STOCK);
 				}
 				this.savePharmacyMedicine(m);
+				patientRepository.save(patient);
 				// reservationRepository.save(medRes);
 
 				emailService.sendMedicineReservationMail(patient, medRes.getId());
@@ -263,6 +284,7 @@ public class MedicineService {
 					dto.setPharmacyID(m.getPharmacy().getId());
 					dto.setPharmacyName(m.getPharmacy().getName());
 					dto.setStatus(m.getStatus().toString());
+					dto.setLoyaltyPoints(m.getMedicine().getLoyaltyPoints());
 
 					dto.setQuantity(1);
 
@@ -589,8 +611,10 @@ public class MedicineService {
 		return changed;
 	}
 
+	@Transactional
 	public boolean pickUpMedicine(Long id, Long pharmacyID, Long userID) {
 
+		// loyalty points will be added to patient after he picks up the medicine
 		boolean picked = false;
 
 		List<MedicineReservation> medicines = reservationRepository.findAll();
@@ -599,6 +623,10 @@ public class MedicineService {
 			if (mr.getMedicine().getId() == id && mr.getPharmacy().getId() == pharmacyID
 					&& mr.getPatient().getId() == userID) {
 				mr.setStatus(MedicineStatus.PICKED_UP);
+				int p = mr.getPatient().getLoyaltyPoints();
+				int newp = p + mr.getMedicine().getLoyaltyPoints();
+				mr.getPatient().setLoyaltyPoints(newp);
+				patientService.update(mr.getPatient());
 				reservationRepository.save(mr);
 				picked = true;
 			}

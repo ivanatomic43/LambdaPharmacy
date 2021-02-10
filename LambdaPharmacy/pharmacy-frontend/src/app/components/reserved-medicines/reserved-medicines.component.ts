@@ -20,6 +20,7 @@ export class ReservedMedicinesComponent implements OnInit {
     'pharmacyName',
     'status',
     'quantity',
+    'points',
     'action'
   ];
 

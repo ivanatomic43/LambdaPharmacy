@@ -1,3 +1,4 @@
+import { AppointmentLoyalty } from './../../model/AppointmentLoyalty';
 import { NumberValueAccessor } from '@angular/forms/src/directives';
 import { SysAdminService } from './../../services/SysAdminService';
 import { MatTableDataSource } from '@angular/material';
@@ -31,6 +32,23 @@ export class LoyaltyProgramComponent implements OnInit {
   editForm: FormGroup;
   editCategoryModel : Category;
 
+
+  dataSource1 : MatTableDataSource<AppointmentLoyalty>;
+  fetchedApp : AppointmentLoyalty[] = [];
+  displayedColumns1 : string [] = [
+    'id',
+    'type',
+    'points',
+    'action'
+  ];
+
+  clicked1 : boolean = false;
+  editID1 : number;
+  editName1: string;
+  editPoints : number;
+  editForm1 : FormGroup;
+  editAppModel :AppointmentLoyalty;
+
   constructor(
     private sysAdminService : SysAdminService,
     private formBuilder : FormBuilder
@@ -45,6 +63,17 @@ export class LoyaltyProgramComponent implements OnInit {
       editPointsBorder : ['', Validators.required]
     });
     this.fetchCategories();
+
+    this.editForm1 = this.formBuilder.group({
+      editID1 : [{value: '', disabled: true}, Validators.required],
+      editName1 : [{value: '', disabled: true}, Validators.required],
+      editPoints : ['', Validators.required],
+
+    });
+
+    this.fetchApp();
+
+
   }
 
   fetchCategories(){
@@ -88,6 +117,43 @@ export class LoyaltyProgramComponent implements OnInit {
 
   }
 
+   fetchApp(){
+
+    this.sysAdminService.getAppLoy().subscribe(response => {
+      this.fetchedApp= response;
+      this.dataSource1 = new MatTableDataSource(this.fetchedApp);
+    });
+
+
+   }
+
+   editClick1(id:number, name: string, points:number){
+    this.clicked1= true;
+    this.editID1 = id;
+    this.editName1 = name;
+    this.editPoints = points;
+  }
+
+  cancel1(){
+    this.clicked1 = false;
+  }
+
+  save1(){
+
+    this.editAppModel= new AppointmentLoyalty(
+      this.editForm1.get('editID1').value,
+      this.editForm1.get('editName1').value,
+      this.editForm1.get('editPoints').value,
+
+    );
+
+    this.sysAdminService.editAppLoy(this.editAppModel).subscribe(response =>{
+        alert("Points for appointment updated!");
+        this.fetchApp();
+        this.clicked1= false;
+    });
+
+  }
 
 
 }

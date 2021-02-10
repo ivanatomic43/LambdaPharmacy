@@ -48,6 +48,9 @@ public class Appointment {
 	@Version
 	private int version;
 
+	@Column
+	private int loyaltyPoints;
+
 	/**
 	 * @return Long return the id
 	 */
@@ -214,6 +217,20 @@ public class Appointment {
 	 */
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	/**
+	 * @return int return the loyaltyPoints
+	 */
+	public int getLoyaltyPoints() {
+		return loyaltyPoints;
+	}
+
+	/**
+	 * @param loyaltyPoints the loyaltyPoints to set
+	 */
+	public void setLoyaltyPoints(int loyaltyPoints) {
+		this.loyaltyPoints = loyaltyPoints;
 	}
 
 }

@@ -28,6 +28,7 @@ export class MyAppointmentsComponent implements OnInit {
     'type',
     'duration',
     'price',
+    'points',
     'action'
   ];
 

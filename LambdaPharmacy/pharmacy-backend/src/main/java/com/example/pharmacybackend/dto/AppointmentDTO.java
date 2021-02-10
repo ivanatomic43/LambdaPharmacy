@@ -24,6 +24,7 @@ public class AppointmentDTO {
 
     private String role;
     private String type;
+    private int loyaltyPoints;
 
     public AppointmentDTO() {
     }
@@ -40,7 +41,7 @@ public class AppointmentDTO {
     }
 
     public AppointmentDTO(Long id, String dateOfAppointmentt, LocalTime meetingTime, long duration, double price,
-            String firstName, String lastName, double rating) {
+            String firstName, String lastName, double rating, int loyaltyPoints) {
         this.id = id;
         this.dateOfAppointmentt = dateOfAppointmentt;
         this.meetingTime = meetingTime;
@@ -49,10 +50,11 @@ public class AppointmentDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rating = rating;
+        this.loyaltyPoints = loyaltyPoints;
     }
 
     public AppointmentDTO(Long id, String dateOfAppointmentt, LocalTime meetingTime, long duration, double price,
-            String firstName, String lastName, double rating, String role, String type) {
+            String firstName, String lastName, double rating, String role, String type, int loyaltyPoints) {
         this.id = id;
         this.dateOfAppointmentt = dateOfAppointmentt;
         this.meetingTime = meetingTime;
@@ -63,6 +65,7 @@ public class AppointmentDTO {
         this.rating = rating;
         this.role = role;
         this.type = type;
+        this.loyaltyPoints = loyaltyPoints;
     }
 
     /**
@@ -287,6 +290,20 @@ public class AppointmentDTO {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    /**
+     * @return int return the loyaltyPoints
+     */
+    public int getLoyaltyPoints() {
+        return loyaltyPoints;
+    }
+
+    /**
+     * @param loyaltyPoints the loyaltyPoints to set
+     */
+    public void setLoyaltyPoints(int loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
     }
 
 }

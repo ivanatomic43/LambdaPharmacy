@@ -14,6 +14,7 @@ public class UserDTO {
     private String email;
     private String role;
     private int penalty;
+    private int loyaltyPoints;
 
     public UserDTO() {
 
@@ -21,7 +22,7 @@ public class UserDTO {
 
     public UserDTO(User u) {
         this(u.getId(), u.getFirstName(), u.getLastName(), u.getUsername(), u.getPassword(), u.getEmail(),
-                u.getAddress(), u.getPhoneNumber(), u.getAuthority().toString(), u.getPenalty());
+                u.getAddress(), u.getPhoneNumber(), u.getAuthority().toString(), u.getPenalty(), u.getLoyaltyPoints());
     }
 
     public String getPhoneNumber() {
@@ -33,7 +34,7 @@ public class UserDTO {
     }
 
     public UserDTO(Long id, String firstName, String lastName, String username, String password, String email,
-            String address, String phoneNumber, String role, int penalty) {
+            String address, String phoneNumber, String role, int penalty, int loyaltyPoints) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,6 +45,7 @@ public class UserDTO {
         this.phoneNumber = phoneNumber;
         this.role = role;
         this.penalty = penalty;
+        this.loyaltyPoints = loyaltyPoints;
 
     }
 
@@ -144,6 +146,20 @@ public class UserDTO {
      */
     public void setPenalty(int penalty) {
         this.penalty = penalty;
+    }
+
+    /**
+     * @return int return the loyaltyPoints
+     */
+    public int getLoyaltyPoints() {
+        return loyaltyPoints;
+    }
+
+    /**
+     * @param loyaltyPoints the loyaltyPoints to set
+     */
+    public void setLoyaltyPoints(int loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
     }
 
 }

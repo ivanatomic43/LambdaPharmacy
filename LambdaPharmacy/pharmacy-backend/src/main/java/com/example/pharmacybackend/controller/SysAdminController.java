@@ -181,4 +181,22 @@ public class SysAdminController {
         return new ResponseEntity<>(edited, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getAppLoyalty", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> getAppLoyalty() {
+
+        List<CategoryDTO> retList = sysAdminService.getAppLoyalty();
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/editAppLoy", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('SYS_ADMIN')")
+    public ResponseEntity<?> editAppLoy(@RequestBody CategoryDTO cat) {
+
+        boolean edited = sysAdminService.editAppLoyalty(cat);
+
+        return new ResponseEntity<>(edited, HttpStatus.OK);
+    }
+
 }

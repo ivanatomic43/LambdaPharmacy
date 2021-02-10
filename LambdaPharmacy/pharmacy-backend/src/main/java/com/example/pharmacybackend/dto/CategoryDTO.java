@@ -7,6 +7,9 @@ public class CategoryDTO {
     private int discount;
     private int pointsBorder;
 
+    private String appointmentType;
+    private int appPoints;
+
     public CategoryDTO() {
     }
 
@@ -64,6 +67,34 @@ public class CategoryDTO {
      */
     public void setPointsBorder(int pointsBorder) {
         this.pointsBorder = pointsBorder;
+    }
+
+    /**
+     * @return String return the appointmentType
+     */
+    public String getAppointmentType() {
+        return appointmentType;
+    }
+
+    /**
+     * @param appointmentType the appointmentType to set
+     */
+    public void setAppointmentType(String appointmentType) {
+        this.appointmentType = appointmentType;
+    }
+
+    /**
+     * @return int return the appPoints
+     */
+    public int getAppPoints() {
+        return appPoints;
+    }
+
+    /**
+     * @param appPoints the appPoints to set
+     */
+    public void setAppPoints(int appPoints) {
+        this.appPoints = appPoints;
     }
 
 }

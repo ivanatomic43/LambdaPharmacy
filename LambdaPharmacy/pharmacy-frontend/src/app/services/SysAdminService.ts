@@ -1,3 +1,4 @@
+import { AppointmentLoyalty } from './../model/AppointmentLoyalty';
 import { Category } from 'src/app/model/Category';
 
 import { Router } from '@angular/router';
@@ -25,6 +26,8 @@ approveRequestUrl = sysAdminUrl + '/approveVacation/';
 denyRequestUrl = sysAdminUrl + '/denyVacation/';
 editCategoryUrl = sysAdminUrl + '/editCategory';
 getCategoriesUrl = sysAdminUrl + '/getCategories';
+getAppLoyUrl = sysAdminUrl + '/getAppLoyalty';
+editAppLoyUrl = sysAdminUrl + '/editAppLoy';
 
   constructor(
 
@@ -145,6 +148,14 @@ getCategoriesUrl = sysAdminUrl + '/getCategories';
 
   getCategories(){
     return this.http.get<any>(this.getCategoriesUrl);
+  }
+
+  editAppLoy(app: AppointmentLoyalty){
+    return this.http.post<any>(this.editAppLoyUrl, app);
+  }
+
+  getAppLoy(){
+    return this.http.get<any>(this.getAppLoyUrl);
   }
 
 
