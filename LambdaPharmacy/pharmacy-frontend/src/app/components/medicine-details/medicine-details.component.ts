@@ -17,6 +17,7 @@ export class MedicineDetailsComponent implements OnInit {
   fetchedMedicine: MedicinePreview;
   showData =  true;
   isPharmacyAdmin = false;
+  isSysAdmin = false;
   profil : UserDTO;
 
 
@@ -51,6 +52,12 @@ export class MedicineDetailsComponent implements OnInit {
       else {
         this.isPharmacyAdmin = false;
       }
+      if(role =='ROLE_SYS_ADMIN'){
+        this.isSysAdmin = true;
+
+      } else {
+        this.isSysAdmin = false;
+      }
 
   });
 
@@ -79,6 +86,10 @@ export class MedicineDetailsComponent implements OnInit {
   }
   backToList(){
     this.router.navigate(['/pharmacy-medicines/'+ this.pharmacyID]);
+  }
+
+  backToListAdmin(){
+    this.router.navigate(['/list-of-medicines']);
   }
 
 }

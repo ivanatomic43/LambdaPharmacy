@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.pharmacybackend.dto.DermatologistDTO;
+import com.example.pharmacybackend.dto.UserDTO;
 import com.example.pharmacybackend.dto.UserRequestDTO;
 import com.example.pharmacybackend.enumerations.AppointmentType;
 import com.example.pharmacybackend.model.Appointment;
@@ -64,6 +65,29 @@ public class DermatologistService {
         Dermatologist d = dermatologistRepository.findOneById(id);
         d.setRating(rate);
         this.save(d);
+
+    }
+
+    public List<UserDTO> getAllDermatologist() {
+
+        List<Dermatologist> dermList = dermatologistRepository.findAll();
+        List<UserDTO> retList = new ArrayList<>();
+
+        for (Dermatologist d : dermList) {
+
+            UserDTO dto = new UserDTO();
+            dto.setId(d.getId());
+            dto.setFirstName(d.getFirstName());
+            dto.setLastName(d.getLastName());
+            dto.setUsername(d.getUsername());
+            dto.setAddress(d.getAddress());
+            dto.setPhoneNumber(d.getPhoneNumber());
+            dto.setRole(d.getAuthority().getName().toString());
+
+            retList.add(dto);
+        }
+
+        return retList;
 
     }
 

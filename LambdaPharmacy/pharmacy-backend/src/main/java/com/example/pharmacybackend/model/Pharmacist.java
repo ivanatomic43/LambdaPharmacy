@@ -14,7 +14,8 @@ public class Pharmacist extends User {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	private Pharmacy pharmacy;
+	@JoinColumn(name = "pharmacy_id")
+	private Pharmacy myPharmacy;
 
 	@OneToMany(mappedBy = "pharmacist", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Appointment> reservedAppointments = new ArrayList<>();
@@ -32,23 +33,23 @@ public class Pharmacist extends User {
 	private LocalTime workingTo;
 
 	@Column(name = "rating")
-	private double rating;
+	private Double rating;
 
 	@Column(name = "price")
-	private double price;
+	private Double price;
 
 	/**
 	 * @return Pharmacy return the pharmacy
 	 */
 	public Pharmacy getPharmacy() {
-		return pharmacy;
+		return myPharmacy;
 	}
 
 	/**
 	 * @param pharmacy the pharmacy to set
 	 */
 	public void setPharmacy(Pharmacy pharmacy) {
-		this.pharmacy = pharmacy;
+		this.myPharmacy = pharmacy;
 	}
 
 	/**
@@ -122,31 +123,45 @@ public class Pharmacist extends User {
 	}
 
 	/**
-	 * @return double return the rating
+	 * @return Pharmacy return the myPharmacy
 	 */
-	public double getRating() {
-		return rating;
+	public Pharmacy getMyPharmacy() {
+		return myPharmacy;
 	}
 
 	/**
-	 * @param rating the rating to set
+	 * @param myPharmacy the myPharmacy to set
 	 */
-	public void setRating(double rating) {
-		this.rating = rating;
+	public void setMyPharmacy(Pharmacy myPharmacy) {
+		this.myPharmacy = myPharmacy;
 	}
 
 	/**
-	 * @return double return the price
+	 * @return Double return the price
 	 */
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
 	/**
 	 * @param price the price to set
 	 */
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	/**
+	 * @return Double return the rating
+	 */
+	public Double getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(Double rating) {
+		this.rating = rating;
 	}
 
 }

@@ -71,6 +71,7 @@ public class PharmacistService {
         p.setWorkingTo(newUser.getWorkTo());
         p.setPrice(newUser.getPrice());
         p.setApproved(true);
+        p.setRating(0.0);
 
         String salt = org.springframework.security.crypto.bcrypt.BCrypt.gensalt();
         String hashedPass = org.springframework.security.crypto.bcrypt.BCrypt.hashpw(newUser.getPassword(), salt);
@@ -82,6 +83,9 @@ public class PharmacistService {
 
         Pharmacy pharm = pharmacyRepository.findOneById(id);
         p.setPharmacy(pharm);
+        List<Pharmacist> phList = new ArrayList<>();
+        phList = pharm.getPharmacists();
+        phList.add(p);
         // List<Pharmacist> retPh = pharm.getPharmacists();
         // retPh.add(p);
 
@@ -173,7 +177,7 @@ public class PharmacistService {
                                         dto.setName(p.getName());
                                         dto.setAddress(p.getAddress());
                                         dto.setRating(p.getRating());
-                                        dto.setPrice(a.getPrice());
+                                        dto.setPrice(ph.getPrice());
 
                                         if (retPharm.isEmpty()) {
                                             retPharm.add(dto);
@@ -201,7 +205,7 @@ public class PharmacistService {
                                     dto.setName(p.getName());
                                     dto.setAddress(p.getAddress());
                                     dto.setRating(p.getRating());
-                                    dto.setPrice(a.getPrice());
+                                    dto.setPrice(ph.getPrice());
 
                                     if (retPharm.isEmpty()) {
                                         retPharm.add(dto);
@@ -226,6 +230,11 @@ public class PharmacistService {
                         // List<Pharmacist> pharmPharm = p.getPharmacists();
 
                         for (Pharmacist pha : pharmacists) {
+                            System.out.println("USAO OVDE");
+                            System.out.println(pha.getUsername());
+                            System.out.println(params.getTime());
+                            System.out.println(pha.getWorkingFrom());
+                            System.out.println(pha.getWorkingTo());
                             if ((params.getTime().compareTo(pha.getWorkingFrom()) > 0
                                     && params.getTime().compareTo(pha.getWorkingTo()) < 0)
                                     || (params.getTime().compareTo(pha.getWorkingFrom()) == 0)) {
@@ -235,7 +244,7 @@ public class PharmacistService {
                                 dto.setName(p.getName());
                                 dto.setAddress(p.getAddress());
                                 dto.setRating(p.getRating());
-                                dto.setPrice(a.getPrice());
+                                dto.setPrice(pha.getPrice());
 
                                 if (retPharm.isEmpty()) {
                                     retPharm.add(dto);
@@ -269,7 +278,7 @@ public class PharmacistService {
                         dto.setName(p.getName());
                         dto.setAddress(p.getAddress());
                         dto.setRating(p.getRating());
-                        // dto.setPrice(a.getPrice());
+                        dto.setPrice(phar.getPrice());
                         retPharm.add(dto);
                     } else {
                         System.out.println("TIME does not match...");
@@ -316,6 +325,7 @@ public class PharmacistService {
                     dto.setFrom(ph.getWorkingFrom().toString());
                     dto.setTo(ph.getWorkingTo().toString());
                     dto.setRating(ph.getRating());
+                    dto.setPrice(ph.getPrice());
 
                     if (retList.isEmpty()) {
                         retList.add(dto);
@@ -351,6 +361,7 @@ public class PharmacistService {
                                     dto.setFirstName(ph.getFirstName());
                                     dto.setFrom(ph.getWorkingFrom().toString());
                                     dto.setTo(ph.getWorkingTo().toString());
+                                    dto.setPrice(ph.getPrice());
 
                                     if (retList.isEmpty()) {
                                         retList.add(dto);
@@ -375,6 +386,7 @@ public class PharmacistService {
                             dto.setFirstName(ph.getFirstName());
                             dto.setFrom(ph.getWorkingFrom().toString());
                             dto.setTo(ph.getWorkingTo().toString());
+                            dto.setPrice(ph.getPrice());
 
                             if (retList.isEmpty()) {
                                 retList.add(dto);
@@ -396,6 +408,7 @@ public class PharmacistService {
                         dto.setFirstName(ph.getFirstName());
                         dto.setFrom(ph.getWorkingFrom().toString());
                         dto.setTo(ph.getWorkingTo().toString());
+                        dto.setPrice(ph.getPrice());
 
                         if (retList.isEmpty()) {
                             retList.add(dto);
@@ -418,6 +431,7 @@ public class PharmacistService {
         return retList;
     }
 
+    @Transactional
     public boolean removePharmacist(Long id, Long pharmID) {
 
         boolean removed = false;
@@ -491,45 +505,33 @@ public class PharmacistService {
     }
 
     // for pharmacy admin
-    public List<PharmacistDTO> getAdmins(Long id) {
+    public List<PharmacistDTO> getAdmins(Long pharmacyID) {
 
         List<PharmacistDTO> retList = new ArrayList<>();
 
-        List<Pharmacy> pharmList = pharmacyRepository.findAll();
+        List<Pharmacist> pharmacistList = pharmacistRepository.findAll();
 
-        for (Pharmacy p : pharmList) {
+        for (Pharmacist ph : pharmacistList) {
+            if (ph.getPharmacy().getId() == pharmacyID) {
+                PharmacistDTO dto = new PharmacistDTO();
+                dto.setId(ph.getId());
+                dto.setAddress(ph.getAddress());
+                dto.setEmail(ph.getEmail());
+                dto.setFirstName(ph.getFirstName());
+                dto.setLastName(ph.getLastName());
+                dto.setPhoneNumber(ph.getPhoneNumber());
+                dto.setFrom(ph.getWorkingFrom().toString());
+                dto.setTo(ph.getWorkingTo().toString());
+                dto.setPrice(ph.getPrice());
+                dto.setPharmacyName(ph.getPharmacy().getName());
+                dto.setUsername(ph.getUsername());
+                dto.setRating(ph.getRating());
 
-            List<PharmacyAdministrator> admins = new ArrayList<>();
-            admins = p.getPharmacyAdministrators();
-
-            for (PharmacyAdministrator a : admins) {
-                if (a.getId() == id) {
-
-                    List<Pharmacist> list = new ArrayList<>();
-                    list = p.getPharmacists();
-
-                    for (Pharmacist ph : list) {
-                        PharmacistDTO dto = new PharmacistDTO();
-                        dto.setId(ph.getId());
-                        dto.setAddress(ph.getAddress());
-                        dto.setEmail(ph.getEmail());
-                        dto.setFirstName(ph.getFirstName());
-                        dto.setLastName(ph.getLastName());
-                        dto.setPhoneNumber(ph.getPhoneNumber());
-                        dto.setFrom(ph.getWorkingFrom().toString());
-                        dto.setTo(ph.getWorkingTo().toString());
-                        dto.setPrice(ph.getPrice());
-                        dto.setPharmacyName(ph.getPharmacy().getName());
-                        dto.setUsername(ph.getUsername());
-                        dto.setRating(ph.getRating());
-
-                        retList.add(dto);
-                    }
-                }
+                retList.add(dto);
 
             }
-
         }
+
         return retList;
 
     }

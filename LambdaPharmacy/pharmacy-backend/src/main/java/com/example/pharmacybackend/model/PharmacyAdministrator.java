@@ -15,8 +15,8 @@ public class PharmacyAdministrator extends User {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pharmacy_id")
+	@ManyToOne
+	@JoinColumn(name = "pharmacy_admin_id")
 	private Pharmacy pharmacy;
 
 	@OneToMany(mappedBy = "admin")

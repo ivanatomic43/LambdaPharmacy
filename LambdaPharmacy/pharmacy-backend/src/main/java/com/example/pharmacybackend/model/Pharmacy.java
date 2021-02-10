@@ -47,10 +47,10 @@ public class Pharmacy implements Serializable {
 	@JoinTable(name = "pharmacy_dermatologist", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dermatologist_id", referencedColumnName = "id"))
 	private List<EmployedDermatologist> dermatologists;
 
-	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "myPharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Pharmacist> pharmacists = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PharmacyAdministrator> pharmacyAdministrators = new ArrayList<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)

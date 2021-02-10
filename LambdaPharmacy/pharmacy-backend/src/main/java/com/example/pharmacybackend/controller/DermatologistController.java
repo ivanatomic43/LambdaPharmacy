@@ -47,7 +47,7 @@ public class DermatologistController {
     @PreAuthorize("hasRole('PHARMACY_ADMIN') or hasRole('SYS_ADMIN')")
     public ResponseEntity<?> getAllDermatologists(HttpServletRequest request) {
 
-        List<UserDTO> list = userService.getAllDermatologist();
+        List<UserDTO> list = dermatologistService.getAllDermatologist();
 
         if (list.isEmpty())
             return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);

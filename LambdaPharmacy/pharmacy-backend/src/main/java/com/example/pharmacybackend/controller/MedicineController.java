@@ -84,7 +84,7 @@ public class MedicineController {
 		List<ReservationParamsDTO> myReservations = medicineService.getPatientReservations(user.getId());
 
 		if (myReservations.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(myReservations, HttpStatus.NOT_FOUND);
 		}
 
 		return new ResponseEntity<>(myReservations, HttpStatus.OK);
@@ -199,7 +199,7 @@ public class MedicineController {
 	@PreAuthorize("hasRole('PATIENT')")
 	public ResponseEntity<?> pickUpMedicine(@PathVariable("id") Long id, @PathVariable("pharmacyID") Long pharmacyID,
 			HttpServletRequest request) {
-		System.out.println("USAo ovde");
+
 		String myToken = tokenUtils.getToken(request);
 		String username = tokenUtils.getUsernameFromToken(myToken);
 		User user = userService.findByUsername(username);

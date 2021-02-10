@@ -231,7 +231,7 @@ public class OrderService {
         return retList;
     }
 
-    @Transactional
+    @Transactional // updating medicine quantity in pharmacy
     public boolean acceptOffer(Long offerID, Long userID) {
 
         boolean accepted = false;
@@ -279,7 +279,8 @@ public class OrderService {
 
                         int quantity = p.getQuantity();
                         int newQ = quantity + i.getQuantity();
-                        p.setQuantity(newQ);
+                        this.medicineService.updatePharmacyMedicineQuantity(newQ, p.getId());
+
                         this.medicineService.savePharmacyMedicine(p);
                         myItems.remove(i);
 
@@ -312,7 +313,7 @@ public class OrderService {
 
         }
 
-        if (!myItems.isEmpty()) {
+        if (!myItems.isEmpty()) { // adding medicines that don't exist in pharmacy
             for (OrderItem item : myItems) {
 
                 PharmacyMedicine med = new PharmacyMedicine();

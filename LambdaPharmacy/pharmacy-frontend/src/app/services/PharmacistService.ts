@@ -27,7 +27,8 @@ export class PharmacistService {
   getAllPharm = pharmacistUrl + '/getAllPharmacistForPharmacy/';
   seePharmacistsUrl = pharmacistUrl + '/seePharmacists/';
   removePharmacistUrl = pharmacistUrl + '/removePharmacist/';
-  getAllPUrl = pharmacistUrl + '/getAllP';
+  getAllPUrl = pharmacistUrl + '/getAllP/';
+  getAllPatientPharmacistsUrl = pharmacistUrl + '/getAllPatientPharmacists';
 
 
 
@@ -57,10 +58,28 @@ export class PharmacistService {
 
   }
 
+  getAllPatientPharmacists(){
 
-  getAllP(){
+    return this.http.post(this.getAllPatientPharmacistsUrl, {
 
-    return this.http.post(this.getAllPUrl, {
+    })
+      .pipe(
+        map((response: any) => {
+          // tslint:disable-next-line:no-unused-expression
+          const data = response;
+          console.log(data);
+          return data;
+        }),
+        catchError((err: any) => {
+          return throwError(err);
+        })
+      );
+
+      }
+
+  getAllP(id:number){
+
+    return this.http.post(this.getAllPUrl + id, {
 
     })
       .pipe(

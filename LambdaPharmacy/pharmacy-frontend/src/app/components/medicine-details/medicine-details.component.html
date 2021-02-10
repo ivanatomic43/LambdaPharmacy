@@ -37,7 +37,7 @@
                   <h5>Loyalty points: {{fetchedMedicine.loyaltyPoints}}</h5>
                   <button *ngIf="isPharmacyAdmin" style="margin-left: 15px;" class="btn-search" (click)="editMedicine(fetchedMedicine.id, fetchedMedicine.pharmacyID)" >Edit</button>
                   <button *ngIf="isPharmacyAdmin" style="margin-left: 15px;" class="btn-search" (click)="removeMedicine(fetchedMedicine.id, fetchedMedicine.pharmacyID)">Remove</button>
-
+                  <button *ngIf="isSysAdmin" style="margin-left: 15px;" class="btn-search" (click)="backToListAdmin()">Back to list</button>
 
 
 

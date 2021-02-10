@@ -145,6 +145,10 @@ export class StatisticComponent implements OnInit {
     this.barChartData.push({data: this.dataList, label: 'Total earnings per month'});
   }
 
+  backToDetails(id:number){
+    this.router.navigate(['/pharmacy-details/'+this.pharmacyID]);
+  }
+
 
 
 }

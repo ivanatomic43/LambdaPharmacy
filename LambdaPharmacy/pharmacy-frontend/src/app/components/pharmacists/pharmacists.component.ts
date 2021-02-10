@@ -1,3 +1,5 @@
+import { PharmacyDTO } from './../../model/PharmacyDTO';
+import { PharmacyService } from './../../services/PharmacyService';
 import { SortPipe } from './../../services/SortPipe';
 import { SearchUserDTO } from './../../model/SearchUserDTO';
 import { SearchService } from 'src/app/services/SearchService';
@@ -39,13 +41,16 @@ export class PharmacistsComponent implements OnInit{
         'action'
   ];
 
+  pharmacy : PharmacyDTO;
+  pharmacyID : number;
 
   constructor(
     private authService : AuthService,
     private pharmacistService : PharmacistService,
     private formBuilder : FormBuilder,
     private searchService : SearchService,
-    private sortPipe : SortPipe
+    private sortPipe : SortPipe,
+    private pharmacyService : PharmacyService
   ) { }
 
   @ViewChild(MatSort) sort: MatSort;
@@ -65,7 +70,7 @@ export class PharmacistsComponent implements OnInit{
 
         if(role == 'ROLE_PATIENT') {
           this.isPatient = true;
-          this.fetchAllPharmacists();
+          this.fetchPatientPharmacists();
 
 
 
@@ -74,7 +79,14 @@ export class PharmacistsComponent implements OnInit{
         }
         if(role == 'ROLE_PHARMACY_ADMIN'){
           this.isPharmacyAdmin= true;
-          this.fetchAllPharmacists();
+          this.pharmacyService.getAdminsPharmacy().subscribe(response => {
+            this.pharmacy = response;
+            this.pharmacyID = this.pharmacy.id;
+
+            this.fetchAllPharmacists(this.pharmacyID);
+
+          });
+
 
 
 
@@ -89,9 +101,17 @@ export class PharmacistsComponent implements OnInit{
 
   }
 
+  fetchPatientPharmacists(){
+    this.pharmacistService.getAllPatientPharmacists().subscribe(response => {
+      this.fetchedPharmacists = response;
+      this.dataSource3 = new MatTableDataSource(this.fetchedPharmacists);
+      this.dataSource3.sort = this.sort;
+    });
+  }
 
-  fetchAllPharmacists(){
-    this.pharmacistService.getAllP().subscribe(response => {
+  fetchAllPharmacists(id:number){
+
+    this.pharmacistService.getAllP(id).subscribe(response => {
       this.fetchedPharmacists = response;
       this.dataSource3 = new MatTableDataSource(this.fetchedPharmacists);
       this.dataSource3.sort = this.sort;
@@ -119,7 +139,7 @@ export class PharmacistsComponent implements OnInit{
 
   cancelSearch(){
 
-    this.fetchAllPharmacists();
+    this.fetchAllPharmacists(this.pharmacyID);
   }
 
   sortChange(value) {

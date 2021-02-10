@@ -200,7 +200,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell class="action-cell" *matCellDef="let element">
-          <button (click)="reservePharmacist(fetchedPharmacy.id, element.id)">Reserve</button>
+
           <button *ngIf="isPharmacyAdmin" (click)="removePharmacist(fetchedPharmacy.id, element.id)">Remove</button>
 
 

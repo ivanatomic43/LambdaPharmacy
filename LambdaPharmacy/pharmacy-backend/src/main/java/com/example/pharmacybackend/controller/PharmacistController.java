@@ -113,9 +113,9 @@ public class PharmacistController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getAllP", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getAllP/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('PATIENT') or hasRole('PHARMACY_ADMIN')")
-    public ResponseEntity<?> getAllP(HttpServletRequest request) {
+    public ResponseEntity<?> getAllP(HttpServletRequest request, @PathVariable("id") Long pharmacyID) {
 
         String myToken = tokenUtils.getToken(request);
         String username = tokenUtils.getUsernameFromToken(myToken);
@@ -128,7 +128,29 @@ public class PharmacistController {
         }
 
         if (user.getAuthority().getName().equals("ROLE_PHARMACY_ADMIN")) {
-            retPharm = pharmacistService.getAdmins(user.getId());
+            retPharm = pharmacistService.getAdmins(pharmacyID);
+        }
+
+        if (retPharm.isEmpty()) {
+            return new ResponseEntity<>(retPharm, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(retPharm, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/getAllPatientPharmacists", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> getAllPaPh(HttpServletRequest request) {
+
+        String myToken = tokenUtils.getToken(request);
+        String username = tokenUtils.getUsernameFromToken(myToken);
+        User user = userService.findByUsername(username);
+
+        List<PharmacistDTO> retPharm = new ArrayList<>();
+
+        if (user.getAuthority().getName().equals("ROLE_PATIENT")) {
+            retPharm = pharmacistService.getAllP();
         }
 
         if (retPharm.isEmpty()) {

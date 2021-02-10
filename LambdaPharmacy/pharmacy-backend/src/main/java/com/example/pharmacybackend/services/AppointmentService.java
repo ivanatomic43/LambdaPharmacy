@@ -76,6 +76,16 @@ public class AppointmentService {
         return this.appointmentRepository.save(ap);
     }
 
+    @Transactional
+    public void updatePatient(Long patient_id, Long ap_id) {
+
+        Appointment a = appointmentRepository.findOneById(ap_id);
+        Patient p = patientRepository.findOneById(patient_id);
+        a.setPatient(p);
+        this.update(a);
+
+    }
+
     // dermatologist
     public AppointmentDTO createAppointment(AppointmentDTO newApp) {
 
@@ -308,7 +318,7 @@ public class AppointmentService {
         return retList;
     }
 
-    @Transactional
+    @Transactional // predefined
     public boolean reserveAppointment(Long id, Long userID) {
 
         boolean reserved = false;
@@ -326,7 +336,7 @@ public class AppointmentService {
         a.setStatus(AppointmentStatus.RESERVED);
         this.update(a);
 
-        appointmentRepository.setPatient(patient.getId(), a.getId());
+        this.updatePatient(patient.getId(), a.getId());
 
         this.update(a);
         patientService.update(patient);
@@ -377,6 +387,7 @@ public class AppointmentService {
         return myList;
     }
 
+    @Transactional
     public boolean cancelAppointment(Long id, Long patientID) {
 
         boolean cancelled = false;
@@ -424,9 +435,11 @@ public class AppointmentService {
     }
 
     @Transactional
-    public void updatePatient(Long patientID, Long id) {
-        appointmentRepository.setPatient(patientID, id);
-
+    public void updatePharmacist(Long pharm_id, Long ap_id) {
+        Appointment a = appointmentRepository.findOneById(ap_id);
+        Pharmacist p = pharmacistRepository.findOneById(pharm_id);
+        a.setPharmacist(p);
+        this.update(a);
     }
 
     @Transactional
@@ -450,9 +463,12 @@ public class AppointmentService {
         a.setStatus(AppointmentStatus.RESERVED);
         a.setDuration(1);
         a.setPatient(p);
-        a.setPharmacist(pharmacist);
         a.setPharmacy(pharmacy);
         a.setPrice(pharmacist.getPrice());
+
+        this.update(a);
+
+        this.updatePharmacist(pharmacist.getId(), a.getId());
 
         List<AppointmentLoyalty> appList = appLoyaltyRepository.findAll();
         for (AppointmentLoyalty al : appList) {
@@ -460,12 +476,6 @@ public class AppointmentService {
                 a.setLoyaltyPoints(al.getPoints());
             }
         }
-
-        this.update(a);
-
-        // this.updatePatient(p.getId(), a.getId());
-        // appointmentRepository.setPharmacist(pharmacist.getId(), a.getId());
-        // appointmentRepository.setPharmacy(pharmacy.getId(), a.getId());
 
         List<Appointment> pharmacyAppointments = pharmacy.getPharmacyAppointments();
         pharmacyAppointments.add(a);

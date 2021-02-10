@@ -28,4 +28,8 @@ public interface PharmacyMedicinesRepository extends JpaRepository<PharmacyMedic
     @Modifying
     @Query(value = "delete from pharmacy_medicines where pharmacy_medicines.id=?1", nativeQuery = true)
     public void deleteMedicineFromPharmacy(Long id);
+
+    @Modifying
+    @Query(value = "update pharmacy_medicines pm set pm.quantity =?1 where pm.id =?2", nativeQuery = true)
+    public void updatePharmacyMedicineQuantity(Integer quantity, Long pm_id);
 }

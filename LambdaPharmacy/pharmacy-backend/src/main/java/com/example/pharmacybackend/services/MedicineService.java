@@ -90,6 +90,16 @@ public class MedicineService {
 		pharmacyMedicinesRepository.deleteMedicineFromPharmacy(id);
 	}
 
+	@Transactional
+	public void updatePharmacyMedicineQuantity(int quantity, Long pm_id) {
+
+		PharmacyMedicine pm = pharmacyMedicinesRepository.findOneById(pm_id);
+
+		pm.setQuantity(quantity);
+		pharmacyMedicinesRepository.save(pm);
+
+	}
+
 	public List<MedicineDTO> getAllMedicine() {
 
 		List<PharmacyMedicine> medicinesInPharmacies = pharmacyMedicinesRepository.findAll();
@@ -242,7 +252,8 @@ public class MedicineService {
 
 				if (m.getQuantity() != 0) {
 					int newMedQuantity = m.getQuantity() - 1;
-					m.setQuantity(newMedQuantity);
+					this.updatePharmacyMedicineQuantity(newMedQuantity, m.getId());
+
 					if (m.getQuantity() == 0) {
 						m.setStatusInPharmacy(MedicineStatus.OUT_OF_STOCK);
 					} else {
@@ -468,6 +479,7 @@ public class MedicineService {
 
 	}
 
+	@Transactional
 	public boolean cancelMedicineReservation(Long resID, Long patientID) {
 
 		boolean cancelled = false;
@@ -490,8 +502,8 @@ public class MedicineService {
 
 			if (currentDate.before(lastDayToCancel)) {
 
-				// vrati kolicinu u +1
-				// izvuci sve lekove u apotekama
+				// quantity +1
+
 				List<PharmacyMedicine> allMedsInPharmacy = pharmacyMedicinesRepository.findAll();
 
 				for (PharmacyMedicine pm : allMedsInPharmacy) {
@@ -500,7 +512,7 @@ public class MedicineService {
 								&& medRes.getPharmacy().getId() == pm.getPharmacy().getId()) {
 
 							int newQuantity = pm.getQuantity() + 1;
-							pm.setQuantity(newQuantity);
+							this.updatePharmacyMedicineQuantity(newQuantity, pm.getId());
 							System.out.println(pm.getQuantity());
 							medRes.setPatient(null);
 							medRes.setPharmacy(null);

@@ -114,24 +114,6 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	public List<UserDTO> getAllDermatologist() {
-
-		List<User> userList = userRepository.findAll();
-		List<UserDTO> retList = new ArrayList<>();
-
-		for (User u : userList) {
-
-			if (u.getAuthority().getName().toString().equals("ROLE_DERMATOLOGIST")) {
-				UserDTO dto = new UserDTO(u);
-				dto.setRole(u.getAuthority().getName());
-				retList.add(dto);
-			}
-		}
-
-		return retList;
-
-	}
-
 	public List<UserDTO> getAllPharmacists() {
 
 		List<User> userList = userRepository.findAll();

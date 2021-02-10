@@ -152,6 +152,7 @@ public class SysAdminService {
         return retList;
     }
 
+    @Transactional
     public boolean sendReply(ReplyDTO reply) {
 
         boolean done = false;
