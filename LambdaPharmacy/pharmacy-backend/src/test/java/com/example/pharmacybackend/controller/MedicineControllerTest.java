@@ -3,8 +3,7 @@ package com.example.pharmacybackend.controller;
 import java.nio.charset.Charset;
 
 import com.example.pharmacybackend.TestUtil;
-import com.example.pharmacybackend.constants.PharmacyConstants;
-import com.example.pharmacybackend.model.Pharmacy;
+import com.example.pharmacybackend.constants.MedicineConstants;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,9 +34,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ContextConfiguration
 @WebAppConfiguration
-public class PharmacyControllerTest {
+public class MedicineControllerTest {
 
-    private static final String URL_PREFIX = "/pharmacy";
+    private static final String URL_PREFIX = "/medicine";
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype());
@@ -53,29 +52,13 @@ public class PharmacyControllerTest {
     }
 
     @Test
-    public void testGetPharmacies() throws Exception {
-        mockMvc.perform(get(URL_PREFIX + "/getAllPharmacies")).andExpect(status().isOk())
-                .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(PharmacyConstants.DB_COUNT_PHARMACIES)))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(PharmacyConstants.DB_ID.intValue())))
-                .andExpect(jsonPath("$.[*].name").value(hasItem(PharmacyConstants.DB_NAME)))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(PharmacyConstants.DB_DESCRIPTION)))
-                .andExpect(jsonPath("$.[*].rating").value(hasItem(PharmacyConstants.DB_RATING)));
-    }
-
-    @WithMockUser(roles = "SYS_ADMIN")
-    @Test
-    @Transactional
-    @Rollback(true)
-    public void testSavePharmacy() throws Exception {
-        Pharmacy pharmacy = new Pharmacy();
-        pharmacy.setName(PharmacyConstants.NEW_NAME);
-        pharmacy.setDescription(PharmacyConstants.NEW_DESCRIPTION);
-        pharmacy.setRating(PharmacyConstants.NEW_RATING);
-
-        String json = TestUtil.json(pharmacy);
-        this.mockMvc.perform(post(URL_PREFIX + "/createPharmacy").contentType(contentType).content(json))
-                .andExpect(status().isOk());
+    public void testGetPharmacyMedicines() throws Exception {
+        mockMvc.perform(get(URL_PREFIX + "/getPharmacyMedicines" + "/" + MedicineConstants.DB_PHARMACY_ID))
+                .andExpect(status().isOk()).andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(MedicineConstants.DB_COUNT_PHARMACY_MEDICINES)))
+                .andExpect(jsonPath("$.[*].id").value(hasItem(MedicineConstants.DB_PHARM_MED_MED_ID.intValue())))
+                .andExpect(jsonPath("$.[*].name").value(hasItem(MedicineConstants.DB_PHARM_MED_NAME)))
+                .andExpect(jsonPath("$.[*].quantity").value(hasItem(MedicineConstants.DB_PHARM_MED_QUANTITY)));
     }
 
 }

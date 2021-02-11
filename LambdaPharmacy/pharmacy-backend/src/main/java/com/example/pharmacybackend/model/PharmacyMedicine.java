@@ -31,7 +31,7 @@ public class PharmacyMedicine implements Serializable {
     private MedicineStatus statusInPharmacy;
 
     @Column
-    private int quantity;
+    private Integer quantity;
 
     @Column
     private double price;
