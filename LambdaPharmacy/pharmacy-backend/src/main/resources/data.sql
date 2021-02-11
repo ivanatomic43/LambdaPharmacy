@@ -82,8 +82,8 @@ INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (1, '2021-01-20', 2,0, '08:22:00', 50, 'RESERVED', 'EXAMINATION',0, 1, 1, NULL, 1);
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (2, '2021-01-23', 2, 0,'10:22:00', 50, 'RESERVED', 'EXAMINATION',0, 2, 1, NULL, 1);
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (3, '2021-02-25', 1, 0, '09:00:00', 50, 'FREE', 'EXAMINATION',   0, 1,NULL, NULL, 1);
-INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id) VALUES (1, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 1, NULL);
-INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id) VALUES (2, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 2, NULL);
+INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id, version) VALUES (1, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 1, NULL,0);
+INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id, version) VALUES (2, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 2, NULL,0);
 
 INSERT INTO PURCHASE_ORDER (id, date, status,version, pharmacy_administrator_id, pharmacy_id) VALUES (1, '2021-02-26', 'WAITING_FOR_OFFER',0, 2, 1);
 
