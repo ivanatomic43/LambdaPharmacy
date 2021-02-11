@@ -20,7 +20,7 @@ export class NewPharmacyComponent implements OnInit {
   choosenImage: Image;
   imgSource : string = '';
   submittedData : PharmacyDTO;
-  fetchedAdministrators : UserProfileDTO[] = [];
+
 
 
   constructor
@@ -35,15 +35,10 @@ export class NewPharmacyComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       street: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      pharmacyAdministrator : new FormControl('', [Validators.required])
+      description: new FormControl('', [Validators.required])
     });
 
-    this.pharmacyService.getAdministrators().subscribe(response => {
-        this.fetchedAdministrators = response;
-    }, error => {
-      console.log("There is no pharmacy administrators in system...");
-    })
+
 
 
 

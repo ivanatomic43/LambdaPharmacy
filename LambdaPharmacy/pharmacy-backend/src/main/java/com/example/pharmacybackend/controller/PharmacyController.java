@@ -85,33 +85,6 @@ public class PharmacyController {
 
 	}
 
-	@PostMapping(value = "/addImages/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> addImages(@PathVariable("id") Long id, @RequestPart("image") MultipartFile file)
-			throws IOException {
-
-		Pharmacy pharm = pharmacyService.findById(id);
-
-		byte[] data = file.getBytes();
-		Image image = new Image(data, pharm);
-
-		this.imageService.save(image);
-
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/getImage/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> allImages(@PathVariable("id") Long id) throws UnsupportedEncodingException {
-
-		Pharmacy ph = this.pharmacyService.findById(id);
-		Image img = this.imageService.getImage(ph);
-
-		byte[] encodeBase64 = Base64.getEncoder().encode(img.getUrl());
-		String encoded = new String(encodeBase64, "UTF-8");
-		String newSt = encoded.substring(1);
-
-		return new ResponseEntity<>(newSt, HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/getPharmacy/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getPharmacy(@PathVariable("id") Long id) {
 

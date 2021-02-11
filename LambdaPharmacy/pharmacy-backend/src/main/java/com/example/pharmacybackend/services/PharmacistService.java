@@ -14,7 +14,6 @@ import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.Authority;
 import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
-import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.repository.PharmacistRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;

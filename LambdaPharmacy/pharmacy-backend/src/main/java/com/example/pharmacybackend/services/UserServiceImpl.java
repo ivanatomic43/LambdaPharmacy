@@ -134,7 +134,6 @@ public class UserServiceImpl implements UserService {
 
 	public List<UserDTO> getAdministrators() {
 
-		List<User> userList = userRepository.findAll();
 		List<PharmacyAdministrator> adminList = adminRepository.findAll();
 		List<UserDTO> retList = new ArrayList<>();
 
@@ -148,7 +147,7 @@ public class UserServiceImpl implements UserService {
 			dto.setPhoneNumber(a.getPhoneNumber());
 			dto.setUsername(a.getUsername());
 			dto.setEmail(a.getEmail());
-			dto.setRole(a.getAuthority().getName());
+			dto.setRole(a.getAuthority().getName().toString());
 
 			retList.add(dto);
 

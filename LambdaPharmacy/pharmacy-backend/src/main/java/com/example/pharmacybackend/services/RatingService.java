@@ -2,8 +2,6 @@ package com.example.pharmacybackend.services;
 
 import java.util.List;
 
-import javax.transaction.TransactionScoped;
-
 import com.example.pharmacybackend.enumerations.RateStatus;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.Medicine;

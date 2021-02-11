@@ -70,6 +70,7 @@ export class OrderDetailsComponent implements OnInit {
     this.orderService.acceptOffer(id).subscribe(response => {
       alert("Offer accepted!");
       this.getOffers();
+      this.router.navigate(['/orders']);
 
     }, error => {
       if(error.status == 400){

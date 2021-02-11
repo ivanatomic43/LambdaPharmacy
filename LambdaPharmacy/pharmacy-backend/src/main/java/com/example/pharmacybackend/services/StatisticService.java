@@ -17,7 +17,6 @@ import com.example.pharmacybackend.enumerations.MedicineStatus;
 import com.example.pharmacybackend.model.Appointment;
 import com.example.pharmacybackend.model.MedicineReservation;
 import com.example.pharmacybackend.repository.AppointmentRepository;
-import com.example.pharmacybackend.repository.PharmacyRepository;
 import com.example.pharmacybackend.repository.ReservationRepository;
 
 import org.springframework.stereotype.Service;
@@ -31,9 +30,6 @@ public class StatisticService {
 
     @Autowired
     private ReservationRepository reservationRepository;
-
-    @Autowired
-    private PharmacyRepository pharmacyRepository;
 
     public List<StatisticDTO> getAppointmentStatistic(Long pharmacyID) throws ParseException {
 

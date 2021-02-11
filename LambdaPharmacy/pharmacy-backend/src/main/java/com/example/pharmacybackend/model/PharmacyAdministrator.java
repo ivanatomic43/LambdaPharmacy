@@ -2,17 +2,15 @@ package com.example.pharmacybackend.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @DiscriminatorValue("USER_PHARMA_ADMIN")
-public class PharmacyAdministrator extends User implements Serializable {
+public class PharmacyAdministrator extends User {
 
 	private static final long serialVersionUID = 1L;
 

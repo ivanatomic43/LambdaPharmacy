@@ -142,28 +142,25 @@ public class PharmacyService {
 		p.setDescription(pharmacy.getDescription());
 		p.setRating(0);
 
-		// setting pharmacy administrator
-
-		PharmacyAdministrator pa = pharmacyAdministratorRepository.findOneById(pharmacy.getPharmacyAdministrator());
-		List<PharmacyAdministrator> pharmAdmins = new ArrayList<>();
-
-		List<Pharmacy> pharmacies = pharmacyRepository.findAll();
-		for (Pharmacy ph : pharmacies) {
-			List<PharmacyAdministrator> admins = new ArrayList<>();
-			admins = ph.getPharmacyAdministrators();
-
-			for (PharmacyAdministrator pad : admins) {
-				if (pad.getId() == pharmacy.getPharmacyAdministrator()) {
-					System.out.println("Administrator has been employed in another pharmacy...");
-					return null;
-				}
-			}
-		}
-
-		pharmAdmins.add(pa);
-
+		/*
+		 * setting pharmacy administrator
+		 * 
+		 * PharmacyAdministrator pa =
+		 * pharmacyAdministratorRepository.findOneById(pharmacy.getPharmacyAdministrator
+		 * ()); List<PharmacyAdministrator> pharmAdmins = new ArrayList<>();
+		 * 
+		 * List<Pharmacy> pharmacies = pharmacyRepository.findAll(); for (Pharmacy ph :
+		 * pharmacies) { List<PharmacyAdministrator> admins = new ArrayList<>(); admins
+		 * = ph.getPharmacyAdministrators();
+		 * 
+		 * for (PharmacyAdministrator pad : admins) { if (pad.getId() ==
+		 * pharmacy.getPharmacyAdministrator()) {
+		 * System.out.println("Administrator has been employed in another pharmacy...");
+		 * return null; } } }
+		 * 
+		 * pharmAdmins.add(pa); pa.setPharmacy(ph);
+		 */
 		Pharmacy ph = this.savePharmacy(p);
-		pa.setPharmacy(ph);
 
 		PharmacyDTO ret = new PharmacyDTO();
 		ret.setId(ph.getId());
@@ -172,11 +169,8 @@ public class PharmacyService {
 		ret.setCity(ph.getAdd().getCity());
 		ret.setDescription(ph.getDescription());
 		ret.setRating(ph.getRating());
-		ret.setFirstName(pa.getFirstName());
-		ret.setLastName(pa.getLastName());
-
-		// PharmacyDTO ret = new PharmacyDTO(retPha);
-		System.out.println(ret.getId());
+		// ret.setFirstName(pa.getFirstName());
+		// ret.setLastName(pa.getLastName());
 
 		return ret;
 
@@ -209,6 +203,7 @@ public class PharmacyService {
 		List<PharmacyAdministrator> pharmAdmins = new ArrayList<>();
 		pharmAdmins = p.getPharmacyAdministrators();
 		pharmAdmins.add(d);
+		d.setPharmacy(p);
 
 		pharmacyAdministratorRepository.save(d);
 		this.savePharmacy(p);
@@ -376,31 +371,21 @@ public class PharmacyService {
 
 		List<Pharmacy> list = pharmacyRepository.findAll();
 
-		for (Pharmacy p : list) {
+		Pharmacy p = admin.getPharmacy();
+		System.out.println(p.getName());
+		PharmacyDTO dto = new PharmacyDTO();
 
-			List<PharmacyAdministrator> admins = new ArrayList<>();
-			admins = p.getPharmacyAdministrators();
+		dto.setId(p.getId());
+		dto.setName(p.getName());
+		dto.setDescription(p.getDescription());
+		dto.setRating(p.getRating());
+		dto.setStreet(p.getAdd().getStreet());
+		dto.setCity(p.getAdd().getCity());
+		dto.setLatitude(p.getAdd().getLatitude());
+		dto.setLongitude(p.getAdd().getLongitude());
 
-			for (PharmacyAdministrator pm : admins) {
+		return dto;
 
-				if (pm.getId() == id) {
-					PharmacyDTO dto = new PharmacyDTO();
-
-					dto.setId(p.getId());
-					dto.setName(p.getName());
-					dto.setDescription(p.getDescription());
-					dto.setRating(p.getRating());
-					dto.setStreet(p.getAdd().getStreet());
-					dto.setCity(p.getAdd().getCity());
-					dto.setLatitude(p.getAdd().getLatitude());
-					dto.setLongitude(p.getAdd().getLongitude());
-
-					return dto;
-				}
-			}
-
-		}
-		return null;
 	}
 
 	public List<DermatologistDTO> getEmployedStaff(Long pharmacyID) {
