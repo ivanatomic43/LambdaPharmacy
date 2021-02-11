@@ -2,6 +2,8 @@ package com.example.pharmacybackend.services;
 
 import java.util.List;
 
+import javax.transaction.TransactionScoped;
+
 import com.example.pharmacybackend.enumerations.RateStatus;
 import com.example.pharmacybackend.model.Dermatologist;
 import com.example.pharmacybackend.model.Medicine;
@@ -17,6 +19,8 @@ import com.example.pharmacybackend.repository.RatingRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RatingService {
@@ -48,6 +52,7 @@ public class RatingService {
     @Autowired
     private MedicineService medicineService;
 
+    @Transactional
     public Rating save(Rating r) {
         return this.ratingRepository.save(r);
     }
@@ -68,6 +73,7 @@ public class RatingService {
         return ratingRepository.medicineRates(medicineID);
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public double rateDermatologist(Long id, Integer rate, User user) {
 
         Dermatologist dermatologist = dermatologistRepository.findOneById(id);
@@ -90,6 +96,7 @@ public class RatingService {
         return rating;
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public double changeRateDermatologist(Long id, Integer rate, User user) {
 
         List<Rating> allRates = ratingRepository.findAll();
@@ -117,6 +124,7 @@ public class RatingService {
         return 0;
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public double ratePharmacist(Long id, Integer rate, User user) {
 
         Pharmacist pharmacist = pharmacistRepository.findOneById(id);
@@ -140,6 +148,7 @@ public class RatingService {
 
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public double changeRatePharmacist(Long id, Integer rate, User user) {
 
         List<Rating> allRates = ratingRepository.findAll();
@@ -166,6 +175,7 @@ public class RatingService {
         return 0;
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public double ratePharmacy(Long id, Integer rate, User user) {
 
         Pharmacy pharmacy = pharmacyRepository.findOneById(id);
@@ -189,6 +199,7 @@ public class RatingService {
 
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public double changeRatePharmacy(Long id, Integer rate, User user) {
 
         List<Rating> allRates = ratingRepository.findAll();
@@ -215,6 +226,7 @@ public class RatingService {
         return 0;
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public double rateMedicine(Long id, Integer rate, User user) {
 
         Medicine medicine = medicineRepository.findOneById(id);
@@ -238,6 +250,7 @@ public class RatingService {
 
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public double changeRateMedicine(Long id, Integer rate, User user) {
 
         List<Rating> allRates = ratingRepository.findAll();

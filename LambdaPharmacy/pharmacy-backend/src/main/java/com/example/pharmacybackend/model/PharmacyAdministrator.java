@@ -7,11 +7,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @DiscriminatorValue("USER_PHARMA_ADMIN")
-public class PharmacyAdministrator extends User {
+public class PharmacyAdministrator extends User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -34,6 +34,7 @@ import com.example.pharmacybackend.repository.VacationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -208,6 +209,7 @@ public class SysAdminService {
 
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public boolean approveVacation(Long id, Long userid) {
 
         boolean approved = false;
@@ -227,6 +229,7 @@ public class SysAdminService {
         return false;
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public boolean denyVacation(Long id, Long userid, String text) {
 
         boolean denied = false;

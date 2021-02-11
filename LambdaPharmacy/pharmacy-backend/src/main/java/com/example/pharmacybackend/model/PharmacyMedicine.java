@@ -1,5 +1,6 @@
 package com.example.pharmacybackend.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -8,7 +9,12 @@ import com.example.pharmacybackend.enumerations.MedicineStatus;
 
 @Entity
 @Table(name = "PHARMACY_MEDICINES")
-public class PharmacyMedicine {
+public class PharmacyMedicine implements Serializable {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

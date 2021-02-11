@@ -18,6 +18,8 @@ import com.example.pharmacybackend.model.PharmacyAdministrator;
 import com.example.pharmacybackend.repository.DermatologistRepository;
 import com.example.pharmacybackend.repository.EmployedDermatologistRepository;
 import com.example.pharmacybackend.repository.PharmacyRepository;
+
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +120,7 @@ public class DermatologistService {
     }
 
     // employ dermatologist
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public DermatologistDTO addDermatologist(DermatologistDTO dto, Long id) {
 
         Pharmacy pharmacy = pharmacyRepository.findOneById(id);

@@ -2,6 +2,7 @@ package com.example.pharmacybackend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacybackend.repository.MedicineRepository;
@@ -592,7 +593,7 @@ public class MedicineService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public boolean editPrice(Long id, PriceDTO model) {
 
 		boolean changed = false;
@@ -699,7 +700,7 @@ public class MedicineService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public boolean removeMedicine(Long id, Long pharmacyID) {
 
 		boolean removed = false;
@@ -763,7 +764,7 @@ public class MedicineService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public boolean editMedicine(Long pharmacyID, MedicineDTO medicine) {
 
 		boolean edited = false;

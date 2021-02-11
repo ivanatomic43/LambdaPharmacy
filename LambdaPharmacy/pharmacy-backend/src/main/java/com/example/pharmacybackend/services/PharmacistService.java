@@ -56,6 +56,7 @@ public class PharmacistService {
         this.savePharmacist(p);
     }
 
+    @Transactional
     public PharmacistDTO registerPharmacist(PharmacistDTO newUser, Long id) {
 
         Pharmacist p = new Pharmacist();
@@ -141,6 +142,7 @@ public class PharmacistService {
     }
 
     // for counceling reservation
+    @Transactional
     public List<PharmacyDTO> searchPharmacist(SearchPharmacistParams params) {
 
         List<PharmacyDTO> retPharm = new ArrayList<>();
@@ -302,6 +304,7 @@ public class PharmacistService {
     }
 
     // available pharmacists for counceling
+    @Transactional
     public List<PharmacistDTO> getAvailablePharmacists(Long id, SearchPharmacistParams params) {
 
         List<PharmacistDTO> retList = new ArrayList<>();

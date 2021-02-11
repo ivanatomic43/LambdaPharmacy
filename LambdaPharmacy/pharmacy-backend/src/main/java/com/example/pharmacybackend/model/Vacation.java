@@ -32,6 +32,9 @@ public class Vacation implements Serializable {
     @Enumerated(EnumType.STRING)
     private VacationStatus status;
 
+    @Version
+    private int version;
+
     /**
      * @return Long return the id
      */
@@ -114,6 +117,20 @@ public class Vacation implements Serializable {
      */
     public void setStatus(VacationStatus status) {
         this.status = status;
+    }
+
+    /**
+     * @return int return the version
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(int version) {
+        this.version = version;
     }
 
 }

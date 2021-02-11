@@ -1,5 +1,6 @@
 package com.example.pharmacybackend.model;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("USER_PHARMACIST")
-public class Pharmacist extends User {
+public class Pharmacist extends User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
