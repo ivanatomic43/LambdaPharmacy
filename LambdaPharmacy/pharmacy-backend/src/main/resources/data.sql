@@ -2,6 +2,7 @@
 /*
 Password za sve naloge je 123.
 Komunikacija se odvija preko e-mail naloga  no.reply.medclinic@gmail.com, password je sifra123.
+Rating je svuda setovan na 0, menja se kada korisnik unese ocenu za objekat.
 */
 INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (1, 'Novi Sad', 45.26125996629874, 19.834538133520123, 'Bulevar Kralja Petra I 11'); 
 INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (2, 'Novi Sad', 45.24608736237126, 19.830979426522536, 'Puškinova 2');
@@ -28,6 +29,8 @@ INSERT INTO USER (user_type, id, address, approved, email, first_login, first_na
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name,loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id) VALUES ('USER_SUPPLIER', 7, 'Bulevar Evrope 67, Novi Sad', true, 'no.reply.medclinic@gmail.com', false, 'Dobavljac', 'Dobavljacic',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601234444','dobavljac',0,1);
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id, pharmacy_admin_id) values ('USER_PHARMA_ADMIN', 8, 'Gunduliceva 12, Novi Sad', true, 'no.reply.medclinic@gmail.com', false, 'Admin Zegin', 'Zegin Admin',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0633216588', 'adminzegin',0,1,3);
 INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points,  password, penalty, phone_number, username, version, loyalty_category_id, pharmacy_admin_id) values ('USER_PHARMA_ADMIN', 9, 'Drage Spasic 4, Novi Sad', true, 'no.reply.medclinic@gmail.com', false, 'Admin Jankovic 2', 'Admin Jankovic 2',0, '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0633277588', 'adminjankovic2',0,1,1);
+INSERT INTO USER (user_type, id, address, approved, email, first_login, first_name, last_name, loyalty_points, password, penalty, phone_number, username, version, loyalty_category_id) values ('USER_PATIENT',10,'Bulevar Cara Lazara 78, Novi Sad',true,'no.reply.medclinic@gmail.com',false,'Pacijent','Pacijentic',0,'$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',0,'0601237767','pacijent',0,1);
+
 
 INSERT INTO AUTHORITY (id, name) VALUES (1, 'ROLE_PATIENT');
 INSERT INTO AUTHORITY (id, name) VALUES (2,'ROLE_PHARMACIST');
@@ -47,6 +50,7 @@ INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (6,4);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (7,6);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (8,4);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (9,4);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (10,1);
 
 
 
@@ -82,6 +86,7 @@ INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (1, '2021-02-20', 2,0, '08:22:00', 50, 'RESERVED', 'EXAMINATION',0, 1, 1, NULL, 1);
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (2, '2021-02-23', 2, 0,'10:22:00', 50, 'RESERVED', 'EXAMINATION',0, 2, 1, NULL, 1);
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (3, '2021-02-25', 1, 0, '09:00:00', 50, 'FREE', 'EXAMINATION',   0, 1,NULL, NULL, 1);
+
 INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id, version) VALUES (1, 'WAITING_FOR_APPROVAL', '2021-02-15', '2021-02-25', 1, NULL,0);
 INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id, version) VALUES (2, 'WAITING_FOR_APPROVAL', '2021-02-15', '2021-02-25', 2, NULL,0);
 
@@ -90,3 +95,6 @@ INSERT INTO PURCHASE_ORDER (id, date, status,version, pharmacy_administrator_id,
 
 INSERT INTO ORDER_ITEM (id, quantity, medicine_id, purchase_order_id ) VALUES (1, 5, 2, 1);
 INSERT INTO ORDER_ITEM (id, quantity, medicine_id, purchase_order_id ) VALUES (2, 10, 5, 1);
+
+INSERT INTO COMPLAINT (id, status, text, version, patient_id) VALUES (1, 'PROCESSING', 'Zalba blabla', 0, 1);
+INSERT INTO COMPLAINT (id, status, text, version, patient_id) VALUES (2, 'PROCESSING', 'DRUGA ZALBA BLABLABLA', 0, 10)

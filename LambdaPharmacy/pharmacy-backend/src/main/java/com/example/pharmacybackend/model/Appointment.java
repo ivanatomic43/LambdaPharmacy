@@ -51,6 +51,23 @@ public class Appointment {
 	@Column
 	private int loyaltyPoints;
 
+	public Appointment(Long id, AppointmentType type, double price, Date date, long duration, LocalTime time,
+			AppointmentStatus status, EmployedDermatologist d, Patient p, Pharmacy ph) {
+		this.id = id;
+		this.type = type;
+		this.price = price;
+		this.dateOfAppointment = date;
+		this.duration = duration;
+		this.meetingTime = time;
+		this.status = status;
+		this.dermatologist = d;
+		this.patient = p;
+		this.pharmacy = ph;
+	}
+
+	public Appointment() {
+	}
+
 	/**
 	 * @return Long return the id
 	 */
