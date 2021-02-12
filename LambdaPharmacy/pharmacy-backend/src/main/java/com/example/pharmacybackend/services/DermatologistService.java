@@ -44,8 +44,8 @@ public class DermatologistService {
     @Autowired
     private EmployedDermatologistRepository employedDermatologistRepository;
 
-    public Dermatologist findById(long id) {
-        return this.dermatologistRepository.findById(id);
+    public Dermatologist findOneById(Long id) {
+        return this.dermatologistRepository.findOneById(id);
     }
 
     public List<Dermatologist> findAll() {

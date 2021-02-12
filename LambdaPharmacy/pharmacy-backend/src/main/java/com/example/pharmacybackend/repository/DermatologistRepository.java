@@ -9,7 +9,7 @@ import com.example.pharmacybackend.model.Dermatologist;
 @Repository
 public interface DermatologistRepository extends JpaRepository<Dermatologist, Long> {
 
-    Dermatologist findById(long id);
+    // Dermatologist findById(Long id);
 
     List<Dermatologist> findAll();
 
