@@ -92,18 +92,19 @@ public class PharmacyService {
 		return this.pharmacyRepository.findOneById(id);
 	}
 
+	@Transactional
 	public List<PharmacyDTO> searchPharmacy(String name, String location) {
-		System.out.println("ime" + name + "lokacija" + location);
+
 		List<PharmacyDTO> retPha = new ArrayList<>();
 		List<Pharmacy> pha = new ArrayList<>();
 		List<Pharmacy> list = pharmacyRepository.findAll();
 
 		for (Pharmacy p : list) {
-			System.out.println(p.getName());
+
 			if (!name.equals("") && location.equals("")) {
 
 				if (p.getName().toLowerCase().equals(name.toLowerCase())) {
-					System.out.println("usao u name" + p.getName());
+
 					pha.add(p);
 					PharmacyDTO dto = new PharmacyDTO(p);
 					retPha.add(dto);
@@ -180,7 +181,6 @@ public class PharmacyService {
 
 		boolean registred = false;
 		PharmacyAdministrator d = new PharmacyAdministrator();
-		System.out.println(newUser.getUsername());
 
 		d.setUsername(newUser.getUsername());
 		d.setFirstName(newUser.getFirstName());

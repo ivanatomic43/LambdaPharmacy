@@ -108,7 +108,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.submitted = false;
         //this.notification = {msgType: 'error', msgBody: 'Incorrect username or password.'};
         //this.alertService.error("Incorrect username/password!");
+        if(error.status == 401){
         alert("Wrong username or password!");
+        }
+        if(error.status == 403){
+          alert("User didn't confirm registration!");
+        }
       }
 
     );

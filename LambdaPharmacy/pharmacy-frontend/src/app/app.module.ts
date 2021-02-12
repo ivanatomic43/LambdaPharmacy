@@ -15,14 +15,12 @@ import { SearchComponent } from './components/search/search.component';
 import { ListOfMedicinesComponent } from './components/list-of-medicines/list-of-medicines.component';
 import { ListOfPharmaciesComponent } from './components/list-of-pharmacies/list-of-pharmacies.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import { PatientPageComponent } from './components/patient-page/patient-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TokenInterceptor} from './interceptor/TokenInterceptor';
 import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 import { AlertComponent } from './alert/alert.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
-import { ListOfPrescriptionsComponent } from './components/list-of-prescriptions/list-of-prescriptions.component';
 import { ReservedMedicinesComponent } from './components/reserved-medicines/reserved-medicines.component';
 import { AllMyMedicinesComponent } from './components/all-my-medicines/all-my-medicines.component';
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
@@ -31,9 +29,7 @@ import { MakeAnAppPComponent } from './components/make-an-app-p/make-an-app-p.co
 import { ComplaintComponent } from './components/complaint/complaint.component';
 import { HistoryOfAppDComponent } from './components/history-of-app-d/history-of-app-d.component';
 import { HistoryOfAppPComponent } from './components/history-of-app-p/history-of-app-p.component';
-import { AlergiesComponent } from './components/alergies/alergies.component';
 import { SubPharmaciesComponent } from './components/sub-pharmacies/sub-pharmacies.component';
-import { MyStatsComponent } from './components/my-stats/my-stats.component';
 import {SortPipe} from "./services/SortPipe";
 import { MatTableModule } from "@angular/material/table";
 import {MatSortModule} from "@angular/material";
@@ -87,12 +83,10 @@ import { LoyaltyProgramComponent } from './components/loyalty-program/loyalty-pr
     SearchComponent,
     ListOfMedicinesComponent,
     ListOfPharmaciesComponent,
-    PatientPageComponent,
     PatientProfileComponent,
     AlertComponent,
     EditProfileComponent,
     PasswordChangeComponent,
-    ListOfPrescriptionsComponent,
     ReservedMedicinesComponent,
     AllMyMedicinesComponent,
     MyAppointmentsComponent,
@@ -101,9 +95,7 @@ import { LoyaltyProgramComponent } from './components/loyalty-program/loyalty-pr
     ComplaintComponent,
     HistoryOfAppDComponent,
     HistoryOfAppPComponent,
-    AlergiesComponent,
     SubPharmaciesComponent,
-    MyStatsComponent,
     SortPipe,
     DermatologistsComponent,
     ManagePharmacyComponent,

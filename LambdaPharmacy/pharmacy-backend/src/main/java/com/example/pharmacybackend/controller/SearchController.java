@@ -68,8 +68,6 @@ public class SearchController {
 	@RequestMapping(value = "/searchPharmacy", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchPharmacy(@RequestBody SimpleSearchDTO p) {
 
-		System.out.println("SIMPLE SEARCHDTO" + p.toString());
-
 		String name = "";
 		String location = "";
 		// double rating = 0;
@@ -94,8 +92,6 @@ public class SearchController {
 	@RequestMapping(value = "/searchPharmacist", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchPharmacist(@RequestBody SearchPharmacistParams sp) {
 
-		System.out.println(sp.getDate());
-		System.out.println(sp.getTime());
 		List<PharmacyDTO> pharmacies = pharmacistService.searchPharmacist(sp);
 
 		/*

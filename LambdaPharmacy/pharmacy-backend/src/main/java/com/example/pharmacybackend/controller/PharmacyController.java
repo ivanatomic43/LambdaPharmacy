@@ -22,7 +22,6 @@ import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.User;
 
 import com.example.pharmacybackend.security.TokenUtils;
-import com.example.pharmacybackend.services.ImageService;
 import com.example.pharmacybackend.services.PharmacyService;
 import com.example.pharmacybackend.services.UserServiceImpl;
 
