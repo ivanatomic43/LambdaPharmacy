@@ -34,3 +34,6 @@ $ ng serve
 ### Setup for e-mail service
  1. Use e-mail and password from application.yml file to login into google account
  2. If necessary, turn off security protection for this account (turn off access for less secure applications)
+ 
+ 
+ ### Student: RA 43/2015 Ivana Tomić
