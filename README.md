@@ -12,25 +12,25 @@
 
 ### Setup for pharmacy-backend 
 
- Clone git repository
- Open Visual Studio Code and import pharmacy-backend folder
- Install dependencies from pom.xml file
- Create connection to database and start MySQL server 
- Run project as Spring Boot App
+ 1. Clone git repository
+ 2. Open Visual Studio Code and import pharmacy-backend folder
+ 3. Install dependencies from pom.xml file
+ 4. Create connection to database and start MySQL server 
+ 5. Run project as Spring Boot App
 
 ### Setup for pharmacy-frontend
- Open Visual Studio Code and import pharmacy-frontend folder
- Install Angular from terminal
+ 1. Open Visual Studio Code and import pharmacy-frontend folder
+ 2. Install Angular from terminal
 ```shell
 $npm install -g @angular/cli 
 ```
-   Open terminal in './pharmacy-frontend' folder and run commands
+ 3. Open terminal in './pharmacy-frontend' folder and run commands
  ```shell
 $ npm install
 $ ng serve 
 ```
- Application is running on port 4200.
+4. Application is running on port 4200.
 
 ### Setup for e-mail service
- Use e-mail and password from application.yml file to login into google account
- If necessary, turn off security protection for this account (turn off access for less secure applications)
+ 1. Use e-mail and password from application.yml file to login into google account
+ 2. If necessary, turn off security protection for this account (turn off access for less secure applications)
