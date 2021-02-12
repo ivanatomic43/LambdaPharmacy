@@ -21,6 +21,8 @@ import com.example.pharmacybackend.model.Pharmacist;
 import com.example.pharmacybackend.model.Pharmacy;
 import com.example.pharmacybackend.model.Rating;
 import com.example.pharmacybackend.repository.*;
+
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -87,6 +89,7 @@ public class AppointmentService {
     }
 
     // dermatologist
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public AppointmentDTO createAppointment(AppointmentDTO newApp) {
 
         // checking if dermatologist is available

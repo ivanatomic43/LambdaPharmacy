@@ -49,7 +49,7 @@ public class AppointmentController {
         return new ResponseEntity<>(createdAppointment, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getAllPredefined/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getAllPredefined/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAll(@PathVariable("id") Long id) {
 
         List<AppointmentDTO> appointmentList = appointmentService.getAllPredefined(id);

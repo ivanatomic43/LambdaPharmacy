@@ -61,29 +61,29 @@ INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status,loyalty_
 INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, loyalty_points, med_type, medicine_code, mode, name, note, producer, rating,shape,  structure, version) VALUES (9, 'Not for children', '1','AVAILABLE',12,'Humani lekovi','119','RECIPE','Xanax','Namenjen za lečenje anksioznosti, napetosti ili drugih somatskih (telesnih) ili psihijatrijskih simptoma povezanih sa anksioznošću','PFIZER ITALIA S.R.L.',0,'Tableta', 'alprazolam',0);
 INSERT INTO MEDICINE (id, contraindications, daily_dose, default_status, loyalty_points, med_type, medicine_code, mode, name, note, producer,rating, shape,  structure, version) VALUES (10, 'None', '2','AVAILABLE',22,'Humani lekovi','120','RECIPE','Rantudil forte 60mg','Koristi se u terapiji bola i zapaljenja kod reumatoidnog artritisa (hronični poliartritis)','MEDA MANUFACTURING GMBH',0,'Kapsula', 'acemetacin',0);
 
-INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (1, 150,  '2021-02-06', 5, 'AVAILABLE',0, 1,1);
-INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity,status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (2, 230,  '2021-01-06', 5, 'AVAILABLE',0, 2,1);
-INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity,status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (3,175, '2021-02-06', 5, 'AVAILABLE', 0,3,1);
-INSERT INTO PHARMACY_MEDICINES (id, price,  price_lasts_to,quantity,status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (4,165, '2021-02-06', 5,  'AVAILABLE',0, 4,1);
-INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (5,155, '2021-02-06', 5, 'AVAILABLE',0, 1,2);
-INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (6,145, '2021-02-06', 5, 'AVAILABLE',0, 4,2);
-INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (7,280, '2021-02-06', 5, 'AVAILABLE',0, 6,3);
-INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (8,300, '2021-02-06', 5,'AVAILABLE', 0,7,3);
-INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (9, 210, '2021-02-06',5,'AVAILABLE',0, 8,3);
-INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (10,225, '2021-02-06', 5, 'AVAILABLE',0, 2,3);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (1, 150,  '2021-02-25', 5, 'AVAILABLE',0, 1,1);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity,status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (2, 230,  '2021-01-25', 5, 'AVAILABLE',0, 2,1);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity,status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (3,175, '2021-02-25', 5, 'AVAILABLE', 0,3,1);
+INSERT INTO PHARMACY_MEDICINES (id, price,  price_lasts_to,quantity,status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (4,165, '2021-02-25', 5,  'AVAILABLE',0, 4,1);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (5,155, '2021-02-25', 5, 'AVAILABLE',0, 1,2);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (6,145, '2021-02-25', 5, 'AVAILABLE',0, 4,2);
+INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (7,280, '2021-02-25', 5, 'AVAILABLE',0, 6,3);
+INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (8,300, '2021-02-25', 5,'AVAILABLE', 0,7,3);
+INSERT INTO PHARMACY_MEDICINES (id,price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (9, 210, '2021-02-25',5,'AVAILABLE',0, 8,3);
+INSERT INTO PHARMACY_MEDICINES (id, price, price_lasts_to, quantity, status_in_pharmacy ,version,medicine_id, pharmacy_id) VALUES (10,225, '2021-02-25', 5, 'AVAILABLE',0, 2,3);
 
 
 
 
-INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (1, '2020-11-01', '2021-02-01', 120, 0,'06:00:00', '14:00:00', 3, 1 );
-INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (2, '2020-11-01', '2021-02-01', 100, 0, '18:00:00', '21:00:00', 3, 2);
-INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (3, '2020-11-01', '2021-02-01', 110, 0, '07:00:00', '15:00:00', 4, 1);
+INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (1, '2020-11-01', '2021-03-01', 120, 0,'06:00:00', '14:00:00', 3, 1 );
+INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (2, '2020-11-01', '2021-03-01', 100, 0, '18:00:00', '21:00:00', 3, 2);
+INSERT INTO EMPLOYED_DERMATOLOGIST (id, date_from, date_to, price, rating, work_from, work_to, dermatologist_id, pharmacy_id) VALUES (3, '2020-11-01', '2021-03-01', 110, 0, '07:00:00', '15:00:00', 4, 1);
 
-INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (1, '2021-01-20', 2,0, '08:22:00', 50, 'RESERVED', 'EXAMINATION',0, 1, 1, NULL, 1);
-INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (2, '2021-01-23', 2, 0,'10:22:00', 50, 'RESERVED', 'EXAMINATION',0, 2, 1, NULL, 1);
+INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (1, '2021-02-20', 2,0, '08:22:00', 50, 'RESERVED', 'EXAMINATION',0, 1, 1, NULL, 1);
+INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (2, '2021-02-23', 2, 0,'10:22:00', 50, 'RESERVED', 'EXAMINATION',0, 2, 1, NULL, 1);
 INSERT INTO APPOINTMENT (id, date_of_appointment, duration, loyalty_points, meeting_time, price, status, type, version, dermatologist_id, patient_id, pharmacist_id, pharmacy_id) VALUES (3, '2021-02-25', 1, 0, '09:00:00', 50, 'FREE', 'EXAMINATION',   0, 1,NULL, NULL, 1);
-INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id, version) VALUES (1, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 1, NULL,0);
-INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id, version) VALUES (2, 'WAITING_FOR_APPROVAL', '2021-01-15', '2021-01-25', 2, NULL,0);
+INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id, version) VALUES (1, 'WAITING_FOR_APPROVAL', '2021-02-15', '2021-02-25', 1, NULL,0);
+INSERT INTO VACATION (id, status, vacation_from, vacation_to, dermatologist_id, pharmacist_id, version) VALUES (2, 'WAITING_FOR_APPROVAL', '2021-02-15', '2021-02-25', 2, NULL,0);
 
 INSERT INTO PURCHASE_ORDER (id, date, status,version, pharmacy_administrator_id, pharmacy_id) VALUES (1, '2021-02-26', 'WAITING_FOR_OFFER',0, 2, 1);
 
