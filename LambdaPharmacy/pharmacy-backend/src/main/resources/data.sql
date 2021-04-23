@@ -1,7 +1,7 @@
 
 /*
-Password za sve naloge je 123.
-Komunikacija se odvija preko e-mail naloga  no.reply.medclinic@gmail.com, password je sifra123.
+
+Komunikacija se odvija preko e-mail naloga.  
 Rating je svuda setovan na 0, menja se kada korisnik unese ocenu za objekat.
 */
 INSERT INTO ADDRESS (id, city, latitude, longitude, street) VALUES (1, 'Novi Sad', 45.26125996629874, 19.834538133520123, 'Bulevar Kralja Petra I 11'); 
